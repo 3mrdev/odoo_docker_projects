@@ -1,0 +1,572 @@
+<odoo>
+    <data>
+        <record id="swms_ticket_form_inherit" model="ir.ui.view">
+            <field name="name">swms.helpdesk.ticket.form.inherit</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+            <field name="arch" type="xml">
+
+                <field name="stage_id" position="replace">
+                    <field name="stage_id" widget="statusbar_duration" options="{'clickable': False, 'fold_field': 'fold'}" invisible="not is_swms"/>
+                    <field name="stage_id" widget="statusbar_duration" options="{'clickable': True, 'fold_field': 'fold'}" invisible="is_swms"/>
+                </field>
+
+                <field name="priority" widget="priority" position="replace">
+                    <field name="priority" widget="selection" invisible="not is_swms"/>
+                    <field name="priority" widget="priority" invisible="is_swms"/>
+                </field>
+
+                <xpath expr="//header/button[@name='action_convert_ticket_to_lead_or_opportunity'][1]" position="attributes">
+                    <attribute name="invisible">not active or is_swms</attribute>
+                </xpath>
+
+                <xpath expr="//header/button[@name='action_convert_ticket_to_lead_or_opportunity'][2]" position="attributes">
+                    <attribute name="invisible">not active or is_swms</attribute>
+                </xpath>
+
+                <xpath expr="//header/button[1]" position="before">
+                    <button name="button_draft_stage" type="object" string="Reset to draft" invisible="not active or not is_swms or not show_draft_button or show_cancel_button" class="btn btn-secondary" icon="fa-edit"/>
+                    <button name="button_reject_stage" type="object" string="Reject" invisible="not active or not is_swms or not show_reject_button" class="btn btn-secondary" icon="fa-close" confirm="Are you sure you want to reject this request? Please provide a reason in the notes."/>
+                    <button name="button_approve_stage" type="object" string="Approve" invisible="not active or not is_swms or not show_approve_button" class="oe_highlight" icon="fa-check" confirm="Did you check all the information and documents along with preparing the case study?"/>
+                    <!-- or show_reject_button -->
+                    <button name="button_previous_stage" type="object" string="Previous" invisible="not active or not previous_stage or not is_swms or show_approve_button" class="btn btn-secondary" icon="fa-arrow-left">
+                        <field name="previous_stage" options='{"no_open": True}' readonly="1"/>
+                    </button>
+                     <!-- or show_reject_button -->
+                    <button name="button_next_stage" type="object" string="Next" invisible="not active or not next_stage or not is_swms or show_approve_button" class="oe_highlight" icon="fa-arrow-right">
+                        <field name="next_stage" options='{"no_open": True}' readonly="1"/>
+                    </button>
+                    
+                    <button name="button_cancel_stage" type="object" string="Cancel" invisible="not active or not is_swms or not show_cancel_button" class="btn btn-secondary" icon="fa-ban"/>
+                </xpath>
+
+                <div name="button_box" position="inside">
+                    <button groups="documents.group_documents_user" name="action_see_documents" type="object" class="oe_stat_button" icon="fa-file-text-o" invisible="not is_swms">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value"><field name="document_count"/></span>
+                            <span class="o_stat_text">Documents</span>
+                        </div>
+                    </button>
+                    <!-- or user_id != uid -->
+                    <button name="action_see_cases" type="object" class="oe_stat_button" icon="fa-file-text-o" invisible="not is_swms">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value"><field name="cases_count"/></span>
+                            <span class="o_stat_text">Case Studies</span>
+                        </div>
+                    </button>
+                    <button name="action_see_bills" type="object" class="oe_stat_button" icon="fa-money" invisible="not is_swms or bills_count == 0">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value"><field name="bills_count"/></span>
+                            <span class="o_stat_text">Bills</span>
+                        </div>
+                    </button>
+                    <button name="action_see_sponserships" type="object" class="oe_stat_button" icon="fa-users" invisible="not is_swms or sponserships_count == 0">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value"><field name="sponserships_count"/></span>
+                            <span class="o_stat_text">Sponserships</span>
+                        </div>
+                    </button>
+                    <button name="action_see_pickings" type="object" class="oe_stat_button" icon="fa-truck" invisible="not is_swms or pickings_count == 0">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value"><field name="pickings_count"/></span>
+                            <span class="o_stat_text">Delivery</span>
+                        </div>
+                    </button>
+                    <button name="action_see_projects" type="object" class="oe_stat_button" icon="fa-puzzle-piece" invisible="not is_swms or projects_count == 0">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value"><field name="projects_count"/></span>
+                            <span class="o_stat_text">Projects</span>
+                        </div>
+                    </button>
+                </div>
+
+                <xpath expr="//sheet" position="before">
+                    <div class="alert alert-danger w-100 d-flex align-items-center" role="alert" invisible="not noti_documents">
+                        <field name="noti_documents" readonly="1"/>
+                        <button name="check_documents" type="object" title="Refresh" class="alert-link" icon="fa-refresh"/>
+                    </div>
+                </xpath>
+
+                <field name="fold" position="before">
+                    <field name="is_sponsership" invisible="1"/>
+
+                    <!-- Payment status for invoices / receipts -->
+                    <widget name="web_ribbon" title="Paid" invisible="payment_status != 'paid'"/>
+                    <widget name="web_ribbon" title="In Payment" invisible="payment_status != 'in_payment'"/>
+                    <widget name="web_ribbon" title="Partial" invisible="payment_status != 'partial'"/>
+                    <widget name="web_ribbon" title="Reversed" bg_color="text-bg-danger" invisible="payment_status != 'reversed'"/>
+                    <widget name="web_ribbon" title="Blocked" bg_color="text-bg-danger" invisible="payment_status != 'blocked'"/>
+                    <widget name="web_ribbon" text="Invoicing App Legacy" bg_color="text-bg-info" invisible="payment_status != 'invoicing_legacy'" tooltip="This entry has been generated through the Invoicing app, before installing Accounting. It has been disabled by the 'Invoicing Switch Threshold Date' setting so that it does not impact your accounting."/>
+                
+                    <group>
+                        <group>
+                            <field name="is_swms" string="Is SWMS ?" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                    <field name="request_seq" string="Request No." readonly="1" invisible="not is_swms"/>
+                </field>
+
+                <field name="partner_id" position="replace">
+                    <field name="partner_id" invisible="not is_swms" string="Family" readonly="partner_id or user_id != uid" class="field_partner_id" domain="['|', ('company_id', '=', False), ('company_id', '=', company_id),('is_family', '=', True),('is_company', '=', True)]" widget="res_partner_many2one" context="{'default_phone': partner_phone}"/>
+                    <field name="partner_id" invisible="is_swms" class="field_partner_id" domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]" widget="res_partner_many2one" context="{'default_phone': partner_phone}"/>
+                </field>
+
+                <field name="user_id" position="replace">
+                    <field name="user_id" class="field_user_id" domain="['&amp;', ('id', 'in', domain_user_ids), ('share', '=', False)]" widget="many2one_avatar_user" groups="appness_swms.group_swms_manager"/>
+                </field>
+
+                <field name="partner_phone" position="attributes">
+                    <attribute name="readonly">user_id != uid</attribute>
+                </field>
+                <field name="description" position="attributes">
+                    <attribute name="readonly">user_id != uid</attribute>
+                </field>
+                <field name="priority" position="attributes">
+                    <attribute name="readonly">user_id != uid</attribute>
+                </field>
+                <field name="tag_ids" position="attributes">
+                    <attribute name="readonly">user_id != uid</attribute>
+                </field>
+                <field name="email_cc" position="attributes">
+                    <attribute name="readonly">user_id != uid</attribute>
+                </field>
+                
+                <div class="oe_title" position="replace">
+                    <div class="oe_title">
+                        <h1><field name="name" options="{'line_breaks': False}" widget="text" class="field_name" placeholder="e.g. Product arrived damaged"/></h1>
+                        <h2 class="row g-0 pb-3 pb-sm-4" invisible="action_types in ['material','project']">
+                            <div class="col-auto pb-2 pb-md-0">
+                                <label for="total_amount" class="oe_edit_only" string="Amount To Pay"/>
+                                <div class="d-flex align-items-baseline">
+                                    <field name="company_currency_id" invisible="1"/>
+                                    <div class="d-flex align-items-baseline gap-3">
+                                        <field name="total_amount" readonly="user_id != uid" string="Amount To Pay" class="o_input_10ch" widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
+                                        <div class="d-flex align-items-baseline">
+                                            <field name="plan_id" invisible="not is_sponsership or action_types not in ['recurring']" class="oe_inline o_input_13ch" placeholder="e.g. &quot;Monthly&quot;" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </h2>
+                    </div>
+                </div>
+
+                <field name="team_id" position="replace">
+                    <field name="team_id" invisible="not is_swms" no_open="1" string="Service Team" readonly="1" required="1" context="{'kanban_view_ref': 'helpdesk.helpdesk_team_view_kanban_mobile', 'default_use_sla': True}" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                    <field name="team_id" invisible="is_swms" readonly="0" required="1" context="{'kanban_view_ref': 'helpdesk.helpdesk_team_view_kanban_mobile', 'default_use_sla': True}"/>
+                </field>
+                
+                <xpath expr="//notebook/page[1]" position="after">
+                    <page string="SWMS" invisible="not is_swms">
+                        <group>
+                            <group string="Service Info">
+                                <span class="o_form_label o_td_label o_address_type" name="address_name">
+                                    <span>Address</span>
+                                    <span invisible="not is_address_allowed" style="color:green;"> (Allowed)</span>
+                                    <span invisible="is_address_allowed" style="color:red;"> (Not Allowed)</span>
+                                </span>
+                                <div class="o_address_format">
+                                    <div name="partner_address_country" class="d-flex justify-content-between">
+                                        <field name="country_id" domain="[('swms_allow','=',True)]" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" />
+                                    </div>
+                                    <field name="state_id" domain="[('swms_allow','=',True)]" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True,'no_create': True}" context="{'country_id': country_id, 'default_country_id': country_id}"/>
+                                    <field name="city_id" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" placeholder="City" class="o_address_city" domain="[('country_id', '=', country_id),('swms_allow','=',True)]" context="{'default_country_id': country_id, 'default_state_id': state_id}"/>
+                                </div>
+                                <field name="service" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" groups="base.group_no_one"/>
+                                <field name="next_stage" invisible="not is_swms" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" groups="base.group_no_one"/>
+                                <field name="previous_stage" invisible="not is_swms" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" groups="base.group_no_one"/>
+                                <field name="action_types" groups="base.group_no_one"/>
+                                <field name="payment_status" readonly="1" widget="badge" groups="base.group_no_one"
+                                    invisible="action_types not in ['one','recurring']"
+                                    decoration-danger="payment_status == 'not_paid'"
+                                    decoration-warning="payment_status in ('partial', 'in_payment')"
+                                    decoration-success="payment_status in ('paid', 'reversed')"/>
+                            </group>
+                            <group string="Bill Info">
+                                <field name="vendor_id" string="Who to Pay?" domain="[('is_family','=',False)]" readonly="user_id != uid" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" invisible="not is_bill"/>
+                                <!-- <field name="vendor_bank" string="Who to Pay Bank?" readonly="user_id != uid" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True,'no_create': True}" invisible="not is_bill"/> -->
+                                <field name="vendor_name" string="Who to Pay Name?" readonly="user_id != uid" invisible="not is_bill"/>
+                                <field name="vendor_phone" string="Who to Pay Phone?" readonly="user_id != uid" invisible="not is_bill"/>
+                                <field name="vendor_address" string="Who to Pay Address?" readonly="user_id != uid" invisible="not is_bill"/>
+                                <field name="vendor_bank_name" string="Who to Pay Bank Name?" readonly="user_id != uid" invisible="not is_bill"/>
+                                <field name="vendor_bank_card" string="Who to Pay Bank Card?" readonly="user_id != uid" invisible="not is_bill"/>
+                                <field name="prepaid_meter_req_no" readonly="user_id != uid"/>
+                            </group>
+                        </group>
+                        <group string="Education Info" invisible="not is_education"> 
+                            <group>
+                                <field name="edu_current_semester" required="is_education" readonly="user_id != uid"/>
+                                <field name="edu_major" required="is_education" readonly="user_id != uid"/>
+                                <field name="edu_university" required="is_education" readonly="user_id != uid"/>
+                                <field name="edu_level" required="is_education" readonly="user_id != uid"/>
+                                <field name="edu_previous_gpa" required="is_education" readonly="user_id != uid"/>
+                            </group>
+                            <group>
+                                <field name="edu_payment_status" required="is_education" readonly="user_id != uid"/>
+                                <field name="edu_scholarship_status" required="is_education" readonly="user_id != uid"/>
+                                <field name="edu_grading_system_type" widget="radio" options="{'horizontal': true}" required="is_education" readonly="user_id != uid"/>
+                                <field name="edu_enrollment_date" required="is_education" readonly="user_id != uid"/>
+                                <field name="edu_graduation_date" required="is_education" readonly="user_id != uid"/>
+                                <field name="edu_total_fees" required="is_education" readonly="user_id != uid"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page string="Sponsership Waiting List" invisible="not is_swms or not is_sponsership">
+                        <field name="service_variant_id" invisible="1"/>
+                        <!-- readonly="user_id != uid or is_done_stage" -->
+                        <field name="sponsership_lines" context="{'default_family': partner_id,'default_product': service_variant_id}" readonly="user_id != uid">
+                            <list editable="bottom" delete="False">
+                                <field name="name" readonly="1" optional="show"/>
+                                <field name="product" string="Service" domain="[('is_swms','=',True),('type','=','service'),('product_tmpl_id','=',parent.service)]"
+                                    options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" readonly="state not in ['draft','submited','reported']"/>
+                                <field name="family" domain="[('id','=',parent.partner_id)]" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" readonly="state not in ['draft','submited','reported']"/>
+                                <field name="family_member" column_invisible="parent.is_needy_family" required="1" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" readonly="state not in ['draft','submited','reported']"/>
+                                <field name="card_id" string="Lulu Card No." column_invisible="not parent.is_needy_family" required="0" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" readonly="1" help="If the card is already used by a family if you confirm it. it will be automatically assigned to current choosen family"/>
+                                <field name="card_used" string="Card Used?" optional="show" column_invisible="not parent.is_needy_family" help="If the card is already used by a family if you confirm it. it will be automatically assigned to current choosen family"/>
+                                <field name="lead" domain="[('is_swms','=',True),('is_available','=',True)]" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" readonly="1"/>
+                                <field name="sponsership" readonly="1" optional="show" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                                <field name="sponsership_state" optional="show"/>
+                                <field name="birthday" optional="hide"/>
+                                <field name="age" optional="hide"/>
+                                <field name="state" readonly="1"/>
+                            </list>
+                        </field>
+                        <group string="Lulu Card History" invisible="not is_needy_family"></group>
+                        <field name="card_history" context="{'default_family_id': partner_id}" readonly="1" invisible="not is_needy_family">
+                            <list editable="bottom" decoration-danger="account_move_type == 'in_refund'" decoration-success="account_move_type == 'in_invoice'">
+                                <field name="date"/>
+                                <field name="name" string="Description" optional="hide"/>
+                                <field name="account_move_type" column_invisible="1"/>
+                                <field name="account_move_id" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                                <field name="card_id" string="Lulu Card No." options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                                <field name="request_id" optional="hide" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                                <field name="family_id" optional="hide" domain="[('is_family','=',True),('is_company','=',True)]" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                                <field name="currency_id" column_invisible="1"/>
+                                <field name="amount" sum="Total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            </list>
+                        </field>
+                    </page>
+                    <page string="Inventory" invisible="not is_swms or action_types not in ['material'] or not is_material">
+                        <group string="Choose Products"/>
+                        <field name="material_lines" context="{'default_family': partner_id}" readonly="user_id != uid">
+                            <list editable="bottom">
+                                <field name="product" string="Product" domain="[('is_swms','=',False),('type','=','consu')]" 
+                                    options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                                <field name="qty"/>
+                            </list>
+                        </field>
+                    </page>
+                    <page string="Budget" invisible="not is_swms" groups="appness_swms.group_swms_manager">
+                        <group>
+                            <field name="budget_analytic_accounts_ids" invisible="1"/>
+                            <field name="analytic_account_id" string="Money taken from" readonly="0" domain="[('id','in',budget_analytic_accounts_ids)]" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                        </group>
+                        <field name="budget_line_ids"/>
+                    </page>
+                    <page string="Documents" invisible="not is_swms">
+                        <field name="documents" mode="kanban" context="{'default_partner_id': partner_id}" readonly="user_id != uid">
+                            <kanban js_class="documents_kanban" create="false" sample="1">
+                                <field name="id"/>
+                                <field name="active"/>
+                                <field name="mimetype"/>
+                                <field name="favorited_ids"/>
+                                <field name="attachment_id"/>
+                                <field name="res_id"/>
+                                <field name="folder_id"/>
+                                <field name="lock_uid"/>
+                                <field name="type"/>
+                                <field name="shortcut_document_id"/>
+                                <field name="create_uid"/>
+                                <field name="url"/>
+                                <field name="url_preview_image"/>
+                                <field name="checksum"/>
+                                <field name="name"/>
+                                <field name="display_name"/>
+                                <field name="res_model_name"/>
+                                <field name="res_model"/>
+                                <field name="activity_state"/>
+                                <field name="is_multipage"/>
+                                <field name="thumbnail_status"/>
+                                <field name="user_permission"/>
+                                <field name="access_token"/>
+                                <field name="access_url"/>
+                                <field name="access_via_link"/>
+                                <field name="access_internal"/>
+                                <field name="is_access_via_link_hidden"/>
+                                <field name="available_embedded_actions_ids" groups="base.group_user"/>
+                                <field name="partner_id"/>
+                                <field name="file_size"/>
+                                <field name="alias_name"/>
+                                <field name="alias_domain_id"/>
+                                <field name="alias_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/> <!-- fetch `color` too -->
+                                <templates>
+                                    <t t-name="card">
+                                        <div draggable="true" class="o_documents_pre_18_1 d-flex flex-column o_kanban_attachment o_documents_attachment h-100 pb-2"
+                                            t-attf-class="#{record.is_multipage.raw_value ? 'o_kanban_stack' : ''}" t-att-data-id="record.id.raw_value">
+                                            <t t-set="fileRequest" t-value="record.type.raw_value === 'binary' and !record.attachment_id.raw_value and !record.shortcut_document_id.raw_value"/>
+                                            <div t-if="record.type.raw_value != 'folder'" t-attf-class="#{fileRequest ? 'o_request_image' : ''}">
+                                                <t t-set="hasStoredThumbnail" t-value="record.thumbnail_status.raw_value === 'present'"/>
+                                                <!-- should be made more generic if we support different websites for videos -->
+                                                <t t-set="youtubeUrlMatch" t-value="record.url.raw_value ? record.url.raw_value.match('youtu(?:\.be|be\.com)/(?:.*v(?:/|=)|(?:.*/)?)([a-zA-Z0-9-_]{11})') : false"/>
+                                                <t t-set="youtubeVideoToken" t-value="youtubeUrlMatch ? youtubeUrlMatch.length > 1 ? youtubeUrlMatch[1] : false : false"/>
+                                                <div name="document_preview" class="o_kanban_image_wrapper d-flex justify-content-center position-relative" t-att-title="fileRequest ? 'Upload file' : ''">
+                                                    <field name="is_favorited" nolabel="1" widget="boolean_favorite" class="position-absolute top-0 end-0 p-1 pt-2"/>
+                                                    <img t-if="youtubeVideoToken" class="w-100 h-100" alt="Document"
+                                                        t-attf-src="https://img.youtube.com/vi/{{youtubeVideoToken}}/0.jpg"/>
+                                                    <a t-elif="record.type.raw_value =='url'" target="_blank" t-att-href="record.url.raw_value" class="o_kanban_image_wrapper">
+                                                        <img t-if="record.url_preview_image.raw_value" class="w-100 h-100"
+                                                            t-att-src="record.url_preview_image.raw_value" t-att-alt="record.name.raw_value"/>
+                                                        <t t-else="">
+                                                            <span class="fa fa-link fa-3x text-muted"/>
+                                                        </t>
+                                                    </a>
+                                                    <t t-elif="hasStoredThumbnail">
+                                                        <t t-set="unique" t-value="record.checksum.value ? record.checksum.value.slice(-8) : ''"/>
+                                                        <img t-attf-src="/documents/thumbnail/#{record.access_token.raw_value}?unique=#{unique}" class="w-100 h-100" alt="Document preview"/>
+                                                    </t>
+                                                    <div t-elif="fileRequest" class="fa fa-upload fa-3x text-muted">
+                                                        <input type="file" class="o_input_file o_hidden o_kanban_replace_document"/>
+                                                    </div>
+                                                    <div t-else="!hasStoredThumbnail" class="o_image o_image_thumbnail" t-att-data-mimetype="record.mimetype.value"/>
+                                                </div>
+                                            </div>
+                                            <div class="flex-shrink-1 flex-auto">
+                                                <t t-set="discoverable" t-value="record.access_via_link.raw_value === 'none'
+                                                    or record.access_internal.raw_value !== 'none' or !record.is_access_via_link_hidden.raw_value"/>
+                                                <div t-if="record.type.raw_value == 'folder'" class="d-flex align-items-center text-truncate p-2 pb-0">
+                                                    <t t-if="record.shortcut_document_id.raw_value">
+                                                        <i class="fa fa-external-link me-2" title="This is a shortcut"/>
+                                                    </t>
+                                                    <i t-else="" class="fa fa-folder-o me-2" title="This is a folder"/>
+                                                    <i t-if="!discoverable" class="fa fa-eye-slash me-1" title="Must have the link to access"/>
+                                                    <field name="name" class="text-truncate me-1" required="True" string="Document"/>
+                                                    <field name="is_favorited" nolabel="1" widget="boolean_favorite" class="ms-auto"/>
+                                                </div>
+                                                <div t-else="" class="p-2 pb-0">
+                                                    <div t-att-title="record.name.raw_value" class="fw-bolder w-100 d-flex align-items-center">
+                                                        <a t-if="record.type.raw_value == 'url'" t-att-href="record.url.raw_value" class="me-1" t-att-title="record.url.raw_value">
+                                                            <i class="fa fa-link"/>
+                                                        </a>
+                                                        <div class="d-flex flex-grow-1 align-items-center gap-2 overflow-hidden">
+                                                            <field name="name" class="text-truncate" required="True" string="Document"/>
+                                                            <t t-if="record.shortcut_document_id.raw_value">
+                                                                <i class="fa fa-external-link text-gray-500" title="This is a shortcut"/>
+                                                            </t>
+                                                            <t t-if="record.lock_uid.raw_value">
+                                                                <i class="fa fa-lock" t-att-title="record.lock_uid.value"/>
+                                                            </t>
+                                                        </div>
+                                                        <div class="d-flex d-flex-row align-items-center ms-2 gap-2">
+                                                            <i t-if="!discoverable" class="fa fa-eye-slash" title="Must have the link to access"/>
+                                                            <field name="activity_ids" widget="kanban_activity"/>
+                                                            <field name="owner_id" widget="many2one_avatar_user"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="o_kanban_record_body text-truncate">
+                                                        <t t-if="record.res_model_name.raw_value &amp;&amp; record.res_model.raw_value !== 'documents.document'">
+                                                            <t t-if="record.res_name.raw_value">
+                                                                <field name="res_name" class="text-muted"/>
+                                                            </t>
+                                                            <t t-elif="fileRequest">
+                                                                <span><b> Request</b></span>
+                                                            </t>
+                                                        </t>
+                                                        <t t-elif="fileRequest">
+                                                            <span><b>Requested Document</b></span>
+                                                        </t>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex align-items-center text-truncate p-2 pb-0">
+                                                    <span><b> Type: </b></span><field name="doc_type"/>
+                                                </div>
+                                                <div class="d-flex align-items-center text-truncate p-2 pb-0">
+                                                    <span><b> Issuance Date: </b></span><field name="issuance_date"/>
+                                                </div>
+                                                <div class="d-flex align-items-center text-truncate p-2 pb-0">
+                                                    <span><b> Expire Date: </b></span><field name="expire_date"/>
+                                                </div>
+                                            </div>
+                                            <footer t-if="record.type.raw_value != 'folder' and record.tag_ids.raw_value.length" class="d-flex px-2">
+                                                <field name="tag_ids" class="d-block text-wrap" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                            </footer>
+                                        </div>
+                                        <t t-if="record.is_multipage.raw_value">
+                                            <div class="o_kanban_stack"/>
+                                            <div class="o_kanban_stack"/>
+                                        </t>
+                                    </t>
+                                </templates>
+                            </kanban>
+                            <form create="false">
+                                <header>
+                                    <button type="object" name="access_content" string="Access" class="oe_highlight" invisible="not url"/>
+                                    <button type="object" name="access_content" string="Download" class="oe_highlight" invisible="type != 'binary'"/>
+                                    <button type="object" name="toggle_lock" string="Lock" invisible="lock_uid"/>
+                                    <button type="object" name="toggle_lock" string="Unlock" invisible="not lock_uid"/>
+                                    <button type="object" name="action_unarchive" string="Restore" invisible="active"/>
+                                </header>
+                                <sheet>
+                                    <div class="oe_button_box" name="button_box">
+                                        <button name="open_resource" type="object" class="oe_stat_button" icon="fa-external-link" invisible="not res_id or res_model in [False, 'documents.document']">
+                                            <div class="o_field_widget o_stat_info">
+                                                <span class="o_stat_text">Related <br/> Record</span>
+                                            </div>
+                                        </button>
+                                    </div>
+                                    <widget name="web_ribbon" title="Moved to trash" bg_color="text-bg-danger" invisible="active"/>
+                                    <field name="thumbnail" nolabel="1" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;:&quot;thumbnail&quot;}" invisible="not thumbnail"/>
+                                    <div class="oe_title" aria-label="Name">
+                                        <h1>
+                                            <field name="name" class="oe_inline" placeholder="Document Name" required="True" readonly="is_locked"/> <i class="fa fa-lock oe_inline" title="Locked" invisible="not lock_uid"/>
+                                        </h1>
+                                    </div>
+                                    <field name="is_locked" invisible="1"/>
+                                    <field name="active" invisible="1"/>
+                                    <field name="res_id" invisible="1"/>
+                                    <field name="res_model" invisible="1"/>
+                                    <group>
+                                        <group>
+                                            <field name="datas" string="File" filename="name" invisible="type in ['url', 'folder']" readonly="is_locked"/>
+                                            <field name="url" invisible="type != 'url'" readonly="is_locked"/>
+                                            <field name="folder_id" widget="documents_folder_many2one"
+                                                domain="[('type', '=', 'folder'), ('shortcut_document_id', '=', False)]"
+                                                options="{'no_create_edit': True, 'no_create': True}"/>
+                                            <field name="owner_id" widget="many2one_avatar_user" readonly="is_locked"/>
+                                            <field name="partner_id" widget="many2one_avatar_user"/>
+                                            <field name="tag_ids" widget="many2many_tags"
+                                                options="{'color_field': 'color'}"/>
+                                        </group>
+                                        <group>
+                                            <field name="type" readonly="1"/>
+                                            <field name="doc_type" readonly="0"/>
+                                            <field name="issuance_date" required="doc_type.issuance_date_is_mandatory == True"/>
+                                            <field name="expire_date" required="doc_type.expire_date_is_mandatory == True"/>
+                                            <field name="is_expired" readonly="1"/>
+                                            <field name="is_archived" readonly="1"/>
+                                            <field name="create_date"/>
+                                            <field name="create_uid" widget="many2one_avatar_user"/>
+                                            <field name="lock_uid" readonly="1" invisible="not lock_uid"/>
+                                        </group>
+                                    </group>
+                                    <group groups="base.group_no_one">
+                                        <field name="company_id" groups="base.group_multi_company"/>
+                                        <field name="file_size" invisible="type != 'binary'"/>
+                                        <field name="mimetype" invisible="type != 'binary'"/>
+                                    </group>
+                                    <group>
+                                        <field name="create_activity_option"/>
+                                    </group>
+                                    <group string="Activity" name="activity" autofocus="autofocus" invisible="not create_activity_option">
+                                        <group>
+                                            <field name="create_activity_type_id" options="{'no_create': True, 'no_open': True}" required="create_activity_option"/>
+                                            <field name="create_activity_summary" placeholder="e.g. Discuss proposal"/>
+                                        </group>
+                                        <group>
+                                            <label for="create_activity_date_deadline_range"/>
+                                            <div class="o_row">
+                                                <field name="create_activity_date_deadline_range"/>
+                                                <field name="create_activity_date_deadline_range_type"/>
+                                            </div>
+                                            <field name="create_activity_user_id"/>
+                                        </group>
+                                        <group>
+                                            <field name="create_activity_note" placeholder="Log a note..."/>
+                                        </group>
+                                    </group>
+                                </sheet>
+                                <chatter/>
+                                <footer class="justify-content-between">
+                                    <div class="btn-group">
+                                        <button class="btn btn-primary me-2 rounded w-auto" special="save" data-hotkey="q">Save</button>
+                                        <button class="btn btn-secondary rounded w-auto" special="cancel" data-hotkey="x">Discard</button>
+                                    </div>
+                                </footer>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="swms_ticket_kanban_inherit" model="ir.ui.view">
+            <field name="name">swms.helpdesk.ticket.kanban.inherit</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//kanban" position="attributes">
+                    <attribute name="groups_draggable">0</attribute>
+                    <attribute name="records_draggable">0</attribute>
+                    <attribute name="quick_create_view"></attribute>
+                    <attribute name="on_create"></attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="swms_ticket_list" model="ir.ui.view">
+            <field name="name">swms.helpdesk.ticket.list</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="priority">100</field>
+            <field name="arch" type="xml">
+                <list editable="bottom" open_form_view="True">
+                    <field name="name" string="Request" readonly="1"/>
+                    <field name="total_amount" string="Requested Amount" optional="hide" readonly="1"/>
+                    <field name="stage_id" optional="show" readonly="1" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="partner_id" string="Family" readonly="1" options="{'no_create': True, 'no_open': True}" optional="hide"/>
+                    <field name="members_count" string="Members" optional="show"/>
+                    <field name="accommodation_type" optional="show"/>
+                    <field name="building_type" optional="hide"/>
+                    <field name="professional_status" optional="show"/>
+                    <field name="team_id" string="Service" optional="hide" readonly="1" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="total_income" optional="show"/>
+                    <field name="total_obligations" optional="show"/>
+                    <field name="net_worth" optional="show"/>
+                    <field name="member_net_worth" optional="show"/>
+                </list>
+            </field>
+        </record>
+
+        <record model="ir.actions.server" id="action_calculate_budget_lines">
+            <field name="name">Refresh Budget</field>
+            <field name="model_id" ref="helpdesk.model_helpdesk_ticket"/>
+            <field name="binding_model_id" ref="helpdesk.model_helpdesk_ticket" />
+            <field name="binding_view_types">form</field>
+            <field name="state">code</field>
+            <field name="code">
+if records:
+    action = records.calculate_budget_lines()
+            </field>
+        </record>
+
+        <record id="swms_ticket_search" model="ir.ui.view">
+            <field name="name">swms.helpdesk.ticket.search</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <group expand="0" string="Filters">
+                        <filter name="stage" string="Stage" context="{'group_by': 'stage_id'}"/>
+                        <filter name="family" string="Family" context="{'group_by': 'partner_id'}"/>
+                        <filter name="service" string="Service" context="{'group_by': 'team_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="helpdesk_new_requests_report_action_swms">
+            <field name="name">New Requests Report</field>
+            <field name="res_model">helpdesk.ticket</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('is_swms','=',True)]</field>
+            <field name="context">{'create': False}</field>
+            <field name="search_view_id" ref="swms_ticket_search"/>
+        </record>
+
+        <record id="helpdesk_new_requests_report_action_swms_list" model="ir.actions.act_window.view">
+            <field name="sequence" eval="0"/>
+            <field name="view_mode">list</field>
+            <field name="view_id" ref="swms_ticket_list"/>
+            <field name="act_window_id" ref="helpdesk_new_requests_report_action_swms"/>
+        </record>
+
+    </data>
+</odoo>

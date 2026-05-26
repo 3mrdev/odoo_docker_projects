@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="crm_team_view_form_jiz_waqf" model="ir.ui.view">
+            <field name="name">crm.team.form.jiz.waqf</field>
+            <field name="model">crm.team</field>
+            <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="waqf_type" widget="radio" options="{'horizontal': true}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

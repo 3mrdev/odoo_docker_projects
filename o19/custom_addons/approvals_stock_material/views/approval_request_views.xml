@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Add Stock Transfers smart button and Create Transfer button -->
+    <record id="approval_stock_material_request_view_form_inherit" model="ir.ui.view">
+        <field name="name">approval.stock.material.request.view.form.inherit</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals.approval_request_view_form" />
+        <field name="arch" type="xml">
+            <!-- Add Stock Transfers smart button -->
+            <xpath expr="//button[@name='action_get_attachment_view']" position="after">
+                <button name="action_open_stock_transfers" type="object"
+                    class="oe_stat_button" icon="fa-truck"
+                    groups="stock.group_stock_user"
+                    invisible="approval_type != 'stock_material' or stock_picking_count == 0">
+                    <field name="stock_picking_count" string="Stock Transfers"
+                        widget="statinfo" />
+                </button>
+            </xpath>
+
+            <!-- Add Create Transfer Material button for stock_material type -->
+            <xpath expr="//button[@name='action_confirm']" position="after">
+                <button name="action_create_custom_by_type" type="object"
+                    groups="stock.group_stock_user"
+                    string="Transfer Material" class="btn-primary"
+                    data-hotkey="t"
+                    invisible="approval_type != 'stock_material' or request_status != 'approved' or stock_picking_count &gt; 0" />
+            </xpath>
+
+            <!-- Add warehouse and location fields after product lines -->
+            <xpath expr="//field[@name='product_line_ids']" position="after">
+                <group invisible="approval_type != 'stock_material'" groups="stock.group_stock_user">
+                    <group string="Source">
+                        <field name="source_warehouse_id"
+                            readonly="request_status not in ['new','pending']"
+                            options="{'no_create': True}"/>
+                        <field name="source_location_id"
+                            readonly="request_status not in ['new','pending']"
+                            options="{'no_create': True}"/>
+                    </group>
+                    <group string="Destination">
+                        <field name="dest_warehouse_id"
+                            readonly="request_status not in ['new','pending']"
+                            options="{'no_create': True}"/>
+                        <field name="dest_location_id"
+                            readonly="request_status not in ['new','pending']"
+                            options="{'no_create': True}"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

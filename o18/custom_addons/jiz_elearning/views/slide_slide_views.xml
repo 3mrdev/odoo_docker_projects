@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="slide_slide_view_form_inherit_jiz" model="ir.ui.view">
+            <field name="name">slide.slide.form.inherit.jiz</field>
+            <field name="model">slide.slide</field>
+            <field name="inherit_id" ref="website_slides.view_slide_slide_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='lesson_details']" position="after">
+                    <group string="Student Information" name="student_info">
+                        <field name="deadline"/>
+                        <field name="feedback"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

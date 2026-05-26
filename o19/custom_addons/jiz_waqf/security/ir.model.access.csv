@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_jiz_waqf_user,jiz.waqf.user,model_jiz_waqf,jiz_waqf.group_jiz_waqf_user,1,1,1,0
+access_jiz_waqf_admin,jiz.waqf.admin,model_jiz_waqf,jiz_waqf.group_jiz_waqf_admin,1,1,1,1
+access_jiz_waqf_unit_user,jiz.waqf.unit.user,model_jiz_waqf_unit,jiz_waqf.group_jiz_waqf_user,1,1,1,0
+access_jiz_waqf_unit_admin,jiz.waqf.unit.admin,model_jiz_waqf_unit,jiz_waqf.group_jiz_waqf_admin,1,1,1,1
+access_jiz_waqf_type_user,jiz.waqf.type.user,model_jiz_waqf_type,jiz_waqf.group_jiz_waqf_user,1,1,1,0
+access_jiz_waqf_type_admin,jiz.waqf.type.admin,model_jiz_waqf_type,jiz_waqf.group_jiz_waqf_admin,1,1,1,1
+access_jiz_use_type_user,jiz.use.type.user,model_jiz_use_type,jiz_waqf.group_jiz_waqf_user,1,1,1,0
+access_jiz_use_type_admin,jiz.use.type.admin,model_jiz_use_type,jiz_waqf.group_jiz_waqf_admin,1,1,1,1
+access_jiz_document_type_user,jiz.document.type.user,jiz_base.model_jiz_document_type,jiz_waqf.group_jiz_waqf_user,1,1,1,0
+access_jiz_document_type_admin,jiz.document.type.admin,jiz_base.model_jiz_document_type,jiz_waqf.group_jiz_waqf_admin,1,1,1,1
+access_res_area_user,res.area.user,model_res_area,jiz_waqf.group_jiz_waqf_user,1,1,1,0
+access_res_area_admin,res.area.admin,model_res_area,jiz_waqf.group_jiz_waqf_admin,1,1,1,1
+access_jiz_waqf_generate_units_wizard_user,jiz.waqf.generate.units.wizard.user,model_jiz_waqf_generate_units_wizard,jiz_waqf.group_jiz_waqf_user,1,1,1,1

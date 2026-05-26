@@ -1,0 +1,998 @@
+<odoo>
+
+    <record id="paperformat_obc_rop_letter" model="report.paperformat">
+        <field name="name">OBC ROP Letter</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">32</field>
+        <field name="margin_bottom">32</field>
+        <field name="margin_left">10.0</field>
+        <field name="margin_right">10.0</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="obc_rop_letter_print" model="ir.actions.report">
+        <field name="name">OBC ROP Letter</field>
+        <field name="model">obc.chassis</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">appness_gs1.print_obc_rop_letter</field>
+        <field name="report_file">appness_gs1.print_obc_rop_letter</field>
+        <field name="print_report_name">'OBC ROP Letter - %s' % (object.name).replace('/', '')</field>
+        <field name="binding_model_id" ref="model_obc_chassis" />
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="appness_gs1.paperformat_obc_rop_letter" />
+        <field name="group_ids" eval="[(4, ref('appness_gs1.group_rop_letter_user'))]" />
+    </record>
+
+    <template id="print_obc_rop_letter">
+        <t t-call="web.basic_layout">
+            <!-- <t t-foreach="docs" t-as="doc"> -->
+            <t t-foreach="docs" t-as="doc">
+                <t t-set="line" t-value="doc.sale_order_line_id" />
+                <t t-set="is_rop" t-value="line.product_id.is_rop_letter" />
+                <div t-if="is_rop" class="page"
+                    style="page-break-before: always;">
+                    <link rel="preconnect" href="https://fonts.googleapis.com" />
+                    <link rel="preconnect" href="https://fonts.gstatic.com" />
+                    <link href="https://fonts.googleapis.com/css2?family=Changa"
+                        rel="stylesheet" />
+
+                    <p
+                        style='text-align:right;text-autospace:ideograph-numeric;
+                        direction:rtl;unicode-bidi:embed'>
+                        <b>
+                            <span style='font-family:"Changa",serif'></span>
+                        </b>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif'>الإفاضل/ </span>
+                        </b>
+                        <span></span>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif'>
+                                <span></span>
+                            </span>
+                        </b>
+                        <b>
+                            <span
+                                t-esc="doc.order_id.partner_id.name"
+                                style='font-family:"Changa",serif'></span>
+                        </b>
+                        <b>
+                            <span
+                                style='font-family:
+                        "Changa",serif'></span>
+                        </b>
+                        <span></span>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif'>
+                                <span></span>
+                            </span>
+                        </b>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif'>المحترمين
+                            </span>
+                        </b>
+                    </p>
+
+                    <p
+                        style='text-align:right;direction:rtl;unicode-bidi:
+                        embed'>
+                        <b>
+                            <span style='font-family:"Changa",serif'>سجل تجاري رقم</span>
+                        </b>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif'> ( </span>
+                        </b>
+                        <b>
+                            <span t-esc="doc.order_id.partner_id.company_registry"
+                                style='font-family:"Changa",serif'></span>
+                        </b>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif'>) </span>
+                        </b>
+                    </p>
+
+                    <p
+                        style='text-align:center;direction:
+                        rtl;unicode-bidi:embed'>
+                        <b>
+                            <u>
+                                <span
+                                    style='font-size:14.0pt;
+                        line-height:107%;font-family:"Changa",sans-serif'>الموضوع
+                                    : استلام </span>
+                            </u>
+                        </b>
+                        <b>
+                            <u>
+                                <span
+                                    style='font-size:14.0pt;line-height:107%;font-family:"Changa",sans-serif'>لوحة
+                                    مواصفات رقم القاعدة</span>
+                            </u>
+                        </b>
+                    </p>
+
+                    <p
+                        style='margin-bottom:0cm;text-align:right;
+                        line-height:150%;direction:rtl;unicode-bidi:embed'>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif;color:#222222'>              
+                                بالإشارة
+                                الى الموضوع </span>
+                        </b>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif;
+                        color:#222222'>
+                                أ</span>
+                        </b>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif;
+                        color:#222222'>علاه
+                                والى خطاب شرطة عمان السلطانية (الإدارة العامة للمرور) والطلب
+                                المقدم لمركز عمان للترقيم بتاريخ </span>
+                        </b>
+                        <b>
+                            <span t-esc="line.chassis_submission_date"
+                                style='font-family:"Changa",serif;color:#222222'></span>
+                        </b>
+                        <span></span>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif;
+                        color:#222222'><span></span>،
+                                أقر أنا مقدم الطلب المذكور بياناته ادناه بأنني استلمت <a
+                                    name="_Hlk187236273">لوحة مواصفات رقم القاعدة</a></span>
+                        </b>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif;color:#222222'> </span>
+                        </b>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif;color:#222222'>،</span>
+                        </b>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif;color:#222222'> </span>
+                        </b>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif;color:#222222'>
+                                وكما </span>
+                        </b>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif;color:#222222'>أتعهد
+                                لكم
+                                ب</span>
+                        </b>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif;color:#222222'>أن
+                                أقوم
+                                بتركيبها
+                                كما هو موضح في نموذج الصورة </span>
+                        </b>
+                        <b>
+                            <span
+                                style='font-family:
+                        "Changa",serif;color:#222222'>
+                                 </span>
+                        </b>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif;color:#222222'>
+                                ادناه</span>
+                        </b>
+                        <span></span>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif;
+                        color:#222222'>
+                                <span></span>
+                            </span>
+                        </b>
+                        <span></span>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif;color:#222222'><span></span> و وفق
+                                الضوابط المعمول بها</span>
+                        </b>
+                        <b>
+                            <span style='font-family:"Changa",serif;color:#222222'>
+                            </span>
+                        </b>
+                        <b>
+                            <span style='font-family:"Changa",serif;color:#222222'>
+                                . </span>
+                        </b>
+                    </p>
+
+                    <p
+                        style='margin-top:0cm;margin-right:18.0pt;
+                        margin-bottom:0cm;margin-left:0cm;text-align:right;text-indent:-18.0pt;
+                        line-height:24.0pt;direction:rtl;unicode-bidi:embed'>
+                        <b>
+                            <span
+                                style='font-family:Wingdings;color:#222222'>v<span
+                                    style='font:7.0pt "Changa"'>
+                                </span></span>
+                        </b>
+                        <span></span>
+                        <b>
+                            <span
+                                style='font-family:
+                        "Changa",serif;color:#222222'>
+                                أولاً </span>
+                        </b>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif;color:#222222'>/ </span>
+                        </b>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif;color:#222222'>لوحة
+                                مواصفات رقم القاعدة:</span>
+                        </b>
+                    </p>
+
+                    <div align="center">
+
+                        <table border="1" dir="RTL" cellspacing="0" cellpadding="0"
+                            width="100%"
+                            style='width:100.0%;border-collapse:collapse;border:none'>
+                            <tr>
+                                <td width="26%"
+                                    style='width:26.32%;border:double windowtext 1.5pt;
+                        background:#BFBFBF;padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+                                        <span
+                                            style='font-size:12.5pt;
+                        font-family:"Changa";color:black'>رقم
+                                            القاعدة</span>
+                                    </p>
+                                </td>
+                                <td width="73%" colspan="3"
+                                    style='width:73.68%;border:double windowtext 1.5pt;
+                        border-right:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+                                        <span t-esc="doc.name"
+                                            style='font-size:12.0pt'></span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="26%"
+                                    style='width:26.32%;border:double windowtext 1.5pt;
+                        border-top:none;background:#BFBFBF;padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+                                        <span
+                                            style='font-size:12.5pt;
+                        font-family:"Changa";color:black'>
+                                            الطول</span>
+                                    </p>
+                                </td>
+                                <td width="26%"
+                                    style='width:26.62%;border-top:none;border-left:double windowtext 1.5pt;
+                        border-bottom:double windowtext 1.5pt;border-right:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+
+                                        <span t-esc="line.chassis_length"
+                                            style='font-size:12.0pt'></span>
+                                        <span
+                                            style='font-size:12.5pt;
+                        font-family:"Changa"'>
+                                            متر</span>
+                                    </p>
+                                </td>
+                                <td width="18%"
+                                    style='width:18.56%;border-top:none;border-left:double windowtext 1.5pt;
+                        border-bottom:double windowtext 1.5pt;border-right:none;background:#BFBFBF;
+                        padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+                                        <span
+                                            style='font-size:12.5pt;
+                        font-family:"Changa";color:black'>الوزن
+                                            الفارغ</span>
+                                    </p>
+                                </td>
+                                <td width="28%"
+                                    style='width:28.52%;border-top:none;border-left:double windowtext 1.5pt;
+                        border-bottom:double windowtext 1.5pt;border-right:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+
+                                        <span t-esc="line.chassis_empty_weight"
+                                            style='font-size:12.0pt'></span>
+                                        <span
+                                            style='font-size:12.5pt;
+                        font-family:"Changa"'>
+                                            كجم</span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="26%"
+                                    style='width:26.32%;border:double windowtext 1.5pt;
+                        border-top:none;background:#BFBFBF;padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+                                        <span
+                                            style='font-size:12.5pt;
+                        font-family:"Changa";color:black'>
+                                            العرض</span>
+                                    </p>
+                                </td>
+                                <td width="26%"
+                                    style='width:26.62%;border-top:none;border-left:double windowtext 1.5pt;
+                        border-bottom:double windowtext 1.5pt;border-right:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+
+                                        <span t-esc="line.chassis_width"
+                                            style='font-size:12.0pt'></span>
+                                        <span
+                                            style='font-size:12.5pt;
+                        font-family:"Changa"'>
+                                            متر</span>
+                                    </p>
+                                </td>
+                                <td width="18%"
+                                    style='width:18.56%;border-top:none;border-left:double windowtext 1.5pt;
+                        border-bottom:double windowtext 1.5pt;border-right:none;background:#BFBFBF;
+                        padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+                                        <span
+                                            style='font-size:12.5pt;
+                        font-family:"Changa";color:black'>
+                                            الحمولة</span>
+                                    </p>
+                                </td>
+                                <td width="28%"
+                                    style='width:28.52%;border-top:none;border-left:double windowtext 1.5pt;
+                        border-bottom:double windowtext 1.5pt;border-right:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+
+                                        <span t-esc="line.chassis_load_capacity"
+                                            style='font-size:12.0pt'></span>
+                                        <span
+                                            style='font-size:12.5pt;
+                        font-family:"Changa"'>
+                                            كجم</span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="26%"
+                                    style='width:26.32%;border:double windowtext 1.5pt;
+                        border-top:none;background:#BFBFBF;padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+                                        <span
+                                            style='font-size:12.5pt;
+                        font-family:"Changa";color:black'>
+                                            الارتفاع</span>
+                                    </p>
+                                </td>
+                                <td width="26%"
+                                    style='width:26.62%;border-top:none;border-left:double windowtext 1.5pt;
+                        border-bottom:double windowtext 1.5pt;border-right:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+
+                                        <span t-esc="line.chassis_height"
+                                            style='font-size:12.0pt'></span>
+                                        <span
+                                            style='font-size:12.5pt;
+                        font-family:"Changa"'>
+                                            متر</span>
+                                    </p>
+                                </td>
+                                <td width="18%"
+                                    style='width:18.56%;border-top:none;border-left:double windowtext 1.5pt;
+                        border-bottom:double windowtext 1.5pt;border-right:none;background:#BFBFBF;
+                        padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+                                        <span
+                                            style='font-size:12.5pt;
+                        font-family:"Changa";color:black'>الوزن
+                                            الأقصى</span>
+                                    </p>
+                                </td>
+                                <td width="28%"
+                                    style='width:28.52%;border-top:none;border-left:double windowtext 1.5pt;
+                        border-bottom:double windowtext 1.5pt;border-right:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+
+                                        <span t-esc="line.chassis_max_weight"
+                                            style='font-size:12.0pt'></span>
+                                        <span
+                                            style='font-size:12.5pt;
+                        font-family:"Changa"'>
+                                            كجم</span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="26%"
+                                    style='width:26.32%;border:double windowtext 1.5pt;
+                        border-top:none;background:#BFBFBF;padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+                                        <span
+                                            style='font-size:12.5pt;
+                        font-family:"Changa";color:black'>عدد
+                                            المحور</span>
+                                    </p>
+                                </td>
+                                <td width="26%"
+                                    style='width:26.62%;border-top:none;border-left:double windowtext 1.5pt;
+                        border-bottom:double windowtext 1.5pt;border-right:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+                                        <span t-esc="line.chassis_axies_number"
+                                            style='font-size:12.0pt'></span>
+                                    </p>
+                                </td>
+                                <td width="18%"
+                                    style='width:18.56%;border-top:none;border-left:double windowtext 1.5pt;
+                        border-bottom:double windowtext 1.5pt;border-right:none;background:#BFBFBF;
+                        padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+                                        <span
+                                            style='font-size:12.5pt;
+                        font-family:"Changa";color:black'>سنة
+                                            الصنع</span>
+                                    </p>
+                                </td>
+                                <td width="28%"
+                                    style='width:28.52%;border-top:none;border-left:double windowtext 1.5pt;
+                        border-bottom:double windowtext 1.5pt;border-right:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+                                        <span t-esc="line.chassis_manufactur_year"
+                                            style='font-size:12.0pt'></span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="26%"
+                                    style='width:26.32%;border:double windowtext 1.5pt;
+                        border-top:none;background:#BFBFBF;padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+                                        <span
+                                            style='font-size:12.5pt;
+                        font-family:"Changa";color:black'>وزن
+                                            المحور</span>
+                                    </p>
+                                </td>
+                                <td width="26%"
+                                    style='width:26.62%;border-top:none;border-left:double windowtext 1.5pt;
+                        border-bottom:double windowtext 1.5pt;border-right:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+
+                                        <span t-esc="line.chassis_axies_weight"
+                                            style='font-size:12.0pt'></span>
+                                        <span
+                                            style='font-size:12.5pt;
+                        font-family:"Changa"'>
+                                            طن</span>
+                                    </p>
+                                </td>
+                                <td width="18%"
+                                    style='width:18.56%;border-top:none;border-left:double windowtext 1.5pt;
+                        border-bottom:double windowtext 1.5pt;border-right:none;background:#BFBFBF;
+                        padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+                                        <span
+                                            style='font-size:12.5pt;
+                        font-family:"Changa";color:black'>بلد
+                                            الصنع</span>
+                                    </p>
+                                </td>
+                                <td width="28%"
+                                    style='width:28.52%;border-top:none;border-left:double windowtext 1.5pt;
+                        border-bottom:double windowtext 1.5pt;border-right:none;padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+                                        <span t-esc="line.chassis_manufactur_country"
+                                            style='font-size:12.0pt'></span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="26%"
+                                    style='width:26.32%;border:double windowtext 1.5pt;
+                        border-top:none;background:#BFBFBF;padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+                                        <span
+                                            style='font-size:12.5pt;
+                        font-family:"Changa";color:black'>رقم
+                                            المرجع</span>
+                                    </p>
+                                </td>
+                                <td width="73%" colspan="3"
+                                    style='width:73.68%;border-top:none;border-left:
+                        double windowtext 1.5pt;border-bottom:double windowtext 1.5pt;border-right:
+                        none;padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:right;
+                        line-height:normal;direction:rtl;unicode-bidi:embed'>
+                                        <span t-esc="line.chassis_reference_number"
+                                            style='font-size:12.0pt'></span>
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <span t-esc="doc.secret_number_1"
+                        style="position: relative;margin-top: 104px;margin-right: 745px;font-size: 5px; color:gray;">
+                    </span>
+
+                    <p
+                        style='margin-top:0cm;margin-right:18.0pt;
+                        margin-bottom:0cm;margin-left:0cm;text-align:right;text-indent:-18.0pt;
+                        line-height:24.0pt;direction:rtl;unicode-bidi:embed'>
+                        <b>
+                            <span
+                                style='font-family:Wingdings;color:#222222'>v<span
+                                    style='font:7.0pt "Changa"'>
+                                </span></span>
+                        </b>
+                        <span></span>
+                        <b>
+                            <span
+                                style='font-family:
+                        "Changa",serif;color:#222222'>
+                                ثانياً </span>
+                        </b>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif;color:#222222'>/ </span>
+                        </b>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif;color:#222222'>بيانات
+                                مقدم الطلب ومستلم لوحة مواصفات رقم القاعدة:</span>
+                        </b>
+                    </p>
+
+                    <div align="center">
+
+                        <table border="1" dir="RTL" cellspacing="0" cellpadding="0"
+                            width="100%"
+                            style='width:100.0%;border-collapse:collapse;border:none'>
+                            <tr style='height:21.6pt'>
+                                <td width="4%"
+                                    style='width:4.06%;border:double windowtext 1.5pt;background:
+                        #BFBFBF;padding:0cm 5.4pt 0cm 5.4pt;height:21.6pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+                                        <span></span>
+                                        <span
+                                            style='font-size:12.5pt;font-family:"Changa";color:black'><span></span>
+                                            1</span>
+                                    </p>
+                                </td>
+                                <td width="16%"
+                                    style='width:16.92%;border:double windowtext 1.5pt;
+                        border-right:none;background:#BFBFBF;padding:0cm 5.4pt 0cm 5.4pt;height:21.6pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+                                        <span
+                                            style='font-size:12.5pt;
+                        font-family:"Changa";color:black'>بيانات
+                                            مقدم الطلب</span>
+                                    </p>
+                                </td>
+                                <td width="8%"
+                                    style='width:8.3%;border-top:double windowtext 1.5pt;
+                        border-left:none;border-bottom:double windowtext 1.5pt;border-right:none;
+                        padding:0cm 5.4pt 0cm 5.4pt;height:21.6pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal;direction:rtl;unicode-bidi:embed'>
+                                        <span
+                                            style='font-size:11.5pt;font-family:"Changa"'>
+                                            الاسم</span>
+                                        <span></span>
+                                        <span><span></span>: </span>
+                                    </p>
+                                </td>
+                                <td width="41%"
+                                    style='width:41.62%;border:double windowtext 1.5pt;
+                        border-right:none;padding:0cm 5.4pt 0cm 5.4pt;height:21.6pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        right;line-height:normal'>
+                                        <span t-esc="doc.order_id.partner_id.name"
+                                            style='font-size:12.5pt;font-family:"Changa"'></span>
+                                    </p>
+                                </td>
+                                <td width="15%"
+                                    style='width:15.98%;border-top:double windowtext 1.5pt;
+                        border-left:none;border-bottom:double windowtext 1.5pt;border-right:none;
+                        padding:0cm 5.4pt 0cm 5.4pt;height:21.6pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:right;
+                        line-height:normal;direction:rtl;unicode-bidi:embed'>
+                                        <span style='font-size:9.5pt;font-family:"Changa"'>البطاقة
+                                            الشخصية</span>
+                                        <span></span>
+                                        <span><span></span>: </span>
+                                    </p>
+                                </td>
+                                <td width="13%"
+                                    style='width:13.14%;border:double windowtext 1.5pt;
+                        border-right:none;padding:0cm 5.4pt 0cm 5.4pt;height:21.6pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+                                        <span t-esc="doc.order_id.partner_id.company_registry"
+                                            style='font-size:12.5pt;font-family:
+                        "Changa"'></span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr style='height:21.6pt'>
+                                <td width="4%"
+                                    style='width:4.06%;border:double windowtext 1.5pt;border-top:
+                        none;background:#BFBFBF;padding:0cm 5.4pt 0cm 5.4pt;height:21.6pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+                                        <span></span>
+                                        <span
+                                            style='font-size:12.5pt;font-family:"Changa";color:black'><span></span>
+                                            2</span>
+                                    </p>
+                                </td>
+                                <td width="16%"
+                                    style='width:16.92%;border-top:none;border-left:double windowtext 1.5pt;
+                        border-bottom:double windowtext 1.5pt;border-right:none;background:#BFBFBF;
+                        padding:0cm 5.4pt 0cm 5.4pt;height:21.6pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+                                        <span
+                                            style='font-size:12.5pt;
+                        font-family:"Changa";color:black'>بيانات
+                                            المستلم</span>
+                                    </p>
+                                </td>
+                                <td width="8%"
+                                    style='width:8.3%;border:none;border-bottom:double windowtext 1.5pt;
+                        padding:0cm 5.4pt 0cm 5.4pt;height:21.6pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal;direction:rtl;unicode-bidi:embed'>
+                                        <span
+                                            style='font-size:11.5pt;font-family:"Changa"'>
+                                            الاسم</span>
+                                        <span>: </span>
+                                    </p>
+                                </td>
+                                <td width="41%"
+                                    style='width:41.62%;border-top:none;border-left:double windowtext 1.5pt;
+                        border-bottom:double windowtext 1.5pt;border-right:none;padding:0cm 5.4pt 0cm 5.4pt;
+                        height:21.6pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        right;line-height:normal'>
+                                        <span t-esc="doc.order_id.company_id.name"
+                                            style='font-size:12.0pt'></span>
+                                    </p>
+                                </td>
+                                <td width="15%"
+                                    style='width:15.98%;border:none;border-bottom:double windowtext 1.5pt;
+                        padding:0cm 5.4pt 0cm 5.4pt;height:21.6pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:right;
+                        line-height:normal;direction:rtl;unicode-bidi:embed'>
+                                        <span
+                                            style='font-size:9.5pt;font-family:"Changa"'>البطاقة
+                                            الشخصية</span>
+                                        <span>: </span>
+                                    </p>
+                                </td>
+                                <td width="13%"
+                                    style='width:13.14%;border-top:none;border-left:double windowtext 1.5pt;
+                        border-bottom:double windowtext 1.5pt;border-right:none;padding:0cm 5.4pt 0cm 5.4pt;
+                        height:21.6pt'>
+                                    <p
+                                        style='margin-bottom:0cm;text-align:
+                        center;line-height:normal'>
+                                        <span t-esc="doc.order_id.company_id.vat"
+                                            style='font-size:12.5pt;
+                        font-family:"Changa"'></span>
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                    <span t-esc="doc.secret_number_2"
+                        style="position: relative;margin-top: 190px;margin-right: 238px;font-size: 5px; color:gray;">
+                    </span>
+
+                    <p
+                        style='margin-top:0cm;margin-right:
+                        18.0pt;margin-bottom:0cm;margin-left:0cm;text-align:right;text-indent:-18.0pt;
+                        line-height:24.0pt;direction:rtl;unicode-bidi:embed'>
+                        <b>
+                            <span
+                                style='font-family:Wingdings;color:#222222'>v<span
+                                    style='font:7.0pt "Changa"'>
+                                </span></span>
+                        </b>
+                        <span></span>
+                        <b>
+                            <span
+                                style='font-family:
+                        "Changa",serif;color:#222222'>
+                                ثالثاً </span>
+                        </b>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif;color:#222222'>/ </span>
+                        </b>
+                        <b>
+                            <span
+                                style='font-family:"Changa",serif;color:#222222'>
+                                الاشتراطات:</span>
+                        </b>
+                    </p>
+
+                    <div>
+
+                        <table class="table-borderless" border="0" dir="RTL" cellspacing="0"
+                            cellpadding="0"
+                            width="100%"
+                            style='width:100.0%;border-collapse:collapse;border:none'>
+                            <tr>
+                                <td width="100%" valign="top"
+                                    style='width:100.0%;padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-top:0cm;margin-right:
+                        25.2pt;margin-bottom:0cm;margin-left:0cm;text-align:right;text-indent:-18.0pt;
+                        line-height:150%;direction:rtl;unicode-bidi:embed'>
+                                        <b>
+                                            <span style='font-family:Symbol;color:#222222'>·<span
+                                                    style='font:7.0pt "Changa"'>
+                                                </span></span>
+                                        </b>
+                                        <span></span>
+                                        <b>
+                                            <span
+                                                style='font-family:
+                        "Changa",serif;color:#222222'>يجب
+                                                تثبيت لوحة مواصفات رقم القاعدة في
+                                                جهة اليسار على بعد متر من المحور الخلفي.</span>
+                                        </b>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr style='height:28.8pt'>
+                                <td width="100%" valign="top"
+                                    style='width:100.0%;padding:0cm 5.4pt 0cm 5.4pt;height:28.8pt'>
+                                    <p
+                                        style='margin-top:0cm;margin-right:7.2pt;margin-bottom:0cm;margin-left:0cm;text-align:right;line-height:150%;direction:rtl;unicode-bidi:embed'>
+                                        <b>
+                                            <span
+                                                style='font-family:"Changa",serif;color:#222222'>تثبيت
+                                                لوحة
+                                                مواصفات رقم القاعدة باستخدام الغراء إبوكسي </span>
+                                        </b>
+                                        <b>
+                                            <span
+                                                style='font-family:"Changa",serif;color:#222222'>
+                                                (</span>
+                                        </b>
+                                        <b>
+                                            <span
+                                                style='font-family:"Changa",serif;color:#222222'>EPOXY
+                                                GLUE)</span>
+                                        </b>
+                                        <span></span>
+                                        <b>
+                                            <span
+                                                style='font-family:
+                        "Changa",serif;color:#222222'><span></span>
+                                                و المسامير السحابات (</span>
+                                        </b>
+                                        <b>
+                                            <span
+                                                style='font-family:"Changa",serif;
+                        color:#222222'>
+                                                RIVETE)</span>
+                                        </b>
+                                        <span></span>
+                                        <b>
+                                            <span
+                                                style='font-family:"Changa",serif;color:#222222'><span></span>
+                                                ، كما هو موضح في الصورة ادناه .</span>
+                                        </b>
+                                        <span></span>
+                                        <span>
+                                            <span></span>
+                                        </span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr style='height:86.4pt'>
+                                <td width="100%" valign="top"
+                                    style='width:100.0%;padding:0cm 5.4pt 0cm 5.4pt;height:86.4pt'>
+                                    <!-- <span t-esc="doc.secret_number_1"
+                                        style="position: absolute;margin-top: 104px;margin-right: 745px;font-size: 10px; width: 100%;
+                                    color:gray;">
+                                    </span>
+                                    <span t-esc="doc.secret_number_2"
+                                        style="position: absolute;margin-top: 190px;margin-right: 238px;font-size: 10px; width: 100%;
+                                    color:gray;">
+                                    </span> -->
+                                    <img
+                                        t-if="doc.order_id.company_id.default_rop_letter_visual_guide"
+                                        width="100%"
+                                        t-attf-src="data:image/png;base64,{{doc.order_id.company_id.default_rop_letter_visual_guide}}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100%" valign="top"
+                                    style='width:100.0%;padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-top:0pt;margin-right:25.2pt;margin-bottom:0cm;margin-left:0cm;text-align:right;text-indent:-18.0pt;line-height:150%;direction:rtl;unicode-bidi:embed'>
+                                        <b>
+                                            <span style='font-family:Symbol;color:#222222'>·<span
+                                                    style='font:7.0pt "Changa"'>
+                                                </span></span>
+                                        </b>
+                                        <span></span>
+                                        <b>
+                                            <span
+                                                style='font-family:
+                        "Changa",serif;color:#222222'>
+                                                إزالة </span>
+                                        </b>
+                                        <b>
+                                            <span
+                                                style='font-family:"Changa",serif;color:#222222'>لوحة
+                                                مواصفات رقم
+                                                القاعدة</span>
+                                        </b>
+                                        <b>
+                                            <span
+                                                style='font-family:"Changa",serif;
+                        color:#222222'> </span>
+                                        </b>
+                                        <b>
+                                            <span
+                                                style='font-family:"Changa",serif;
+                        color:#222222'>بعد
+                                                تثبيتها يعرضها للتلف وعدم استطاعة قراءة رمز
+                                                الاستجابة
+                                                السريع ( </span>
+                                        </b>
+                                        <b>
+                                            <span
+                                                style='font-family:"Changa",serif;
+                        color:#222222'>QR
+                                                CODE </span>
+                                        </b>
+                                        <span></span>
+                                        <b>
+                                            <span
+                                                style='font-family:"Changa",serif;color:#222222'><span></span>)
+                                                كما يجب إبلاغ الإدارة العامة للمرور عن التلف .</span>
+                                        </b>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100%" valign="top"
+                                    style='width:100.0%;padding:0cm 5.4pt 0cm 5.4pt'>
+                                    <p
+                                        style='margin-top:0cm;margin-right:25.2pt;
+                        margin-bottom:0cm;margin-left:0cm;text-align:right;text-indent:-18.0pt;
+                        line-height:150%;direction:rtl;unicode-bidi:embed'>
+                                        <b>
+                                            <span style='font-family:Symbol;color:#222222'>·<span
+                                                    style='font:7.0pt "Changa"'>
+                                                </span></span>
+                                        </b>
+                                        <span></span>
+                                        <b>
+                                            <span
+                                                style='font-family:
+                        "Changa",serif;color:#222222'>
+                                                يجب</span>
+                                        </b>
+                                        <b>
+                                            <span
+                                                style='font-family:"Changa",serif;color:#222222'>
+                                                إرسال صورة للمركز
+                                                عمان للترقيم بعد تثيبت </span>
+                                        </b>
+                                        <b>
+                                            <span
+                                                style='font-family:
+                        "Changa",serif;color:#222222'>لوحة
+                                                مواصفات رقم القاعدة</span>
+                                        </b>
+                                        <b>
+                                            <span
+                                                style='font-family:"Changa",serif;color:#222222'>
+                                                لاستكمال
+                                                باقي الإجراءات.</span>
+                                        </b>
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+
+                    <p
+                        style='text-align:right;direction:rtl;unicode-bidi:
+                        embed'>
+                        <span style='font-family:"Changa",sans-serif'></span>
+                    </p>
+
+                </div>
+            </t>
+            <!-- </t> -->
+        </t>
+    </template>
+
+</odoo>

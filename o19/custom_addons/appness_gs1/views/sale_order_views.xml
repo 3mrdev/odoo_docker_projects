@@ -1,0 +1,175 @@
+<odoo>
+
+    <record id="view_order_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/list" position="attributes">
+                <attribute name="open_form_view">True</attribute>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_chassis_numbers"
+                    type="object"
+                    class="oe_stat_button"
+                    groups="appness_gs1.group_rop_letter_user"
+                    invisible="is_subscription or not show_rop_letter"
+                    icon="fa-exclamation-triangle">
+                    <field name="chassis_numbers_count" widget="statinfo" string="Chassis Numbers" />
+                </button>
+                <button name="action_view_gln_certs"
+                    type="object"
+                    class="oe_stat_button"
+                    groups="appness_gs1.group_certificates_user"
+                    invisible="not is_subscription or not show_gs1_cert"
+                    icon="fa-certificate">
+                    <field name="gln_certs_count" widget="statinfo" string="GLN Certs" />
+                </button>
+            </xpath>
+            <field name="user_id" position="after">
+                <field name="manager_signature" invisible="not is_subscription or not show_gs1_cert"
+                    groups="appness_gs1.group_certificates_user" />
+            </field>
+            <field name="date_order" position="after">
+                <field name="gs1_company_prefix" readonly="state != 'draft'"
+                    help="GS1 Company Prefix (GCP)"
+                    invisible="not is_subscription or not show_gs1_cert"
+                    groups="appness_gs1.group_certificates_user" />
+                <field name="last_paid_invoice_date" string="Last Paid Invoice Date"
+                    invisible="not last_paid_invoice_date or not is_subscription"
+                    groups="appness_gs1.group_certificates_user" />
+                <field name="last_paid_invoice_id" string="Last Paid Invoice"
+                    invisible="1"
+                    groups="appness_gs1.group_certificates_user" />
+                <field name="payment_voucher_link" widget="url" readonly="state != 'draft'" 
+                    invisible="is_subscription or not show_rop_letter"
+                    groups="appness_gs1.group_rop_letter_user" />
+            </field>
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_template_id']"
+                position="after">
+
+                <!-- OBC ROP Letter -->
+                <field name="chassis_model" string="Model" optional="show"
+                    help="Chassis Model"
+                    column_invisible="parent.is_subscription or not parent.show_rop_letter"
+                    invisible="not is_rop_letter"
+                    groups="appness_gs1.group_rop_letter_user" />
+                <field name="chassis_submission_date" 
+                    help="Model Timestamp"
+                    column_invisible="parent.is_subscription or not parent.show_rop_letter"
+                    invisible="not is_rop_letter"
+                    groups="appness_gs1.group_rop_letter_user" />
+                <field name="chassis_height" string="Height" optional="show"
+                    help="Chassis Height"
+                    column_invisible="parent.is_subscription or not parent.show_rop_letter"
+                    invisible="not is_rop_letter"
+                    groups="appness_gs1.group_rop_letter_user" />
+                <field name="chassis_width" string="Width" optional="show"
+                    help="Chassis Width"
+                    column_invisible="parent.is_subscription or not parent.show_rop_letter"
+                    invisible="not is_rop_letter"
+                    groups="appness_gs1.group_rop_letter_user" />
+                <field name="chassis_length" string="Length" optional="show"
+                    help="Chassis Length"
+                    column_invisible="parent.is_subscription or not parent.show_rop_letter"
+                    invisible="not is_rop_letter"
+                    groups="appness_gs1.group_rop_letter_user" />
+                <field name="chassis_empty_weight" string="Empty Weight" optional="hide"
+                    help="Chassis Empty Weight"
+                    column_invisible="parent.is_subscription or not parent.show_rop_letter"
+                    invisible="not is_rop_letter"
+                    groups="appness_gs1.group_rop_letter_user" />
+                <field name="chassis_load_capacity" string="Load Capacity" optional="hide"
+                    help="Chassis Load Capacity"
+                    column_invisible="parent.is_subscription or not parent.show_rop_letter"
+                    invisible="not is_rop_letter"
+                    groups="appness_gs1.group_rop_letter_user" />
+                <field name="chassis_max_weight" string="Max Weight" optional="hide"
+                    help="Chassis Max Weight"
+                    column_invisible="parent.is_subscription or not parent.show_rop_letter"
+                    invisible="not is_rop_letter"
+                    groups="appness_gs1.group_rop_letter_user" />
+                <field name="chassis_axies_number" string="Axies Number" optional="hide"
+                    help="Chassis Number of axies"
+                    column_invisible="parent.is_subscription or not parent.show_rop_letter"
+                    invisible="not is_rop_letter"
+                    groups="appness_gs1.group_rop_letter_user" />
+                <field name="chassis_axies_weight" string="Axies Weight" optional="hide"
+                    help="Chassis Axies Weight"
+                    column_invisible="parent.is_subscription or not parent.show_rop_letter"
+                    invisible="not is_rop_letter"
+                    groups="appness_gs1.group_rop_letter_user" />
+                <field name="chassis_manufactur_year" string="Year"
+                    help="Chassis Year of manufacture"
+                    optional="hide"
+                    column_invisible="parent.is_subscription or not parent.show_rop_letter"
+                    invisible="not is_rop_letter"
+                    groups="appness_gs1.group_rop_letter_user" />
+                <field name="chassis_manufactur_country" string="Country"
+                    help="Chassis Country of manufacture"
+                    optional="hide"
+                    column_invisible="parent.is_subscription or not parent.show_rop_letter"
+                    invisible="not is_rop_letter"
+                    groups="appness_gs1.group_rop_letter_user" />
+                <field name="chassis_reference_number" string="Ref No."
+                    help="General Traffic Department Number"
+                    optional="hide"
+                    column_invisible="parent.is_subscription or not parent.show_rop_letter"
+                    invisible="not is_rop_letter"
+                    groups="appness_gs1.group_rop_letter_user" />
+                <field name="chassis_model_og_rop_letter_link" string="OG Link" 
+                    help="OG ROP Letter Link" 
+                    widget="url"
+                    optional="hide"
+                    column_invisible="parent.is_subscription or not parent.show_rop_letter"
+                    invisible="not is_rop_letter"
+                    groups="appness_gs1.group_rop_letter_user" />
+                <field name="chassis_vehicle_type" string="Vehicle Type" 
+                    column_invisible="parent.is_subscription or not parent.show_rop_letter"
+                    invisible="not is_rop_letter"
+                    optional="hide"
+                    groups="appness_gs1.group_rop_letter_user" />
+                <field name="chassis_image_link" string="Image Link" 
+                    help="Chassis Image Link" 
+                    widget="url"
+                    optional="hide"
+                    column_invisible="parent.is_subscription or not parent.show_rop_letter"
+                    invisible="not is_rop_letter"
+                    groups="appness_gs1.group_rop_letter_user" />
+                <field name="chassis_image" widget="image" optional="hide"
+                    string="Image"
+                    help="Chassis Image"
+                    column_invisible="parent.is_subscription or not parent.show_rop_letter"
+                    readonly="parent.state != 'draft'"
+                    invisible="not is_rop_letter"
+                    groups="appness_gs1.group_rop_letter_user" />
+                <field name="chassis_numbers_inspection" string="(Passed/Total)" optional="show"
+                    help="Chassis Inspection (Passed/Total)"
+                    column_invisible="parent.is_subscription or not parent.show_rop_letter"
+                    groups="appness_gs1.group_rop_letter_user" />
+
+                <!-- GLN Certs -->
+                <field name="gln_certs_count_display" string="(Used/Max)" optional="show"
+                    help="GLN Certs Used Count"
+                    invisible="not is_gln_cert"
+                    column_invisible="not parent.is_subscription or not parent.show_gs1_cert"
+                    groups="appness_gs1.group_certificates_user" />
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page name="inspection_signature" string="Inspection Signature"
+                    invisible="is_subscription or not show_rop_letter"
+                    groups="appness_gs1.group_rop_letter_manager">
+                    <group>
+                        <group>
+                            <field name="inspector_id" readonly="state != 'draft'"/>
+                            <field name="date_of_inspection" readonly="state != 'draft' or inspector_id != uid"/>
+                            <field name="inspection_signiture" widget="signature"
+                                readonly="state != 'draft' or inspector_id != uid" />
+                        </group>
+                        <group></group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

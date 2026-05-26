@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Inherit from stock res_config_settings_view_form to add Stock Volume Tracking section -->
+        <record id="res_config_settings_view_form_inherit_volume_tracking" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.volume.tracking</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="stock.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//block[@name='operations_setting_container']" position="after">
+                    <block title="Stock Volume Tracking" name="volume_tracking_setting_container">
+                        <setting id="stock_volume_tracking_merge_by_dimensions"
+                                 help="When enabled, volume-tracked products with different dimensions (L×W×H) will not be merged into a single line during picking confirmation. Products with identical dimensions can still be merged. This applies to all operations: receipts, deliveries, internal transfers, and manufacturing orders.">
+                            <field name="stock_volume_tracking_merge_by_dimensions"/>
+                        </setting>
+                    </block>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="appness_wd.Orderline" t-inherit="point_of_sale.Orderline" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('product-price')]" position="before">
+            <!-- <div t-if="vals.price" t-out="vals.price" class="product-price price"
+            t-attf-class="{{ vals.isReceipt ? 'font-monospace' : 'fw-bolder' }}"/> -->
+            <small t-if="line.is_reward_line" class="mx-2">FREE</small>
+        </xpath>
+        <xpath expr="//span[hasclass('qty')]/t" position="before">
+            <!-- 
+            <span class="qty d-inline-block fw-bolder" t-attf-class="{{ vals.isReceipt ? 'pe-2' : 'px-1' }}">
+                <t t-esc="vals.unitPart"/>
+                <small t-if="vals.decimalPart" t-out="vals.decimalPart" class="fw-normal" style="font-size: 85%;"/>
+            </span> 
+            -->
+            <small t-if="line.is_reward_line">-</small>
+        </xpath>
+    </t>
+    
+</templates>
+<!-- <span>
+    <img t-att-src="/appness_wd/static/src/img/instgram.png" width="30px"/> @appness_technology
+</span>
+<xpath expr="//div[1]" position="inside">
+    appness technology
+</xpath> -->

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="mockup_search_page" name="Logspace Search">
+        <t t-call="appness_logspace_mockup.mockup_layout">
+            <div class="container mt-4">
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h2 class="text-primary">Find Your Delivery Partner</h2>
+                        <!-- Search Form (Mockup) -->
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body">
+                                <form action="/mockup/search" method="GET" class="row gx-3 gy-2 align-items-center">
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" placeholder="Pickup Location"/>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" placeholder="Drop-off Location"/>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="date" class="form-control"/>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button type="submit" class="btn btn-primary w-100">Search</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-12 d-flex justify-content-between align-items-center">
+                        <span class="text-muted"><t t-out="len(trucks)"/> results found</span>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-outline-secondary active" id="btn-grid"><i class="fa fa-th"></i></button>
+                            <button type="button" class="btn btn-outline-secondary" id="btn-list"><i class="fa fa-list"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Grid/List -->
+                <div class="row" id="results-container" data-view="grid">
+                    <t t-foreach="trucks" t-as="truck">
+                        <div class="col-md-4 mb-4 truck-card-wrapper">
+                            <div class="card h-100 shadow-sm border-0 truck-card">
+                                <!-- Dummy image placeholder if no real image -->
+                                <div class="card-img-top bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 200px;">
+                                    <i class="fa fa-truck fa-4x"></i>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary"><t t-out="truck['name']"/></h5>
+                                    <h6 class="card-subtitle mb-2 text-muted"><t t-out="truck['vendor']"/></h6>
+                                    <p class="card-text">
+                                        <span class="text-warning"><i class="fa fa-star"></i> <t t-out="truck['rating']"/></span> 
+                                        (<t t-out="truck['reviews']"/> reviews)
+                                    </p>
+                                    <h4 class="text-success"><t t-out="truck['price']"/></h4>
+                                    <a t-attf-href="/mockup/vendor/#{truck['id']}" class="btn btn-outline-primary mt-3 w-100">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

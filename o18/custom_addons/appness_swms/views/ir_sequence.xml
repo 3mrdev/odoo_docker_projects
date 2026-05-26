@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+
+        <record id="swms_sequence_list_inherit" model="ir.ui.view">
+            <field name="name">ir.sequence.list.inherit</field>
+            <field name="model">ir.sequence</field>
+            <field name="inherit_id" ref="base.sequence_view_tree"/>
+            <field name="arch" type="xml">
+                <field name="code" position="after">
+                    <field name="swms_allow" widget="boolean_toggle"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="swms_sequence_form_inherit" model="ir.ui.view">
+            <field name="name">ir.sequence.form.inherit</field>
+            <field name="model">ir.sequence</field>
+            <field name="inherit_id" ref="base.sequence_view"/>
+            <field name="arch" type="xml">
+                <field name="code" position="after">
+                    <field name="swms_allow" widget="boolean_toggle"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

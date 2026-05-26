@@ -1,0 +1,33 @@
+<odoo>
+    <record id="res_users_view_form_inherit" model="ir.ui.view">
+        <field name="name">res.users.form</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form" />
+        <field name="arch" type="xml">
+            <group name="other_preferences" position="after">
+                <group string="Digital Signatures" name="sign" groups="base.group_system">
+                    <field name="sign_signature" widget="signature"
+                        options="{'full_name': 'display_name', 'size': ['',200]}" />
+                    <field name="sign_initials" widget="signature"
+                        options="{'full_name': 'display_name', 'size': [200,''], 'type': 'initial'}" />
+                </group>
+            </group>
+        </field>
+    </record>
+
+    <record id="res_users_view_form_simple_modify_inherit" model="ir.ui.view">
+        <field name="name">res.users.form.simple.modify</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif" />
+        <field name="arch" type="xml">
+            <group name="other_preferences" position="after">
+                <group string="Digital Signatures" name="sign" groups="base.group_system">
+                    <field name="sign_signature" widget="signature"
+                        options="{'full_name': 'name', 'size': ['',200]}" />
+                    <field name="sign_initials" widget="signature"
+                        options="{'full_name': 'name', 'size': [200,''], 'type': 'initial'}" />
+                </group>
+            </group>
+        </field>
+    </record>
+</odoo>

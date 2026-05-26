@@ -1,0 +1,21 @@
+<odoo>
+
+    <record id="obc_chassis_view_order_line_list_rop_letter" model="ir.ui.view">
+        <field name="name">obc.chassis.order.line.list.rop_letter</field>
+        <field name="model">obc.chassis</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="order_id_domain" string="Order Domain" column_invisible="1" />
+                <field name="order_id" string="Order" optional="hide" />
+                <field name="sale_order_line_id" string="Order Line"
+                    domain="[('order_id', '=', order_id_domain),('product_id.is_rop_letter', '=', True)]" />
+                <field name="name" string="Chassis Number" />
+                <field name="chassis_datamatrix"/>
+                <field name="secret_number_1" string="Secret Number 1" optional="show" />
+                <field name="secret_number_2" string="Secret Number 2" optional="show" />
+                <field name="state" string="State" optional="show" />
+            </list>
+        </field>
+    </record>
+
+</odoo>

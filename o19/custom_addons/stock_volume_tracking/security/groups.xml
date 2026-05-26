@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+
+        <record model="res.groups.privilege" id="res_groups_privilege_volume_tracked">
+            <field name="name">Tracking By Volume</field>
+            <field name="sequence">9</field>
+        </record>
+
+        <record id="group_volume_only" model="res.groups">
+            <field name="name">Volume Only</field>
+            <field name="privilege_id" ref="res_groups_privilege_volume_tracked" />
+        </record>
+
+        <record id="group_volume_and_cost" model="res.groups">
+            <field name="name">Volume and Cost</field>
+            <field name="privilege_id" ref="res_groups_privilege_volume_tracked" />
+            <field name="implied_ids" eval="[(4, ref('stock_volume_tracking.group_volume_only'))]" />
+        </record>
+
+    </data>
+</odoo>

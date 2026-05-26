@@ -1,0 +1,53 @@
+/* Logspace Mockup Custom Styles */
+
+.truck-card-wrapper {
+    transition: all 0.3s ease;
+}
+
+.truck-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    height: 100%;
+}
+
+.truck-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+/* List view adjustments */
+#results-container[data-view="list"] {
+    .truck-card {
+        flex-direction: row;
+        
+        .card-img-top {
+            width: 30%;
+            height: auto;
+            border-radius: 0.5rem 0 0 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .btn {
+            margin-top: auto;
+            width: auto;
+            align-self: flex-start;
+        }
+    }
+}
+
+/* Custom progress bar styles for stepper */
+.progress-bar {
+    transition: width 0.4s ease;
+}
+
+/* Timeline tracking styles */
+.border-start {
+    border-left-width: 2px !important;
+}

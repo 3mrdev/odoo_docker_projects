@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Seller Payout Scheduler-->
+        <record model="ir.cron" forcecreate="True" id="seller_debit_payment_scheduler">
+            <field name="name">Seller Payout Scheduler</field>
+            <field name="model_id" ref="model_seller_payment"/>
+            <field name="state">code</field>
+            <field name="code">model.create_debit_payment()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+        </record>
+    </data>
+</odoo>

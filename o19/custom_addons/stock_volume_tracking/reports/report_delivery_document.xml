@@ -1,0 +1,31 @@
+<odoo>
+    <template id="report_delivery_document_inherit_volume" inherit_id="stock.report_delivery_document">
+        <xpath expr="//tr[td[hasclass('o_td_quantity')]]/td[1]" position="inside">
+            <span t-if="move.is_volume_tracked"> (<span t-field="move.volume_length" class="text-nowrap"/>x<span t-field="move.volume_width" class="text-nowrap"/>x<span t-field="move.volume_height" class="text-nowrap"/>)</span>
+        </xpath>
+        <xpath expr="//table[@name='stock_move_line_table']" position="after">
+            <div t-if="o.packages_count" class="row justify-content-end mt-3">
+                <div class="col-2">
+                    <strong>Total Packages:</strong>
+                    <span t-field="o.packages_count"/>
+                </div>
+                <div class="col-2">
+                    <strong>Total Quantities:</strong>
+                    <span t-field="o.total_products"/>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="stock_report_delivery_has_serial_move_line_inherit_volume" inherit_id="stock.stock_report_delivery_has_serial_move_line">
+        <xpath expr="//td[1]" position="inside">
+            <span t-if="move_line.is_volume_tracked"> (<span t-field="move_line.volume_length" class="text-nowrap"/>x<span t-field="move_line.volume_width" class="text-nowrap"/>x<span t-field="move_line.volume_height" class="text-nowrap"/>)</span>
+        </xpath>
+    </template>
+
+    <template id="stock_report_delivery_aggregated_move_lines_inherit_volume" inherit_id="stock.stock_report_delivery_aggregated_move_lines">
+        <xpath expr="//tr/td[1]" position="inside">
+            <span t-if="aggregated_lines[line]['is_volume_tracked']"> (<span t-esc="aggregated_lines[line]['volume_length']" class="text-nowrap"/>x<span t-esc="aggregated_lines[line]['volume_width']" class="text-nowrap"/>x<span t-esc="aggregated_lines[line]['volume_height']" class="text-nowrap"/>)</span>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Scheduled Action: Add Penalty Lines to Late Subscription Invoices -->
+    <record id="ir_cron_add_penalty_lines" model="ir.cron">
+        <field name="name">Add Subscription Penalty Lines</field>
+        <field name="model_id" ref="sale.model_sale_order" />
+        <field name="state">code</field>
+        <field name="code">model._cron_add_penalty_lines()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <!-- <field name="numbercall">-1</field> -->
+        <!-- <field name="doall" eval="False" /> -->
+        <field name="active" eval="True" />
+        <field name="priority">5</field>
+    </record>
+</odoo>

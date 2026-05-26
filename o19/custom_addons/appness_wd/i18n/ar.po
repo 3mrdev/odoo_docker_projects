@@ -1,0 +1,544 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* appness_wd
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-17 08:08+0000\n"
+"PO-Revision-Date: 2025-12-17 08:08+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.view_partner_form_inherit
+msgid "<span class=\"oe_grey p-2\"> %</span>"
+msgstr ""
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.view_partner_form_inherit
+msgid "<span class=\"oe_grey p-2\"> /</span>"
+msgstr ""
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.view_partner_form_inherit
+msgid "<span class=\"oe_grey\">%</span>"
+msgstr ""
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_invoice_document_inherit_wd
+msgid "<span>Barcode</span>"
+msgstr "<span>باركود</span>"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_invoice_document_inherit_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_purchaseorder_document_inherit_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_saleorder_document_inherit_wd
+msgid "<span>Disc.% Amount</span>"
+msgstr "<span>مبلغ الخصم</span>"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_invoice_document_inherit_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_purchaseorder_document_inherit_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_saleorder_document_inherit_wd
+msgid "<span>Tax Inc.</span>"
+msgstr "<span>متضمن الضريبة</span>"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_invoice_document_inherit_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_purchaseorder_document_inherit_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_saleorder_document_inherit_wd
+msgid "<span>Taxes Amount</span>"
+msgstr "<span>مبلغ الضريبة</span>"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_delivery_document_inherit_wd
+msgid "<strong>Barcode</strong>"
+msgstr "<strong>باركود</strong>"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_invoice_document_inherit_wd
+msgid "<strong>Credit Note Reference</strong>"
+msgstr "<strong>رقم الفاتورة المرتجعة</strong>"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.view_partner_form_inherit
+msgid "Accept Evaluation"
+msgstr "قبول التقييم"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_wd_standard__active
+#: model:ir.model.fields,field_description:appness_wd.field_wd_standard_scale__active
+msgid "Active"
+msgstr "نشط"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.view_account_move_form_inherit_wd
+msgid "Are you sure you want to return the products ?"
+msgstr "هل انت متأكد من انك تريد ارجاع المنتجات؟"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_account_move_line__barcode
+#: model:ir.model.fields,field_description:appness_wd.field_purchase_order_line__barcode
+#: model:ir.model.fields,field_description:appness_wd.field_sale_order_line__barcode
+#: model:ir.model.fields,field_description:appness_wd.field_stock_move__barcode
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_purchaseorder_document_inherit_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_saleorder_document_inherit_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.view_account_move_form_inherit_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.view_order_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_wd.view_picking_form_inherit_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.view_purchase_order_form_inherit_wd
+msgid "Barcode"
+msgstr "باركود"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_invoice_document_inherit_wd
+msgid "Cancelled Proforma Tax Credit Note"
+msgstr "تم إلغاء ملاحظة الائتمان الضريبية الفورية"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_invoice_document_inherit_wd
+msgid "Cancelled Proforma Tax Invoice"
+msgstr "تم إلغاء الفاتورة الضريبية الفورية"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_invoice_document_inherit_wd
+msgid "Cancelled Tax Credit Note"
+msgstr "تم إلغاء ملاحظة الائتمان الضريبية"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_invoice_document_inherit_wd
+msgid "Cancelled Tax Invoice"
+msgstr "تم إلغاء الفاتورة الضريبية"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_wd_standard_scale__standard_id
+msgid "Category"
+msgstr "النوع"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_wd_evaluation__category_score
+msgid "Category Score"
+msgstr "درجة الفئة"
+
+#. module: appness_wd
+#: model:ir.model,name:appness_wd.model_res_partner
+msgid "Contact"
+msgstr "جهة الاتصال"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_wd_evaluation__create_uid
+#: model:ir.model.fields,field_description:appness_wd.field_wd_standard__create_uid
+#: model:ir.model.fields,field_description:appness_wd.field_wd_standard_scale__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_wd_evaluation__create_date
+#: model:ir.model.fields,field_description:appness_wd.field_wd_standard__create_date
+#: model:ir.model.fields,field_description:appness_wd.field_wd_standard_scale__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_stock_picking__credit_note_id
+msgid "Credit Note"
+msgstr "الفاتورة المرتجعة"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_account_bank_statement_line__credit_note_ref
+#: model:ir.model.fields,field_description:appness_wd.field_account_move__credit_note_ref
+msgid "Credit Note Ref"
+msgstr "رقم الفاتورة المرتجعة"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.view_account_move_form_inherit_wd
+msgid "Credit Note Reference"
+msgstr "رقم الفاتورة المرتجعة"
+
+#. module: appness_wd
+#: model:ir.model,name:appness_wd.model_wd_evaluation
+#: model:ir.module.category,description:appness_wd.customer_evaluation_category
+#: model:ir.module.category,name:appness_wd.customer_evaluation_category
+#: model:ir.ui.menu,name:appness_wd.customer_evaluation_menu
+#: model:res.groups.privilege,name:appness_wd.res_groups_privilege_customer_evaluation
+msgid "Customer Evaluation"
+msgstr "تقييم العملاء"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_wd_evaluation__name
+msgid "Description"
+msgstr "الوصف"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.view_account_move_form_inherit_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.view_order_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_wd.view_purchase_order_form_inherit_wd
+msgid "Disc. Amount"
+msgstr "مبلغ الخصم"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_account_move_line__discount_amount
+#: model:ir.model.fields,field_description:appness_wd.field_purchase_order_line__discount_amount
+#: model:ir.model.fields,field_description:appness_wd.field_sale_order_line__discount_amount
+msgid "Discount Amount"
+msgstr "مبلغ الخصم"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_account_move__display_name
+#: model:ir.model.fields,field_description:appness_wd.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:appness_wd.field_purchase_order_line__display_name
+#: model:ir.model.fields,field_description:appness_wd.field_res_partner__display_name
+#: model:ir.model.fields,field_description:appness_wd.field_sale_order_line__display_name
+#: model:ir.model.fields,field_description:appness_wd.field_stock_move__display_name
+#: model:ir.model.fields,field_description:appness_wd.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:appness_wd.field_wd_evaluation__display_name
+#: model:ir.model.fields,field_description:appness_wd.field_wd_standard__display_name
+#: model:ir.model.fields,field_description:appness_wd.field_wd_standard_scale__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_wd_evaluation__display_type
+msgid "Display Type"
+msgstr "نوع العرض"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_invoice_document_inherit_wd
+msgid "Draft Proforma Tax Credit Note"
+msgstr "فاتورة الائتمان الفورية"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_invoice_document_inherit_wd
+msgid "Draft Proforma Tax Invoice"
+msgstr "فاتورة الفورية"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_invoice_document_inherit_wd
+msgid "Draft Tax Credit Note"
+msgstr "فاتورة الائتمان"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_invoice_document_inherit_wd
+msgid "Draft Tax Invoice"
+msgstr "مسودة فاتورة ضريبية"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.view_partner_form_inherit
+msgid "Evaluation"
+msgstr "تقييم"
+
+#. module: appness_wd
+#: model:ir.actions.act_window,name:appness_wd.wd_standard_action
+#: model:ir.ui.menu,name:appness_wd.wd_standard_menu
+#: model_terms:ir.ui.view,arch_db:appness_wd.wd_standard_view_list
+msgid "Evaluation Categories"
+msgstr "فئات التقييم"
+
+#. module: appness_wd
+#: model:ir.model,name:appness_wd.model_wd_standard
+#: model:ir.model.fields,field_description:appness_wd.field_wd_evaluation__standard_id
+#: model_terms:ir.ui.view,arch_db:appness_wd.wd_standard_view_form
+msgid "Evaluation Category"
+msgstr "فئة التقييم"
+
+#. module: appness_wd
+#: model:res.groups,name:appness_wd.group_evaluation_manager
+msgid "Evaluation Manager"
+msgstr "مدير التقييم"
+
+#. module: appness_wd
+#: model:ir.model,name:appness_wd.model_wd_standard_scale
+#: model:ir.model.fields,field_description:appness_wd.field_wd_evaluation__scale_id
+#: model_terms:ir.ui.view,arch_db:appness_wd.wd_standard_scale_view_form
+msgid "Evaluation Metric"
+msgstr "مقياس التقييم"
+
+#. module: appness_wd
+#: model:ir.actions.act_window,name:appness_wd.wd_standard_scale_action
+#: model:ir.ui.menu,name:appness_wd.wd_standard_scale_menu
+#: model_terms:ir.ui.view,arch_db:appness_wd.wd_standard_scale_view_list
+msgid "Evaluation Metrics"
+msgstr "مقياسات التقييم"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_res_partner__evaluation_score_percentage
+#: model:ir.model.fields,field_description:appness_wd.field_res_users__evaluation_score_percentage
+msgid "Evaluation Score Percentage"
+msgstr "نسبة درجة التقييم"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_res_partner__evaluation_score_percentage_total
+#: model:ir.model.fields,field_description:appness_wd.field_res_users__evaluation_score_percentage_total
+msgid "Evaluation Score Percentage Total"
+msgstr "اجمالي نسبة درجة التقييم"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_res_partner__is_evaluation_stage
+#: model:ir.model.fields,field_description:appness_wd.field_res_users__is_evaluation_stage
+msgid "Evaluation Stage"
+msgstr "مرحلة التقييم"
+
+#. module: appness_wd
+#: model:res.groups,name:appness_wd.group_evaluation_user
+msgid "Evaluation User"
+msgstr "مستخدم التقييم"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_res_partner__evaluation_ids
+#: model:ir.model.fields,field_description:appness_wd.field_res_users__evaluation_ids
+msgid "Evaluations"
+msgstr "تقييمات"
+
+#. module: appness_wd
+#. odoo-javascript
+#: code:addons/appness_wd/static/src/xml/pos_reward_fix.xml:0
+msgid "FREE"
+msgstr "مجانٍ"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_account_move__id
+#: model:ir.model.fields,field_description:appness_wd.field_account_move_line__id
+#: model:ir.model.fields,field_description:appness_wd.field_purchase_order_line__id
+#: model:ir.model.fields,field_description:appness_wd.field_res_partner__id
+#: model:ir.model.fields,field_description:appness_wd.field_sale_order_line__id
+#: model:ir.model.fields,field_description:appness_wd.field_stock_move__id
+#: model:ir.model.fields,field_description:appness_wd.field_stock_picking__id
+#: model:ir.model.fields,field_description:appness_wd.field_wd_evaluation__id
+#: model:ir.model.fields,field_description:appness_wd.field_wd_standard__id
+#: model:ir.model.fields,field_description:appness_wd.field_wd_standard_scale__id
+msgid "ID"
+msgstr "المُعرف"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_invoice_document_inherit_wd
+msgid "INV/2023/0001"
+msgstr ""
+
+#. module: appness_wd
+#: model:ir.model.fields,help:appness_wd.field_account_move_line__barcode
+#: model:ir.model.fields,help:appness_wd.field_purchase_order_line__barcode
+#: model:ir.model.fields,help:appness_wd.field_sale_order_line__barcode
+#: model:ir.model.fields,help:appness_wd.field_stock_move__barcode
+msgid "International Article Number used for product identification."
+msgstr ""
+
+#. module: appness_wd
+#: model:ir.model,name:appness_wd.model_account_move
+msgid "Journal Entry"
+msgstr "قيد اليومية"
+
+#. module: appness_wd
+#: model:ir.model,name:appness_wd.model_account_move_line
+msgid "Journal Item"
+msgstr "عنصر دفتر اليومية"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_wd_evaluation__write_uid
+#: model:ir.model.fields,field_description:appness_wd.field_wd_standard__write_uid
+#: model:ir.model.fields,field_description:appness_wd.field_wd_standard_scale__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_wd_evaluation__write_date
+#: model:ir.model.fields,field_description:appness_wd.field_wd_standard__write_date
+#: model:ir.model.fields,field_description:appness_wd.field_wd_standard_scale__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_wd_standard_scale__name
+msgid "Metric"
+msgstr "مقياس"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_wd_standard__scale_ids
+#: model_terms:ir.ui.view,arch_db:appness_wd.wd_standard_view_form
+msgid "Metrics"
+msgstr "مقياسات"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_wd_evaluation__partner_id
+msgid "Partner"
+msgstr "شريك"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_invoice_document_inherit_wd
+msgid "Proforma Tax Credit Note"
+msgstr "فاتورة الائتمان الفورية"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_invoice_document_inherit_wd
+msgid "Proforma Tax Invoice"
+msgstr "فاتورة ضريبية فورية"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_invoice_document_inherit_wd
+msgid "Proforma Vendor Bill"
+msgstr "فاتورة فورية للمورد"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_invoice_document_inherit_wd
+msgid "Proforma Vendor Tax Credit Note"
+msgstr "فاتورة الائتمان الفورية للمورد"
+
+#. module: appness_wd
+#: model:ir.model,name:appness_wd.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "بند أمر الشراء"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_account_bank_statement_line__return_pickings
+#: model:ir.model.fields,field_description:appness_wd.field_account_move__return_pickings
+msgid "Return Pickings"
+msgstr "إرجاع الشحنات"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_account_bank_statement_line__return_pickings_count
+#: model:ir.model.fields,field_description:appness_wd.field_account_move__return_pickings_count
+msgid "Return Pickings Count"
+msgstr "عدد الشحنات المسترجعة"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.view_account_move_form_inherit_wd
+msgid "Return Products"
+msgstr "إرجاع المنتجات"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.view_account_move_form_inherit_wd
+msgid "Returned Products"
+msgstr "المنتجات المسترجعة"
+
+#. module: appness_wd
+#: model:ir.model,name:appness_wd.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "بند أمر المبيعات"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_wd_evaluation__scale_weight
+msgid "Scale Weight"
+msgstr "وزن المقياس"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_wd_evaluation__scale_weight_matched
+msgid "Scale Weight Matched"
+msgstr "تم تطابق وزن المقياس"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_wd_evaluation__score
+msgid "Score"
+msgstr "النقاط"
+
+#. module: appness_wd
+#: model:ir.model.fields.selection,name:appness_wd.selection__wd_evaluation__display_type__line_section
+msgid "Section"
+msgstr "القسم"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_invoice_document_inherit_wd
+msgid "Self Billing"
+msgstr "فاتورة ذاتية"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_invoice_document_inherit_wd
+msgid "Self Billing Tax Credit Note"
+msgstr "فاتورة الائتمان ذاتية"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_wd_evaluation__sequence
+msgid "Sequence"
+msgstr "الترتيب"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_wd_standard__name
+msgid "Standard Name"
+msgstr "اسم المقياس"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.view_partner_form_inherit
+msgid "Start Evaluation"
+msgstr "بدء التقييم"
+
+#. module: appness_wd
+#: model:ir.model,name:appness_wd.model_stock_move
+msgid "Stock Move"
+msgstr "حركة المخزون"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_wd_evaluation__subtotal_category_score
+msgid "Subtotal"
+msgstr "المجموع"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_account_move_line__tax_amount
+#: model:ir.model.fields,field_description:appness_wd.field_purchase_order_line__tax_amount
+#: model:ir.model.fields,field_description:appness_wd.field_sale_order_line__tax_amount
+#: model_terms:ir.ui.view,arch_db:appness_wd.view_account_move_form_inherit_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.view_order_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_wd.view_purchase_order_form_inherit_wd
+msgid "Tax Amount"
+msgstr "مبلغ الضريبة"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_invoice_document_inherit_wd
+msgid "Tax Credit Note"
+msgstr "فاتورة المرتجع الضريبية"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.view_account_move_form_inherit_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.view_purchase_order_form_inherit_wd
+msgid "Tax Inc."
+msgstr "ضريبة شاملة"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_invoice_document_inherit_wd
+msgid "Tax Invoice"
+msgstr "فاتورة الضريبة"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_res_partner__total_evaluation_score
+#: model:ir.model.fields,field_description:appness_wd.field_res_users__total_evaluation_score
+msgid "Total Evaluation Score"
+msgstr "اجمالي نقاط التقييم"
+
+#. module: appness_wd
+#: model:ir.model,name:appness_wd.model_stock_picking
+msgid "Transfer"
+msgstr "تحويل"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_invoice_document_inherit_wd
+msgid "Vendor Bill"
+msgstr "فاتورة المورد"
+
+#. module: appness_wd
+#: model_terms:ir.ui.view,arch_db:appness_wd.report_invoice_document_inherit_wd
+msgid "Vendor Tax Credit Note"
+msgstr "فاتورة المرتجع الضريبية للمورد"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_wd_standard__weight
+#: model:ir.model.fields,field_description:appness_wd.field_wd_standard_scale__evaluation_weight
+msgid "Weight"
+msgstr "وزن"
+
+#. module: appness_wd
+#: model:ir.model.fields,help:appness_wd.field_wd_standard__weight
+msgid "Weight for this category (e.g., 0.3 for 30%)"
+msgstr "وزن لهذه الفئة (مثل 0.3 لل 30%)"
+
+#. module: appness_wd
+#: model:ir.model.fields,help:appness_wd.field_wd_standard_scale__evaluation_weight
+msgid "Weight for this metric within its category (e.g., 0.5 for 50%)"
+msgstr "وزن هذه المقياس داخل فئةها (مثل 0.5 لل 50%)"
+
+#. module: appness_wd
+#: model:ir.model.fields,field_description:appness_wd.field_wd_evaluation__weighted_score
+msgid "Weighted Score"
+msgstr "النقاط الموزعة"

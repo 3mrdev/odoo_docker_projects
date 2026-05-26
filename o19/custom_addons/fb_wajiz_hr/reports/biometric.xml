@@ -1,0 +1,152 @@
+<odoo>
+    <data>
+
+        <!-- <report id="biometric_report_action"
+                model="employee.attendance.report.wizard"
+                string="Biometric Report"
+                report_type="qweb-pdf"
+                name="fb_wajiz_hr.attendance_report_view"
+                menu="False"/> -->
+
+        <record id="biometric_report_action" model="ir.actions.report">
+            <field name="name">Biometric Report</field>
+            <field name="model">employee.attendance.report.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">fb_wajiz_hr.attendance_report_view</field>
+            <field name="report_file">fb_wajiz_hr.attendance_report_view</field>
+            <field name="print_report_name">('Biometric Report - %s' % (object.name))</field>
+            <field name="binding_model_id" ref="model_employee_attendance_report_wizard"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <template id="attendance_report_view">
+            <t t-call="web.html_container">
+                    <!-- <style>
+                        body {
+                            font-family: 'Changa Regular';
+                            direction: rtl;
+                            text-align: right;
+                        }
+                        .attendance-details {
+                            background-color: #f9f9f9; /* Light gray background */
+                            
+                            padding: 10px;             /* Padding for spacing */
+                            
+                            font-family: 'Changa Regular';
+                        }
+                    </style>
+                 -->
+                <t t-foreach ="docs" t-as="details">
+                    <div class="page" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+                        <t t-call="web.external_layout">
+                            <link rel="preconnect" href="https://fonts.googleapis.com"/>
+                            <link rel="preconnect" href="https://fonts.gstatic.com"/>
+                            <link href="https://fonts.googleapis.com/css2?family=Changa" rel="stylesheet"/>
+                          <div>
+                          </div>
+                          <div style="text-align: center; border: 2px dotted #d2b48c; padding: 20px; border-radius: 10px;">
+                            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                            <h2 class="text-center" style="text-align: center; color: #d2b48c; font-family: 'Changa', sans-serif;">الحضور والانصراف</h2>
+                            <h2 class="text-center" style="font-family: 'Changa', sans-serif;"><t t-esc="details['department_name']"/></h2>
+                            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                          </div>
+                          <div>
+                          </div>
+                        </t>
+                    </div>
+                    <div class="page">
+                        <t t-call="web.external_layout">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="font-family: 'Changa', sans-serif;">الرقم الوظیفي</th>
+                                        <th style="font-family: 'Changa', sans-serif;">رقم الموظف</th>
+                                        <th style="font-family: 'Changa', sans-serif;">اسم الموظف</th>
+                                        <th style="font-family: 'Changa', sans-serif;">المهنة حسب المشروع</th>
+                                        <th style="font-family: 'Changa', sans-serif;">تفاصيل الغياب</th>
+                                        <th style="font-family: 'Changa', sans-serif;">ملاحظات</th>
+                                        <th style="font-family: 'Changa', sans-serif;">الاعتماد</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="details['employees_docs']" t-as="data">
+                                        <tr>
+                                            <t t-if="data['leaves_details']">
+                                                <td rowspan="2" style="font-family: 'Changa', sans-serif;"><t t-esc="data['job_uid']"/></td>
+                                                <td rowspan="2" style="font-family: 'Changa', sans-serif;"><t t-esc="data['employee_id']"/></td>
+                                                <td rowspan="2" style="font-family: 'Changa', sans-serif;"><t t-esc="data['employee_name']"/></td>
+                                                <td rowspan="2" style="font-family: 'Changa', sans-serif;"><t t-esc="data['job_title']"/></td>
+                                            </t> 
+                                            <t t-else="">
+                                                <td style="font-family: 'Changa', sans-serif;"><t t-esc="data['job_uid']"/></td>
+                                                <td style="font-family: 'Changa', sans-serif;"><t t-esc="data['employee_id']"/></td>
+                                                <td style="font-family: 'Changa', sans-serif;"><t t-esc="data['employee_name']"/></td>
+                                                <td style="font-family: 'Changa', sans-serif;"><t t-esc="data['job_title']"/></td>
+                                            </t> 
+                                            <td>
+                                            <!--   <div class="attendance-details">
+                                                    <t t-esc="data['attendance_details']"/>
+                                                </div> -->
+                                                <t t-foreach="data['absence_details']" t-as="absence">
+                                                    <div class="attendance-details" style="font-family: 'Changa', sans-serif;">
+                                                        <t t-esc="absence"/>
+                                                    </div>
+                                                </t>
+                                            </td>
+                                            <td style="font-family: 'Changa', sans-serif;"><t t-esc="data['absence_notes']"/></td>
+                                            <td style="font-family: 'Changa', sans-serif;"><t t-esc="data['approval_notes']"/></td>
+                                        </tr>
+                                        <tr t-if="data['leaves_details']">
+                                            <td>
+                                                 <t t-foreach="data['leaves_details']" t-as="leave">
+                                                    <div class="leave-details" style="font-family: 'Changa', sans-serif;">
+                                                        <t t-esc="leave"/>
+                                                    </div>
+                                                </t>
+                                            </td>
+                                            <td style="font-family: 'Changa', sans-serif;"><t t-esc="data['leave_text']"/></td>
+                                            <td style="font-family: 'Changa', sans-serif;">معتمد</td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </t>
+                    </div>
+            </t>
+        </t>
+        </template>
+
+        <record model="ir.ui.view" id="biometric_report_wizard">
+            <field name="name">Biometric Report</field>
+            <field name="model">employee.attendance.report.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Biometric Report">
+                    <group>
+                        <field name="year" widget="char"/>
+                        <field name="month"/>
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Get Report" type="object" class="oe_highlight"/>
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="action_biometric_report_wizard"
+                    name="Biometric Report"
+                    res_model="employee.attendance.report.wizard"
+                    view_mode="form"
+                    target="new"/>
+
+        <!-- <menuitem
+            id="employee_biometric_menu"
+            name="Biometric Report"
+            sequence="2"
+            groups="hr.group_hr_manager,hr.group_hr_user"
+            action="action_biometric_report_wizard"
+            parent="hr.hr_menu_hr_reports"/> -->
+            
+    </data>
+</odoo>

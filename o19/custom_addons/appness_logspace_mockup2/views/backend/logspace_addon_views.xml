@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Add-on Actions -->
+    <record id="action_logspace_addon" model="ir.actions.act_window">
+        <field name="name">Add-ons</field>
+        <field name="res_model">logspace.addon</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first add-on service!
+            </p>
+        </field>
+    </record>
+
+    <!-- Add-on Tree View -->
+    <record id="view_logspace_addon_tree" model="ir.ui.view">
+        <field name="name">logspace.addon.tree</field>
+        <field name="model">logspace.addon</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="price"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="price_type"/>
+                <field name="icon" optional="hide"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Add-on Form View -->
+    <record id="view_logspace_addon_form" model="ir.ui.view">
+        <field name="name">logspace.addon.form</field>
+        <field name="model">logspace.addon</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="icon" placeholder="fa-plus"/>
+                            <field name="sequence"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="price"/>
+                            <field name="currency_id"/>
+                            <field name="price_type"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

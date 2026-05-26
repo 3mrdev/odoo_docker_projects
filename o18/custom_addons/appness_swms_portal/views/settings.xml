@@ -1,0 +1,34 @@
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form_portal" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.appness_swms_portal</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="appness_swms.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//app[@name='appness_swms']" position="inside">
+                    <block title="Social Welfare Portal (SWMS)">
+                        <setting id="attachment_size_limit" help="Files Size Limit (MB)">
+                            <field name="attachment_size_limit"/>
+                        </setting>
+                        <setting id="module_auth_otp" help="Use OTP?">
+                            <div title="Allow users to sign in with OTP">
+                                <label for="module_auth_otp" string="OTP Verification"/>
+                                <field name="module_auth_otp"/>
+                            </div>
+                            <div class="text-muted">
+                                Allow users to sign in with OTP
+                            </div>
+                            <group>
+                                <field name="otp_message" required="module_auth_otp == True" invisible="not module_auth_otp"/>
+                                <field name="otp_message_url" required="module_auth_otp == True" invisible="not module_auth_otp"/>
+                                <field name="phone_key" required="module_auth_otp == True" invisible="not module_auth_otp"/>
+                                <field name="message_key" required="module_auth_otp == True" invisible="not module_auth_otp"/>
+                            </group>
+                        </setting>
+                    </block>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

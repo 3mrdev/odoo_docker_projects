@@ -1,0 +1,651 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-03-09 11:07+0000\n"
+"PO-Revision-Date: 2023-03-09 11:51+0000\n"
+"Last-Translator: \n"
+"Language-Team: Unknown\n"
+"Language: zxx\n"
+"Plural-Forms: nplurals=2; plural=n!=1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"X-Loco-Source-Locale: tr_TR\n"
+"X-Loco-Parser: loco_parse_po\n"
+"X-Generator: Loco https://localise.biz/"
+
+#. module: maintenance_plan
+#: model_terms:ir.ui.view,arch_db:maintenance_plan.report_maintenance_request_document
+msgid "<strong>Instructions:</strong>"
+msgstr "<strong>تعليمات:</strong>"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__message_needaction
+msgid "Action Needed"
+msgstr "الاجراء اللازم"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__active
+#:  
+#: model_terms:ir.ui.view,arch_db:maintenance_plan.maintenance_plan_view_search
+msgid "Active"
+msgstr "نشط"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_kind__active
+msgid "Active Kind"
+msgstr "نوع النشاط"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__activity_ids
+msgid "Activities"
+msgstr "النشاطات"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "زخرفة استثناء النشاط"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "ايقونة نوع النشاط"
+
+#. module: maintenance_plan
+#: model_terms:ir.ui.view,arch_db:maintenance_plan.maintenance_plan_view_form
+msgid "Archived"
+msgstr "مؤرشف"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_kind__create_uid
+#:  
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__create_uid
+msgid "Created by"
+msgstr "تم الانشاء بواسطة"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_kind__create_date
+#:  
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__create_date
+msgid "Created on"
+msgstr "تاريخ الانشاء"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__maintenance_open_count
+msgid "Current Maintenance"
+msgstr "الصيانة الحالية"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,help:maintenance_plan.field_maintenance_plan__start_maintenance_date
+msgid "Date from which the maintenance will we active"
+msgstr "التاريخ الذي سنبدأ فيه الصيانة"
+
+#. module: maintenance_plan
+#: model:ir.model.fields.selection,name:maintenance_plan.selection__maintenance_plan__interval_step__day
+#:  
+#: model:ir.model.fields.selection,name:maintenance_plan.selection__maintenance_plan__planning_step__day
+msgid "Day(s)"
+msgstr "يوم/أيام"
+
+#. module: maintenance_plan
+#: model_terms:ir.ui.view,arch_db:maintenance_plan.hr_equipment_request_view_form
+#:  model_terms:ir.ui.view,arch_db:maintenance_plan.maintenance_plan_view_form
+msgid "Describe the maintenance to do..."
+msgstr "صف الصيانة التي يجب القيام بها ..."
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__name
+msgid "Description"
+msgstr "الوصف"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_kind__display_name
+#:  
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__display_name
+msgid "Display Name"
+msgstr "الاسم الظاهر"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__duration
+msgid "Duration (hours)"
+msgstr "المدة بالساعات"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__equipment_id
+msgid "Equipment"
+msgstr "معدة"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "متابعون/شركاء"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,help:maintenance_plan.field_maintenance_plan__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "رمز الخط الرائع ، على سبيل المثال FA- المهام"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__interval
+msgid "Frequency"
+msgstr "تكرار"
+
+#. module: maintenance_plan
+#: model_terms:ir.ui.view,arch_db:maintenance_plan.maintenance_plan_view_form
+msgid "Generate requests for current threshold"
+msgstr "إنشاء طلبات للحد الحالي"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__has_message
+msgid "Has Message"
+msgstr "لديه رسالة"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_kind__id
+#:  
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__activity_exception_icon
+msgid "Icon"
+msgstr "ايقونة"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,help:maintenance_plan.field_maintenance_plan__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "رمز للإشارة إلى نشاط استثناء."
+
+#. module: maintenance_plan
+#: model:ir.model.fields,help:maintenance_plan.field_maintenance_plan__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا تم تحديدها ، فإن الرسائل الجديدة تتطلب انتباهك."
+
+#. module: maintenance_plan
+#: model:ir.model.fields,help:maintenance_plan.field_maintenance_plan__message_has_error
+#:  
+#: model:ir.model.fields,help:maintenance_plan.field_maintenance_plan__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا تم تحديده ، فإن بعض الرسائل بها خطأ في التسليم."
+
+#. module: maintenance_plan
+#: model_terms:ir.ui.view,arch_db:maintenance_plan.maintenance_plan_view_form
+msgid "If not clicked, the scheduled action will do it for you."
+msgstr "إذا لم يتم النقر فوقها ، فسيقوم الإجراء المجدول بذلك نيابة عنك."
+
+#. module: maintenance_plan
+#: model_terms:ir.ui.view,arch_db:maintenance_plan.maintenance_plan_view_search
+msgid "Inactive"
+msgstr "غير نشط"
+
+#. module: maintenance_plan
+#: model_terms:ir.ui.view,arch_db:maintenance_plan.hr_equipment_request_view_form
+#:  model_terms:ir.ui.view,arch_db:maintenance_plan.maintenance_plan_view_form
+msgid "Instructions"
+msgstr "التعليمات"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,help:maintenance_plan.field_maintenance_plan__interval
+msgid "Interval between each maintenance"
+msgstr "الفاصل الزمني بين كل صيانة"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: maintenance_plan
+#: model_terms:ir.ui.view,arch_db:maintenance_plan.hr_equipment_view_form
+msgid "Kind"
+msgstr "نوع"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_kind____last_update
+#:  
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan____last_update
+msgid "Last Modified on"
+msgstr "آخر تعديل تم بتاريخ"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_kind__write_uid
+#:  
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__write_uid
+msgid "Last Updated by"
+msgstr "آخر تعديل تم بواسطة"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_kind__write_date
+#:  
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__write_date
+msgid "Last Updated on"
+msgstr "آخر تاريخ تعديل"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,help:maintenance_plan.field_maintenance_plan__planning_step
+msgid "Let the event automatically repeat at that interval"
+msgstr "دع الحدث يتكرر تلقائيًا في تلك الفترة الزمنية"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,help:maintenance_plan.field_maintenance_plan__interval_step
+msgid "Let the event automatically repeat at that interval step"
+msgstr "دع الحدث يتكرر تلقائيًا في تلك الخطوة الفاصلة"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "المرفق الرئيسي"
+
+#. module: maintenance_plan
+#. odoo-python
+#: code:addons/maintenance_plan/models/maintenance_plan.py:0
+#, python-format
+msgid "Maintenace Equipment must belong to the equipment's company"
+msgstr "يجب أن تنتمي معدات الصيانة إلى شركة المعدات"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__maintenance_count
+#:  model_terms:ir.ui.view,arch_db:maintenance_plan.maintenance_plan_view_form
+msgid "Maintenance"
+msgstr "صيانة"
+
+#. module: maintenance_plan
+#: model:ir.model,name:maintenance_plan.model_maintenance_equipment
+msgid "Maintenance Equipment"
+msgstr "معدات الصيانة"
+
+#. module: maintenance_plan
+#: model:ir.model,name:maintenance_plan.model_maintenance_kind 
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__maintenance_kind_id
+msgid "Maintenance Kind"
+msgstr "نوع الصيانة"
+
+#. module: maintenance_plan
+#: model:ir.model,name:maintenance_plan.model_maintenance_plan 
+#: model_terms:ir.ui.view,arch_db:maintenance_plan.maintenance_plan_view_form
+msgid "Maintenance Plan"
+msgstr "خطة الصيانة"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_equipment__maintenance_plan_count
+msgid "Maintenance Plan Count"
+msgstr "عدد خطط الصيانة"
+
+#. module: maintenance_plan
+#: model:ir.ui.menu,name:maintenance_plan.menu_m_plan_form 
+#: model_terms:ir.ui.view,arch_db:maintenance_plan.maintenance_plan_view_search
+msgid "Maintenance Plans"
+msgstr "خطط الصيانة"
+
+#. module: maintenance_plan
+#: model:ir.model,name:maintenance_plan.model_maintenance_request
+msgid "Maintenance Request"
+msgstr "طلب الصيانة"
+
+#. module: maintenance_plan
+#: model:ir.actions.act_window,name:maintenance_plan.hr_equipment_request_action_from_plan
+msgid "Maintenance Requests"
+msgstr "طلبات الصيانة"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__maintenance_team_id
+msgid "Maintenance Team"
+msgstr "فريق الصيانة"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_equipment__maintenance_team_required
+msgid "Maintenance Team Required"
+msgstr "مطلوب فريق صيانة"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,help:maintenance_plan.field_maintenance_plan__duration
+msgid "Maintenance duration in hours"
+msgstr "مدة الصيانة بالساعات"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_request__maintenance_kind_id
+msgid "Maintenance kind"
+msgstr "نوع الصيانة"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_request__equipment_number
+msgid "Equipment Number"
+msgstr "رقم المعدة"
+
+#. module: maintenance_plan
+#: model:ir.model.constraint,message:maintenance_plan.constraint_maintenance_kind_name_uniq
+msgid "Maintenance kind name already exists."
+msgstr "اسم نوع الصيانة موجود بالفعل."
+
+#. module: maintenance_plan
+#: model:ir.actions.act_window,name:maintenance_plan.maintenance_kind_action 
+#: model:ir.ui.menu,name:maintenance_plan.menu_maintenance_kind_configuration
+msgid "Maintenance kinds"
+msgstr "أنواع الصيانة"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_equipment__maintenance_plan_ids
+#:  
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_request__maintenance_plan_id
+msgid "Maintenance plan"
+msgstr "خطة الصيانة"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,help:maintenance_plan.field_maintenance_plan__maintenance_plan_horizon
+msgid ""
+"Maintenance planning horizon. Only the maintenance requests inside the "
+"horizon will be created."
+msgstr "أفق تخطيط الصيانة. سيتم إنشاء طلبات الصيانة فقط داخل الأفق."
+
+#. module: maintenance_plan
+#: model:ir.actions.act_window,name:maintenance_plan.maintenance_plan_action 
+#: model:ir.actions.act_window,name:maintenance_plan.maintenance_plan_equipment_action
+msgid "Maintenance plans"
+msgstr "خطط الصيانة"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__maintenance_ids
+msgid "Maintenance requests"
+msgstr "طلبات الصيانة"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__message_ids
+msgid "Messages"
+msgstr "رسائل"
+
+#. module: maintenance_plan
+#: model:ir.model.fields.selection,name:maintenance_plan.selection__maintenance_plan__interval_step__month
+#:  
+#: model:ir.model.fields.selection,name:maintenance_plan.selection__maintenance_plan__planning_step__month
+msgid "Month(s)"
+msgstr "شهر/اشهر"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "الموعد النهائي لنشاطي"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_kind__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "النشاط التالي للتقويم"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__activity_summary
+msgid "Next Activity Summary"
+msgstr "مختصر النشاط القادم"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط القادم"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__next_maintenance_date
+msgid "Next Maintenance Date"
+msgstr "تاريخ الصيانة القادم"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__note
+#:  
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_request__note
+msgid "Note"
+msgstr "ملاحظة"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_equipment__notes
+#:  
+#: model_terms:ir.ui.view,arch_db:maintenance_plan.hr_equipment_request_view_form
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الاجراءات"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الاخطاء"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,help:maintenance_plan.field_maintenance_plan__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "عدد الرسائل التي تتطلب اتخاذ إجراء"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,help:maintenance_plan.field_maintenance_plan__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي بها خطأ في التسليم"
+
+#. module: maintenance_plan
+#: model_terms:ir.ui.view,arch_db:maintenance_plan.hr_equipment_view_form
+msgid "P. Horizon period"
+msgstr "فترة أفق التخطيط"
+
+#. module: maintenance_plan
+#: model_terms:ir.ui.view,arch_db:maintenance_plan.hr_equipment_view_form
+msgid "P. Horizon step"
+msgstr "خطوة أفق التخطيط"
+
+#. module: maintenance_plan
+#: model_terms:ir.ui.view,arch_db:maintenance_plan.maintenance_plan_view_form
+msgid "Planning Horizon"
+msgstr "أفق التخطيط"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__maintenance_plan_horizon
+msgid "Planning Horizon period"
+msgstr "فترة أفق التخطيط"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__planning_step
+msgid "Planning Horizon step"
+msgstr "خطوة أفق التخطيط"
+
+#. module: maintenance_plan
+#: model_terms:ir.ui.view,arch_db:maintenance_plan.hr_equipment_view_form
+msgid "Plans"
+msgstr "الخطط"
+
+#. module: maintenance_plan
+#. odoo-python
+#: code:addons/maintenance_plan/models/maintenance_equipment.py:0
+#, python-format
+msgid "Preventive Maintenance (%(kind)s) - %(description)s"
+msgstr " الصيانة الوقائية (%(kind)s) - %(description)s"
+
+#. module: maintenance_plan
+#. odoo-python
+#: code:addons/maintenance_plan/tests/test_maintenance_plan.py:0
+#, python-format
+msgid "Preventive Maintenance (%(kind)s) - %(plan)s"
+msgstr "الصيانة الوقائية (%(kind)s) - %(plan)s"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__interval_step
+msgid "Recurrence"
+msgstr "تكرار"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "خطأ في تسليم الرسائل القصيرة"
+
+#. module: maintenance_plan
+#. odoo-python
+#: code:addons/maintenance_plan/models/maintenance_equipment.py:0
+#, python-format
+msgid ""
+"Some maintenance plan's company is incompatible with the company of this "
+"equipment."
+msgstr "بعض شركات خطة الصيانة غير متوافقة مع شركة هذه المعدة."
+
+#. module: maintenance_plan
+#: model_terms:ir.ui.view,arch_db:maintenance_plan.hr_equipment_view_form
+msgid "Start Date"
+msgstr "تاريخ البدء"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__start_maintenance_date
+msgid "Start Maintenance Date"
+msgstr "تاريخ بدء الصيانة"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,help:maintenance_plan.field_maintenance_plan__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"الوضع على أساس الأنشطة\n"
+"متأخر: تاريخ الاستحقاق فات بالفعل\n"
+"اليوم: تاريخ النشاط هو اليوم\n"
+"مخطط له: الأنشطة المستقبلية."
+
+#. module: maintenance_plan
+#: model_terms:ir.ui.view,arch_db:maintenance_plan.hr_equipment_view_form
+msgid "Team"
+msgstr "فريق"
+
+#. module: maintenance_plan
+#. odoo-python
+#: code:addons/maintenance_plan/models/maintenance_plan.py:0
+#, python-format
+msgid ""
+"The maintenance plan %(kind)s of equipment %(eqpmnt)s has generated a "
+"request which is not done yet. You should either set the request as done, "
+"remove its maintenance kind or delete it first."
+msgstr ""
+"خطة الصيانة %(kind)s للمعدة %(eqpmnt)s قام بتوليد طلب لم يتم تنفيذه بعد. يجب "
+"عليك إما تعيين الطلب على أنه تم أو إزالة نوع الصيانة الخاص به أو حذفه أولاً."
+
+#. module: maintenance_plan
+#: model:ir.model.fields,help:maintenance_plan.field_maintenance_plan__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع نشاط الاستثناء المسجل."
+
+#. module: maintenance_plan
+#: model_terms:ir.ui.view,arch_db:maintenance_plan.maintenance_plan_view_search
+msgid "Under Maintenance"
+msgstr "تحت الصيانة"
+
+#. module: maintenance_plan
+#. odoo-python
+#: code:addons/maintenance_plan/tests/test_maintenance_plan.py:0
+#, python-format
+msgid "Unnamed %(kind)s plan (%(eqpmnt)s)"
+msgstr "لم يتم تسمية%(kind)s الخطة(%(eqpmnt)s)"
+
+#. module: maintenance_plan
+#. odoo-python
+#: code:addons/maintenance_plan/models/maintenance_plan.py:0
+#, python-format
+msgid "Unnamed %(kind)s plan (%(eqpmt)s)"
+msgstr "لم يتم تسمية%(kind)s الخطة (%(eqpmt)s)"
+
+#. module: maintenance_plan
+#. odoo-python
+#: code:addons/maintenance_plan/tests/test_maintenance_plan.py:0
+#, python-format
+msgid "Unnamed %(void)s plan (%(eqpmnt)s)"
+msgstr "لم يتم تسبمية%(void)s الخطة (%(eqpmnt)s)"
+
+#. module: maintenance_plan
+#. odoo-python
+#: code:addons/maintenance_plan/models/maintenance_equipment.py:0
+#, python-format
+msgid "Unspecified kind"
+msgstr "لم يتم تحديد النوع"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,field_description:maintenance_plan.field_maintenance_plan__website_message_ids
+msgid "Website Messages"
+msgstr "رسالة الموقع"
+
+#. module: maintenance_plan
+#: model:ir.model.fields,help:maintenance_plan.field_maintenance_plan__website_message_ids
+msgid "Website communication history"
+msgstr "سجل اتصال الموقع"
+
+#. module: maintenance_plan
+#: model:ir.model.fields.selection,name:maintenance_plan.selection__maintenance_plan__interval_step__week
+#:  
+#: model:ir.model.fields.selection,name:maintenance_plan.selection__maintenance_plan__planning_step__week
+msgid "Week(s)"
+msgstr "اسبوع/اسابيع"
+
+#. module: maintenance_plan
+#: model:ir.model.fields.selection,name:maintenance_plan.selection__maintenance_plan__interval_step__year
+#:  
+#: model:ir.model.fields.selection,name:maintenance_plan.selection__maintenance_plan__planning_step__year
+msgid "Year(s)"
+msgstr "السنة/السنوات"
+
+#. module: maintenance_plan
+#: model:ir.model.constraint,message:maintenance_plan.constraint_maintenance_plan_equipment_kind_uniq
+msgid ""
+"You cannot define multiple times the same maintenance kind on an equipment "
+"maintenance plan."
+msgstr "لا يمكنك تحديد عدة مرات لنوع الصيانة نفسه في خطة صيانة المعدات."
+
+#. module: maintenance_plan
+#. odoo-python
+#: code:addons/maintenance_plan/hooks.py:0
+#, python-format
+msgid ""
+"You have multiple preventive maintenance requests on equipment %(name)s next "
+"action date (%(date)s). Please leave only one preventive request on the date "
+"of equipment's next action to install the module."
+msgstr ""
+"لديك العديد من طلبات الصيانة الوقائية على الجهاز %(name)s\n"
+"  تاريخ الإجراء التالي (%(date)s) .\n"
+" يرجى ترك طلب وقائي واحد فقط في تاريخ الإجراء التالي للجهاز لتثبيت الوحدة."
+
+#. module: maintenance_plan
+#: model_terms:ir.ui.view,arch_db:maintenance_plan.maintenance_plan_view_form
+msgid "e.g. Calibration"
+msgstr "مثال: المعايرة"

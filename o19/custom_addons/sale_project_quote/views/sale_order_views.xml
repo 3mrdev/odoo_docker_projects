@@ -1,0 +1,58 @@
+<odoo>
+    <record id="view_sale_order_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <field name="validity_date" position="before">
+                <field name="team_user_ids" options="{'no_open': True, 'no_quick_create': True}"
+                    widget="many2many_avatar_user" invisible="not team_user_ids"
+                    groups="!sale_project_quote.group_sale_project_quote_user,!sale_project_quote.group_sale_project_quote_manager" />
+            </field>
+            <xpath expr="//header" position="after">
+                <div class="alert alert-warning" role="alert" invisible="not team_user_ids"
+                    groups="!sale_project_quote.group_sale_project_quote_user,!sale_project_quote.group_sale_project_quote_manager">
+                    Projects Team has access to this order <button class="oe_link" type="object"
+                        name="remove_project_team" style="padding: 0; vertical-align: baseline;">
+                    click here to remove Project Team</button>
+                </div>
+            </xpath>
+            <xpath expr="//button[@name='action_draft']" position="after">
+                <button name="add_project_team" string="Add Project Team" type="object"
+                    class="oe_highlight" invisible="team_user_ids"
+                    groups="!sale_project_quote.group_sale_project_quote_user,!sale_project_quote.group_sale_project_quote_manager" />
+            </xpath>
+            <!-- Hide Confirm button from project team only - keep visible for regular sales users and managers -->
+            <xpath expr="//button[@name='action_confirm']" position="attributes">
+                <attribute name="groups">!sale_project_quote.group_sale_project_quote_user,!sale_project_quote.group_sale_project_quote_manager</attribute>
+            </xpath>
+            <!-- Hide price fields from project team -->
+            <xpath expr="//field[@name='pricelist_id']" position="attributes">
+                <attribute name="groups">!sale_project_quote.group_sale_project_quote_user,!sale_project_quote.group_sale_project_quote_manager</attribute>
+            </xpath>
+            <xpath expr="//field[@name='fiscal_position_id']" position="attributes">
+                <attribute name="groups">!sale_project_quote.group_sale_project_quote_user,!sale_project_quote.group_sale_project_quote_manager</attribute>
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                <attribute name="groups">!sale_project_quote.group_sale_project_quote_user,!sale_project_quote.group_sale_project_quote_manager</attribute>
+            </xpath>
+            <xpath expr="//field[@name='tax_totals']" position="attributes">
+                <attribute name="groups">!sale_project_quote.group_sale_project_quote_user,!sale_project_quote.group_sale_project_quote_manager</attribute>
+            </xpath>
+            <!-- Hide order line price fields from project team in list view -->
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_unit']" position="attributes">
+                <attribute name="groups">!sale_project_quote.group_sale_project_quote_user,!sale_project_quote.group_sale_project_quote_manager</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list/field[@name='tax_ids']" position="attributes">
+                <attribute name="groups">!sale_project_quote.group_sale_project_quote_user,!sale_project_quote.group_sale_project_quote_manager</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_subtotal']" position="attributes">
+                <attribute name="groups">!sale_project_quote.group_sale_project_quote_user,!sale_project_quote.group_sale_project_quote_manager</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list/field[@name='discount']" position="attributes">
+                <attribute name="groups">!sale_project_quote.group_sale_project_quote_user,!sale_project_quote.group_sale_project_quote_manager</attribute>
+            </xpath>
+            <!-- Note: Order line form view fields are handled via field visibility in the Python model -->
+        </field>
+    </record>
+</odoo>

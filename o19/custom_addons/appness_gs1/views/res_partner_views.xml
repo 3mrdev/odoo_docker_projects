@@ -1,0 +1,38 @@
+<odoo>
+    <record id="view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group/group[1]" position="before">
+                <group>
+                    <field name="name_arabic" string="Name (Arabic)" />
+                    <field name="po_box" string="P.O Box" />
+                    <field name="fax_num" string="Fax No." />
+                    <field name="legal_type" string="Legal Type" />
+                    <field name="number_of_employees" string="No. of Employees" />
+                    <field name="profile_id" string="Profile ID" widget="url"
+                        invisible="allow_companies_only" />
+                </group>
+                <group>
+                    <field name="industry_id" string="Main Product Category" />
+                    <field name="company_registry" string="C.R" invisible="company_type == 'person'" />
+                    <field name="company_registry" string="ID."
+                        invisible="company_type == 'company'" />
+                    <field name="cr_reg_date" string="C.R Registration Date" />
+                    <field name="cr_expiry_date" string="C.R Expiry Date" />
+                    <field name="tax_reg_num" string="Tax Registration No." />
+                    <field name="ref" string="Manufacturer ID"/>
+                    <field name="allow_companies_only" invisible="1" />
+                    <field name="tag_as_manufacturer" invisible="1" />
+                </group>
+            </xpath>
+            <field name="vat" position="attributes">
+                <attribute name="string">VAT No.</attribute>
+            </field>
+            <field name="company_type" position="attributes">
+                <attribute name="readonly">allow_companies_only</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

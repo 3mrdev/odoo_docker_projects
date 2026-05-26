@@ -1,0 +1,61 @@
+<odoo>
+    <data>
+        <template id="swms_service_request_template">
+            <!-- <t t-if="not o" t-set="o" t-value="request.env['swms.reports.wizard'].search([],limit=1)" />
+            <t t-if="not company" t-set="company" t-value="request.env.company"/> -->
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="service" t-call="web.external_layout">
+                    <div class="page">
+                        <div class="text-center">
+                            <h1>تقرير الخدمة المطلوبة</h1>
+                            <h1>Service Request Report</h1>
+                        </div>
+                        <br/><br/>
+                        <table class="table text-center">
+                            <tr>
+                                <td>Family No.</td>
+                                <td><span t-field="service.partner_id.family_seq"/></td>
+                                <td>رقم الاسرة</td>
+                            </tr>
+                            <tr>
+                                <td>Family Name</td>
+                                <td><span t-field="service.partner_id.name"/></td>
+                                <td>اسم الاسرة</td>
+                            </tr>
+                        </table>
+                        <br/><br/>
+                        <table class="table text-center">
+                            <tr>
+                                <td>Limit</td>
+                                <td></td>
+                                <td>الحد</td>
+                            </tr>
+                            <tr>
+                                <td>Address</td>
+                                <td></td>
+                                <td>المنطقة</td>
+                            </tr>
+                            <tr>
+                                <td>Frequency</td>
+                                <td></td>
+                                <td>معدل التكرار</td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <record id="action_service_report" model="ir.actions.report">
+            <field name="name">Service Request Report</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="binding_model_id" ref="model_helpdesk_ticket"/>
+            <field name="binding_type">report</field>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">appness_swms.swms_service_request_template</field>
+            <field name="report_file">appness_swms.swms_service_request_template</field>
+            <field name="print_report_name">'Service Request Report'</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_maintenance_request_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <style>
+                        @media print {
+                        .page {
+                        page-break-before: always;
+                        }
+                        }
+                        .img_grid {
+                        width: 100%;
+                        margin-top: 10px;
+                        overflow: hidden; /* Clear floats */
+                        }
+                        .img_grid .img_item {
+                        width: 33.33%;
+                        float: left;
+                        padding: 10px;
+                        text-align: center;
+                        box-sizing: border-box;
+                        }
+                        .img_grid .img_item img {
+                        max-width: 100%;
+                        height: auto;
+                        border: 1px solid #ddd;
+                        padding: 5px;
+                        }
+                        .img_grid::after {
+                        content: "";
+                        display: table;
+                        clear: both;
+                        }
+                    </style>
+
+                    <div class="page">
+                        <!-- <center>
+                        <h2><span t-field="doc.name"/></h2>
+                    </center> -->
+                        <div>
+                            <p>Request Address: <span t-esc="doc.address_id.name" /></p>
+                            <p>Request No.: <span t-esc="doc.seq" /></p>
+                            <p t-if="doc.close_date">Close Date: <span t-esc="doc.close_date" /></p>
+                        </div>
+                        <table class="table" style="border-collapse: collapse; width: 100%;">
+                            <tbody>
+                                <t t-set="fields"
+                                    t-value="[
+                                ('Request Date', doc.request_date),
+                                ('Schedule Date', doc.schedule_date),
+                                ('Stage', doc.stage_id.name),
+                                ('Print Date', time.strftime('%Y-%m-%d %H:%M:%S')),
+                                ('Print By', user.name),
+                                ('Technician', doc.employee_id.name),
+                                ('Responsible', doc.user_id.name),
+                                ('Equipment', doc.equipment_id.name),
+                                ('Category', doc.equipment_id.category_id.name),
+                                ('Team', doc.maintenance_team_id.name),
+                                ('Priority', doc.priority),
+                                ('Maintenance Type', doc.maintenance_type),
+                            ]" />
+                                <tr t-foreach="range(0, len(fields), 2)" t-as="row_index">
+                                    <td style="width: 25%; padding: 5px;">
+                                        <strong t-esc="fields[row_index][0]" />
+                                    </td>
+                                    <td style="width: 25%; padding: 5px;">
+                                        <span t-esc="fields[row_index][1]" />
+                                    </td>
+                                    <td style="width: 25%; padding: 5px;">
+                                        <t t-if="row_index + 1 &lt; len(fields)">
+                                            <strong t-esc="fields[row_index + 1][0]" />
+                                        </t>
+                                    </td>
+                                    <td style="width: 25%; padding: 5px;">
+                                        <t t-if="row_index + 1 &lt; len(fields)">
+                                            <span t-esc="fields[row_index + 1][1]" />
+                                        </t>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div>
+                            <h3>Description</h3>
+                            <pre t-esc="doc.note" />
+
+                            <!-- Display text description if it exists -->
+                            <!-- <t t-if="doc.description">
+                                <pre t-esc="doc.description" />
+                            </t>
+                            <t t-else=""> -->
+                            <!-- Display attached images -->
+                            <t t-set="image_attachments"
+                                t-value="env['ir.attachment'].search([
+                                ('res_model', '=', 'maintenance.request'),
+                                ('res_id', '=', doc.id),
+                                ('mimetype', 'in', ['image/jpeg', 'image/png', 'image/tiff'])
+                            ])" />
+
+                            <t t-if="image_attachments">
+                                <div class="img_grid" style="margin-top: 10px;">
+                                    <t t-foreach="image_attachments" t-as="attachment">
+                                        <div class="img_item">
+                                            <img alt="Attachment"
+                                                t-att-src="'data:%s;base64,%s' % (attachment.mimetype, attachment.datas.decode('utf-8'))" />
+                                            <p>
+                                                <strong t-esc="attachment.name" />
+                                            </p>
+                                        </div>
+                                    </t>
+                                </div>
+                            </t>
+                            <!-- </t> -->
+                        </div>
+                        <br />
+                        <br />
+                        <br />
+                        <div>
+                            <h3>Todo List</h3>
+                            <table class="table table-bordered table-sm">
+                                <thead>
+                                    <tr>
+                                        <th class="text-right">Task Title</th>
+                                        <th class="text-right">Strategy</th>
+                                        <th class="text-right">Check</th>
+                                        <th class="text-right">Note</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="sale_tbody">
+                                    <tr t-foreach="doc.todolines" t-as="li">
+                                        <td class="text-center">
+                                            <span t-esc="li.name"></span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="li.maintenance_strategy.upper()"></span>
+                                        </td>
+                                        <td class="text-center" style="text-align:center;">
+                                            <!-- <div t-if="li.check == False" style="width: 20px;
+                                            height: 20px; border: 1px solid #aaa;
+                                            text-align:center;">
+                                            <div style="height: 10px; width: 5px; border: solid #333; border-width: 0 2px 2px 0; display: none;
+                                            text-align:center;">
+                                                
+                                            </div>
+                                        </div> -->
+                                            <i t-if="li.check == False" class="fa fa-square-o fa-2x"></i>
+                                            <i t-if="li.check == True"
+                                                class="fa fa-check-square-o fa-2x"></i>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="li.note"></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div style="margin-top: 30px;">
+                            <!-- <p>Request No.: <span t-esc="doc.seq"/></p>
+                        <p>Request Address: <span t-esc="doc.address_id.name"/></p>
+                        <p>Print Date: <span t-esc="time.strftime('%Y-%m-%d %H:%M:%S')"/></p>
+                        <p>Print By: <span t-field="user.name"/></p> -->
+                            <p>Authorized Area Manager Signature: ___________________________</p>
+                            <p>Authorized Technician Signature: ___________________________</p>
+                            <!-- <p>Authorized Signature: ___________________________</p> -->
+                            <!-- <p>Signature Date: ____________________</p> -->
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <report
+        id="maintenance_request_report"
+        string="Maintenance Request"
+        model="maintenance.request"
+        report_type="qweb-pdf"
+        name="maintenance_request_report.report_maintenance_request_document"
+        file="maintenance_request_report.report_maintenance_request_document"
+        print_report_name="'Maintenance Request - %s' % (object.name)"
+    />
+</odoo>

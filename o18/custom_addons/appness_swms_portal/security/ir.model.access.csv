@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_model_swms_stepper,swms.stepper,model_swms_stepper,helpdesk.group_helpdesk_user,1,1,1,1
+access_model_swms_stepper_step,swms.stepper.step,model_swms_stepper_step,helpdesk.group_helpdesk_user,1,1,1,1
+access_model_swms_stepper_step_line,swms.stepper.step.line,model_swms_stepper_step_line,helpdesk.group_helpdesk_user,1,1,1,1
+access_model_swms_stepper_step_line_v2line,swms.stepper.step.line.v2line,model_swms_stepper_step_line_v2line,helpdesk.group_helpdesk_user,1,1,1,1

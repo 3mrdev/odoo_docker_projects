@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- <record model="ir.ui.view" id="maintenance_equipment_form_view">
+        <field name="name">maintenance.equipment.form</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
+        <field name="arch" type="xml">
+            <field name="maintenance_team_id" position="after">
+                <field name="address_id"/>
+            </field>
+        </field>
+    </record> -->
+
+    <!-- <record model="ir.ui.view" id="maintenance_requiest_inherit_form_view">
+        <field name="name">maintenance.request.form</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="address_id"/>
+            </field>
+
+        </field>
+    </record> -->
+    <record id="maintenance_request_form_inherit_hr" model="ir.ui.view">
+        <field name="name">maintenance.request.view.form.inherit.hr</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="hr_maintenance.maintenance_request_view_form_inherit_hr"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='employee_id']" position="attributes">
+                    <attribute name="string">Technical</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="event_event_view_form_inherit_project" model="ir.ui.view">
+            <field name="name">event.event.form.inherit.project</field>
+            <field name="model">event.event</field>
+            <field name="inherit_id" ref="event.view_event_form"/>
+            <field name="arch" type="xml">
+                <div name="button_box" position="inside">
+                    <button name="%(project.open_view_project_all)d"
+                        class="oe_stat_button"
+                        icon="fa-puzzle-piece"
+                        type="action"
+                        invisible="not project_id"
+                        context="{'search_default_id': project_id, 'default_id': project_id}">
+                        <field name="project_id" widget="statinfo" string="Project"/>
+                    </button>
+                    <button name="action_view_surveys" type="object" class="oe_stat_button" icon="fa-file-text-o">
+                        <field name="survey_count" widget="statinfo" string="Surveys"/>
+                    </button>
+                </div>
+                <field name="event_type_id" position="after">
+                    <field name="project_id" invisible="project_id"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

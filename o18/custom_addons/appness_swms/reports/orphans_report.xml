@@ -1,0 +1,61 @@
+<odoo>
+    <data>
+        <template id="orphans_template">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="text-center">
+                        <h1>تقرير الايتام</h1>
+                        <h1>Orphans Report</h1>
+                    </div>
+                    <br/><br/>
+                    <table class="table text-center">
+                        <tr>
+                            <td>
+                                Orphan ID
+                                <br/>
+                                رقم اليتيم
+                            </td>
+                            <td>
+                                Name
+                                <br/>
+                                الاسم
+                            </td>
+                            <td>
+                                Age
+                                <br/>
+                                العمر
+                            </td>
+                            <td>
+                                Educational Status
+                                <br/>
+                                حالة التعليم
+                            </td>
+                            <td>
+                                Sponsorship Status
+                                <br/>
+                                حالة الكفالة
+                            </td>
+                            <td>
+                                Assigned Sponsor
+                                <br/>
+                                الكفيل المعين
+                            </td>
+                        </tr>
+                        <tr t-foreach="orphans" t-as="orphan">
+                            <td t-esc="orphan['orphan_id']"></td>
+                            <td t-esc="orphan['name']"></td>
+                            <td t-esc="orphan['age']"></td>
+                            <td t-esc="orphan['education']"></td>
+                            <td t-esc="orphan['sponsorship_state']"></td>
+                            <td t-esc="orphan['sponsor']"></td>
+                        </tr>
+                        <!-- <tr>
+                            <td colspan="4">2308.730</td>
+                            <td colspan="1">Total Amount</td>
+                        </tr> -->
+                    </table>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

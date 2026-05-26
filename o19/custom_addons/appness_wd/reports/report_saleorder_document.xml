@@ -1,0 +1,72 @@
+<odoo>
+    <template id="report_saleorder_document_inherit_wd" inherit_id="sale.report_saleorder_document">
+        <!-- Columns -->
+        <xpath expr="//th[@name='th_description']" position="before">
+            <th name="th_barcode" class="text-end text-nowrap">Barcode</th>
+        </xpath>
+        <xpath expr="//th[@name='th_discount']" position="after">
+            <th name="th_discount_amount" t-if="display_discount" class="text-end">
+                <span>Disc.% Amount</span>
+            </th>
+        </xpath>
+        <xpath expr="//th[@name='th_taxes']" position="after">
+            <th name="th_taxes_amount" t-if="display_taxes" class="text-end">
+                <span>Taxes Amount</span>
+            </th>
+        </xpath>
+        <xpath expr="//th[@name='th_subtotal']" position="after">
+            <th name="th_subtotal_tax_inc" class="text-end">
+                <span>Tax Inc.</span>
+            </th>
+        </xpath>
+
+        <!-- Rows -->
+        <xpath expr="//td[@name='td_product_name']" position="before">
+            <td name="td_product_barcode" class="text-end">
+                <span t-field="line.barcode" class="text-nowrap"></span>
+            </td>
+        </xpath>
+        <xpath expr="//td[@name='td_product_discount']" position="after">
+            <td t-if="display_discount" name="td_product_discount_amount" class="text-end">
+                <t t-if="not collapse_prices">
+                    <span t-field="line.discount_amount">-</span>
+                </t>
+            </td>
+        </xpath>
+        <xpath expr="//td[@name='td_product_taxes']" position="after">
+            <td t-if="display_taxes" name="td_product_taxes_amount"
+                t-attf-class="text-end {{ 'text-nowrap' if len(taxes) &lt; 10 else '' }}">
+                <!-- <span t-out="taxe_amount">Tax 15%</span> -->
+                <span t-field="line.tax_amount"></span>
+            </td>
+        </xpath>
+        <xpath expr="//td[@name='td_product_subtotal']" position="after">
+            <td t-if="not line.is_downpayment" name="td_product_subtotal_tax_inc"
+                class="text-end o_price_total">
+                <t t-if="not collapse_prices">
+                    <span t-field="line.price_total"></span>
+                </t>
+            </td>
+        </xpath>
+        <xpath expr="//table[hasclass('o_total_table')]/t[1]" position="before">
+            <tr class="o_total_amount_before_discount" t-if="doc.total_discount > 0">
+                <td>
+                    <span>Amount Before Discount</span>
+                </td>
+                <td class="text-end">
+                    <span t-field="doc.amount_undiscounted"
+                        t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: currency}"></span>
+                </td>
+            </tr>
+            <tr class="o_total_discount" t-if="doc.total_discount > 0">
+                <td>
+                    <span>Total Discount</span>
+                </td>
+                <td class="text-end">
+                    <span t-field="doc.total_discount"
+                        t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: currency}"></span>
+                </td>
+            </tr>
+        </xpath>
+    </template>
+</odoo>

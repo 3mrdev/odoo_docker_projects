@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_model_logspace_stepper,logspace.stepper,model_logspace_stepper,sales_team.group_sale_manager,1,1,1,1
+access_model_logspace_stepper_step,logspace.stepper.step,model_logspace_stepper_step,sales_team.group_sale_manager,1,1,1,1
+access_model_logspace_stepper_step_line,logspace.stepper.step.line,model_logspace_stepper_step_line,sales_team.group_sale_manager,1,1,1,1
+access_model_logspace_stepper_step_line_v2line,logspace.stepper.step.line.v2line,model_logspace_stepper_step_line_v2line,sales_team.group_sale_manager,1,1,1,1

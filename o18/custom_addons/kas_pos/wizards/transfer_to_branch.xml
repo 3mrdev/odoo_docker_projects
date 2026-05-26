@@ -1,0 +1,40 @@
+<odoo>
+    <data>
+        <record id="view_transfer_to_branch_form_wizard" model="ir.ui.view">
+            <field name="name">transfer.to.branch.form.wizard.kas_pos</field>
+            <field name="model">kas.transfer.branch</field>
+            <field name="arch" type="xml">
+                <form string="Transfer To Branch">
+                    <sheet>
+                        <group>
+                            <field name="purchase_order_id" invisible="not purchase_order_id"/>
+                            <field name="purchase_order_line_id" invisible="not purchase_order_line_id"/>
+                            <field name="line_product_id" string="Product" invisible="not purchase_order_line_id"/>
+                            <field name="line_product_qty" string="Max Product Quantity" invisible="not purchase_order_line_id"/>
+                            <field name="branches_qty" invisible="not purchase_order_line_id"/>
+                        </group>
+                        <notebook>
+                            <page string="Transfers">
+                                <field name="transfers" string="Transfers">
+                                    <list editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="quantity"/>
+                                        <field name="branch_id" domain="[('usage', '=', 'internal')]"/>
+                                        <!-- <button name="action_duplicate" icon="fa-copy" type="object"/> -->
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <footer>
+                        <button name="action_transfer" string="Transfer" type="object" class="oe_highlight" invisible="not purchase_order_id"/>
+                        <button name="action_view_transfers" string="View Transfers" type="object" invisible="not purchase_order_id"/>
+                        <button name="action_save" string="Save" type="object" class="oe_highlight" invisible="not purchase_order_line_id"/>
+                        <!-- <button name="action_duplicate" string="Duplicate" type="object" invisible="not purchase_order_line_id"/> -->
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

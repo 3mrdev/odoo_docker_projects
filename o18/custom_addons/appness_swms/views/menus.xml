@@ -1,0 +1,523 @@
+<odoo>
+    <data>
+
+        <record id="helpdesk_team_dashboard_action_main" model="ir.actions.act_window">
+            <field name="name">SWMS Overview</field>
+            <field name="path">swms</field>
+            <field name="res_model">helpdesk.team</field>
+            <field name="view_mode">kanban,form</field>
+            <field name="domain" eval="[('is_swms', '=', True)]"/>
+            <field name="context">{}</field>
+            <field name="view_id" ref="helpdesk.helpdesk_team_view_kanban"/>
+            <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                    No teams found
+                </p>
+                <p>
+                    Create teams to organize your tickets by expertise or geographical region, and define a different workflow for each team.
+                </p>
+            </field>
+        </record>
+
+        <!-- <record id="contacts.action_contacts" model="ir.actions.act_window">
+            <field name="name">Contacts</field>
+            <field name="path">contacts</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,list,form,activity</field>
+            <field name="search_view_id" ref="base.view_res_partner_filter"/>
+            <field name="domain" eval="[('is_family', '=', False)]"/>
+            <field name="context">{'default_is_company': True}</field>
+            <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Contact in your address book
+            </p><p>
+                Odoo helps you track all activities related to your contacts.
+            </p>
+            </field>
+        </record> -->
+        
+        <record id="swms_services_action" model="ir.actions.act_window">
+            <field name="name">Services</field>
+            <field name="path">swms-services</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">kanban,list,form,activity</field>
+            <field name="domain">[('is_swms','=',True),('type','=','service')]</field>
+            <field name="context">{'default_is_swms': True, 'default_type': 'service','default_sale_ok': False,'default_purchase_ok': False}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new service
+                </p>
+            </field>
+        </record>
+
+        <record id="swms_families_action" model="ir.actions.act_window">
+            <field name="name">Families</field>
+            <field name="path">swms-families</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,list,form,activity</field>
+            <field name="domain" eval="[('is_family', '=', True),('is_company', '=', True)]"/>
+            <field name="context">{
+                'default_is_family': 1,
+                'default_family_type': 'family',
+                'default_company_type': 'company',
+                'default_gender': 'male',
+                'default_marital': 'married',
+                'default_relationship': 0,
+            }</field>
+        </record>
+
+        <record id="swms_family_members_action" model="ir.actions.act_window">
+            <field name="name">Members</field>
+            <field name="path">swms-family-members</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,list,form,activity</field>
+            <field name="domain" eval="[('is_family', '=', True),('is_company', '=', False)]"/>
+            <field name="context">{
+                'default_is_family': 1,
+                'default_family_type': 'member',
+                'default_company_type': 'person',
+                'default_gender': 0,
+                'default_marital': 0,
+                'default_relationship': 0,
+            }</field>
+        </record>
+
+        <record id="swms_cards_action" model="ir.actions.act_window">
+            <field name="name">Cards</field>
+            <field name="path">swms-cards</field>
+            <field name="res_model">swms.card</field>
+            <field name="view_mode">list,form,activity</field>
+        </record>
+
+        <record id="swms_sponsers_action" model="ir.actions.act_window">
+            <field name="name">Sponsers</field>
+            <field name="path">swms-sponsers</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,list,form,activity</field>
+            <field name="domain" eval="[('is_sponser', '=', True)]"/>
+            <field name="context">{'default_is_sponser': 1}</field>
+        </record>
+
+        <record id="swms_waiting_list_action" model="ir.actions.act_window">
+            <field name="name">Waiting List</field>
+            <field name="path">swms-waiting-list</field>
+            <field name="res_model">swms.service.line</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain" eval="[('qty', '=', 0),('product.type','=','service')]"/>
+            <field name="context">{'create':0}</field>
+        </record>
+
+        <record id="swms_case_action" model="ir.actions.act_window">
+            <field name="name">Case Studies</field>
+            <field name="path">swms-case-studies</field>
+            <field name="res_model">swms.case</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{'create':0}</field>
+        </record>
+
+        <record id="swms_orphans_action" model="ir.actions.act_window">
+            <field name="name">Orphans</field>
+            <field name="path">swms-orphans</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,list,form,activity</field>
+            <field name="domain" eval="[('is_orphan', '=', True)]"/>
+            <field name="context">{'create':0}</field>
+        </record>
+
+        <record id="swms_conf_doc_type_action" model="ir.actions.act_window">
+            <field name="name">Document Types</field>
+            <field name="path">swms-document-types</field>
+            <field name="res_model">swms.document.type</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="swms_conf_payment_method_action" model="ir.actions.act_window">
+            <field name="name">Payment Methods</field>
+            <field name="path">swms-payment-methods</field>
+            <field name="res_model">swms.payment.method</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="swms_conf_task_list_action" model="ir.actions.act_window">
+            <field name="name">Case Study List</field>
+            <field name="path">swms-case-study-list</field>
+            <field name="res_model">swms.list</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="swms_conf_area_action" model="ir.actions.act_window">
+            <field name="name">Areas</field>
+            <field name="path">swms-areas</field>
+            <field name="res_model">swms.area</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <!-- Subscriptions Inherit: Start -->
+        <record id="sale_subscription_action_swms" model="ir.actions.act_window">
+            <field name="name">Sponserships</field>
+            <field name="path">sponserships</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_mode">list,kanban,form,pivot,graph,cohort,activity</field>
+            <field name="context">{
+                'default_subscription_state': '1_draft',
+                'search_default_progress': 1,
+                'search_default_paused': 1,
+                'create':0,
+                'default_is_swms': 1,
+            }</field>
+            <field name="domain">[('is_swms','=',True),('subscription_state', 'not in', ['2_renewal', '5_renewed', '7_upsell', False])]</field>
+            <field name="search_view_id" ref="sale_subscription.sale_subscription_view_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_subscription_graph">
+                    Create a new sponsership
+                </p><p>
+                    Automate invoices and payments, simplify upsell quotes, reduce churn and get insights (MRR, churn, CLTV, ...)
+                </p>
+            </field>
+        </record>
+
+        <record id="sale_subscription_kanban_swms" model="ir.actions.act_window.view">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="sale_subscription.sale_subscription_view_kanban"/>
+            <field name="act_window_id" ref="sale_subscription_action_swms"/>
+        </record>
+
+        <record id="sale_subscription_tree_swms" model="ir.actions.act_window.view" >
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">list</field>
+            <field name="view_id" ref="sale_subscription.sale_subscription_view_tree"/>
+            <field name="act_window_id" ref="sale_subscription_action_swms"/>
+        </record>
+
+        <record id="sale_subscription_calendar_swms" model="ir.actions.act_window.view" >
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="sale_subscription.view_sale_subscription_calendar"/>
+            <field name="act_window_id" ref="sale_subscription_action_swms"/>
+        </record>
+
+        <record id="sale_subscription_form_swms" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="sale_subscription.sale_subscription_primary_form_view"/>
+            <field name="act_window_id" ref="sale_subscription_action_swms"/>
+        </record>
+        <!-- Subscriptions Inherit: End -->
+
+        <!-- CRM Pipeline inherit: Start -->
+        <record model="ir.actions.act_window" id="crm_lead_action_pipeline_swms">
+            <field name="name">Sponser Opportunities</field>
+            <field name="path">swms-sponser-opportunities</field>
+            <field name="res_model">crm.lead</field>
+            <field name="view_mode">kanban,list,graph,pivot,form,calendar,activity</field>
+            <field name="domain">[('type','=','opportunity'),('is_swms','=',True)]</field>
+            <field name="context">{
+                    'default_type': 'opportunity',
+                    'search_default_assigned_to_me': 1,
+                    'default_is_swms': 1,
+            }</field>
+            <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
+        </record>
+
+        <record id="crm_lead_action_pipeline_view_kanban_swms" model="ir.actions.act_window.view">
+            <field name="sequence" eval="0"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="crm.crm_case_kanban_view_leads"/>
+            <field name="act_window_id" ref="crm_lead_action_pipeline_swms"/>
+        </record>
+
+        <record id="crm_lead_action_pipeline_view_tree_swms" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">list</field>
+            <field name="view_id" ref="crm.crm_case_tree_view_oppor"/>
+            <field name="act_window_id" ref="crm_lead_action_pipeline_swms"/>
+        </record>
+
+        <record id="crm_lead_action_pipeline_view_calendar_swms" model="ir.actions.act_window.view">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="crm.crm_case_calendar_view_leads"/>
+            <field name="act_window_id" ref="crm_lead_action_pipeline_swms"/>
+        </record>
+
+        <record id="crm_lead_action_pipeline_view_pivot_swms" model="ir.actions.act_window.view">
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">pivot</field>
+            <field name="view_id" ref="crm.crm_lead_view_pivot"/>
+            <field name="act_window_id" ref="crm_lead_action_pipeline_swms"/>
+        </record>
+
+        <record id="crm_lead_action_pipeline_view_graph_swms" model="ir.actions.act_window.view">
+            <field name="sequence" eval="5"/>
+            <field name="view_mode">graph</field>
+            <field name="view_id" ref="crm.crm_lead_view_graph"/>
+            <field name="act_window_id" ref="crm_lead_action_pipeline_swms"/>
+        </record>
+        <!-- CRM Pipeline inherit: End -->
+
+        <!-- web_icon="helpdesk,static/description/icon.png" -->
+        <menuitem
+            id="menu_swms_root"
+            name="Social Welfare"
+            sequence="90"
+            web_icon="appness_swms,static/description/helphand.png"
+            groups="helpdesk.group_helpdesk_user">
+
+            <menuitem
+                id="helpdesk_menu_team_dashboard"
+                name="Overview"
+                action="helpdesk_team_dashboard_action_main"
+                sequence="5"
+                groups="helpdesk.group_helpdesk_user"/>
+
+            <menuitem
+                id="helpdesk_ticket_menu_main"
+                name="Requests"
+                sequence="10">
+
+                <menuitem
+                    id="helpdesk_ticket_menu_my"
+                    name="My Requests"
+                    action="helpdesk.helpdesk_ticket_action_main_my"
+                    sequence="10"/>
+
+                <menuitem
+                    id="helpdesk_ticket_menu_all"
+                    name="All Requests"
+                    action="helpdesk.helpdesk_ticket_action_main_tree"
+                    sequence="20"/>
+
+            </menuitem>
+
+            <menuitem
+                id="helpdesk_ticket_report_menu_main"
+                name="Reporting"
+                sequence="20">
+
+                <menuitem
+                    id="helpdesk_ticket_report_menu"
+                    name="Requests Analysis"
+                    action="helpdesk.helpdesk_ticket_analysis_action"
+                    sequence="10"/>
+
+                <menuitem
+                    id="helpdesk_ticket_report_menu_sla_analysis"
+                    name="SLA Status Analysis"
+                    action="helpdesk.helpdesk_sla_report_analysis_action"
+                    sequence="20"
+                    groups="helpdesk.group_use_sla"/>
+
+                <menuitem
+                    id="helpdesk_ticket_report_menu_ratings"
+                    name="Customer Ratings"
+                    action="helpdesk.helpdesk_ratings_server_action"
+                    sequence="30"
+                    groups="helpdesk.group_use_rating"/>
+
+                <menuitem
+                    id="helpdesk_new_requests_report_action_swms_menu"
+                    name="Family New Requests Report"
+                    action="appness_swms.helpdesk_new_requests_report_action_swms"
+                    sequence="40"
+                    groups="helpdesk.group_helpdesk_user"/>
+
+            </menuitem>
+
+            <menuitem
+                id="swms_menu_config"
+                name="Configuration"
+                sequence="100"
+                groups="helpdesk.group_helpdesk_manager">
+
+                <menuitem
+                    id="helpdesk_team_menu"
+                    name="SWMS Teams"
+                    action="helpdesk.helpdesk_team_action"
+                    sequence="0"
+                    groups="helpdesk.group_helpdesk_manager"/>
+
+                <menuitem
+                    id="helpdesk_stage_menu"
+                    action="helpdesk.helpdesk_stage_action"
+                    sequence="3"
+                    groups="base.group_no_one"/>
+
+                <menuitem
+                    id="helpdesk_sla_menu_main"
+                    action="helpdesk.helpdesk_sla_action_main"
+                    sequence="7"
+                    groups="helpdesk.group_use_sla"/>
+
+                <menuitem
+                    id="helpdesk_tag_menu"
+                    action="helpdesk.helpdesk_tag_action"
+                    sequence="15"
+                    groups="base.group_no_one"/>
+
+                <menuitem
+                    id="helpdesk_team_canned_response_menu"
+                    action="mail.mail_canned_response_action"
+                    sequence="17"/>
+
+                <menuitem
+                    id="helpdesk_menu_config_activity_type"
+                    action="helpdesk.mail_activity_type_action_config_helpdesk"
+                    sequence="20"
+                    groups="base.group_no_one"/>
+
+            </menuitem>
+
+        </menuitem>
+
+        <menuitem
+            id="swms_menu"
+            name="SWMS"
+            sequence="6"
+            parent="menu_swms_root"
+            groups="helpdesk.group_helpdesk_user"/>
+
+        <menuitem
+            id="swms_menu_services"
+            name="Services"
+            action="swms_services_action"
+            sequence="1"
+            parent="swms_menu"
+            groups="helpdesk.group_helpdesk_user"/>
+
+        <menuitem
+            id="swms_menu_families"
+            name="Families"
+            action="swms_families_action"
+            sequence="2"
+            parent="swms_menu"
+            groups="helpdesk.group_helpdesk_user"/>
+
+        <menuitem
+            id="swms_menu_family_members"
+            name="Members"
+            action="swms_family_members_action"
+            sequence="3"
+            parent="swms_menu"
+            groups="helpdesk.group_helpdesk_user"/>
+
+        <menuitem
+            id="swms_menu_orphans"
+            name="Orphans"
+            action="swms_orphans_action"
+            sequence="4"
+            parent="swms_menu"
+            groups="helpdesk.group_helpdesk_user"/>
+
+        <menuitem
+            id="swms_menu_cards"
+            name="Lulu Cards"
+            action="swms_cards_action"
+            sequence="5"
+            parent="swms_menu"
+            groups="helpdesk.group_helpdesk_user"/>
+
+        <menuitem
+            id="swms_menu_sponsers"
+            name="Sponsers"
+            action="swms_sponsers_action"
+            sequence="6"
+            parent="swms_menu"
+            groups="helpdesk.group_helpdesk_user"/>
+
+        <menuitem
+            id="swms_menu_opportunities"
+            name="Sponsers Opportunities"
+            parent="swms_menu"
+            action="crm_lead_action_pipeline_swms"
+            sequence="7"
+            groups="sales_team.group_sale_salesman"/>
+
+        <menuitem
+            id="swms_menu_sponserships"
+            name="Sponserships"
+            action="sale_subscription_action_swms"
+            sequence="8"
+            parent="swms_menu"
+            groups="sales_team.group_sale_salesman"/>
+
+        <menuitem
+            id="swms_menu_case_study"
+            name="Case Studies"
+            action="swms_case_action"
+            sequence="9"
+            parent="swms_menu"
+            groups="helpdesk.group_helpdesk_user"/>
+
+        <menuitem
+            id="swms_menu_waiting_list"
+            name="Waiting List"
+            action="swms_waiting_list_action"
+            sequence="10"
+            parent="swms_menu"
+            groups="helpdesk.group_helpdesk_user"/>
+
+        <menuitem
+            id="swms_conf_menu"
+            name="SWMS"
+            sequence="50"
+            parent="swms_menu_config"
+            groups="helpdesk.group_helpdesk_manager">
+
+            <menuitem
+                id="swms_conf_menu_doc_type"
+                name="Document Types"
+                action="swms_conf_doc_type_action"
+                groups="helpdesk.group_helpdesk_manager"/>
+
+            <menuitem
+                id="swms_conf_menu_payment_method"
+                name="Payment Methods"
+                action="swms_conf_payment_method_action"
+                groups="helpdesk.group_helpdesk_manager"/>
+
+            <menuitem
+                id="swms_conf_menu_case_list"
+                name="Case Task List"
+                action="swms_conf_task_list_action"
+                groups="helpdesk.group_helpdesk_manager"/>
+
+            <menuitem
+                id="swms_conf_menu_country"
+                name="Countries"
+                action="base.action_country"
+                groups="helpdesk.group_helpdesk_manager"/>
+
+            <menuitem
+                id="swms_conf_menu_state"
+                name="States"
+                action="base.action_country_state"
+                groups="helpdesk.group_helpdesk_manager"/>
+
+            <menuitem
+                id="swms_conf_menu_city"
+                name="Cities"
+                action="base_address_extended.action_res_city_tree"
+                groups="helpdesk.group_helpdesk_manager"/>
+
+            <menuitem
+                id="swms_conf_menu_area"
+                name="Areas"
+                action="swms_conf_area_action"
+                groups="helpdesk.group_helpdesk_manager"/>
+
+            <menuitem
+                id="swms_conf_menu_settings"
+                name="Settings"
+                action="appness_swms.configuration_action"
+                groups="helpdesk.group_helpdesk_manager"/>
+        </menuitem>
+
+        <menuitem
+            id="contacts_menu_area"
+            name="Areas"
+            action="swms_conf_area_action"
+            parent="contacts.menu_localisation"
+            groups="helpdesk.group_helpdesk_manager"/>
+
+    </data>
+</odoo>

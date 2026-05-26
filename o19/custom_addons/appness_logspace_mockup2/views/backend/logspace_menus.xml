@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Logspace Menu -->
+    <menuitem id="menu_logspace_root"
+              name="Logspace"
+              web_icon="appness_logspace_mockup2,static/description/logo.png"
+              sequence="50"/>
+
+    <!-- Dashboard -->
+    <menuitem id="menu_logspace_dashboard"
+              name="Dashboard"
+              parent="menu_logspace_root"
+              sequence="10"/>
+
+    <menuitem id="menu_logspace_dashboard_overview"
+              name="Overview"
+              parent="menu_logspace_dashboard"
+              action="action_res_partner_provider"
+              sequence="10"/>
+
+    <!-- Providers -->
+    <menuitem id="menu_logspace_providers"
+              name="Providers"
+              parent="menu_logspace_root"
+              sequence="20"/>
+
+    <menuitem id="menu_logspace_providers_list"
+              name="Providers"
+              parent="menu_logspace_providers"
+              action="action_res_partner_provider"
+              sequence="10"/>
+
+    <menuitem id="menu_logspace_providers_vehicles"
+              name="Vehicles"
+              parent="menu_logspace_providers"
+              action="action_logspace_vehicle_list"
+              sequence="20"/>
+
+    <menuitem id="menu_logspace_contact_roles"
+              name="Contact Roles"
+              parent="menu_logspace_providers"
+              action="action_logspace_contact_roles"
+              sequence="30"/>
+
+    <menuitem id="menu_logspace_provider_vtype_addons"
+              name="Vehicle Type Add-ons"
+              parent="menu_logspace_providers"
+              action="action_logspace_provider_vtype_addon"
+              sequence="40"/>
+
+    <!-- Sales -->
+    <menuitem id="menu_logspace_sales"
+              name="Sales"
+              parent="menu_logspace_root"
+              sequence="30"/>
+
+    <menuitem id="menu_logspace_orders"
+              name="Logspace Orders"
+              parent="menu_logspace_sales"
+              action="action_sale_order_logspace"
+              sequence="10"/>
+
+    <menuitem id="menu_logspace_price_matrix"
+              name="Price Matrix"
+              parent="menu_logspace_sales"
+              action="action_logspace_price_matrix"
+              sequence="30"/>
+
+    <!-- Customer Support -->
+    <menuitem id="menu_logspace_support"
+              name="Customer Support"
+              parent="menu_logspace_root"
+              sequence="40"/>
+
+    <menuitem id="menu_logspace_tickets"
+              name="Tickets"
+              parent="menu_logspace_support"
+              action="action_helpdesk_ticket_logspace"
+              sequence="10"/>
+
+    <menuitem id="menu_logspace_ratings"
+              name="Ratings &amp; Reviews"
+              parent="menu_logspace_support"
+              action="action_logspace_rating"
+              sequence="20"/>
+
+    <menuitem id="menu_logspace_refunds"
+              name="Refund Requests"
+              parent="menu_logspace_support"
+              action="action_logspace_refund"
+              sequence="30"/>
+
+    <!-- Services -->
+    <menuitem id="menu_logspace_services"
+              name="Services"
+              parent="menu_logspace_root"
+              sequence="50"/>
+
+    <menuitem id="menu_logspace_addons"
+              name="Add-ons"
+              parent="menu_logspace_services"
+              action="action_logspace_addon"
+              sequence="10"/>
+
+    <menuitem id="menu_logspace_zones"
+              name="Zones"
+              parent="menu_logspace_services"
+              action="action_logspace_zone"
+              sequence="20"/>
+
+    <menuitem id="menu_logspace_vehicle_types"
+              name="Vehicle Types"
+              parent="menu_logspace_services"
+              action="action_logspace_vehicle_type"
+              sequence="30"/>
+
+    <!-- Notifications (User menu) -->
+    <menuitem id="menu_logspace_notifications"
+              name="Notifications"
+              parent="menu_logspace_root"
+              action="action_logspace_notification"
+              sequence="60"/>
+</odoo>

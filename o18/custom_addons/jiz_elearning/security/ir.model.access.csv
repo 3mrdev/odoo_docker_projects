@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+gen_cert_user,jiz.gen.cert.user,model_jiz_gen_cert,website_slides.group_website_slides_officer,1,1,1,0
+gen_cert_admin,jiz.gen.cert.admin,model_jiz_gen_cert,website_slides.group_website_slides_manager,1,1,1,1
+gen_cert_scores_user,jiz.gen.cert.scores.user,model_jiz_gen_cert_scores,website_slides.group_website_slides_officer,1,1,1,0
+gen_cert_scores_admin,jiz.gen.cert.scores.admin,model_jiz_gen_cert_scores,website_slides.group_website_slides_manager,1,1,1,1
+

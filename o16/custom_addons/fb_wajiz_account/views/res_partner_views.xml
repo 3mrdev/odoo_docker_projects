@@ -1,0 +1,13 @@
+<odoo>
+    <record id="view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="vat" string="VAT Number"/>
+                <field name="company_registry" string="Company ID"/>
+            </field>
+        </field>
+    </record>
+</odoo>

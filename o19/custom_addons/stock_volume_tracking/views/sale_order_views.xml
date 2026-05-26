@@ -1,0 +1,165 @@
+<odoo>
+    <record id="view_sale_order_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_generate_mrp_production"
+                    string="Create Manufacturing Orders"
+                    type="object"
+                    class="oe_highlight"
+                    groups="stock_volume_tracking.group_volume_only"
+                    invisible="not show_volume_tracked or mrp_production_created or not show_mrp_production_button" />
+            </xpath>
+            <xpath expr="//header" position="after">
+                <div class="alert alert-warning" role="alert"
+                    invisible="not show_mrp_production_alert or mrp_production_created"> The
+                    available quantity is less than the ordered quantity for some products. You can
+                    create Manufacturing Orders to fulfill the remaining quantity. <button
+                        class="oe_link" type="object"
+                        name="action_view_bom_lines"
+                        style="padding: 0; vertical-align: baseline;">
+                        click here to choose the components</button>
+                </div>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_bom_lines"
+                    type="object"
+                    class="oe_stat_button"
+                    groups="stock_volume_tracking.group_volume_only"
+                    invisible="not show_volume_tracked or mrp_production_created"
+                    icon="fa-cube">
+                    <field name="sale_mrp_bom_lines_count" widget="statinfo"
+                        string="Consumed Components" />
+                </button>
+                <!-- <button name="action_view_mrp_production"
+                    type="object"
+                    class="oe_stat_button"
+                    groups="stock_volume_tracking.group_volume_only"
+                    invisible="not show_volume_tracked"
+                    icon="fa-cube">
+                    <field name="mrp_production_count" widget="statinfo"
+                        string="Manufacturing Orders" />
+                </button> -->
+            </xpath>
+            <field name="team_id" position="after">
+                <field name="mrp_production_created" />
+            </field>
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_unit']"
+                position="after">
+                <field name="is_volume_tracked" column_invisible="True"
+                    groups="stock_volume_tracking.group_volume_only" />
+                <field name="volume_length"
+                    invisible="not is_volume_tracked"
+                    optional="show"
+                    groups="stock_volume_tracking.group_volume_only"
+                    readonly="state in ('sale', 'cancel')"
+                    string="L (cm)" />
+                <field name="volume_width"
+                    invisible="not is_volume_tracked"
+                    optional="show"
+                    groups="stock_volume_tracking.group_volume_only"
+                    readonly="state in ('sale', 'cancel')"
+                    string="W (cm)" />
+                <field name="volume_height"
+                    invisible="not is_volume_tracked"
+                    optional="show"
+                    groups="stock_volume_tracking.group_volume_only"
+                    readonly="state in ('sale', 'cancel')"
+                    string="H (cm)" />
+                <field name="volume_display" 
+                    invisible="not is_volume_tracked" 
+                    readonly="1"
+                    groups="stock_volume_tracking.group_volume_only" 
+                    optional="show"/>
+                <field name="volume"
+                    invisible="not is_volume_tracked"
+                    optional="hide"
+                    groups="stock_volume_tracking.group_volume_only"
+                    readonly="1"
+                    string="Volume" />
+                <field name="volume_total"
+                    invisible="not is_volume_tracked"
+                    optional="hide"
+                    groups="stock_volume_tracking.group_volume_only"
+                    readonly="1"
+                    string="Total Volume" />
+                <field name="reserved_lot_id"
+                    invisible="not is_volume_tracked"
+                    optional="show"
+                    string="Lot"
+                    options="{'no_create': True, 'no_create_edit': True}"
+                    domain="[('product_id', '=', product_id), ('product_qty', '>', 0)]"
+                    context="{'default_product_id': product_id}"
+                    groups="stock_volume_tracking.group_volume_only,sales_team.group_sale_salesman,sales_team.group_sale_manager" />
+                <field name="lot_product_qty"
+                    invisible="not is_volume_tracked or not reserved_lot_id"
+                    optional="show"
+                    readonly="1"
+                    string="Lot/Serial QTY"
+                    groups="stock_volume_tracking.group_volume_only,sales_team.group_sale_salesman,sales_team.group_sale_manager" />
+                <field name="lot_volume_display"
+                    invisible="not is_volume_tracked or not reserved_lot_id"
+                    optional="hide"
+                    readonly="1"
+                    string="Lot/Serial Line/Square/Cubic"
+                    groups="stock_volume_tracking.group_volume_only,sales_team.group_sale_salesman,sales_team.group_sale_manager" />
+                <field name="lot_volume_total"
+                    invisible="not is_volume_tracked or not reserved_lot_id"
+                    optional="hide"
+                    readonly="1"
+                    string="Lot/Serial Total Volume"
+                    groups="stock_volume_tracking.group_volume_only,sales_team.group_sale_salesman,sales_team.group_sale_manager" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Sale Order Line Form View (popup) -->
+    <record id="sale_order_line_form_view_volume" model="ir.ui.view">
+        <field name="name">sale.order.line.form.volume</field>
+        <field name="model">sale.order.line</field>
+        <field name="inherit_id" ref="sale.sale_order_line_view_form_readonly" />
+        <field name="arch" type="xml">
+            <field name="product_uom_qty" position="after">
+                <field name="is_volume_tracked" invisible="1"
+                    groups="stock_volume_tracking.group_volume_only" />
+                <label for="volume_length" string="Dim (L × W × H)"
+                    invisible="not is_volume_tracked"
+                    groups="stock_volume_tracking.group_volume_only" />
+                <div class="o_row" invisible="not is_volume_tracked"
+                    groups="stock_volume_tracking.group_volume_only">
+                    <field name="volume_length" placeholder="Length" class="oe_inline" readonly="1" />
+                    <span>×</span>
+                    <field name="volume_width" placeholder="Width" class="oe_inline" readonly="1" />
+                    <span>×</span>
+                    <field name="volume_height" placeholder="Height" class="oe_inline" readonly="1" />
+                </div>
+                <field name="volume_display" invisible="not is_volume_tracked" readonly="1"
+                    groups="stock_volume_tracking.group_volume_only" />
+                <field name="volume" invisible="not is_volume_tracked" readonly="1"
+                    groups="stock_volume_tracking.group_volume_only" />
+                <field name="volume_total" invisible="not is_volume_tracked" readonly="1"
+                    groups="stock_volume_tracking.group_volume_only" />
+                <field name="reserved_lot_id"
+                    invisible="not is_volume_tracked"
+                    readonly="1"
+                    options="{'no_create': True, 'no_create_edit': True}"
+                    domain="[('product_id', '=', product_id), ('product_qty', '>', 0)]"
+                    groups="stock_volume_tracking.group_volume_only,sales_team.group_sale_salesman,sales_team.group_sale_manager" />
+                <field name="lot_product_qty"
+                    invisible="not is_volume_tracked or not reserved_lot_id"
+                    readonly="1"
+                    groups="stock_volume_tracking.group_volume_only,sales_team.group_sale_salesman,sales_team.group_sale_manager" />
+                <field name="lot_volume_display"
+                    invisible="not is_volume_tracked or not reserved_lot_id"
+                    readonly="1"
+                    groups="stock_volume_tracking.group_volume_only,sales_team.group_sale_salesman,sales_team.group_sale_manager" />
+                <field name="lot_volume_total"
+                    invisible="not is_volume_tracked or not reserved_lot_id"
+                    readonly="1"
+                    groups="stock_volume_tracking.group_volume_only,sales_team.group_sale_salesman,sales_team.group_sale_manager" />
+            </field>
+        </field>
+    </record>
+</odoo>

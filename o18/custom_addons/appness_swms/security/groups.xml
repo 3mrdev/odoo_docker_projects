@@ -1,0 +1,32 @@
+
+<odoo>
+    <data>
+        <record model="ir.module.category" id="swms_category">
+            <field name="name">Social Welfare (SWMS)</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="group_renew_sponsership" model="res.groups">
+            <field name="name">Renew Sponsership</field>
+            <field name="category_id" ref="swms_category"/>
+        </record>
+
+        <record id="group_swms_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="swms_category"/>
+        </record>
+
+        <!-- <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/> -->
+
+        <record id="group_allow_edit_portal" model="res.groups">
+            <field name="name">Enable the "Allow Editing? (Portal)" checkbox in family profile</field>
+            <field name="category_id" ref="swms_category"/>
+        </record>
+
+        <record id="group_reassign_all_requests_to_family_responsible" model="res.groups">
+            <field name="name">Reassign All Requests to Family Responsible</field>
+            <field name="category_id" ref="swms_category"/>
+        </record>
+
+    </data>
+</odoo>

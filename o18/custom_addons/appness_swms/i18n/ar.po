@@ -1,0 +1,4135 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* appness_swms
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-05 14:53+0000\n"
+"PO-Revision-Date: 2025-08-05 14:53+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/helpers.py:0
+msgid " Document"
+msgstr " (مستند)"
+
+#. module: appness_swms
+#: model:ir.model.fields,help:appness_swms.field_helpdesk_ticket__action_types
+#: model:ir.model.fields,help:appness_swms.field_product_product__action_types
+#: model:ir.model.fields,help:appness_swms.field_product_template__action_types
+msgid ""
+"\"\n"
+"When you click on the done button in the last stage of a request a few actions can happen automatically:\n"
+"    - None: Nothing will happen\n"
+"    - One Time: The system will create a bill for one time with the recommended amount\n"
+"    - Recurring: The system will create a bills monthly untill a certin date depending on the plan\n"
+"    - Project: The system will create a project\n"
+"    - Material: The system will create a delivery order in inventory\n"
+"    "
+msgstr ""
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/service_line.py:0
+msgid "%s has been added to the waiting list"
+msgstr "‫%s لقد تم اضافته الي قائمة الانتظار"
+
+#. module: appness_swms
+#: model:ir.actions.report,print_report_name:appness_swms.action_swms_report
+msgid "'SWMS Report'"
+msgstr "'تقرير دائرة الرعاية الاجتماعية'"
+
+#. module: appness_swms
+#: model:ir.actions.report,print_report_name:appness_swms.action_service_report
+msgid "'Service Request Report'"
+msgstr "'تقرير طلب الخدمة'"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "( 2,308.734 )"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "( 2,638.644 )"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "( 246.750 )"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "( 83.160 )"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_config_settings_view_form
+msgid "0 days means automatic pause is disabled"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "0.000"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+msgid "10.000"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "2,061.356"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.income_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+msgid "20.000"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.income_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "2024-04-01"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.income_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+msgid "2024-04-30"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.income_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+msgid "2308.730"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.income_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "3270"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "4,700.000"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "<i class=\"fa fa-external-link me-2\" title=\"This is a shortcut\"/>"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "<i class=\"fa fa-external-link text-gray-500\" title=\"This is a shortcut\"/>"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "<i class=\"fa fa-lock oe_inline\" title=\"Locked\" invisible=\"not lock_uid\"/>"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid ""
+"<span class=\"o_form_label o_td_label o_address_type\" name=\"address_name\">\n"
+"                                    <span>Address</span>\n"
+"                                    <span invisible=\"not is_address_allowed\" style=\"color:green;\"> (Allowed)</span>\n"
+"                                    <span invisible=\"is_address_allowed\" style=\"color:red;\"> (Not Allowed)</span>\n"
+"                                </span>"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "<span class=\"o_stat_text\">Bills</span>"
+msgstr "<span class=\"o_stat_text\">فواتير</span>"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "<span class=\"o_stat_text\">Case Studies</span>"
+msgstr "<span class=\"o_stat_text\">دراسات الحالة</span>"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "<span class=\"o_stat_text\">Delivery</span>"
+msgstr "‫<span class=\"o_stat_text\"> الطلبات</span>"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "<span class=\"o_stat_text\">Documents</span>"
+msgstr "<span class=\"o_stat_text\">مستندات</span>"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.view_fleet_vehicle_form
+msgid "<span class=\"o_stat_text\">Expenses</span>"
+msgstr "<span class=\"o_stat_text\">المصروفات</span>"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "<span class=\"o_stat_text\">Projects</span>"
+msgstr "<span class=\"o_stat_text\">مشاريع</span>"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "<span class=\"o_stat_text\">Related <br/> Record</span>"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "<span class=\"o_stat_text\">Sponserships</span>"
+msgstr "<span class=\"o_stat_text\">الكفالة</span>"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "<span invisible=\"not is_company\">Address</span>"
+msgstr "<span invisible=\"not is_company\">العنوان</span>"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "<span><b> Expire Date: </b></span>"
+msgstr "<span><b> :تاريخ الانتهاء </b></span>"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "<span><b> Issuance Date: </b></span>"
+msgstr "<span><b> تاريخ الاصدار:  </b></span>"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "<span><b> Request</b></span>"
+msgstr "<span><b> الطلب</b></span>"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "<span><b> Type: </b></span>"
+msgstr "<span><b>النوع : </b></span>"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "<span><b>Requested Document</b></span>"
+msgstr "<span><b>المستندات المطلوبة</b></span>"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "<span>Other address for the company (e.g. subsidiary, ...)</span>"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid ""
+"<span>Preferred address for all deliveries. Selected by default when you "
+"deliver an order that belongs to this company.</span>"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid ""
+"<span>Preferred address for all invoices. Selected by default when you "
+"invoice an order that belongs to this company.</span>"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid ""
+"<span>Use this to organize the contact details of employees of a given "
+"company (e.g. CEO, CFO, ...).</span>"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid ""
+"<span>Use this to organize the member details of members of a given "
+"family.</span>"
+msgstr ""
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/res_partner.py:0
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__marital__abandoned
+msgid "Abandoned"
+msgstr "هجر"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Access"
+msgstr "دخول"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__message_needaction
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__message_needaction
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__message_needaction
+msgid "Action Needed"
+msgstr "الإجراء مطلوب"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_team_form_inherit
+msgid "Action Stages"
+msgstr "مراحل العمل"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__action_types
+#: model:ir.model.fields,field_description:appness_swms.field_product_product__action_types
+#: model:ir.model.fields,field_description:appness_swms.field_product_template__action_types
+msgid "Action Types"
+msgstr "انواع التنفيذ"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__active
+msgid "Active"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__activity_ids
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__activity_ids
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__activity_ids
+msgid "Activities"
+msgstr "نشاطات"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Activity"
+msgstr "نشاط"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__activity_exception_decoration
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__activity_exception_decoration
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__activity_state
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__activity_state
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__activity_state
+msgid "Activity State"
+msgstr "حالة النشاط"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__activity_type_icon
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__activity_type_icon
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.ui.menu,name:appness_swms.helpdesk_menu_config_activity_type
+msgid "Activity Types"
+msgstr "انواع النشاطات"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_service_request_template
+msgid "Address"
+msgstr "العنوان"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "Address Area"
+msgstr "موقع العمل"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "Address City"
+msgstr "المدينة"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "Address Country"
+msgstr "الدولة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__age
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__age
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__age
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "Age"
+msgstr "العمر"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.orphans_template
+msgid ""
+"Age\n"
+"                                <br/>\n"
+"                                العمر"
+msgstr ""
+"العمر\n"
+"                                <br/>\n"
+"                                العمر"
+
+#. module: appness_swms
+#: model:ir.ui.menu,name:appness_swms.helpdesk_ticket_menu_all
+msgid "All Requests"
+msgstr "كل الطلبات"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__max_expire_date
+msgid "Allow After Expire Date (Days)"
+msgstr "السماح بعد تاريخ الإنتهاء (بالأيام)"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__max_issuance_date
+msgid "Allow Before Issunace Date (Days)"
+msgstr "السماح قبل تاريخ الاصدار(بالأيام)"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__allow_editing_portal
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__allow_editing_portal
+msgid "Allow Editing Portal"
+msgstr "السماح بالتعديل في المنصة"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Allow Editing? (Portal)"
+msgstr "السماح بالتعديل في المنصة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_product_product__allowed_address
+#: model:ir.model.fields,field_description:appness_swms.field_product_template__allowed_address
+msgid "Allowed Address"
+msgstr "العناوين المسوح بها"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_card__amount
+#: model:ir.model.fields,field_description:appness_swms.field_swms_income__amount
+#: model:ir.model.fields,field_description:appness_swms.field_swms_obligation__amount
+msgid "Amount"
+msgstr "المبلغ"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.income_template
+msgid ""
+"Amount\n"
+"                                <br/>\n"
+"                                المبلغ"
+msgstr ""
+"المبلغ\n"
+"                                <br/>\n"
+"                                المبلغ"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "Amount (OMR)"
+msgstr "المبلغ(ريال عماني)"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Amount To Pay"
+msgstr "مبلغ الدفع"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__analytic_account_id
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__analytic_account_id
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__analytic_account_id
+msgid "Analytic Account"
+msgstr "مركز التكلفة من الميزانية"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__family_type
+msgid "Applicable for?"
+msgstr "ينطبق على؟"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_case_form
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_service_line_form
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Approve"
+msgstr "الموافقة"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_case__state__approve
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_service_line__state__approved
+msgid "Approved"
+msgstr "تمت الموافقة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__approved_date
+msgid "Approved Date"
+msgstr "تاريخ الموافقة"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid ""
+"Are you sure you want to reject this request? Please provide a reason in the"
+" notes."
+msgstr ""
+"هل انت متاكد انك تريد رفض هذا الطلب؟ رجاءا قم بكتابة السبب في الملحوظات"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__area_id
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__area_id
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Area"
+msgstr "المنطقة"
+
+#. module: appness_swms
+#: model:ir.actions.act_window,name:appness_swms.swms_conf_area_action
+#: model:ir.ui.menu,name:appness_swms.contacts_menu_area
+#: model:ir.ui.menu,name:appness_swms.swms_conf_menu_area
+msgid "Areas"
+msgstr "المناطق"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.families_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.orphans_template
+msgid ""
+"Assigned Sponsor\n"
+"                                <br/>\n"
+"                                الكفيل المعين"
+msgstr ""
+"الكفيل\n"
+"                                <br/>\n"
+"                                الكفيل"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__accommodation_type__attached
+msgid "Attached (with relatives)"
+msgstr "ملحق (مع الأقارب)"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__message_attachment_count
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__message_attachment_count
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.actions.act_window,help:appness_swms.sale_subscription_action_swms
+msgid ""
+"Automate invoices and payments, simplify upsell quotes, reduce churn and get"
+" insights (MRR, churn, CLTV, ...)"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_level__bachelor
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__certificate__bachelor
+msgid "Bachelor"
+msgstr "بكلاريوس"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__analytic_account_balance
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__analytic_account_balance
+msgid "Balance"
+msgstr "الرصيد"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+msgid "Bank"
+msgstr "البنك"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_document_type_form
+msgid "Basic Info"
+msgstr "البيانات الاساسية"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_grading_system_type__basic
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_level__basic
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__certificate__basic
+msgid "Basic School"
+msgstr "مدرسة الاساس"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Bill Info"
+msgstr "بيانات الفاتورة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__bills_ids
+msgid "Bills"
+msgstr "الفواتير"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__bills_count
+msgid "Bills Count"
+msgstr "عدد الفواتير"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_payment_status__blocked
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__payment_status__blocked
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Blocked"
+msgstr "محظور"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Budget"
+msgstr "الميزانية"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__budget_line_ids
+msgid "Budget Line"
+msgstr "سطر الميزانية"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__building_type
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__building_type
+msgid "Built by"
+msgstr "نوع المبني"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_reports_wizard
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Cancel"
+msgstr "الغاء"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/helpdesk_ticket.py:0
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_payment_status__cancel
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_scholarship_status__cancel
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__payment_status__cancel
+msgid "Cancelled"
+msgstr "تم الالغاء"
+
+#. module: appness_swms
+#: model:ir.ui.menu,name:appness_swms.helpdesk_team_canned_response_menu
+msgid "Canned Responses"
+msgstr "الردود الجاهزة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__card_history
+msgid "Card History"
+msgstr "تاريخ البطاقة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_list_task__case_id
+msgid "Case"
+msgstr "الحالة"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/helpdesk_ticket.py:0
+#: model:ir.actions.act_window,name:appness_swms.swms_case_action
+#: model:ir.ui.menu,name:appness_swms.swms_menu_case_study
+msgid "Case Studies"
+msgstr "دراسات حالة"
+
+#. module: appness_swms
+#: model:ir.actions.act_window,name:appness_swms.swms_conf_task_list_action
+msgid "Case Study List"
+msgstr "قائمة دراسة الحالة"
+
+#. module: appness_swms
+#: model:ir.ui.menu,name:appness_swms.swms_conf_menu_case_list
+msgid "Case Task List"
+msgstr "قائمة المهام الباحثين"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_case_form
+msgid "Case's Title"
+msgstr "عنوان الحالة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__cases
+msgid "Cases"
+msgstr "الحالات"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__cases_count
+msgid "Cases Count"
+msgstr "عدد الحالات"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__certificate
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "Certificate Level"
+msgstr "مستوي الشهادة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_list_task__check
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard_report__check
+msgid "Check"
+msgstr "تم التنفيذ"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_document_type_form
+msgid "Check this only if this document is required at all times"
+msgstr "اختيار في حالة تكرار الطلب"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__choose_activity_type_id
+msgid "Choose Activity Type"
+msgstr "اختيار نوع النشاط الاشعارات"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Choose Products"
+msgstr "قم باختيار المنتجات"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_case_form
+msgid "Choose Tasks List"
+msgstr "اخر قائمة مهام"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_team_form_inherit
+msgid "Choose a unique stage for each action don't repeat the stage"
+msgstr "اختر مرحلة مميزة لكل فعل ولا تقم باعادة ادخال المرحلة ف اكثر من فعل"
+
+#. module: appness_swms
+#: model:ir.ui.menu,name:appness_swms.swms_conf_menu_city
+msgid "Cities"
+msgstr "المدن"
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_res_city
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__city_id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_address__city_ids
+#: model:ir.model.fields,field_description:appness_swms.field_swms_area__city_id
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "City"
+msgstr "المدينة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__civil_number
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__civil_number
+msgid "Civil Number (ID)"
+msgstr "الرقم المدني (ID)"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/res_partner.py:0
+msgid "Civil Number must be a number"
+msgstr "رقم الهوية يجب ان يكون رقم"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Company Name..."
+msgstr "اسم الشركة …"
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_res_config_settings
+msgid "Config Settings"
+msgstr "تهيئة الإعدادات "
+
+#. module: appness_swms
+#: model:ir.ui.menu,name:appness_swms.swms_menu_config
+msgid "Configuration"
+msgstr "الاعدادات"
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_res_partner
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_crm_lead_form_inherit
+msgid "Contact"
+msgstr "جهة الاتصال"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Contact / Address"
+msgstr "جهة الاتصال \\ العنوان"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Contact Name"
+msgstr "اسم جهة الاتصال"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Contact image"
+msgstr "صورة جهة الاتصال"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Contacts & Addresses"
+msgstr "جهات الاتصال والعناوين"
+
+#. module: appness_swms
+#: model:ir.ui.menu,name:appness_swms.swms_conf_menu_country
+msgid "Countries"
+msgstr "الدول"
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_res_country
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__country_id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_address__country_id
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Country"
+msgstr "الدولة"
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_res_country_state
+msgid "Country state"
+msgstr "الولاية "
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.account_move_form_inherit_swms
+msgid "Create Sponsership Bill (Manually)"
+msgstr "انشاء فاتورة الكفالة (يدويا)"
+
+#. module: appness_swms
+#: model_terms:ir.actions.act_window,help:appness_swms.swms_services_action
+msgid "Create a new service"
+msgstr "انشاء خدمة جديدة"
+
+#. module: appness_swms
+#: model_terms:ir.actions.act_window,help:appness_swms.sale_subscription_action_swms
+msgid "Create a new sponsership"
+msgstr "انشاء كفالة جديدة"
+
+#. module: appness_swms
+#: model_terms:ir.actions.act_window,help:appness_swms.helpdesk_team_dashboard_action_main
+msgid ""
+"Create teams to organize your tickets by expertise or geographical region, "
+"and define a different workflow for each team."
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_address__create_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_area__create_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_card__create_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__create_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__create_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_income__create_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_list__create_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_list_task__create_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_obligation__create_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_payment_method__create_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_property__create_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard__create_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard_report__create_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__create_uid
+msgid "Created by"
+msgstr "تم الانشاء بواسطة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_address__create_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_area__create_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_card__create_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__create_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__create_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_income__create_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_list__create_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_list_task__create_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_obligation__create_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_payment_method__create_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_property__create_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard__create_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard_report__create_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__create_date
+msgid "Created on"
+msgstr "انشاء في"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+msgid ""
+"Creditor\n"
+"                                <br/>\n"
+"                                الدائن"
+msgstr "تم الانشاء في تاريخ"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+msgid "Creditor A"
+msgstr "الدائن"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_obligation__creditor_name
+msgid "Creditor Name"
+msgstr "اسم الدائن"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_obligation__creditor_phone
+msgid "Creditor Phone"
+msgstr "رقم هاتف الدائن"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_project_project__family_id
+msgid "Customer"
+msgstr "الاسرة"
+
+#. module: appness_swms
+#: model:ir.ui.menu,name:appness_swms.helpdesk_ticket_report_menu_ratings
+msgid "Customer Ratings"
+msgstr "تقييمات العميل"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_income__frequency__day
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_obligation__frequency__day
+msgid "Daily"
+msgstr "يومي"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_card__date
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.income_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "Date From"
+msgstr "من تاريخ"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__birthday
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__birthday
+msgid "Date of Birth"
+msgstr "تاريخ الميلاد"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.income_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "Date to"
+msgstr "الي تاريخ"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__relationship__daughter
+msgid "Daughter"
+msgstr "الابنة"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/res_partner.py:0
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__marital__dead
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__professional_status__dead
+msgid "Dead"
+msgstr "متوفى"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_config_settings_view_form
+msgid "Default Analytic Plan for families"
+msgstr "خطة مراكز التكلفة الافتراضية للاسر"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_config_settings_view_form
+msgid ""
+"Default age during which the sponsership is valid and then the sponsership "
+"will be stoped."
+msgstr "العمر الافتراضي لفعالية الكفالة وبعدها ستتوقف الكفالة بشكل تلقائي"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_config_settings_view_form
+msgid ""
+"Default period during which the sponsership is valid and then the sponsership will be paused for family information update.\n"
+"                                    0 days means automatic pause is disabled"
+msgstr ""
+"الفترة الافتراضية لفعالية الكفالة وبعدها ستتوقف كفالة الاسرة المعسرة بشكل "
+"تلقائي"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_config_settings_view_form
+msgid ""
+"Default period during which the sponsership is valid and then the "
+"sponsership will be stoped."
+msgstr ""
+"الفترة الافتراضية لفعالية الكفالة وبعدها ستتوقف كفالة الاسرة المعسرة بشكل "
+"تلقائي"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/helpdesk_ticket.py:0
+msgid "Delivery"
+msgstr "التوصيل"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__description
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__description
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_document_type_form
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Description"
+msgstr "الوصف"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid ""
+"Did you check all the information and documents along with preparing the "
+"case study?"
+msgstr ""
+"هل تاكدت من صحية جميع البيانات والمستندات مع تحضير دراسة الحالة كباحث ؟"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__professional_status__disabled
+msgid "Disabled"
+msgstr "عاجز"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Discard"
+msgstr "اهمال"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_address__display_name
+#: model:ir.model.fields,field_description:appness_swms.field_swms_area__display_name
+#: model:ir.model.fields,field_description:appness_swms.field_swms_card__display_name
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__display_name
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__display_name
+#: model:ir.model.fields,field_description:appness_swms.field_swms_income__display_name
+#: model:ir.model.fields,field_description:appness_swms.field_swms_list__display_name
+#: model:ir.model.fields,field_description:appness_swms.field_swms_list_task__display_name
+#: model:ir.model.fields,field_description:appness_swms.field_swms_obligation__display_name
+#: model:ir.model.fields,field_description:appness_swms.field_swms_payment_method__display_name
+#: model:ir.model.fields,field_description:appness_swms.field_swms_property__display_name
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard__display_name
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard_report__display_name
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/res_partner.py:0
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__marital__divorced
+msgid "Divorced"
+msgstr "مطلقة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_documents_document__doc_type
+msgid "Doc Type"
+msgstr "نوع المستند"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_level__doctor
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__certificate__doctor
+msgid "Doctor"
+msgstr "الدكتورا"
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_documents_document
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Document"
+msgstr "المستند"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__document_count
+msgid "Document Count"
+msgstr "عدد المستندات"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__document_domain
+msgid "Document Domain"
+msgstr "نطاق المستند"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__document_domain_model_name
+msgid "Document Domain Model Name"
+msgstr "مجال الحث في المودل"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_document_type_form
+msgid "Document Expirations"
+msgstr "انتهاء صلاحية المستند"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_document_type_form
+msgid "Document Expirations and Notifications"
+msgstr "تواريخ انتهاء المستند والاشعارات"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Document Name"
+msgstr "اسم المستند"
+
+#. module: appness_swms
+#: model:ir.actions.act_window,name:appness_swms.swms_conf_doc_type_action
+#: model:ir.model.fields,field_description:appness_swms.field_product_product__document_types
+#: model:ir.model.fields,field_description:appness_swms.field_product_template__document_types
+#: model:ir.ui.menu,name:appness_swms.swms_conf_menu_doc_type
+msgid "Document Types"
+msgstr "انواع المستندات"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Document preview"
+msgstr "معاينة المستند"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/helpdesk_ticket.py:0
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__documents
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__documents
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__documents
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Documents"
+msgstr "المستندات"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_document_type_form
+msgid "Documents Filters"
+msgstr "فلاتر البحث في المستندات"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.account_move_form_inherit_swms
+msgid "Donate Now"
+msgstr "تبرع الان"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.account_move_form_inherit_swms
+msgid "Donation Payment Mehtod"
+msgstr "طريقة التبرع"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/helpdesk_ticket.py:0
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_service_line__state__done
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_service_line_form
+msgid "Done"
+msgstr "تم"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Download"
+msgstr "تحميل"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_payment_status__draft
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_scholarship_status__draft
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__payment_status__draft
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_case__state__draft
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_service_line__state__draft
+msgid "Draft"
+msgstr "مستند"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__edu_current_semester
+msgid "Edu Current Semester"
+msgstr "السمستر الحالي"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__edu_enrollment_date
+msgid "Edu Enrollment Date"
+msgstr "تاريخ الالتحاق"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__edu_graduation_date
+msgid "Edu Graduation Date"
+msgstr "تاريخ التخرج"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__edu_major
+msgid "Edu Major"
+msgstr "المجال الدراسي"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__edu_payment_status
+msgid "Edu Payment Status"
+msgstr "حالة الدفع"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__edu_previous_gpa
+msgid "Edu Previous Gpa"
+msgstr "المعدل التعليمي السابق"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__edu_total_fees
+msgid "Edu Total Fees"
+msgstr "اجمالي الرسوم الدراسية"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__edu_university
+msgid "Edu University"
+msgstr "الجامعة"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Education Info"
+msgstr "بيانات التعليم"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__edu_level
+msgid "Educational Level"
+msgstr "المستوي التعليمي"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.orphans_template
+msgid ""
+"Educational Status\n"
+"                                <br/>\n"
+"                                حالة التعليم"
+msgstr ""
+"حالة التعليم\n"
+"                                <br/>\n"
+"                                حالة التعليم"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__employer
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__employer
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "Employeer"
+msgstr "الشركة المشغلة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__employment_date
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__employment_date
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "Employment Date"
+msgstr "تاريخ التوظيف"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Employment Info"
+msgstr "بيانات التوظيف"
+
+#. module: appness_swms
+#: model:res.groups,name:appness_swms.group_allow_edit_portal
+msgid "Enable the \"Allow Editing? (Portal)\" checkbox in family profile"
+msgstr "السماح بالتعديل في المنصة"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_income_list
+msgid "Every"
+msgstr "كل"
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_hr_expense
+#: model:ir.model.fields,field_description:appness_swms.field_fleet_vehicle__expense_ids
+msgid "Expense"
+msgstr "النفقة "
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_fleet_vehicle__expense_count
+msgid "Expense Count"
+msgstr ""
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/fleet_vehicle.py:0
+msgid "Expenses"
+msgstr "المنصرفات"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_document_type_form
+msgid "Expiration Date"
+msgstr "تاريخ الانتهاء"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_documents_document__expire_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_property__expire_date
+msgid "Expire Date"
+msgstr "تاريخ الانتهاء"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__expire_date_is_mandatory
+msgid "Expire Date Is Mandatory"
+msgstr "هل تاريخ الانتهاء مطلوب؟"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__expire_date_is_visible
+msgid "Expire Date Is Visible"
+msgstr "تاريخ انتهاء الصلاحية مرئي"
+
+#. module: appness_swms
+#: model:ir.actions.act_window,name:appness_swms.swms_families_action
+#: model:ir.ui.menu,name:appness_swms.swms_menu_families
+msgid "Families"
+msgstr "الاسر"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_config_settings__family_analytic_plan
+msgid "Families Analytic Plan"
+msgstr "مراكز التكلفة للاسر"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard__report5
+#: model_terms:ir.ui.view,arch_db:appness_swms.families_template
+msgid "Families Report"
+msgstr "تقرير الاسر"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/document.py:0
+#: model:ir.model.fields,field_description:appness_swms.field_account_bank_statement_line__family
+#: model:ir.model.fields,field_description:appness_swms.field_account_bank_statement_line__sponsership_family
+#: model:ir.model.fields,field_description:appness_swms.field_account_move__family
+#: model:ir.model.fields,field_description:appness_swms.field_account_move__sponsership_family
+#: model:ir.model.fields,field_description:appness_swms.field_sale_order__family
+#: model:ir.model.fields,field_description:appness_swms.field_swms_card__family_id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard__family
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__family
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__family_type__family
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_document_type__family_type__family
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_document_type__type__family
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_project_project_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_service_line_form
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Family"
+msgstr "الاسرة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_account_bank_statement_line__sponsership_family_member
+#: model:ir.model.fields,field_description:appness_swms.field_account_move__sponsership_family_member
+#: model:ir.model.fields,field_description:appness_swms.field_sale_order__family_member
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__family_member
+msgid "Family Member"
+msgstr "افراد الاسرة"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "Family Member Report"
+msgstr "تقرير افراد الاسرة"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Family Members"
+msgstr "افراد الاسرة"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.income_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_service_request_template
+msgid "Family Name"
+msgstr "اسم الاسرة"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Family Name..."
+msgstr "اسم الاسرة…"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__family_seq
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__family_seq
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_service_request_template
+msgid "Family No."
+msgstr "رقم الاسرة"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.families_template
+msgid ""
+"Family No.\n"
+"                                <br/>\n"
+"                                رقم الاسرة"
+msgstr ""
+"رقم الاسرة.\n"
+"                                <br/>\n"
+"                                رقم الاسرة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard__report7
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+msgid "Family Report"
+msgstr "تقرير الاسرة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard__report1
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "Family Statment Report"
+msgstr "تقرير الاسرة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__family_type
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__family_type
+msgid "Family Type"
+msgstr "نوع الاسرة"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/helpers.py:0
+msgid "Father"
+msgstr "الاب"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__gender__female
+msgid "Female"
+msgstr "انثي"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__study_field
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "Field of Study"
+msgstr "مجال الدراسة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__work_field
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__work_field
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "Field of Work"
+msgstr "مجال العمل"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "File"
+msgstr "ملف"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__message_follower_ids
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__message_follower_ids
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__message_follower_ids
+msgid "Followers"
+msgstr "المتابعين"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__message_partner_ids
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__message_partner_ids
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعين(الشركاء)"
+
+#. module: appness_swms
+#: model:ir.model.fields,help:appness_swms.field_swms_case__activity_type_icon
+#: model:ir.model.fields,help:appness_swms.field_swms_document_type__activity_type_icon
+#: model:ir.model.fields,help:appness_swms.field_swms_service_line__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_income__frequency
+#: model:ir.model.fields,field_description:appness_swms.field_swms_obligation__frequency
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_service_request_template
+msgid "Frequency"
+msgstr "معدل التكرار"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.income_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+msgid ""
+"Frequency\n"
+"                                <br/>\n"
+"                                معدل التكرار"
+msgstr ""
+"معدل التكرار\n"
+"                                <br/>\n"
+"                                معدل التكرار"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard__from_date
+msgid "From Date"
+msgstr "من تارخ"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__gender
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "Gender"
+msgstr "الجنس"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "General Info"
+msgstr "البيانات العامة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__edu_grading_system_type
+msgid "Grading System Type"
+msgstr "نوع نظام الدرجات"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_level__graduate
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__certificate__graduate
+msgid "Graduate"
+msgstr "تخرج"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__relationship__grandfather
+msgid "Grandfather"
+msgstr "الجد"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__relationship__grandmother
+msgid "Grandmother"
+msgstr "الجدة"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__relationship__grandson
+msgid "Grandson"
+msgstr "الحفيد"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__has_analytic_account
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__has_analytic_account
+msgid "Has Analytic Account"
+msgstr "لديه مركز تكلفة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__has_message
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__has_message
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__has_message
+msgid "Has Message"
+msgstr "لديه رسالة"
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_helpdesk_team
+msgid "Helpdesk Team"
+msgstr "فريق مكتب المساعدة"
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_helpdesk_ticket
+msgid "Helpdesk Ticket"
+msgstr "تذكرة مكتب المساعدة"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_grading_system_type__high
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_level__high
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__certificate__high
+msgid "High School"
+msgstr "مدرسة ثانوية"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_crm_lead_form_inherit
+msgid "How many do you want to sponser?"
+msgstr "كم عدد المكفولين ؟"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_address__id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_area__id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_card__id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_income__id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_list__id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_list_task__id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_obligation__id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_payment_method__id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_property__id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard__id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard_report__id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__id
+msgid "ID"
+msgstr "الرقم المدني"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__activity_exception_icon
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__activity_exception_icon
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__activity_exception_icon
+msgid "Icon"
+msgstr "صورة"
+
+#. module: appness_swms
+#: model:ir.model.fields,help:appness_swms.field_swms_case__activity_exception_icon
+#: model:ir.model.fields,help:appness_swms.field_swms_document_type__activity_exception_icon
+#: model:ir.model.fields,help:appness_swms.field_swms_service_line__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields,help:appness_swms.field_swms_case__message_needaction
+#: model:ir.model.fields,help:appness_swms.field_swms_document_type__message_needaction
+#: model:ir.model.fields,help:appness_swms.field_swms_service_line__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields,help:appness_swms.field_swms_case__message_has_error
+#: model:ir.model.fields,help:appness_swms.field_swms_case__message_has_sms_error
+#: model:ir.model.fields,help:appness_swms.field_swms_document_type__message_has_error
+#: model:ir.model.fields,help:appness_swms.field_swms_document_type__message_has_sms_error
+#: model:ir.model.fields,help:appness_swms.field_swms_service_line__message_has_error
+#: model:ir.model.fields,help:appness_swms.field_swms_service_line__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields,help:appness_swms.field_helpdesk_ticket__is_sponsership
+msgid ""
+"If set, confirming a sale order with this product will create a subscription"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields,help:appness_swms.field_swms_document_type__is_bill
+msgid "If the family bill payment assistance they should upload this document"
+msgstr "اذا هي فاتورة لمساعدة اسر معسرة لا بد"
+
+#. module: appness_swms
+#: model:ir.model.fields,help:appness_swms.field_swms_document_type__is_needy_family
+msgid "If the family is a needy family they should upload this document"
+msgstr "في حالة الاسرة معسرة الرجاء ارفاق هذا المستند"
+
+#. module: appness_swms
+#: model:ir.model.fields,help:appness_swms.field_swms_document_type__is_divorce
+msgid "If the family member is divorced he/she should upload this document"
+msgstr "في حالة الطلاق الرجاء ارفاق هذا المستند"
+
+#. module: appness_swms
+#: model:ir.model.fields,help:appness_swms.field_swms_document_type__is_marriage
+msgid "If the family member is married he/she should upload this document"
+msgstr "في حالة مقدم الطلب متزوج الرجاء ارفاق المستند"
+
+#. module: appness_swms
+#: model:ir.model.fields,help:appness_swms.field_swms_document_type__is_birth
+msgid ""
+"If the family member is under 18 years old he/she should upload this "
+"document"
+msgstr "في حالة فرد العائلة اصغر من 18 سنة الرجاء ارفاق المستند"
+
+#. module: appness_swms
+#: model:ir.model.fields,help:appness_swms.field_swms_document_type__is_education
+msgid ""
+"If the family member needs assistance in education he/she should upload this"
+" document"
+msgstr "في حالة طلب مساعدة دراسية الرجاء ارفاق المستند"
+
+#. module: appness_swms
+#: model:ir.model.fields,help:appness_swms.field_swms_document_type__is_orphan
+msgid ""
+"If the family member's father is dead he/she should upload this document"
+msgstr "في حالة رب الاسرة متوفي الرجاء ارفاق المستند"
+
+#. module: appness_swms
+#: model:ir.model.fields,help:appness_swms.field_swms_document_type__is_material
+msgid ""
+"If the family needs material assistance they should upload this document"
+msgstr "في حالة الطلب مادي الرجاء ارفاق المستند"
+
+#. module: appness_swms
+#: model:ir.model.fields,help:appness_swms.field_swms_document_type__is_death
+msgid "If the mother's husband is dead she should upload this document"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__professional_status__imprisoned
+msgid "Imprisoned"
+msgstr "مسجون"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_payment_status__in_payment
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__payment_status__in_payment
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "In Payment"
+msgstr "الدفع"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/helpdesk_ticket.py:0
+msgid "In Progress"
+msgstr ""
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/document.py:0
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_document_type__type__income
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "Income"
+msgstr "الدخل"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard__report3
+#: model_terms:ir.ui.view,arch_db:appness_swms.income_template
+msgid "Income Report"
+msgstr "تقرير الدخل"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__income_sources
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__income_sources
+msgid "Income Sources"
+msgstr "مصادر الدخل"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.families_template
+msgid ""
+"Income and Obligations\n"
+"                                <br/>\n"
+"                                الدخل والالتزامات"
+msgstr "الدخل والالتزامات"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__accommodation_type__inherited
+msgid "Inherited"
+msgstr "ملك ورثة"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Internal notes..."
+msgstr "ملاحظات داخلية"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_income__interval
+#: model:ir.model.fields,field_description:appness_swms.field_swms_obligation__interval
+msgid "Interval"
+msgstr "عدد التكرار"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.income_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+msgid ""
+"Interval\n"
+"                                <br/>\n"
+"                                عدد التكرار"
+msgstr ""
+"عدد التكرار\n"
+"                                <br/>\n"
+"                                عدد التكرار"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Inventory"
+msgstr "المخازن"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_payment_status__invoicing_legacy
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__payment_status__invoicing_legacy
+msgid "Invoicing App Legacy"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__is_address_allowed
+msgid "Is Address Allowed"
+msgstr "هل العنوان مسموح به"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_team__is_approve_stage
+msgid "Is Approve Stage"
+msgstr "هل هي مرحلة الموافقة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_documents_document__is_archived
+msgid "Is Archived"
+msgstr "هل هو مؤرشف"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_crm_lead__is_available
+msgid "Is Available"
+msgstr "هل هو متوفر"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__is_bill
+msgid "Is Bill"
+msgstr "هل هي فاتورة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__is_bill
+msgid "Is Bill?"
+msgstr "هل هي فاتورة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_team__is_cancel_stage
+msgid "Is Cancel Stage"
+msgstr "هي مرحلة الالغاء"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__is_dead
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__is_dead
+msgid "Is Dead"
+msgstr "هل هو متوفي"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__is_divorce
+msgid "Is Divorced?"
+msgstr "هل هو\\هي مطلق\\مطلقة ؟"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_account_bank_statement_line__is_donation
+#: model:ir.model.fields,field_description:appness_swms.field_account_move__is_donation
+msgid "Is Donation"
+msgstr "التبرع"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_team__is_done_stage
+msgid "Is Done Stage"
+msgstr "هل هي مرحلة النهائية"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_team__is_draft_stage
+msgid "Is Draft Stage"
+msgstr "هل هي مرحلة الدرافت "
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__is_education
+msgid "Is Education"
+msgstr "هل هو للتعليم"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__is_education
+msgid "Is Education?"
+msgstr "هل هو للتعليم ؟"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_documents_document__is_expired
+msgid "Is Expired"
+msgstr "هل هي منتهي الصلاحية"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__is_family
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__is_family
+msgid "Is Family"
+msgstr "هل هي اسرة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__message_is_follower
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__message_is_follower
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__is_mandatory
+msgid "Is Mandatory"
+msgstr "هل هو مطلوب"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__is_marriage
+msgid "Is Married?"
+msgstr "هل هو\\هي متزوج؟"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__is_material
+msgid "Is Material"
+msgstr "هل هو شي مادي"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__is_material
+msgid "Is Material?"
+msgstr "هل هو شي مادي؟"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__is_needy_family
+msgid "Is Needy Family"
+msgstr "هل هي اسرة متعسرة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__is_needy_family
+msgid "Is Needy Family?"
+msgstr "هل هي اسرة متعسرة؟"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__is_orphan
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__is_orphan
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__is_orphan
+msgid "Is Orphan"
+msgstr "هل هو يتيم"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__is_orphan
+msgid "Is Orphan?"
+msgstr "هل هو يتيم"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_product_product__is_published_swms
+#: model:ir.model.fields,field_description:appness_swms.field_product_template__is_published_swms
+msgid "Is Published Swms"
+msgstr "هل هو منشور علي المنصة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_team__is_reject_stage
+msgid "Is Reject Stage"
+msgstr "هل هي مرحلة الرفض"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.account_move_form_inherit_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.sale_order_sponsership_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_crm_lead_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_project_project_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_stock_picking_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_team_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Is SWMS ?"
+msgstr "هل هو تابع لنظام الرعاية الاجتماعية ؟"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__is_sponser
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__is_sponser
+msgid "Is Sponser"
+msgstr "هل هو كافل"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_crm_lead_form_inherit
+msgid "Is Sponser Avaialble?"
+msgstr "هل الكافل متوفر ؟"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_account_bank_statement_line__is_sponsership
+#: model:ir.model.fields,field_description:appness_swms.field_account_move__is_sponsership
+msgid "Is Sponsership"
+msgstr "هل هي كفالة"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_product_form_inherit
+msgid "Is Sponsership?"
+msgstr "هل هي كفالة؟"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_account_bank_statement_line__is_swms
+#: model:ir.model.fields,field_description:appness_swms.field_account_move__is_swms
+#: model:ir.model.fields,field_description:appness_swms.field_crm_lead__is_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_team__is_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__is_swms
+#: model:ir.model.fields,field_description:appness_swms.field_product_product__is_swms
+#: model:ir.model.fields,field_description:appness_swms.field_product_template__is_swms
+#: model:ir.model.fields,field_description:appness_swms.field_project_project__is_swms
+#: model:ir.model.fields,field_description:appness_swms.field_sale_order__is_swms
+#: model:ir.model.fields,field_description:appness_swms.field_stock_picking__is_swms
+msgid "Is Swms"
+msgstr "هل هو تابع لنظام الرعاية الاجتماعية ؟"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__is_birth
+msgid "Is Under 18?"
+msgstr "هل هو تحت سن ال ١٨ ؟"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__is_death
+msgid "Is Widowed?"
+msgstr "هل هي ارملة ؟"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Is a Sponser ?"
+msgstr "هل هو كافل؟"
+
+#. module: appness_swms
+#: model:ir.model.fields,help:appness_swms.field_product_product__is_published_swms
+#: model:ir.model.fields,help:appness_swms.field_product_template__is_published_swms
+msgid "Is published in the website portal ?"
+msgstr "هل هو منشور علي المنصة؟"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_documents_document__issuance_date
+msgid "Issuance Date"
+msgstr "تاريخ الاصدار"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__issuance_date_is_mandatory
+msgid "Issuance Date Is Mandatory"
+msgstr "هل تاريخ الاصدار اجباري"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__issuance_date_is_visible
+msgid "Issuance Date Is Visible"
+msgstr "تاريخ الاصدار مظهر"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_document_type_form
+msgid "Issunance Dats"
+msgstr "تاريخ الاصدار"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__professional_status__job_seeker
+msgid "Job seeker"
+msgstr "باحث عن عمل"
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_account_move
+msgid "Journal Entry"
+msgstr "قيد اليومية"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_address__write_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_area__write_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_card__write_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__write_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__write_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_income__write_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_list__write_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_list_task__write_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_obligation__write_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_payment_method__write_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_property__write_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard__write_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard_report__write_uid
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__write_uid
+msgid "Last Updated by"
+msgstr "اخر تعديل عن طريق"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_address__write_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_area__write_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_card__write_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__write_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__write_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_income__write_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_list__write_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_list_task__write_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_obligation__write_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_payment_method__write_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_property__write_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard__write_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard_report__write_date
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__write_date
+msgid "Last Updated on"
+msgstr "اخر تعديل في"
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_crm_lead
+msgid "Lead/Opportunity"
+msgstr "عميل مهتم/فرصة "
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_service_request_template
+msgid "Limit"
+msgstr "محدود"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_crm_lead__lines
+msgid "Lines"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_service_line_form
+msgid "Linked with"
+msgstr "ربط مع"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__list_id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_list_task__list_id
+msgid "List"
+msgstr "القائمة"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_list_form
+msgid "List's Title"
+msgstr "عنوان القائمة"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Lock"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Log a note..."
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "Maintenance Expenses"
+msgstr "مصروفات صيانة"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__gender__male
+msgid "Male"
+msgstr "ذكر"
+
+#. module: appness_swms
+#: model:res.groups,name:appness_swms.group_swms_manager
+msgid "Manager"
+msgstr "المدير"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/helpdesk_ticket.py:0
+#: code:addons/appness_swms/models/res_partner.py:0
+msgid "Mandatory fields:"
+msgstr "الحقول الاجبارية:"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__marital
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "Marital Status"
+msgstr "الحالة الاجتماعية"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/res_partner.py:0
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__marital__married
+msgid "Married"
+msgstr "متزوج"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_level__master
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__certificate__master
+msgid "Master"
+msgstr "سيد"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/product_template.py:0
+#: model:ir.model.fields.selection,name:appness_swms.selection__product_template__action_types__material
+msgid "Material"
+msgstr "مادي"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__material_lines
+msgid "Material Lines"
+msgstr "سطور المواد"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__family_type__member
+msgid "Member"
+msgstr "فرد"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+msgid ""
+"Member\n"
+"                                <br/>\n"
+"                                الفرد"
+msgstr ""
+"الفرد\n"
+"                                <br/>\n"
+"                                الفرد"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Member / Address"
+msgstr "عنوان الفرد"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Member Name"
+msgstr "اسم الفرد"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__member_seq
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__member_seq
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+msgid "Member No."
+msgstr "رقم الفرد"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard__report2
+msgid "Member Report"
+msgstr "تقرير الافراد"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Member image"
+msgstr "صورة الفرد"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/document.py:0
+#: model:ir.actions.act_window,name:appness_swms.swms_family_members_action
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_document_type__family_type__member
+#: model:ir.ui.menu,name:appness_swms.swms_menu_family_members
+msgid "Members"
+msgstr "الافراد"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.families_template
+msgid ""
+"Members Count\n"
+"                                <br/>\n"
+"                                عدد الافراد"
+msgstr ""
+"عدد الافراد\n"
+"                                <br/>\n"
+"                                عدد الافراد"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__message_has_error
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__message_has_error
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في توصيل الرسالة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__message_ids
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__message_ids
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__message_ids
+msgid "Messages"
+msgstr "رسالة"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_grading_system_type__middle
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_level__middle
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__certificate__middle
+msgid "Middle School"
+msgstr "المدرسة المتوسطة"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__building_type__ministry
+msgid "Ministry of Housing"
+msgstr "وزارة الإسكان"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_service_line_form
+msgid "Misc."
+msgstr "متنوعة."
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/helpdesk_ticket.py:0
+#: code:addons/appness_swms/models/res_partner.py:0
+msgid "Missing Documents:"
+msgstr "المستندات المفقودة:"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Mobile:"
+msgstr "رقم الهاتف"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "Money Collected By Family"
+msgstr "المبلغ المحصل بواسطة الاسرة"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_income__frequency__month
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_obligation__frequency__month
+#: model_terms:ir.ui.view,arch_db:appness_swms.income_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+msgid "Monthly"
+msgstr "شهري"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "More Info"
+msgstr "المذيد من البيانات"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Moved to trash"
+msgstr "تم الترحيل لسلة المهملات"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Must have the link to access"
+msgstr "تحتاج الرابط للوصول"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__my_activity_date_deadline
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__my_activity_date_deadline
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "موعد نهاية النشاط"
+
+#. module: appness_swms
+#: model:ir.ui.menu,name:appness_swms.helpdesk_ticket_menu_my
+msgid "My Requests"
+msgstr "طلباتي"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_area__name
+#: model:ir.model.fields,field_description:appness_swms.field_swms_card__name
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__name
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__name
+#: model:ir.model.fields,field_description:appness_swms.field_swms_list__name
+#: model:ir.model.fields,field_description:appness_swms.field_swms_list_task__name
+#: model:ir.model.fields,field_description:appness_swms.field_swms_payment_method__name
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard_report__name
+#: model_terms:ir.ui.view,arch_db:appness_swms.income_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Name"
+msgstr "الاسم"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.families_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.orphans_template
+msgid ""
+"Name\n"
+"                                <br/>\n"
+"                                الاسم"
+msgstr ""
+"الاسم\n"
+"                                <br/>\n"
+"                                الاسم"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.purchase_order_form_inherit_swms
+msgid "Name, TIN, Email, or Reference"
+msgstr "الاسم, TIN, البريد, او المصدر"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "National ID"
+msgstr "الرقم الوطني"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Needy Family Info"
+msgstr "بيانات الاسرة المعسرة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_config_settings__needy_family_period
+msgid "Needy Family Sponsership Period (Months)"
+msgstr "فترة كفالة الاسرة المعسرة (بالشهور)"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__needy_received_card
+msgid "Needy Received Card"
+msgstr "تم تسليم البطاقة الغذائية للاسرة المعسرة"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "Net Income"
+msgstr "صافي الدخل"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Next"
+msgstr "التالي"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__activity_calendar_event_id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__activity_calendar_event_id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "النشاط القادم في التقويم"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__activity_date_deadline
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__activity_date_deadline
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "نهاية الموعد القادم"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__activity_summary
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__activity_summary
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط القادم"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__activity_type_id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__activity_type_id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط القادم"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__next_stage
+msgid "Next Stage"
+msgstr "المرحلة التالية"
+
+#. module: appness_swms
+#: model_terms:ir.actions.act_window,help:appness_swms.helpdesk_team_dashboard_action_main
+msgid "No teams found"
+msgstr "لا يوجد فرق مساعدة"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/product_template.py:0
+#: model:ir.model.fields.selection,name:appness_swms.selection__product_template__action_types__none
+msgid "None"
+msgstr "لا يوجد"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_payment_status__not_paid
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_scholarship_status__not_paid
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__payment_status__not_paid
+msgid "Not Paid"
+msgstr "غير مدفوع"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__professional_status__not_working
+msgid "Not working"
+msgstr "لا يعمل"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__noti_documents
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__noti_documents
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__noti_documents
+msgid "Noti Documents"
+msgstr "اشعارات المستندات"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_document_type_form
+msgid "Notifications"
+msgstr "اشعارات"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard_report__num
+msgid "Num"
+msgstr "الرقم"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__message_needaction_counter
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__message_needaction_counter
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الاحداث"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__message_has_error_counter
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__message_has_error_counter
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الاخطاء"
+
+#. module: appness_swms
+#: model:ir.model.fields,help:appness_swms.field_swms_case__message_needaction_counter
+#: model:ir.model.fields,help:appness_swms.field_swms_document_type__message_needaction_counter
+#: model:ir.model.fields,help:appness_swms.field_swms_service_line__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields,help:appness_swms.field_swms_case__message_has_error_counter
+#: model:ir.model.fields,help:appness_swms.field_swms_document_type__message_has_error_counter
+#: model:ir.model.fields,help:appness_swms.field_swms_service_line__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسايل ذات الاخطاء"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/document.py:0
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_document_type__type__obligation
+msgid "Obligation"
+msgstr "التزام"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__obligations
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__obligations
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Obligations"
+msgstr "الالتزامات"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard__report4
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+msgid "Obligations Report"
+msgstr "تقرير الالتزامات"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/product_template.py:0
+#: model:ir.model.fields.selection,name:appness_swms.selection__product_template__action_types__one
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_obligation__frequency__one
+msgid "One Time"
+msgstr "مرة واحدة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__lead
+msgid "Opportunity"
+msgstr "الفرصة"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_document_type_form
+msgid "Optional Filters"
+msgstr "خيارات بحث اختيارية"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard__orphan
+msgid "Orphan"
+msgstr "يتيم"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.orphans_template
+msgid ""
+"Orphan ID\n"
+"                                <br/>\n"
+"                                رقم اليتيم"
+msgstr ""
+"رقم اليتيم                                <br/>\n"
+"                                رقم اليتيم"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_config_settings__orphan_age
+msgid "Orphan Sponsership Age (Years)"
+msgstr "عمر كفالة اليتيم (بالسنين)"
+
+#. module: appness_swms
+#: model:ir.actions.act_window,name:appness_swms.swms_orphans_action
+#: model:ir.ui.menu,name:appness_swms.swms_menu_orphans
+msgid "Orphans"
+msgstr "الايتام"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard__report6
+#: model_terms:ir.ui.view,arch_db:appness_swms.orphans_template
+msgid "Orphans Report"
+msgstr "تقرير الايتام"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_level__other
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__accommodation_type__other
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__certificate__other
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__relationship__other
+msgid "Other"
+msgstr "اخري"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "Other Expenses"
+msgstr "مصاريف اخري"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.income_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "Other Income"
+msgstr "دخل اخر"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__otp
+msgid "Otp"
+msgstr "كلمة المرور لمرة واحدة OTP"
+
+#. module: appness_swms
+#: model:ir.ui.menu,name:appness_swms.helpdesk_menu_team_dashboard
+msgid "Overview"
+msgstr "لوحه التحكم"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__accommodation_type__owned
+msgid "Owned"
+msgstr "ملك"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_property__ownership_date
+msgid "Ownership Date"
+msgstr "تاريخ الملكية"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_payment_status__paid
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_scholarship_status__paid
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__payment_status__paid
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Paid"
+msgstr "تم الدفع"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Partial"
+msgstr "تم الدفع جزئيا"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_payment_status__partial
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__payment_status__partial
+msgid "Partially Paid"
+msgstr "تم الدفع جزئيا"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_income__partner_id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_obligation__partner_id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_property__partner_id
+msgid "Partner"
+msgstr "الاسرة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_config_settings__pause_days
+msgid "Pause Sponserships After (Days)"
+msgstr "ايقاف الكفالة بعد (ايام)"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_account_bank_statement_line__payment_journal
+#: model:ir.model.fields,field_description:appness_swms.field_account_move__payment_journal
+msgid "Payment Journal"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_obligation__payment_method
+msgid "Payment Method"
+msgstr "طرق الدفع"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+msgid ""
+"Payment Method\n"
+"                                <br/>\n"
+"                                طريقة الدفع"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.actions.act_window,name:appness_swms.swms_conf_payment_method_action
+#: model:ir.ui.menu,name:appness_swms.swms_conf_menu_payment_method
+msgid "Payment Methods"
+msgstr "طرق الدفع"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_account_bank_statement_line__payment_state_auto_sponsership_bill_status
+#: model:ir.model.fields,field_description:appness_swms.field_account_move__payment_state_auto_sponsership_bill_status
+msgid "Payment State Auto Sponsership Bill Status"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__payment_status
+msgid "Payment Status"
+msgstr "حالة الدفع"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__building_type__personal
+msgid "Personal"
+msgstr "شخصي"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Personal Info"
+msgstr "البيانات الشخصية"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Phone:"
+msgstr "رقم الهاتف:"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__pickings
+msgid "Pickings"
+msgstr "حركات المخزن"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__pickings_count
+msgid "Pickings Count"
+msgstr "عدد تحركات المخزن"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/helpers.py:0
+msgid "Please Upload "
+msgstr "رجاءا قم برفع "
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/helpers.py:0
+msgid "Please Upload an updated "
+msgstr "رجاءا قم برفع تحديث "
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/helpdesk_ticket.py:0
+msgid "Please configure a project template in the service."
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__prepaid_meter_req_no
+msgid "Prepaid meter change request number"
+msgstr "رقم طلب تغيير العداد مسبق الدفع"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__professional_status__preschooler
+msgid "Preschooler"
+msgstr "مرحلة ما قبل المدرسة"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Previous"
+msgstr "السابق"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__previous_stage
+msgid "Previous Stage"
+msgstr "المرحلة السابقة"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_reports_wizard
+msgid "Print"
+msgstr "طباعة"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_reports_wizard
+msgid "Print Report"
+msgstr "طباعة التقرير"
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_product_template
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__service_variant_id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__product
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Product"
+msgstr "المنتج"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__professional_status
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__professional_status
+msgid "Professional Status"
+msgstr "الحالة المهنية"
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_project_project
+msgid "Project"
+msgstr "المشروع"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/product_template.py:0
+#: model:ir.model.fields.selection,name:appness_swms.selection__product_template__action_types__project
+msgid "Project Based"
+msgstr "مشورع"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/helpdesk_ticket.py:0
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__projects
+msgid "Projects"
+msgstr "مشاريع"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__projects_count
+msgid "Projects Count"
+msgstr "عدد المشاريع"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__properties
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__properties
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Properties"
+msgstr "الممتلكات"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/document.py:0
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_document_type__type__property
+msgid "Property"
+msgstr "الملكية"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__qty
+msgid "Qty"
+msgstr "العدد"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__rating_ids
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__rating_ids
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__rating_ids
+msgid "Ratings"
+msgstr "التقييمات"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/product_template.py:0
+#: model:ir.model.fields.selection,name:appness_swms.selection__product_template__action_types__recurring
+msgid "Recurring"
+msgstr "متكرر"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__plan_id
+#: model:ir.model.fields,field_description:appness_swms.field_product_product__plan_id
+#: model:ir.model.fields,field_description:appness_swms.field_product_template__plan_id
+msgid "Recurring Plan"
+msgstr "خطة التكرار"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Reference Info"
+msgstr "بيانات الاسناد"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_service_line_form
+msgid "Refuse"
+msgstr "رفض"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_service_line__state__refused
+msgid "Refused"
+msgstr "تم الرفض"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Reject"
+msgstr "رفض"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__relationship
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__relationship
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "Relationship"
+msgstr "العلاقة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__relationship_other
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__relationship_other
+msgid "Relationship Other"
+msgstr "صلة القرابة (اخري)"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_obligation__remaining_amount
+msgid "Remaining Amount"
+msgstr "المبلغ المتبقي"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+msgid ""
+"Remaining Amount\n"
+"                                <br/>\n"
+"                                المبلغ المتبقي"
+msgstr ""
+
+#. module: appness_swms
+#: model:res.groups,name:appness_swms.group_renew_sponsership
+msgid "Renew Sponsership"
+msgstr "تجديد الكفالة"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "Rent Expenses"
+msgstr "مصاريف الايجار"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__accommodation_type__rented
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__building_type__rented
+msgid "Rented"
+msgstr "إيجار"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__company_currency_id
+msgid "Report Company Currency"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_service_line_form
+msgid "Report it"
+msgstr "ارسال التقرير"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_service_line__state__reported
+msgid "Reported"
+msgstr "تم التقرير"
+
+#. module: appness_swms
+#: model:ir.ui.menu,name:appness_swms.helpdesk_ticket_report_menu_main
+msgid "Reporting"
+msgstr "التقارير"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard__reports_ids
+msgid "Reports"
+msgstr "التقارير"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_account_bank_statement_line__request_id
+#: model:ir.model.fields,field_description:appness_swms.field_account_bank_statement_line__sponsership_request_id
+#: model:ir.model.fields,field_description:appness_swms.field_account_move__request_id
+#: model:ir.model.fields,field_description:appness_swms.field_account_move__sponsership_request_id
+#: model:ir.model.fields,field_description:appness_swms.field_project_project__request_id
+#: model:ir.model.fields,field_description:appness_swms.field_sale_order__request_id
+#: model:ir.model.fields,field_description:appness_swms.field_stock_picking__request_id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_card__request_id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__request_id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__request
+msgid "Request"
+msgstr "الطلب"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Request No."
+msgstr "رقم الطلب"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__request_seq
+msgid "Request Seq"
+msgstr "رقم الطلب"
+
+#. module: appness_swms
+#: model:ir.ui.menu,name:appness_swms.helpdesk_ticket_menu_main
+msgid "Requests"
+msgstr "الطلبات"
+
+#. module: appness_swms
+#: model:ir.ui.menu,name:appness_swms.helpdesk_ticket_report_menu
+msgid "Requests Analysis"
+msgstr "تحليل الطلبات"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_case_form
+msgid "Research"
+msgstr "البحث"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__research_date
+msgid "Research Date"
+msgstr "تاريخ البحث"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__researcher_id
+msgid "Researcher"
+msgstr "الباحث"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_service_line_form
+msgid "Reset to Draft"
+msgstr "اعادة الي حالة المستند"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_case_form
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Reset to draft"
+msgstr "اعادة الي حالة المستند"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__activity_user_id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__activity_user_id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Restore"
+msgstr "اعادة"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__professional_status__retired
+msgid "Retired"
+msgstr "متقاعد"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_payment_status__reversed
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__payment_status__reversed
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Reversed"
+msgstr "تم العكس"
+
+#. module: appness_swms
+#: model:ir.ui.menu,name:appness_swms.helpdesk_sla_menu_main
+msgid "SLA Policies"
+msgstr "سياسة اتفاقية مستوى الخدمة"
+
+#. module: appness_swms
+#: model:ir.ui.menu,name:appness_swms.helpdesk_ticket_report_menu_sla_analysis
+msgid "SLA Status Analysis"
+msgstr "تحليل سياسة اتفاقية مستوى الخدمة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__message_has_sms_error
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__message_has_sms_error
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.ui.menu,name:appness_swms.swms_conf_menu
+#: model:ir.ui.menu,name:appness_swms.swms_menu
+#: model_terms:ir.ui.view,arch_db:appness_swms.account_move_form_inherit_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.sale_order_sponsership_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_crm_lead_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_product_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_project_project_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_stock_picking_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "SWMS"
+msgstr "الرعاية الاجتماعية"
+
+#. module: appness_swms
+#: model:ir.actions.act_window,name:appness_swms.helpdesk_team_dashboard_action_main
+msgid "SWMS Overview"
+msgstr "لوحه تحكم نظام الرعاية الاجتماعية"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_reports_wizard
+msgid "SWMS Owners Reports"
+msgstr "تقارير الرعاية الاجتماعية"
+
+#. module: appness_swms
+#: model:ir.actions.report,name:appness_swms.action_swms_report
+msgid "SWMS Report"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.actions.act_window,name:appness_swms.action_swms_reports_wizard
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_reports_wizard
+msgid "SWMS Reports"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields,help:appness_swms.field_helpdesk_team__service
+#: model:ir.model.fields,help:appness_swms.field_helpdesk_ticket__service
+msgid ""
+"SWMS Service that is used in this helpdesk team for all the service requests"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.ui.menu,name:appness_swms.helpdesk_team_menu
+msgid "SWMS Teams"
+msgstr "فرق المساعدة الاجتماعية"
+
+#. module: appness_swms
+#: model:mail.activity.type,name:appness_swms.mail_activity_data_approval
+msgid "SWMS: Approval"
+msgstr "الرعاية الاجتماعية: موافقة"
+
+#. module: appness_swms
+#: model:mail.activity.type,name:appness_swms.mail_activity_document_expire
+msgid "SWMS: Document Expired"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.actions.server,name:appness_swms.swms_pause_sponsership_ir_actions_server
+msgid "SWMS: Pause Sponsership to Update Inofrmation"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.actions.server,name:appness_swms.swms_send_notifications_ir_actions_server
+msgid "SWMS: Send Notifications"
+msgstr "الرعاية الاجتماعية: ارسال الاشعارات"
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_sale_order
+msgid "Sales Order"
+msgstr "أمر البيع"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Save"
+msgstr "حفظ"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__edu_scholarship_status
+msgid "Scholarship Status"
+msgstr "حالة المنحة الدراسية"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__study_school
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "School"
+msgstr "المدرسة/الجامعة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__study_class
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__study_class
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "School Class"
+msgstr "الفصل الدراسي"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__professional_status__school_student
+msgid "School student"
+msgstr "طالب مدرسي"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard__select_all
+msgid "Select All"
+msgstr "اختيار الكل"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard_report__seq
+msgid "Seq"
+msgstr "الرقم التسلسلي"
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_ir_sequence
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_team__sequence_id
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__sequence_id
+#: model:ir.model.fields,field_description:appness_swms.field_product_product__sequence_id
+#: model:ir.model.fields,field_description:appness_swms.field_product_template__sequence_id
+msgid "Sequence"
+msgstr "تسلسل "
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/document.py:0
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_team__service
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__service
+#: model:ir.model.fields,field_description:appness_swms.field_swms_address__service_id
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_document_type__type__service
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_crm_lead_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_service_line_form
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_service_line_list
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Service"
+msgstr "الخدمة"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Service Info"
+msgstr "بيانات الخدمة"
+
+#. module: appness_swms
+#: model:ir.actions.report,name:appness_swms.action_service_report
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_service_request_template
+msgid "Service Request Report"
+msgstr "تقرير طلبات الخدمات"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Service Team"
+msgstr "فريق الخدمة"
+
+#. module: appness_swms
+#: model:ir.actions.act_window,name:appness_swms.swms_services_action
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__services
+#: model:ir.ui.menu,name:appness_swms.swms_menu_services
+msgid "Services"
+msgstr "الخدمات"
+
+#. module: appness_swms
+#: model:ir.actions.act_window,name:appness_swms.configuration_action
+#: model:ir.ui.menu,name:appness_swms.swms_conf_menu_settings
+msgid "Settings"
+msgstr "الاعدادات"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__show_approve_button
+msgid "Show Approve Button"
+msgstr "اظهار زر الموافقة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__show_cancel_button
+msgid "Show Cancel Button"
+msgstr "اظهار زر الالغاء"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__show_draft_button
+msgid "Show Draft Button"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_account_bank_statement_line__show_member
+#: model:ir.model.fields,field_description:appness_swms.field_account_move__show_member
+#: model:ir.model.fields,field_description:appness_swms.field_sale_order__show_member
+msgid "Show Member"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__show_reject_button
+msgid "Show Reject Button"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__professional_status__sick
+msgid "Sick"
+msgstr "مريض"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/res_partner.py:0
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__marital__single
+msgid "Single"
+msgstr "اعزب"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__building_type__social
+msgid "Social Development"
+msgstr "التنمية الاجتماعية"
+
+#. module: appness_swms
+#: model:ir.ui.menu,name:appness_swms.menu_swms_root
+msgid "Social Welfare"
+msgstr "الرعاية الاجتماعية"
+
+#. module: appness_swms
+#: model:ir.module.category,name:appness_swms.swms_category
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_team_form_inherit
+msgid "Social Welfare (SWMS)"
+msgstr "الرعاية الاجتماعية"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__relationship__son
+msgid "Son"
+msgstr "الابن"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard__sort_reports
+msgid "Sort Reports"
+msgstr "ترتيب التقارير"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard__sponser_id
+#: model_terms:ir.ui.view,arch_db:appness_swms.sale_order_sponsership_form_inherit
+msgid "Sponser"
+msgstr "الكافل"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.income_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "Sponser Name"
+msgstr "اسم الكافل"
+
+#. module: appness_swms
+#: model:ir.actions.act_window,name:appness_swms.crm_lead_action_pipeline_swms
+msgid "Sponser Opportunities"
+msgstr "فرص الكافل"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_crm_lead__sponsered_qty
+msgid "Sponsered Qty"
+msgstr "عدد الكفالات"
+
+#. module: appness_swms
+#: model:ir.actions.act_window,name:appness_swms.swms_sponsers_action
+#: model:ir.ui.menu,name:appness_swms.swms_menu_sponsers
+msgid "Sponsers"
+msgstr "الكافلين"
+
+#. module: appness_swms
+#: model:ir.ui.menu,name:appness_swms.swms_menu_opportunities
+msgid "Sponsers Opportunities"
+msgstr "فرص التكفل"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_account_bank_statement_line__sponsership_id
+#: model:ir.model.fields,field_description:appness_swms.field_account_move__sponsership_id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__sponsership
+msgid "Sponsership"
+msgstr "الكفالة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_account_bank_statement_line__sponsership_bill_id
+#: model:ir.model.fields,field_description:appness_swms.field_account_move__sponsership_bill_id
+msgid "Sponsership Bill"
+msgstr "فاترة الكفالة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_account_bank_statement_line__sponsership_invoice_id
+#: model:ir.model.fields,field_description:appness_swms.field_account_move__sponsership_invoice_id
+msgid "Sponsership Invoice"
+msgstr "فاتورة الكفالة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__sponsership_lines
+msgid "Sponsership Lines"
+msgstr "اسطر الكفالة"
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_swms_service_line
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Sponsership Waiting List"
+msgstr "قائمة الانتظار للكفالات"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/helpdesk_ticket.py:0
+#: model:ir.actions.act_window,name:appness_swms.sale_subscription_action_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__sponserships
+#: model:ir.ui.menu,name:appness_swms.swms_menu_sponserships
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Sponserships"
+msgstr "الكفالات"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__sponserships_count
+msgid "Sponserships Count"
+msgstr "عدد الكفالات"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__sponserships_family
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__sponserships_family
+msgid "Sponserships Family"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__sponserships_member
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__sponserships_member
+msgid "Sponserships Member"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__sponserships_sponser
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__sponserships_sponser
+msgid "Sponserships Sponser"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.families_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.orphans_template
+msgid ""
+"Sponsorship Status\n"
+"                                <br/>\n"
+"                                حالة الكفالة"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.ui.menu,name:appness_swms.helpdesk_stage_menu
+msgid "Stages"
+msgstr "المراحل"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_team__stages_allowed_to_edit_portal
+msgid "Stages Allowed To Edit Portal"
+msgstr "المراحل المسموح فيها التعديل في المنصة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__state_id
+#: model:ir.model.fields,field_description:appness_swms.field_swms_address__state_ids
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__state
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_product_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "State"
+msgstr "المحافظة"
+
+#. module: appness_swms
+#: model:ir.ui.menu,name:appness_swms.swms_conf_menu_state
+msgid "States"
+msgstr "المحافظات"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__state
+msgid "Status"
+msgstr "الحالة"
+
+#. module: appness_swms
+#: model:ir.model.fields,help:appness_swms.field_swms_case__activity_state
+#: model:ir.model.fields,help:appness_swms.field_swms_document_type__activity_state
+#: model:ir.model.fields,help:appness_swms.field_swms_service_line__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Street 2..."
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Street..."
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__name
+msgid "Subject"
+msgstr "الموضوع "
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_service_line_form
+msgid "Submit"
+msgstr "ارسال"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_service_line__state__submitted
+msgid "Submitted"
+msgstr "تم الارسال"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__is_sponsership
+msgid "Subscription Product"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+msgid "Sum"
+msgstr "المجموع"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_ir_sequence__swms_allow
+#: model:ir.model.fields,field_description:appness_swms.field_res_city__swms_allow
+#: model:ir.model.fields,field_description:appness_swms.field_res_country__swms_allow
+#: model:ir.model.fields,field_description:appness_swms.field_res_country_state__swms_allow
+msgid "Swms Allow"
+msgstr "هل هو مسموح به في نظام الرعاية الاجتماعية"
+
+#. module: appness_swms
+#: model:ir.ui.menu,name:appness_swms.helpdesk_tag_menu
+msgid "Tags"
+msgstr "وسوم التصنيفات"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__tasks_ids
+#: model:ir.model.fields,field_description:appness_swms.field_swms_list__tasks_ids
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_list_form
+msgid "Tasks"
+msgstr "المهام"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_case_form
+msgid "Taskslist"
+msgstr "قائمة المهام"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_team_form_inherit
+msgid "These are the stages that are allowed to be edited in portal"
+msgstr "هذه هي المراحل المسموح بها التعديل في المنصة"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/res_partner.py:0
+#: model:ir.model.constraint,message:appness_swms.constraint_res_partner_civil_number_unique
+msgid "This Civil Number already exists .. Civil Number must be unique !!"
+msgstr "الرقم المدني موجود بالفعل .. يجب أن يكون الرقم المدني فريد !!"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "This is a folder"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__requests_count
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__requests_count
+msgid "Tickets"
+msgstr "الطلبات"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard__to_date
+msgid "To Date"
+msgstr "الي تاريخ"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/helpdesk_ticket.py:0
+msgid "To Do"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__total_amount
+#: model:ir.model.fields,field_description:appness_swms.field_swms_obligation__total_amount
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.income_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+msgid "Total Amount"
+msgstr "المبلغ الكلي"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+msgid ""
+"Total Amount\n"
+"                                <br/>\n"
+"                                المبلغ الكلي"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "Total Expenses"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "Total Income"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_team_form_inherit
+msgid "Track the SWMS requests"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_team_form_inherit
+msgid "Track the sequence on requests"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_team_form_inherit
+msgid "Track the serivces on requests"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_stock_picking
+msgid "Transfer"
+msgstr "تحويل "
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__type
+#: model:ir.model.fields,field_description:appness_swms.field_swms_income__doc_type
+#: model:ir.model.fields,field_description:appness_swms.field_swms_obligation__doc_type
+#: model:ir.model.fields,field_description:appness_swms.field_swms_property__doc_type
+msgid "Type"
+msgstr "النوع"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+msgid ""
+"Type\n"
+"                                <br/>\n"
+"                                نوع الالتزام"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.income_template
+msgid ""
+"Type\n"
+"                                <br/>\n"
+"                                نوع الدخل"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_res_partner__accommodation_type
+#: model:ir.model.fields,field_description:appness_swms.field_res_users__accommodation_type
+msgid "Type of Accommodation"
+msgstr "نوع السكن"
+
+#. module: appness_swms
+#: model:ir.model.fields,help:appness_swms.field_swms_case__activity_exception_decoration
+#: model:ir.model.fields,help:appness_swms.field_swms_document_type__activity_exception_decoration
+#: model:ir.model.fields,help:appness_swms.field_swms_service_line__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.sale_order_sponsership_form_inherit
+msgid "Type to find a customer..."
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.sale_order_sponsership_form_inherit
+msgid "Type to find a sponser..."
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_document_type_form
+msgid "Type's Name"
+msgstr "النوع"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_grading_system_type__university
+#: model:ir.model.fields.selection,name:appness_swms.selection__helpdesk_ticket__edu_level__university
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__certificate__university
+msgid "University"
+msgstr "الجامعة"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__professional_status__university_student
+msgid "University student"
+msgstr "طالب جامعي"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Unlock"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_res_users
+msgid "User"
+msgstr "المستخدم"
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_fleet_vehicle
+#: model:ir.model.fields,field_description:appness_swms.field_hr_expense__vehicle_id
+msgid "Vehicle"
+msgstr "المركبة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__vendor_id
+msgid "Vendor"
+msgstr "المورد"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__vendor_address
+msgid "Vendor Address"
+msgstr "عنوان المورد"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__vendor_bank
+msgid "Vendor Bank"
+msgstr "الحساب البنكي للمورد"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__vendor_bank_card
+msgid "Vendor Bank Card"
+msgstr "البطاقة البنكية للمورد"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__vendor_bank_name
+msgid "Vendor Bank Name"
+msgstr "بطاقة بنك المورد"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/helpdesk_ticket.py:0
+msgid "Vendor Bills"
+msgstr "فواتير المورد"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__vendor_name
+msgid "Vendor Name"
+msgstr "اسم المورد"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_helpdesk_ticket__vendor_phone
+msgid "Vendor Phone"
+msgstr "رقم هاتف المورد"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_service_line__state__waiting
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_service_line_form
+msgid "Waiting"
+msgstr "في الانتظار"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__waiting_date
+msgid "Waiting Date"
+msgstr "تاريخ الانتظار"
+
+#. module: appness_swms
+#: model:ir.actions.act_window,name:appness_swms.swms_waiting_list_action
+#: model:ir.ui.menu,name:appness_swms.swms_menu_waiting_list
+msgid "Waiting List"
+msgstr "قائمة الانتظار"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__name
+msgid "Waiting No."
+msgstr "رقم الانتظار"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "Website"
+msgstr "الموقع الالكتروني"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_case__website_message_ids
+#: model:ir.model.fields,field_description:appness_swms.field_swms_document_type__website_message_ids
+#: model:ir.model.fields,field_description:appness_swms.field_swms_service_line__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields,help:appness_swms.field_swms_case__website_message_ids
+#: model:ir.model.fields,help:appness_swms.field_swms_document_type__website_message_ids
+#: model:ir.model.fields,help:appness_swms.field_swms_service_line__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_income__frequency__week
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_obligation__frequency__week
+msgid "Weekly"
+msgstr "اسبوعي"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_document_type_form
+msgid "Who to Notify !?"
+msgstr "من سوف يتم ارسال الاشعار له ؟"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Who to Pay Address?"
+msgstr "عنوان من سيتم الدفع له ؟"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Who to Pay Bank Card?"
+msgstr "بطاقة بنك من سيتم الدفع له ؟"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Who to Pay Bank Name?"
+msgstr "اسم بنك من سيتم الدفع له ؟"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Who to Pay Name?"
+msgstr "اسم من سيتم الدفع له ؟"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Who to Pay Phone?"
+msgstr "رقم هاتف من سيتم الدفع له ؟"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "Who to Pay?"
+msgstr "من سيتم الدفع له ؟"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/res_partner.py:0
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__marital__widowed
+msgid "Widowed"
+msgstr "ارملة"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__relationship__wife
+msgid "Wife"
+msgstr "الزوجة"
+
+#. module: appness_swms
+#: model:ir.model.fields,field_description:appness_swms.field_swms_reports_wizard_report__wizard_id
+msgid "Wizard"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__professional_status__working
+msgid "Working"
+msgstr "يعمل"
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_income__frequency__year
+#: model:ir.model.fields.selection,name:appness_swms.selection__swms_obligation__frequency__year
+msgid "Yearly"
+msgstr "سنوي"
+
+#. module: appness_swms
+#. odoo-python
+#: code:addons/appness_swms/models/fleet_vehicle.py:0
+msgid "You must have an employee profile to create an expense"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "ZIP"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_config_settings_view_form
+msgid "days"
+msgstr "الايام"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "e.g. \"B2B\", \"VIP\", \"Consulting\", ..."
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "e.g. \"Monthly\""
+msgstr "e.g. \"شهري\""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "e.g. BE0477472701"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "e.g. Discuss proposal"
+msgstr "e.g. مناقشة مقترح"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "e.g. Father Full Name"
+msgstr "مثلا. اسم الاب كامل"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "e.g. Member First Name"
+msgstr "مثلا. اسم الاول لفرد الاسرة"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "e.g. Mister"
+msgstr "e.g. السيدة"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "e.g. Mr."
+msgstr "e.g. السيد."
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "e.g. New Address"
+msgstr "e.g. عنوان جديد"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "e.g. New Member First Name"
+msgstr "مثلا. اسم الاول لفرد الاسرة"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_ticket_form_inherit
+msgid "e.g. Product arrived damaged"
+msgstr "مثلا. لدي حوجه لكذا …"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "e.g. Sales Director"
+msgstr "e.g. مدير المبيعات"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "e.g. https://www.odoo.com"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_partner_family_form_inherit
+msgid "is Dead?"
+msgstr "هل هو متوفي؟"
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_config_settings_view_form
+msgid "months"
+msgstr "شهور"
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_report_appness_swms_swms_report_template
+msgid "report.appness_swms.swms_report_template"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model.fields.selection,name:appness_swms.selection__res_partner__relationship__son-wife
+msgid "son\"s wife"
+msgstr "زوجة الابن"
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_swms_address
+msgid "swms.address"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_swms_area
+msgid "swms.area"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_swms_card
+msgid "swms.card"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_swms_case
+msgid "swms.case"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_swms_document_type
+msgid "swms.document.type"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_swms_income
+msgid "swms.income"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_swms_list
+msgid "swms.list"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_swms_list_task
+msgid "swms.list.task"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_swms_obligation
+msgid "swms.obligation"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_swms_payment_method
+msgid "swms.payment.method"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_swms_property
+msgid "swms.property"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_swms_reports_wizard
+msgid "swms.reports.wizard"
+msgstr ""
+
+#. module: appness_swms
+#: model:ir.model,name:appness_swms.model_swms_reports_wizard_report
+msgid "swms.reports.wizard.report"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.res_config_settings_view_form
+msgid "years"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "اجمالي الدخل"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "اجمالي المصاريف"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.income_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_service_request_template
+msgid "اسم الاسرة"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.income_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "اسم الكفيل"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+msgid "افراد الاسرة"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+msgid "الالتزامات"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "الايرادات الاخري"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "الايرادات المحصلة"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "البلد"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.income_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+msgid "التاريخ الي"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.income_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+msgid "التاريخ من"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "الجنس"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "الحالة الاجتماعية"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_service_request_template
+msgid "الحد"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+msgid "الدخل"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "الدرجة العلمية"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "الرقم المدني"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "العلاقة"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "العمر"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "الفصل الدراسي"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "المال المحصل بواسطة الاسرة"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "المدرسة"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "المدينة"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "المشغل"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "المصروفات الاخري"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_service_request_template
+msgid "المنطقة"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "المنظقة"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "الوصف"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "تاريخ التوظيف"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "تاريخ بداية التقرير"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "تاريخ نهاية التقرير"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "تقرير احصائيات الاسرة"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.families_template
+msgid "تقرير الاسر"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+msgid "تقرير الاسرة"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+msgid "تقرير الالتزامات"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.orphans_template
+msgid "تقرير الايتام"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_service_request_template
+msgid "تقرير الخدمة المطلوبة"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.income_template
+msgid "تقرير الدخل"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "تقرير الفرد"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_service_request_template
+msgid "رقم الاسرة"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+msgid "رقم الفرد"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "صافي الدخل"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.income_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.obligations_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "صباح عيد طلق العقاب"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "مجال الدراسة"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.family_template
+#: model_terms:ir.ui.view,arch_db:appness_swms.member_template
+msgid "مجال العمل"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "مصاريف الايجار"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.stats_template
+msgid "مصاريف الصيانة"
+msgstr ""
+
+#. module: appness_swms
+#: model_terms:ir.ui.view,arch_db:appness_swms.swms_service_request_template
+msgid "معدل التكرار"
+msgstr ""

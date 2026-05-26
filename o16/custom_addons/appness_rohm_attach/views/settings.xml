@@ -1,0 +1,25 @@
+<odoo>
+
+    <!-- mail.res_config_settings_view_form -->
+    <record id="res_config_settings_view_form_inherit_appness_attach_project"  model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.appness.attach</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="project.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='recurring_tasks_setting']" position="before">
+                <setting
+                    id="max_attach_size1"
+                    string="Maximum File Attachment Size (Projects)"
+                    help="Add the size limit in MegaBytes.">
+                    <field name="max_file_attachment_size1" />
+                </setting>
+                <setting
+                    id="max_attach_size2"
+                    string="Maximum File Attachment Size (Helpdesk)"
+                    help="Add the size limit in MegaBytes.">
+                    <field name="max_file_attachment_size2" />
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>

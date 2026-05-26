@@ -1,0 +1,60 @@
+<odoo>
+    <data>
+
+        <record id="account_move_form_inherit_swms" model="ir.ui.view">
+            <field name="name">account.move.form.inherit.swms</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button string="Create Sponsership Bill (Manually)" type="object" name="action_bill_sponsership" icon="fa-copy" invisible="sponsership_bill_id or not is_sponsership"/>
+                    <button name="action_instant_pay"
+                        type="object"
+                        string="Donate Now"
+                        class="btn-primary"
+                        invisible="not is_donation or payment_state == 'paid'"/>
+                </xpath>
+
+                <field name="invoice_date" position="after">
+                    <field name="is_donation"/>
+                    <field name="payment_journal" string="Donation Payment Mehtod" domain="[('type','in',['cash','bank'])]" invisible="not is_donation"/>
+                </field>
+
+                <div name="button_box" position="after">
+                    <group invisible="not is_swms">
+                        <group>
+                            <field name="is_swms" readonly="1" string="Is SWMS ?" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                </div>
+
+                <xpath expr="//notebook/page[1]" position="after">
+                    <!-- groups="helpdesk.group_helpdesk_user" -->
+                    <page string="SWMS" invisible="not is_swms">
+                        <group>
+                            <group invisible="sponsership_id">
+                                <field name="request_id" readonly="1" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True,'no_create': True}"/>
+                                <field name="request_analytic_account_id" string="Money taken from" readonly="1" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True,'no_create': True}"/>
+                                <field name="family" readonly="1" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True,'no_create': True}"/>
+                            </group>
+                            <group invisible="not sponsership_id">
+                                <field name="show_member" invisible="1"/>
+                                <field name="is_sponsership" invisible="1"/>
+                                <field name="sponsership_request_id" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True,'no_create': True}"/>
+                                <field name="sponsership_request_analytic_account_id" string="Money taken from" readonly="1" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True,'no_create': True}"/>
+                                <field name="sponsership_family" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True,'no_create': True}"/>
+                                <field name="sponsership_family_member" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" invisible="not family or not show_member"/>
+                                <field name="sponsership_id" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" invisible="sponsership_id == False" readonly="1"/>
+                                <field name="sponsership_bill_id" options="{'no_create_edit': True, 'no_open': False, 'no_quick_create': True,'no_create': True}" invisible="sponsership_bill_id == False" readonly="1"/>
+                                <field name="sponsership_invoice_id" options="{'no_create_edit': True, 'no_open': False, 'no_quick_create': True,'no_create': True}" invisible="sponsership_invoice_id == False" readonly="1"/>
+                                <field name="card_spending_id" options="{'no_create_edit': True, 'no_open': False, 'no_quick_create': True,'no_create': True}" invisible="card_spending_id == False" readonly="1"/>
+                                <field name="card_id" string="Lulu Card No." invisible="not card_id"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

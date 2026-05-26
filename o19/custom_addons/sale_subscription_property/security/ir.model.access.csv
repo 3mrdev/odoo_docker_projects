@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hrb_property_user,hrb.property.user,model_hrb_property,sale_subscription_property.group_hrb_property_user,1,1,1,0
+access_hrb_property_admin,hrb.property.admin,model_hrb_property,sale_subscription_property.group_hrb_property_admin,1,1,1,1
+access_hrb_property_unit_user,hrb.property.unit.user,model_hrb_property_unit,sale_subscription_property.group_hrb_property_user,1,1,1,0
+access_hrb_property_unit_admin,hrb.property.unit.admin,model_hrb_property_unit,sale_subscription_property.group_hrb_property_admin,1,1,1,1
+access_hrb_property_type_user,hrb.property.type.user,model_hrb_property_type,sale_subscription_property.group_hrb_property_user,1,1,1,0
+access_hrb_property_type_admin,hrb.property.type.admin,model_hrb_property_type,sale_subscription_property.group_hrb_property_admin,1,1,1,1
+access_res_area_user,res.area.user,model_res_area,sale_subscription_property.group_hrb_property_user,1,1,1,0
+access_res_area_admin,res.area.admin,model_res_area,sale_subscription_property.group_hrb_property_admin,1,1,1,1
+access_hrb_property_generate_units_wizard_user,hrb.property.generate.units.wizard.user,model_hrb_property_generate_units_wizard,sale_subscription_property.group_hrb_property_user,1,1,1,1

@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_jiz_standard,jiz.standard access,model_jiz_standard,base.group_user,1,1,1,1
+access_jiz_standard_scale,jiz.standard.scale access,model_jiz_standard_scale,base.group_user,1,1,1,1
+access_jiz_evaluation,jiz.evaluation access,model_jiz_evaluation,base.group_user,1,1,1,1
+access_jiz_document_type_user,jiz.document.type.user,jiz_base.model_jiz_document_type,helpdesk.group_helpdesk_user,1,1,1,0
+access_jiz_document_type_admin,jiz.document.type.admin,jiz_base.model_jiz_document_type,helpdesk.group_helpdesk_manager,1,1,1,1

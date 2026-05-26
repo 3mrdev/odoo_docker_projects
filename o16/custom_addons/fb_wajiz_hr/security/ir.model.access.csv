@@ -1,0 +1,35 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+employee_documents,Access Documents for Employees,model_hr_document,base.group_user,1,0,0,0
+employee_document_type,Access Document Types for Employees,model_hr_document_type,base.group_user,1,0,0,0
+insurance_type_employee,Access Insurance Types for Employees,model_hr_insurance_type,base.group_user,1,0,0,0
+
+officer_documents,Access Documents for Officers,model_hr_document,hr.group_hr_user,1,0,0,0
+officer_document_type,Access Document Types for Officers,model_hr_document_type,hr.group_hr_user,1,1,1,0
+insurance_type_officer,Access Insurance Types for Officers,model_hr_insurance_type,hr.group_hr_user,1,1,1,0
+
+documents_man,Access Documents for Managers,model_hr_document,hr.group_hr_manager,1,1,1,1
+document_type_man,Access Document Types for Managers,model_hr_document_type,hr.group_hr_manager,1,1,1,1
+insurance_type_manager,Access Insurance Types for Managers,model_hr_insurance_type,hr.group_hr_manager,1,1,1,1
+
+document_fleet, Access Documents for Fleet User,model_hr_document,fleet.fleet_group_user,1,1,1,0
+document_fleet_type, Access Documents type for Fleet User,model_hr_document,fleet.fleet_group_user,1,1,1,0
+
+document_fleet_manager, Access Documents for Fleet Manager,model_hr_document,fleet.fleet_group_manager,1,1,1,1
+document_fleet_type_manager, Access Documents type for Fleet Maneger,model_hr_document,fleet.fleet_group_manager,1,1,1,1
+
+
+
+hr_custody_wizard,Access Documents for Custody Wizard,model_custody_confirmation_wizard,base.group_user,1,1,1,1
+
+attendance_report_wizard,Access for Attendance Report Wizard,model_attendance_report_wizard,base.group_user,1,1,1,1
+
+attendance_notes,Access for Attendance Notes,model_attendance_notes,base.group_user,1,1,1,1
+
+biometric_report,Access for Biometric Report,model_employee_attendance_report_wizard,base.group_user,1,1,1,1
+bio_attendance_report,Access for Biometric Attendance Report,model_fb_bio_attendance_report_wizard,base.group_user,1,1,1,1
+employee_attendance_report,Access for Employee Attendance Report,model_employee_attendance_report,base.group_user,1,1,1,1
+
+ir_actions_act_window_hr_user,Access for ir.actions.act_window,base.model_ir_actions_act_window,hr.group_hr_user,1,0,0,0
+ir_actions_act_window_view_hr_user,Access for ir.actions.act_window.view,base.model_ir_actions_act_window_view,hr.group_hr_user,1,0,0,0
+ir_actions_act_window_close_hr_user,Access for ir.actions.act_window.close,base.model_ir_actions_act_window_close,hr.group_hr_user,1,0,0,0
+ir_config_parameter_hr_user,Access for ir.config_parameter,base.model_ir_config_parameter,hr.group_hr_user,1,0,0,0

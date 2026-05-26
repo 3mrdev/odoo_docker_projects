@@ -1,0 +1,92 @@
+<odoo>
+    <data>
+        <template id="stats_template">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="text-center">
+                        <h1>تقرير احصائيات الاسرة</h1>
+                        <h1>Family Statment Report</h1>
+                    </div>
+                    <br/><br/>
+                    <table class="table text-center">
+                        <tr>
+                            <td>Family Name</td>
+                            <td>3270</td>
+                            <td>اسم الاسرة</td>
+                        </tr>
+                        <tr>
+                            <td>Date From</td>
+                            <td t-esc="from_date">2024-04-01</td>
+                            <td>تاريخ بداية التقرير</td>
+                        </tr>
+                        <tr>
+                            <td>Date to</td>
+                            <td t-esc="to_date">2024-04-01</td>
+                            <td>تاريخ نهاية التقرير</td>
+                        </tr>
+                        <tr>
+                            <td>Sponser Name</td>
+                            <td t-esc="sponser">صباح عيد طلق العقاب</td>
+                            <td>اسم الكفيل</td>
+                        </tr>
+                    </table>
+                    <br/><br/>
+                    <table class="table text-center">
+                        <tr>
+                            <td>Description</td>
+                            <td>Amount (OMR)</td>
+                            <td>الوصف</td>
+                        </tr>
+                        <tr>
+                            <td>Income</td>
+                            <td>4,700.000</td>
+                            <td>الايرادات المحصلة</td>
+                        </tr>
+                        <tr>
+                            <td>Other Income</td>
+                            <td>0.000</td>
+                            <td>الايرادات الاخري</td>
+                        </tr>
+                        <tr>
+                            <td>Total Income</td>
+                            <!-- <t t-set="total_income" t-value="docs4_total['total_rent_collect'] + docs1_total"/> -->
+                            <td >4,700.000</td>
+                            <td>اجمالي الدخل</td>
+                        </tr>
+                        <tr>
+                            <td>Rent Expenses</td>
+                            <td style="color:red;">( 246.750 )</td>
+                            <td>مصاريف الايجار</td>
+                        </tr>
+                        <tr>
+                            <td>Maintenance Expenses</td>
+                            <td style="color:red;">( 83.160 )</td>
+                            <td>مصاريف الصيانة</td>
+                        </tr>
+                        <tr>
+                            <td>Other Expenses</td>
+                            <td style="color:red;">( 2,308.734 )</td>
+                            <td>المصروفات الاخري</td>
+                        </tr>
+                        <tr>
+                            <td>Total Expenses</td>
+                            <!-- <t t-set="total_expenses" t-value="docs2_total + docs3_total + commission_by_agency"/> -->
+                            <td style="color:red;">( 2,638.644 )</td>
+                            <td>اجمالي المصاريف</td>
+                        </tr>
+                        <tr>
+                            <td>Net Income</td>
+                            <td>2,061.356</td>
+                            <td>صافي الدخل</td>
+                        </tr>
+                        <tr>
+                            <td>Money Collected By Family</td>
+                            <td style="color:red;">( 246.750 )</td>
+                            <td>المال المحصل بواسطة الاسرة</td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

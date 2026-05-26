@@ -1,0 +1,519 @@
+<odoo>
+
+    <template id="portal_swms_form_fields">
+        <t t-set="today" t-value="datetime.date.today()"/>
+        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+        <div t-if="error_message" class="alert alert-danger" role="alert">
+            <div class="col-lg-12">
+                <t t-foreach="error_message" t-as="err"><t t-esc="err"/><br /></t>
+            </div>
+        </div>
+        <t t-if="steps">
+            <!-- Foreach -->
+            <t t-foreach="steps[page_id-1]['fields']" t-as="field">
+                <t t-call="appness_swms_portal.portal_snippet_input">
+                    <t t-set="field" t-value="field"/>
+                </t>
+                
+                <t t-call="appness_swms_portal.portal_snippet_select">
+                    <t t-set="field" t-value="field"/>
+                </t>
+
+                <t t-call="appness_swms_portal.portal_snippet_binary">
+                    <t t-set="field" t-value="field"/>
+                </t>
+
+                <t t-call="appness_swms_portal.portal_snippet_m2o">
+                    <t t-set="field" t-value="field"/>
+                </t>
+
+                <t t-call="appness_swms_portal.portal_snippet_x2m">
+                    <t t-set="field" t-value="field"/>
+                </t>
+            </t>
+            <!-- Foreach -->
+
+            <hr class="mb-3"/>
+
+            <!-- Stepper Form Documents -->
+            <t t-foreach="steps[page_id-1]['documents']" t-as="document">
+                <t t-call="appness_swms_portal.portal_snippet_document">
+                    <t t-set="document" t-value="document"/>
+                    <t t-set="is_expired" t-value="False"/>
+                </t>
+            </t>
+            
+            <div class="row current_documents py-2 pe-2" style="display: none; padding-left:0;margin-left:0;padding-right: 0px;margin-right: 0px;">
+                <div t-foreach="current_documents" t-as="doc" class="o_portal_index_card col-md-4 order-2" >
+                    <div class="d-flex gap-2 gap-md-3 py-3 pe-2 px-md-3 h-100 rounded text-decoration-none bg-100">
+                        <div class="o_portal_icon col-5">
+                            <img t-attf-src="data:image/png;base64,{{doc['thumbnail']}}" 
+                                style="padding: 0px; margin: 0px; height: auto; width: auto;" 
+                                class="img-fluid" t-att-alt="'%s'%(doc['name'])"/>
+                        </div>
+                        <t t-set="document_label" t-value="doc['doc_type_name']"/>
+                        <t t-if="doc['is_service'] == False">
+                            <t t-set="document_label" t-value="str(document_label) +' ('+str(doc['member_name'])+')'"/>
+                        </t>
+                        <div class="col-7" style="font-size: 15px;">
+                            <div class="mb-2 lh-1">
+                                <span t-esc="document_label"/> 
+                            </div>
+                            <div class="opacity-75">
+                                Issuance Date: <span t-esc="doc['issuance_date']"/> <br></br>
+                                Expire Date: <span t-esc="doc['expire_date']"/> <br></br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+            <div t-if="required_docs_list" class="alert alert-danger" role="alert">
+                <div class="col-6">
+                    <t>Please Upload these Required Documents:</t>
+                </div>
+                <div t-foreach="required_docs_list" t-as="required_document" class="col-6" style="margin-top: 10px;">
+                    <t t-set="flag_document" t-value="True"/>
+                    <t t-foreach="steps[page_id-1]['documents']" t-as="step_document">
+                        <t t-if="step_document['name'] == required_document['name']">
+                            <t t-set="flag_document" t-value="False"/>
+                        </t>
+                    </t>
+                    
+                    
+                    <t t-if="flag_document">
+                        <t t-set="document_label" t-value="required_document['label']"/>
+                        <t t-if="required_document['is_service'] == False">
+                            <t t-set="document_label" t-value="str(document_label) +' ('+str(required_document['member_name'])+')'"/>
+                        </t>
+                        - <t t-esc="document_label"/> <a t-if="required_document['member_type'] == 'member' and not update_member" t-attf-href="/my/swms_account/1/{{required_document['member_id']}}?{{keep_query()}}" class="btn btn-warning fa fa-edit" style="color:rgb(105, 10, 10); text-decoration: none;">(Complete Member Info)</a> <br/>
+                    </t>
+                </div>
+            </div>
+
+            <!-- s_website_form_datepicker_initialized -->
+
+            <t t-foreach="required_docs_list" t-as="document">
+                <t t-set="flag_document" t-value="True"/>
+                <t t-foreach="steps[page_id-1]['documents']" t-as="step_document">
+                    <t t-if="step_document['name'] == document['name'] and step_document['member_id'] == document['member_id']">
+                        <t t-set="flag_document" t-value="False"/>
+                    </t>
+                </t>
+
+                <t t-if="flag_document" t-call="appness_swms_portal.portal_snippet_document">
+                    <t t-set="document" t-value="document"/>
+                    <t t-set="is_expired" t-value="False"/>
+                </t>
+            </t>
+
+            <div t-if="expired_documents_list" class="alert alert-danger" role="alert">
+                <div class="col-6">
+                    <t>Please update these expired Documents:</t>
+                </div>
+                <div t-foreach="expired_documents_list" t-as="expired_document" class="col-6" style="margin-top: 10px;">
+                    <t t-set="flag_document" t-value="True"/>
+                    <t t-foreach="steps[page_id-1]['documents']" t-as="step_document">
+                        <t t-if="step_document['name'] == expired_document['name']">
+                            <t t-set="flag_document" t-value="False"/>
+                        </t>
+                    </t>
+                    
+                    <t t-if="flag_document">
+                        <t t-set="document_label" t-value="expired_document['label']"/>
+                        <t t-if="expired_document['is_service'] == False">
+                            <t t-set="document_label" t-value="str(document_label) +' ('+str(expired_document['member_name'])+')'"/>
+                        </t>
+                        - <t t-esc="document_label"/> <a t-if="expired_document['member_type'] == 'member' and not update_member" t-attf-href="/my/swms_account/1/{{expired_document['member_id']}}?{{keep_query()}}" class="btn btn-warning fa fa-edit" style="color:rgb(105, 10, 10); text-decoration: none;">(Complete Member Info)</a> <br />
+                    </t>
+                </div>
+            </div>
+
+            <!-- Expired Documents -->
+            <t t-foreach="expired_documents_list" t-as="document">
+                <t t-set="flag_document" t-value="True"/>
+                <t t-foreach="steps[page_id-1]['documents']" t-as="step_document">
+                    <t t-if="step_document['name'] == document['name']">
+                        <t t-set="flag_document" t-value="False"/>
+                    </t>
+                </t>
+                <t t-if="flag_document" t-call="appness_swms_portal.portal_snippet_document">
+                    <t t-set="document" t-value="document"/>
+                    <t t-set="is_expired" t-value="True"/>
+                </t>
+            </t>
+
+            <hr t-if="required_docs or required_docs_list or steps[page_id-1]['documents']" class="mb-3"/>
+            <button type="button" class="btn btn-primary fa fa-eye toggle_current_documents mt-2 mb-2" style="width: 200px; height: 40px;">Hide/Show Documents</button>
+        </t>
+    </template>
+    
+    <template id="portal_snippet_input" name="Snippet Input">
+        <div t-attf-id="#{'swms_intl_tel_widget' if field['validation_type'] == 'phone' else ''}" t-attf-class="mb-3 #{error.get(field['name']) and 'o_has_error' or ''} #{'swms_v_' + str(field['validation_type'])} col-xl-4" t-if="field['type'] in ['text','tel','number','date','datetime-local']">
+            <label class="col-form-label" t-attf-for="{{field['name']}}" t-esc="field['label']"></label>
+            <p t-if="field['tip']" t-esc="field['tip']" style="font-size: 12px; color: #6c757d;"></p>
+            <input t-if="field['required']" required="1" t-attf-type="{{field['type']}}" t-attf-name="{{field['name']}}" t-att-value="field['value']" t-attf-class="form-control required-form-control #{'intl_tel_widget' if field['validation_type'] == 'phone' else ''} #{error.get(field['name']) and 'is-invalid' or ''}" t-att-disabled="'1' if field['disabled'] else None"/>
+            <input t-else="" t-attf-type="{{field['type']}}" t-attf-name="{{field['name']}}" t-att-value="field['value']" t-attf-class="form-control #{'intl_tel_widget' if field['validation_type'] == 'phone' else ''} #{error.get(field['name']) and 'is-invalid' or ''}" t-att-disabled="'1' if field['disabled'] else None"/>
+            <!-- <small t-if="field['validation_type']" t-esc="field['validation_type']"></small> -->
+            <small class="text-danger validation_error d-none"></small>
+            <p class="phone_output mt-2 alert d-none" role="alert"></p>
+            <input t-if="field['validation_type'] == 'phone'" type="hidden" class="phone_value" t-attf-name="{{field['name']}}"/>
+        </div>
+        
+        <div t-attf-class="mb-3 #{error.get(field['name']) and 'o_has_error' or ''} col-xl-12" t-if="field['type'] in ['textarea']">
+            <label class="col-form-label" t-attf-for="{{field['name']}}" t-esc="field['label']"></label>
+            <p t-if="field['tip']" t-esc="field['tip']" style="font-size: 12px; color: #6c757d;"></p>
+            <textarea t-if="field['required']" required="1" rows="4" t-attf-name="{{field['name']}}" t-esc="field['value']" t-attf-class="form-control required-form-control border-0 #{error.get(field['name']) and 'is-invalid' or ''}" placeholder="Write a message..." style="resize:none;" t-att-disabled="'1' if field['disabled'] else None"/>
+            <textarea t-else="" rows="4" t-attf-name="{{field['name']}}" t-esc="field['value']" t-attf-class="form-control required-form-control border-0 #{error.get(field['name']) and 'is-invalid' or ''}" placeholder="Write a message..." style="resize:none;" t-att-disabled="'1' if field['disabled'] else None"/>  
+        </div>
+        <div t-attf-class="mb-3 md-3 #{error.get(field['name']) and 'o_has_error' or ''} col-xl-4 form-check" t-if="field['type'] in ['checkbox']">
+            <t t-if="field['value']">
+                <input class="form-check-input" type="checkbox" id="warn" t-attf-name="{{field['name']}}" value="1" checked="1"/>
+            </t>
+            <t t-else="">
+                <input class="form-check-input" type="checkbox" id="warn" t-attf-name="{{field['name']}}" value="0"/>
+            </t>
+            <label class="form-check-label" t-attf-for="{{field['name']}}" t-esc="field['label']"></label>
+            <p t-if="field['tip']" t-esc="field['tip']" style="font-size: 12px; color: #6c757d;"></p>
+        </div>
+    </template>
+
+    <template id="portal_snippet_select" name="Snippet Select">
+        <!-- label-optional -->
+        <div t-attf-class="mb-3 #{error.get(field['name']) and 'o_has_error' or ''} col-xl-4" t-if="field['type'] in ['select']">
+            <label class="col-form-label " t-attf-for="{{field['name']}}" t-esc="field['label']"></label>
+            <p t-if="field['tip']" t-esc="field['tip']" style="font-size: 12px; color: #6c757d;"></p>
+            <select t-if="field['required']" required="1" t-attf-name="{{field['name']}}" t-attf-class="form-select required-form-control #{error.get(field['name']) and 'is-invalid' or ''}" t-att-disabled="'1' if field['disabled'] else None">
+                <option value="">select...</option>
+                <t t-foreach="field['options']" t-as="op">
+                    <option t-att-value="op['value']" t-att-selected="field['value'] == op['value']"> 
+                        <t t-esc="op['name']" />
+                    </option>
+                </t>
+            </select>
+            <select t-else="" t-attf-name="{{field['name']}}" t-attf-class="form-select #{error.get(field['name']) and 'is-invalid' or ''}" t-att-disabled="'1' if field['disabled'] else None">
+                <option value="">select...</option>
+                <t t-foreach="field['options']" t-as="op">
+                    <option t-att-value="op['value']" t-att-selected="field['value'] == op['value']"> 
+                        <t t-esc="op['name']" />
+                    </option>
+                </t>
+            </select>
+        </div>
+    </template>
+
+    <template id="portal_snippet_binary" name="Snippet Binary">
+        <div t-attf-class="mb-3 #{error.get(field['name']) and 'o_has_error' or ''} col-xl-4" t-if="field['type'] in ['file']">
+            <div class="d-flex gap-2 gap-md-3 py-3 pe-2 px-md-3 h-100 rounded text-decoration-none bg-100">
+                <div t-if="field['value']" class="o_portal_icon col-3">
+                    <img t-attf-src="data:image/png;base64,{{field['value']}}" 
+                        style="padding: 0px; margin: 0px; height: auto; width: auto;" 
+                        class="img-fluid" t-att-alt="'%s'%(field['name'])"/>
+                </div>
+                <div class="col-9" style="font-size: 10px;">
+                    <label class="col-form-label" t-attf-for="{{field['name']}}" t-esc="field['label']"></label>
+                    <p t-if="field['tip']" t-esc="field['tip']" style="font-size: 12px; color: #6c757d;"></p>
+                    <input t-if="field['required']" required="1" t-attf-type="{{field['type']}}" t-attf-name="{{field['name']}}" accept="image/*" t-attf-class="form-control required-form-control #{error.get(field['name']) and 'is-invalid' or ''}" t-att-disabled="'1' if field['disabled'] else None"/>
+                    <input t-else="" t-attf-type="{{field['type']}}" t-attf-name="{{field['name']}}" accept="image/*" t-attf-class="form-control #{error.get(field['name']) and 'is-invalid' or ''}" t-att-disabled="'1' if field['disabled'] else None"/>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="portal_snippet_m2o" name="Snippet m2o">
+        <!-- label-optional -->
+        <div t-attf-class="mb-3 #{error.get(field['name']) and 'o_has_error' or ''} #{'swms_v_' + str(field['validation_type'])} col-xl-4" t-if="field['type'] in ['many2one']">
+            <label class="col-form-label " t-attf-for="{{field['name']}}" t-esc="field['label']"></label>
+            <p t-if="field['tip']" t-esc="field['tip']" style="font-size: 12px; color: #6c757d;"></p>
+            <select t-if="field['required']" required="1" t-attf-name="{{field['name']+'_m2o_'+field['type']}}" t-attf-class="form-select required-form-control #{error.get(field['name']) and 'is-invalid' or ''}" t-att-disabled="'1' if field['disabled'] else None">
+                <option value="">select...</option>
+                <t t-if="field['validation_type'] not in ['state','city','area']" t-foreach="field['options']" t-as="op">
+                    <option t-att-value="op['value']" t-att-selected="field['value'] == op['value']"> 
+                        <t t-esc="op['name']" />
+                    </option>
+                </t>
+            </select>
+            <select t-else="" t-attf-name="{{field['name']+'_m2o_'+field['type']}}" t-attf-class="form-select #{error.get(field['name']) and 'is-invalid' or ''}" t-att-disabled="'1' if field['disabled'] else None">
+                <option value="">select...</option>
+                <t t-if="field['validation_type'] not in ['state','city','area']" t-foreach="field['options']" t-as="op">
+                    <option t-att-value="op['value']" t-att-selected="field['value'] == op['value']"> 
+                        <t t-esc="op['name']" />
+                    </option>
+                </t>
+            </select>
+            <!-- <span t-esc="field['name']"/> <span t-esc="field['value']"/> -->
+        </div>
+    </template>
+
+    <template id="portal_snippet_x2m" name="Snippet x2m">
+        <div id="wrap" t-attf-class="mb-3 #{error.get(field['name']) and 'o_has_error' or ''} col-xl-12" t-if="field['type'] in ['one2many']">
+            <label class="col-form-label" t-attf-for="{{field['name']}}"><h3 t-esc="field['label']"/></label>
+            <p t-if="field['tip']" t-esc="field['tip']" style="font-size: 12px; color: #6c757d;"></p>
+            <table class="table o2m_records" style="display: block; overflow-x: auto; white-space: nowrap;">
+                <thead>
+                    <tr>
+                        <td class="d-none">
+                        </td>
+                        <t t-foreach="field['x2m_fields']" t-as="x2m_field">
+                            <td t-if="x2m_field['type'] in ['text','tel','date','datetime-local','number','file','select','many2one']">
+                                <label class="col-form-label" t-attf-for="{{x2m_field['name']}}" t-esc="x2m_field['label']"></label>
+                            </td>
+                        </t>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </thead>
+                <!-- style="display: table; width: 100%;" -->
+                <tbody>
+                    <tr class="o2m_record" t-foreach="field['value']" t-as="field_value">
+                        <td class="d-none">
+                            <input type="hidden" t-attf-name="{{field['name']+'_o2m_id'}}" t-att-value="field_value['id']" /> 
+                            <!-- t-attf-class="form-control #{error.get('id') and 'is-invalid' or ''}" t-att-disabled="'1' if field_value['disabled'] else None" -->
+                        </td>
+                        <t t-foreach="field['x2m_fields']" t-as="x2m_field">
+                            <td t-if="x2m_field['type'] in ['text','tel','date','datetime-local','number','file']">
+                                <input t-if="x2m_field['required']" required="1" t-attf-type="{{x2m_field['type']}}" t-attf-name="{{field['name']+'_o2m_'+x2m_field['name']}}" t-att-value="field_value[x2m_field['name']]" t-attf-class="form-control required-form-control #{error.get(x2m_field['name']) and 'is-invalid' or ''}" />
+                                <!-- t-att-disabled="'1' if x2m_field['disabled'] else None" -->
+                                <input t-else="" t-attf-type="{{x2m_field['type']}}" t-attf-name="{{field['name']+'_o2m_'+x2m_field['name']}}" t-att-value="field_value[x2m_field['name']]" t-attf-class="form-control #{error.get(x2m_field['name']) and 'is-invalid' or ''}" t-att-disabled="'1' if x2m_field['disabled'] else None"/>
+                                <small t-if="x2m_field['tip']" t-esc="x2m_field['tip']" class="form-text text-muted d-block d-xl-none"></small>
+                            </td>
+
+                            <td t-if="x2m_field['type'] in ['checkbox']">
+                                <t t-if="x2m_field['value']">
+                                    <input class="form-check-input" type="checkbox" id="warn" t-attf-name="{{x2m_field['name']}}" value="1" checked="1"/>
+                                </t>
+                                <t t-else="">
+                                    <input class="form-check-input" type="checkbox" id="warn" t-attf-name="{{x2m_field['name']}}" value="0"/>
+                                </t>
+                                <!-- <span t-esc="x2m_field['value']"/> -->
+                            </td>
+
+                            <td t-if="x2m_field['type'] in ['file']">
+                                <div class="d-flex gap-2 gap-md-3 py-3 pe-2 px-md-3 h-100 rounded text-decoration-none bg-100">
+                                    <div t-if="x2m_field['value']" class="o_portal_icon col-3">
+                                        <img t-attf-src="data:image/png;base64,{{x2m_field['value']}}" 
+                                            style="padding: 0px; margin: 0px; height: auto; width: auto;" 
+                                            class="img-fluid" t-att-alt="'%s'%(x2m_field['name'])"/>
+                                    </div>
+                                    <div class="col-9" style="font-size: 10px;">
+                                        <label class="col-form-label" t-attf-for="{{x2m_field['name']}}" t-esc="x2m_field['label']"></label>
+                                        <input t-if="x2m_field['required']" required="1" t-attf-type="{{x2m_field['type']}}" t-attf-name="{{x2m_field['name']}}" accept="image/*" t-attf-class="form-control required-form-control #{error.get(x2m_field['name']) and 'is-invalid' or ''}" />
+                                        <!-- t-att-disabled="'1' if x2m_field['disabled'] else None" -->
+                                        <input t-else="" t-attf-type="{{x2m_field['type']}}" t-attf-name="{{x2m_field['name']}}" accept="image/*" t-attf-class="form-control #{error.get(x2m_field['name']) and 'is-invalid' or ''}" />
+                                        <small t-if="x2m_field['tip']" t-esc="x2m_field['tip']" class="form-text text-muted d-block d-xl-none"></small>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td t-if="x2m_field['type'] in ['select','many2one']">
+                                <select t-if="x2m_field['required']" required="1" t-attf-name="{{field['name']+'_o2m_'+x2m_field['name']}}" t-attf-class="form-select required-form-control #{error.get(x2m_field['name']) and 'is-invalid' or ''}" >
+                                <!-- t-att-disabled="'1' if x2m_field['disabled'] else None" -->
+                                    <option value="">select...</option>
+                                    <t t-foreach="x2m_field['options']" t-as="op">
+                                        <option t-att-value="op['value']" t-att-selected="field_value[x2m_field['name']] == op['value']"> 
+                                            <t t-esc="op['name']" />
+                                        </option>
+                                    </t>
+                                </select>
+                                <select t-else="" t-attf-name="{{field['name']+'_o2m_'+x2m_field['name']}}" t-attf-class="form-select #{error.get(x2m_field['name']) and 'is-invalid' or ''}" >
+                                <!-- t-att-disabled="'1' if x2m_field['disabled'] else None" -->
+                                    <option value="">select...</option>
+                                    <t t-foreach="x2m_field['options']" t-as="op">
+                                        <option t-att-value="op['value']" t-att-selected="field_value[x2m_field['name']] == op['value']"> 
+                                            <t t-esc="op['name']" />
+                                        </option>
+                                    </t>
+                                </select>
+                                <!-- <span t-esc="field_value[x2m_field['name']]"/> <span t-esc="x2m_field['name']"/> -->
+                            </td>
+                        </t>
+                        <!-- 
+                        <td t-if="field_value['is_delete']">
+                            <button class="btn fa fa-trash-o remove_line" name="delete" aria-label="Delete row" style="color: red; padding: 0px; margin-left: -6px; margin-top: 6px; margin-bottom:15px;"/>
+                        </td> 
+                        -->
+                        <td t-if="field_value['is_edit']">
+                            <a t-attf-href="/my/swms_account/1/{{field_value['id']}}?{{keep_query()}}" class="btn btn-warning fa fa-edit" role="button" style="padding: 5px; margin-left: -6px; margin-top: 6px; margin-bottom:15px;"> <span style="margin-left: 5px; margin-right: 5px;">Complete Member Info</span></a>
+                        </td>
+                    </tr>
+                    <tr class="new_o2m_record d-none">
+                        <td class="d-none">
+                            <input type="text" t-attf-name="{{field['name']+'_o2m_id'}}" t-attf-class="form-control #{error.get('id') and 'is-invalid' or ''}"/>
+                        </td>
+                        <t t-foreach="field['x2m_fields']" t-as="x2m_field">
+                            <td t-if="x2m_field['type'] in ['text','tel','date','datetime-local','number','file']">
+                                <input t-attf-type="{{x2m_field['type']}}" t-attf-name="{{field['name']+'_o2m_'+x2m_field['name']}}" t-attf-class="form-control #{error.get(x2m_field['name']) and 'is-invalid' or ''}"/>
+                                <small t-if="x2m_field['tip']" t-esc="x2m_field['tip']" class="form-text text-muted d-block d-xl-none"></small>
+                            </td>
+
+                            <td t-if="x2m_field['type'] in ['select','many2one']">
+                                <select t-attf-name="{{field['name']+'_o2m_'+x2m_field['name']}}" t-attf-class="form-select #{error.get(x2m_field['name']) and 'is-invalid' or ''}">
+                                    <option value="">select...</option>
+                                    <t t-foreach="x2m_field['options']" t-as="op">
+                                        <option t-att-value="op['value']"> 
+                                            <t t-esc="op['name']" />
+                                        </option>
+                                    </t>
+                                </select>
+                            </td>
+                        </t>
+                        <td>
+                            <button class="btn fa fa-trash-o remove_line" name="delete" aria-label="Delete row" style="color: red; padding: 0px; margin-left: -6px; margin-top: 6px; margin-bottom:15px;"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-info fa fa-plus add_new_o2m_record button-color" style="float: right; margin-right: -15px;"/>
+        </div>
+    </template>
+
+    <template id="portal_snippet_document" name="Snippet Document">
+        <div t-attf-class="mb-3 #{error.get(document['name']) and 'o_has_error' or ''} col-xl-6">
+            <t t-set="flag" t-value="False"/>
+            <div t-foreach="current_documents" t-as="doc" class="o_portal_index_card col-md-12 order-2">
+                <div t-if="doc['doc_type_code'] == document['name'] and doc['member_name'] == document['member_name']" class="d-flex gap-2 gap-md-3 py-3 pe-2 px-md-3 h-100 rounded text-decoration-none bg-100">
+                    <t t-set="flag" t-value="True"/>
+                    <div class="o_portal_icon col-5">
+                        <img t-attf-src="data:image/png;base64,{{doc['thumbnail']}}" 
+                            style="padding: 0px; margin: 0px; height: auto; width: auto;" 
+                            class="img-fluid" t-att-alt="'%s'%(doc['name'])"/>
+                    </div>
+                    <t t-set="document_label" t-value="doc['doc_type_name']"/>
+                    <t t-if="doc['is_service'] == False">
+                        <t t-set="document_label" t-value="str(document_label) +' ('+str(doc['member_name'])+')'"/>
+                    </t>
+                    <div class="col-7" style="font-size: 15px;">
+                        <div class="mb-2 lh-1">
+                            <span t-esc="document_label"/> 
+                        </div>
+                        <div class="opacity-75">
+                            Issuance Date: <span t-esc="doc['issuance_date']"/> <br></br>
+                            Expire Date: <span t-esc="doc['expire_date']"/> <br></br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- to show documents for only father or member -->
+            <!-- and document['member_name'] == member_name -->
+
+            <div t-if="(not flag or is_expired)">
+                <t t-set="document_label" t-value="document['label']"/>
+                <t t-if="document['is_service'] == False">
+                    <t t-set="document_label" t-value="document_label +' ('+str(document['member_name'])+')'"/>
+                </t>
+                
+                <label class="col-form-label" t-attf-for="{{document['name']}}" t-esc="document_label"></label>
+                <p t-if="document['description']" t-esc="document['description']" style="font-size: 12px; color: #6c757d;"></p>
+                <input t-if="document['is_mandatory']" required="1" type="file" t-attf-name="{{document['name']}}" accept="image/jepg, image/png, application/pdf" max-size="1024" t-attf-class="form-control required-form-control #{error.get(document['name']) and 'is-invalid' or ''}" t-att-disabled="'1' if document['disabled'] else None"/>
+                <input t-else="" type="file" t-attf-name="{{document['name']}}" accept="image/jepg, image/png, application/pdf" max-size="1024" t-attf-class="form-control #{error.get(document['name']) and 'is-invalid' or ''}" t-att-disabled="'1' if document['disabled'] else None"/>
+                
+                <t t-if="document['issuance_date_is_visible']">
+                    <label class="col-form-label" t-attf-for="{{document['name'] +'_issuance_date'}}"> <span t-esc="document['label']"/> Issuance Date</label>
+                    <input t-if="document['is_mandatory'] and document['issuance_date_is_mandatory']" required="1" type="date" t-attf-name="{{document['name'] +'_issuance_date'}}" t-attf-min="{{document['max_issuance_date']}}" t-attf-max="{{today}}"  t-attf-class="form-control required-form-control #{error.get(document['name']+'_issuance_date') and 'is-invalid' or ''}"/>
+                    <input t-else="" type="date" t-attf-name="{{document['name'] +'_issuance_date'}}" t-attf-min="{{document['max_issuance_date']}}" t-attf-max="{{today}}"  t-attf-class="form-control #{error.get(document['name']+'_issuance_date') and 'is-invalid' or ''}"/>
+                </t>
+                <t t-if="document['expire_date_is_visible']">
+                    <label class="col-form-label" t-attf-for="{{document['name'] +'_expire_date'}}"> <span t-esc="document['label']"/> Expire Date</label>
+                    <input t-if="document['is_mandatory'] and document['expire_date_is_mandatory']" required="1" type="date" t-attf-name="{{document['name'] +'_expire_date'}}" t-attf-min="{{today}}" t-attf-max="{{document['max_expire_date']}}" t-attf-class="form-control required-form-control #{error.get(document['name']+'_expire_date') and 'is-invalid' or ''}"/>
+                    <input t-else="" type="date" t-attf-name="{{document['name'] +'_expire_date'}}" t-attf-min="{{today}}" t-attf-max="{{document['max_expire_date']}}" t-attf-class="form-control #{error.get(document['name']+'_expire_date') and 'is-invalid' or ''}"/>
+                </t>
+
+            </div>
+        </div>
+    </template>
+
+    <!-- <template id="s_website_form" name="Form">
+        <section class="s_website_form pt16 pb16" data-vcss="001" data-snippet="s_website_form">
+            <div class="container-fluid">
+                <form action="/website/form/" method="post" enctype="multipart/form-data" class="o_mark_required" data-mark="*" data-pre-fill="true" data-model_name="mail.mail" data-success-mode="redirect" data-success-page="/contactus-thank-you">
+                    <div class="s_website_form_rows row s_col_no_bgcolor">
+                        <div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_dnone">
+                            <div class="row s_col_no_resize s_col_no_bgcolor">
+                                <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px">
+                                    <span class="s_website_form_label_content"></span>
+                                </label>
+                                <div class="col-sm">
+                                    <input type="hidden" class="form-control s_website_form_input" name="email_to" value="info@yourcompany.example.com"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_custom s_website_form_required" data-type="char">
+                            <div class="row s_col_no_resize s_col_no_bgcolor">
+                                <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="obij2aulqyau">
+                                    <span class="s_website_form_label_content">Your Name</span>
+                                    <span class="s_website_form_mark"> *</span>
+                                </label>
+                                <div class="col-sm">
+                                    <input class="form-control s_website_form_input" type="text" name="name" required="1" data-fill-with="name" id="obij2aulqyau"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_custom" data-type="tel">
+                            <div class="row s_col_no_resize s_col_no_bgcolor">
+                                <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="ozp7022vqhe">
+                                    <span class="s_website_form_label_content">Phone Number</span>
+                                </label>
+                                <div class="col-sm">
+                                    <input class="form-control s_website_form_input" type="tel" name="phone" data-fill-with="phone" id="ozp7022vqhe"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_model_required" data-type="email">
+                            <div class="row s_col_no_resize s_col_no_bgcolor">
+                                <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="oub62hlfgjwf">
+                                    <span class="s_website_form_label_content">Your Email</span>
+                                    <span class="s_website_form_mark"> *</span>
+                                </label>
+                                <div class="col-sm">
+                                    <input class="form-control s_website_form_input" type="email" name="email_from" required="" data-fill-with="email" id="oub62hlfgjwf"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_custom" data-type="char">
+                            <div class="row s_col_no_resize s_col_no_bgcolor">
+                                <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="o291di1too2s">
+                                    <span class="s_website_form_label_content">Your Company</span>
+                                </label>
+                                <div class="col-sm">
+                                    <input class="form-control s_website_form_input" type="text" name="company" data-fill-with="commercial_company_name" id="o291di1too2s"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_model_required" data-type="char">
+                            <div class="row s_col_no_resize s_col_no_bgcolor">
+                                <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="oqsf4m51acj">
+                                    <span class="s_website_form_label_content">Subject</span>
+                                    <span class="s_website_form_mark"> *</span>
+                                </label>
+                                <div class="col-sm">
+                                    <input class="form-control s_website_form_input" type="text" name="subject" required="" id="oqsf4m51acj"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_custom s_website_form_required" data-type="text">
+                            <div class="row s_col_no_resize s_col_no_bgcolor">
+                                <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="oyeqnysxh10b">
+                                    <span class="s_website_form_label_content">Your Question</span>
+                                    <span class="s_website_form_mark"> *</span>
+                                </label>
+                                <div class="col-sm">
+                                    <textarea class="form-control s_website_form_input" name="description" required="1" id="oyeqnysxh10b" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-0 py-2 col-12 s_website_form_submit text-end s_website_form_no_submit_label" data-name="Submit Button">
+                            <div style="width: 200px;" class="s_website_form_label"/>
+                            <span id="s_website_form_result"/>
+                            <a href="#" role="button" class="btn btn-primary s_website_form_send">Submit</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </template> -->
+
+</odoo>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="crm_lead_view_form_jiz_waqf" model="ir.ui.view">
+            <field name="name">crm.lead.form.jiz.waqf</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="before">
+                    <div class="alert alert-danger w-100 d-flex align-items-center" role="alert" invisible="not noti_documents">
+                        <field name="noti_documents" readonly="1"/>
+                        <button name="check_documents" type="object" class="alert-link" icon="fa-refresh" title="Refresh Data"/>
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                    <!-- <field name="waqf_type" widget="radio" options="{'horizontal': true}"/> -->
+                    <field name="thank_you_message_sent" readonly="won_status == 'won'"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="required">1</attribute>
+                    <attribute name="readonly">won_status == 'won'</attribute>
+                </xpath>
+                <header>
+                    <button name="action_create_waqf" type="object" string="Convert to Waqf"
+                        class="oe_highlight" invisible="waqf_count > 0 or won_status != 'won' or waqf_type != 'in_kind'"/>
+                </header>
+                <xpath expr="//widget[@name='web_ribbon'][2]" position="replace">
+                    <widget name="web_ribbon" title="Acquired" invisible="probability &lt; 100"/>
+                </xpath>
+                <div name="button_box" position="inside">
+                    <button name="action_open_attachments" type="object" class="oe_stat_button" icon="fa-file-text-o">
+                        <field name="document_count" widget="statinfo" string="Documents"/>
+                    </button>
+                    <button name="action_view_waqfs" type="object" class="oe_stat_button" icon="fa-star"
+                        invisible="waqf_count == 0 or waqf_type != 'in_kind'">
+                        <field name="waqf_count" widget="statinfo" string="Waqf"/>
+                    </button>
+                </div>
+                <xpath expr="//button[@name='action_set_won_rainbowman']" position="replace">
+                    <button name="action_set_won_rainbowman" string="Acquired" type="object" class="oe_highlight" data-hotkey="w" title="Mark as acquired" invisible="not active or probability == 100 or type == 'lead' or waqf_type != 'in_kind'"/>
+                    <button name="action_set_won_rainbowman" string="Won" type="object" class="oe_highlight" data-hotkey="w" title="Mark as won" invisible="not active or probability == 100 or type == 'lead' or waqf_type == 'in_kind'"/>
+                </xpath>
+                <xpath expr="//field[@name='city']" position="before">
+                    <field name="country_enforce_cities" invisible="1"/>
+                    <field name="area_id" domain="[('city_id', '=', city_id)]"/>
+                    <field name="city_id"
+                           placeholder="City"
+                           class="o_address_city"
+                           domain="[('country_id', '=', country_id)]"
+                           invisible="not country_enforce_cities"
+                           context="{'default_country_id': country_id, 'default_state_id': state_id, 'default_zipcode': zip}"/>
+                </xpath>
+                <xpath expr="//field[@name='city']" position="attributes">
+                    <attribute name="invisible">country_enforce_cities and (city_id or city in ('', False))</attribute>
+                </xpath>
+                <xpath expr="//notebook/page[2]" position="before">
+                    <page string="Waqf" invisible="waqf_type != 'in_kind'">
+                        <group>
+                            <group string="Address">
+                                <span class="o_form_label o_td_label o_address_type" name="address_name">
+                                    <span>Address</span>
+                                </span>
+                                <div class="o_address_format">
+                                    <field name="street" placeholder="Street..." class="o_address_street" readonly="won_status == 'won'"/>
+                                    <field name="street2" placeholder="Street 2..." class="o_address_street" readonly="won_status == 'won'"/>
+                                    <field name="area_id" placeholder="Area" class="o_address_area" domain="[('city_id', '=', city_id)]" readonly="won_status == 'won'"/>
+                                    <field name="city_id" placeholder="City" class="o_address_city" domain="[('country_id', '=', country_id)]" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" invisible="not country_enforce_cities"/>
+                                    <field name="city" placeholder="City" class="o_address_city" invisible="country_enforce_cities and (city_id or city in ('', False))" readonly="won_status == 'won'"/>
+                                    <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True,'no_create': True}" readonly="won_status == 'won'"/>
+                                    <field name="zip" placeholder="ZIP" class="o_address_zip" readonly="won_status == 'won'"/>
+                                    <div name="partner_address_country" class="d-flex justify-content-between">
+                                        <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" readonly="won_status == 'won'"/>
+                                    </div>
+                                </div>
+                                <field name="asset_model_id" required="waqf_type == 'in_kind'" options="{'no_create': True, 'no_open': True}"/>
+                                <!-- <field name="form_document" required="waqf_type == 'in_kind'" widget="file"/> -->
+                            </group>
+                            <group string="Details">
+                                <field name="land_number" required="waqf_type == 'in_kind'" readonly="won_status == 'won'"/>
+                                <field name="waqf_valuation" readonly="won_status == 'won'"/>
+                                <field name="waqf_type_id" required="waqf_type == 'in_kind'" options="{'no_create': True, 'no_open': True}" readonly="won_status == 'won'"/>
+                                <field name="use_type_id" required="waqf_type == 'in_kind'" options="{'no_create': True, 'no_open': True}" readonly="won_status == 'won'"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

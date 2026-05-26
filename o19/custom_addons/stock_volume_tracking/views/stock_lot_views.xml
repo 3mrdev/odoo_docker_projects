@@ -1,0 +1,89 @@
+<odoo>
+
+    <!-- Stock Lot Form View -->
+    <record id="stock_lot_form_inherit" model="ir.ui.view">
+        <field name="name">stock_lot_form_inherit</field>
+        <field name="model">stock.lot</field>
+        <field name="priority" eval="25" />
+        <field name="inherit_id" ref="stock.view_production_lot_form" />
+        <field name="arch" type="xml">
+            <div class="oe_title" position="before">
+                <field name="image" widget="image" class="oe_avatar"
+                    options="{'convert_to_webp': True, 'preview_image': 'image'}" />
+            </div>
+            <field name="name" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </field>
+            <sheet position="before">
+                <field name="is_equal_volume_cost" invisible="1" groups="stock_volume_tracking.group_volume_and_cost"/>
+                <div class="alert alert-warning mb-3"
+                     invisible="is_equal_volume_cost or not is_cost_tracked"
+                     groups="stock_volume_tracking.group_volume_and_cost"
+                     role="alert">
+                    <b>Warning:</b> Cost is not equal to Cost per volume.
+                    <button name="set_cost_per_volume" string="Set Cost per Volume" type="object" class="btn btn-primary"/>
+                </div>
+            </sheet>
+            <group name="main_group" position="inside">
+                <group name="volume_group" string="Volume Dimensions"
+                    invisible="not is_volume_tracked"
+                    groups="stock_volume_tracking.group_volume_only">
+                    <field name="is_volume_tracked" widget="boolean_toggle" readonly="1" />
+                    <label for="volume_length" string="Volume in cm (L × W × H)" />
+                    <div class="o_row" name="volume">
+                        <field name="volume_length" placeholder="Length" class="oe_inline"
+                            readonly="1" />
+                        <span>×</span>
+                        <field name="volume_width" placeholder="Width" class="oe_inline"
+                            readonly="1" />
+                        <span>×</span>
+                        <field name="volume_height" placeholder="Height" class="oe_inline"
+                            readonly="1" />
+                    </div>
+                    <field name="volume" readonly="1" />
+                    <field name="cost_per_volume" groups="stock_volume_tracking.group_volume_and_cost" widget="monetary" invisible="not lot_valuated" options="{'currency_field': 'company_currency_id'}"/>
+                    <field name="volume_total" readonly="1" />
+                    <field name="volume_display" readonly="1" string="Line/Square/Cubic" />
+                </group>
+            </group>
+        </field>
+    </record>
+
+    <!-- Stock Lot List View -->
+    <record id="stock_lot_list_inherit" model="ir.ui.view">
+        <field name="name">stock.lot.list.volume</field>
+        <field name="model">stock.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_tree" />
+        <field name="arch" type="xml">
+            
+            <field name="name" position="before">
+                <field name="image" widget="image" class="oe_avatar" width="75" height="75"
+                    optional="hide" />
+            </field>
+            <field name="name" position="after">
+                <field name="volume_display" optional="show" string="Dimensions"
+                    invisible="not is_volume_tracked"
+                    groups="stock_volume_tracking.group_volume_only" />
+                <field name="is_volume_tracked" widget="boolean_toggle" readonly="1" optional="show"
+                    groups="stock_volume_tracking.group_volume_only" />
+                <field name="is_equal_volume_cost" readonly="1" optional="show"
+                    groups="stock_volume_tracking.group_volume_and_cost" />
+                <field name="volume" optional="hide" invisible="not is_volume_tracked"
+                    groups="stock_volume_tracking.group_volume_only" />
+                <field name="volume_total" optional="hide" invisible="not is_volume_tracked"
+                    groups="stock_volume_tracking.group_volume_only" />
+            </field>
+        </field>
+    </record>
+
+    <record id="set_cost_per_volume_action_list" model="ir.actions.server">
+        <field name="name">Set Cost per Volume on Lot Cost</field>
+        <field name="model_id" ref="stock.model_stock_lot"/>
+        <field name="binding_model_id" ref="stock.model_stock_lot"/>
+        <field name="group_ids" eval="[(4, ref('stock_volume_tracking.group_volume_and_cost'))]"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.set_cost_per_volume()</field>
+    </record>
+
+</odoo>

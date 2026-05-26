@@ -1,0 +1,1048 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* fb_wajiz_maintenance
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e-20230510\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-29 06:47+0000\n"
+"PO-Revision-Date: 2024-01-29 09:02+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_equipment__spareparts
+msgid "Spare Parts"
+msgstr "قطع الغيار"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_equipment__product_id
+msgid "Product"
+msgstr "المنتج"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.actions.act_window,help:fb_wajiz_maintenance.maintenance_branch_action
+msgid "Add a new branch"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.actions.act_window,help:fb_wajiz_maintenance.hr_equipment_category_action
+msgid "Add a new equipment category"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.actions.act_window,help:fb_wajiz_maintenance.spareparts_action
+msgid "Add a new sparepart request"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.actions.act_window,help:fb_wajiz_maintenance.maintenance_todo_action
+msgid "Add a new todo"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.actions.act_window,help:fb_wajiz_maintenance.maintenance_team_action_settings
+msgid "Add a team in the maintenance request"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_request__address_id
+msgid "Address"
+msgstr "العنوان"
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.fb_wajiz_mass_editing_wizard
+msgid "Apply"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.actions.act_window,name:fb_wajiz_maintenance.maintenance_branch_action
+#: model:ir.ui.menu,name:fb_wajiz_maintenance.menu_branch
+msgid "Branches"
+msgstr "الاندية"
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.fb_wajiz_mass_editing_wizard
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.sparepart_wizard_form
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.spareparts_form
+msgid "Cancel"
+msgstr "الغاء"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields.selection,name:fb_wajiz_maintenance.selection__maintenance_spareparts__state__cancel
+msgid "Canceled"
+msgstr "تم الالغاء"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_request__catalog
+msgid "Catalog"
+msgstr "الكتلوج"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_todo_line__check
+msgid "Check"
+msgstr "تم التنفيذ"
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.fb_wajiz_mass_editing_wizard
+msgid "Choose Operation Type"
+msgstr "اختر نوع العملية"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_request__close_date
+msgid "Close Date"
+msgstr "تاريخ الإغلاق"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_request__closed
+msgid "Closed"
+msgstr "تم الاغلاق"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model,name:fb_wajiz_maintenance.model_res_config_settings
+msgid "Config Settings"
+msgstr "تهيئة الإعدادات "
+
+#. module: fb_wajiz_maintenance
+#: model:ir.ui.menu,name:fb_wajiz_maintenance.menu_maintenance_configuration
+msgid "Configuration"
+msgstr "الاعدادات"
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.sparepart_wizard_form
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.spareparts_form
+msgid "Confirm"
+msgstr "تاكيد"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields.selection,name:fb_wajiz_maintenance.selection__maintenance_spareparts__state__confirm
+msgid "Confirmed"
+msgstr "تم التاكيد"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields.selection,name:fb_wajiz_maintenance.selection__maintenance_request__mtype__corrective
+msgid "Corrective"
+msgstr "تصحيحية"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_request__cost
+msgid "Cost"
+msgstr "التكلفة"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_fb_wajiz_mass_editing_wizard__create_uid
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_branch__create_uid
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_sparepart__create_uid
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_sparepart_line__create_uid
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__create_uid
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts_line__create_uid
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_todo__create_uid
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_todo_line__create_uid
+msgid "Created by"
+msgstr "تم الانشاء بواسطة"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_fb_wajiz_mass_editing_wizard__create_date
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_branch__create_date
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_sparepart__create_date
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_sparepart_line__create_date
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__create_date
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts_line__create_date
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_todo__create_date
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_todo_line__create_date
+msgid "Created on"
+msgstr "تم الإنشاء في"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields.selection,name:fb_wajiz_maintenance.selection__maintenance_todo_line__maintenance_strategy__daily
+msgid "Daily"
+msgstr "يومي"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,help:fb_wajiz_maintenance.field_maintenance_request__close_date
+msgid "Date the maintenance was finished. "
+msgstr "تاريخ انتهاء الصيانة. "
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.res_config_settings_view_form_firebits_maintenance
+msgid "Default Operation"
+msgstr "العملية الافتراضية"
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.res_config_settings_view_form_firebits_maintenance
+msgid "Default source location"
+msgstr "الموقع المصري الافتراضي"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_sparepart_line__product_uom_qty
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts_line__product_uom_qty
+msgid "Demand"
+msgstr "الكمية المطلوبة"
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.maintenance_request_form
+msgid "Describe the maintenance to do..."
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_sparepart__to_loc_dest
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__to_loc_dest
+msgid "Destination Location"
+msgstr "موفع الوجهة"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_fb_wajiz_mass_editing_wizard__display_name
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_branch__display_name
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_sparepart__display_name
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_sparepart_line__display_name
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__display_name
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts_line__display_name
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_todo__display_name
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_todo_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields.selection,name:fb_wajiz_maintenance.selection__maintenance_spareparts__state__draft
+msgid "Draft"
+msgstr "مستند"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_fb_wajiz_mass_editing_wizard__equipment_ids
+msgid "Equipment"
+msgstr "معدة"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.actions.act_window,name:fb_wajiz_maintenance.hr_equipment_category_action
+#: model:ir.ui.menu,name:fb_wajiz_maintenance.menu_maintenance_cat
+msgid "Equipment Categories"
+msgstr "فئة المعدة"
+
+#. module: fb_wajiz_maintenance
+#. odoo-python
+#: code:addons/fb_wajiz_maintenance/models.py:0
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_branch__equipments
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.maintenance_branch_form
+#, python-format
+msgid "Equipments"
+msgstr "المعدات"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_branch__equipments_count
+msgid "Equipments Count"
+msgstr "عدد المعدات"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,help:fb_wajiz_maintenance.field_maintenance_spareparts__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields.selection,name:fb_wajiz_maintenance.selection__fb_wajiz_mass_editing_wizard__op_type__generate
+msgid "Generate Plans"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields.selection,name:fb_wajiz_maintenance.selection__maintenance_todo_line__maintenance_strategy__half_yearly
+msgid "Half Yearly"
+msgstr "نصف سنوي"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_fb_wajiz_mass_editing_wizard__id
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_branch__id
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_sparepart__id
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_sparepart_line__id
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__id
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts_line__id
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_todo__id
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_todo_line__id
+msgid "ID"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,help:fb_wajiz_maintenance.field_maintenance_spareparts__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,help:fb_wajiz_maintenance.field_maintenance_spareparts__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,help:fb_wajiz_maintenance.field_maintenance_spareparts__message_has_error
+#: model:ir.model.fields,help:fb_wajiz_maintenance.field_maintenance_spareparts__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.maintenance_request_form
+msgid "Instructions"
+msgstr "التعليمات"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model,name:fb_wajiz_maintenance.model_stock_location
+msgid "Inventory Locations"
+msgstr "مواقع المخزون"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_fb_wajiz_mass_editing_wizard____last_update
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_branch____last_update
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_sparepart____last_update
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_sparepart_line____last_update
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts____last_update
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts_line____last_update
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_todo____last_update
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_todo_line____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_fb_wajiz_mass_editing_wizard__write_uid
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_branch__write_uid
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_sparepart__write_uid
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_sparepart_line__write_uid
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__write_uid
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts_line__write_uid
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_todo__write_uid
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_todo_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_fb_wajiz_mass_editing_wizard__write_date
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_branch__write_date
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_sparepart__write_date
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_sparepart_line__write_date
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__write_date
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts_line__write_date
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_todo__write_date
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_todo_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_todo__lines
+msgid "Lines"
+msgstr "سطور"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "مرفق رئيسي"
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.res_config_settings_view_form_firebits_maintenance
+msgid "Maintenance"
+msgstr "الصيانة"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model,name:fb_wajiz_maintenance.model_maintenance_equipment
+msgid "Maintenance Equipment"
+msgstr "معدات الصيانة"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model,name:fb_wajiz_maintenance.model_maintenance_equipment_category
+msgid "Maintenance Equipment Category"
+msgstr "فئة معدات الصيانة"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model,name:fb_wajiz_maintenance.model_maintenance_kind
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_todo_line__maintenance_kind_id
+msgid "Maintenance Kind"
+msgstr "نوع الصيانة"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model,name:fb_wajiz_maintenance.model_maintenance_plan
+msgid "Maintenance Plan"
+msgstr "خطة الصيانة"
+
+#. module: fb_wajiz_maintenance
+#. odoo-python
+#: code:addons/fb_wajiz_maintenance/models.py:0
+#, python-format
+msgid "Maintenance Plans"
+msgstr "خطط الصيانة"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model,name:fb_wajiz_maintenance.model_maintenance_request
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_sparepart__maintenance_request_id
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__maintenance_request_id
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_purchase_order__maintenance_request_id
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_stock_picking__maintenance_request_id
+msgid "Maintenance Request"
+msgstr "طلب الصيانة"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.actions.server,name:fb_wajiz_maintenance.ir_cron_maintenance_request_ir_actions_server
+#: model:ir.cron,cron_name:fb_wajiz_maintenance.ir_cron_maintenance_request
+msgid "Maintenance Request Cron Job"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#. odoo-python
+#: code:addons/fb_wajiz_maintenance/models.py:0
+#, python-format
+msgid "Maintenance Requests"
+msgstr "طلبات الصيانة"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_todo_line__maintenance_strategy
+msgid "Maintenance Strategy"
+msgstr "الاستراتيجية"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_equipment__maintenance_team_id
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_equipment_category__maintenance_team_id
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_kind__maintenance_team_id
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_plan__maintenance_team_id
+msgid "Maintenance Team"
+msgstr "فريق الصيانة"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model,name:fb_wajiz_maintenance.model_maintenance_team
+#: model:ir.ui.menu,name:fb_wajiz_maintenance.menu_maintenance_teams
+msgid "Maintenance Teams"
+msgstr "فرق الصيانة"
+
+#. module: fb_wajiz_maintenance
+#: model:res.groups,name:fb_wajiz_maintenance.group_maintenance_user
+msgid "Maintenance User"
+msgstr "مستخدم الصيانة"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.actions.act_window,name:fb_wajiz_maintenance.maintenance_kind_action
+#: model:ir.ui.menu,name:fb_wajiz_maintenance.menu_maintenance_kind_configuration
+msgid "Maintenance kinds"
+msgstr "انواع الصيانة"
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.fb_wajiz_mass_editing_wizard
+msgid "Mass Editing"
+msgstr "التعديلات الكثيرة"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields.selection,name:fb_wajiz_maintenance.selection__maintenance_todo_line__maintenance_strategy__monthly
+msgid "Monthly"
+msgstr "شهري"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_request__mtype
+msgid "Mtype"
+msgstr "نوع الصيانة"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_request__equipment_number
+msgid "Equipment Number"
+msgstr "رقم المعدة"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_equipment__equipment_number
+msgid "Equipment Number"
+msgstr "رقم المعدة"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_branch__name
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_todo__name
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_todo_line__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_todo_line__note
+msgid "Note"
+msgstr "الملحوظة"
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.maintenance_request_form
+msgid "Notes"
+msgstr "الملحوظات"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,help:fb_wajiz_maintenance.field_maintenance_spareparts__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,help:fb_wajiz_maintenance.field_maintenance_spareparts__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_fb_wajiz_mass_editing_wizard__op_type
+msgid "Op Type"
+msgstr "نوع العملية"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_sparepart__picking_type_id
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__picking_type_id
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_team__picking_type_id
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_res_config_settings__picking_type_id
+msgid "Operation"
+msgstr "العملية"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields.selection,name:fb_wajiz_maintenance.selection__maintenance_request__mtype__periodic
+msgid "Periodic"
+msgstr "متكررة"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model,name:fb_wajiz_maintenance.model_stock_picking_type
+msgid "Picking Type"
+msgstr "نوع الاستلام"
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.spareparts_form
+msgid "Pickings"
+msgstr "الحركات"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_branch__plans
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.maintenance_branch_form
+msgid "Plans"
+msgstr "الخطط"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_branch__plans_count
+msgid "Plans Count"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields.selection,name:fb_wajiz_maintenance.selection__maintenance_request__mtype__preventive
+msgid "Preventive"
+msgstr "وقائية"
+
+#. module: fb_wajiz_maintenance
+#. odoo-python
+#: code:addons/fb_wajiz_maintenance/models.py:0
+#, python-format
+msgid "Preventive Maintenance (%(kind)s) - %(description)s"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields.selection,name:fb_wajiz_maintenance.selection__maintenance_request__mtype__proactive_
+msgid "Proactive "
+msgstr "استباقية"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.actions.server,name:fb_wajiz_maintenance.action_print_spareparts_report
+msgid "Print Spareparts Report"
+msgstr "طباعة تقرير قطع الغيار"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_sparepart_line__product_id
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts_line__product_id
+msgid "Product"
+msgstr "المنتج"
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.maintenance_request_form
+msgid "Purchase"
+msgstr "شراء"
+
+#. module: fb_wajiz_maintenance
+#. odoo-python
+#: code:addons/fb_wajiz_maintenance/models.py:0
+#: model:ir.model,name:fb_wajiz_maintenance.model_purchase_order
+#, python-format
+msgid "Purchase Order"
+msgstr "أمر شراء"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_request__purchase_orders
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.maintenance_request_form
+msgid "Purchase Orders"
+msgstr "اوامر الشراء"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields.selection,name:fb_wajiz_maintenance.selection__maintenance_todo_line__maintenance_strategy__quarterly
+msgid "Quarterly"
+msgstr "ربع سنوي"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields.selection,name:fb_wajiz_maintenance.selection__fb_wajiz_mass_editing_wizard__op_type__refresh
+msgid "Refresh Address"
+msgstr "تحديث العناوين"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields.selection,name:fb_wajiz_maintenance.selection__fb_wajiz_mass_editing_wizard__op_type__refresh_todo
+msgid "Refresh Todo List"
+msgstr "تحديث قوائم العمل"
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.spareparts_form
+msgid "Reject"
+msgstr "رفض"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields.selection,name:fb_wajiz_maintenance.selection__maintenance_spareparts__state__reject
+msgid "Rejected"
+msgstr "تم الرفض"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_todo_line__request
+msgid "Request"
+msgstr "طلب"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_branch__requests
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.maintenance_branch_form
+msgid "Requests"
+msgstr "طلبات"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_branch__requests_count
+msgid "Requests Count"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.actions.report,name:fb_wajiz_maintenance.main_request_report
+msgid "Requests Table Report"
+msgstr "تقرير الطلبات المجدول"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.actions.report,name:fb_wajiz_maintenance.report_maintenance_spareparts_template
+msgid "Spareparts History Report"
+msgstr "تقرير قطع الغيار"
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.spareparts_form
+msgid "Reset to draft"
+msgstr "ارجاع الي مستند"
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.maintenance_request_form
+msgid "Responsible"
+msgstr "المسؤول"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "المستخدم المسؤول"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields.selection,name:fb_wajiz_maintenance.selection__maintenance_request__mtype__schedule
+msgid "Scheduled"
+msgstr "مجدول"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_request__seq
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__seq
+msgid "Seq"
+msgstr "تسلسلي"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.actions.act_window,name:fb_wajiz_maintenance.action_maintenance_configuration
+#: model:ir.ui.menu,name:fb_wajiz_maintenance.maintenance_general_settings
+msgid "Settings"
+msgstr "الاعدادات"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_sparepart__from_loc
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__from_loc
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_team__source_location
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_res_config_settings__source_location
+msgid "Source Location"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.maintenance_request_form
+msgid "Spare Parts"
+msgstr "قطع الغيار"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.actions.act_window,name:fb_wajiz_maintenance.action_popup_wizard_sparepart
+#: model:ir.actions.act_window,name:fb_wajiz_maintenance.spareparts_action
+#: model:ir.model,name:fb_wajiz_maintenance.model_maintenance_spareparts
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.maintenance_request_form
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.sparepart_wizard_form
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.spareparts_form
+msgid "SpareParts"
+msgstr "قطع الغيار"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_sparepart__sparepart_lines
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__sparepart_lines
+msgid "Sparepart Lines"
+msgstr "سطور قطع الغيار"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.ui.menu,name:fb_wajiz_maintenance.menu_maintenance_spareparts
+msgid "Sparepart requests"
+msgstr "طلبات قطع الغيار"
+
+#. module: fb_wajiz_maintenance
+#. odoo-python
+#: code:addons/fb_wajiz_maintenance/models.py:0
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_sparepart_line__spareparts_id
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts_line__spareparts_id
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.spareparts_form
+#, python-format
+msgid "Spareparts"
+msgstr "قطع الغيار"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_stock_picking__spareparts_request_id
+msgid "Spareparts Request"
+msgstr "طلبات قطع الغيار"
+
+#. module: fb_wajiz_maintenance
+#. odoo-python
+#: code:addons/fb_wajiz_maintenance/models.py:0
+#, python-format
+msgid "Spareparts Transfers"
+msgstr "حركات قطع الغيار"
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.equipment_form_inherit_sparepart_ids
+msgid "Spareparts Records"
+msgstr "قطع الغيار"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_request__sparepartslines
+msgid "Sparepartslines"
+msgstr "سطور قطع الغيار"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_request__sparepartslines2
+msgid "Sparepartslines2"
+msgstr "سطور قطع الغيار"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__state
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts_line__state
+msgid "State"
+msgstr "الحالة"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,help:fb_wajiz_maintenance.field_maintenance_spareparts__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_request__stock_pickings
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__stock_pickings
+msgid "Stock Pickings"
+msgstr "تحركات المخزن"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_request__stock_pickings_count
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__stock_pickings_count
+msgid "Stock Pickings Count"
+msgstr "عدد تحركات المخزن"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_request__stock_pickings2
+msgid "Stock Pickings2"
+msgstr "تحركات المخزن"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_team__location
+msgid "Storage Location"
+msgstr "موقع مخزني"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields.selection,name:fb_wajiz_maintenance.selection__maintenance_spareparts__state__submit
+msgid "Submited"
+msgstr "تم الارسال"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_equipment__member_ids
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_equipment_category__member_ids
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_kind__member_ids
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_plan__member_ids
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_request__member_ids
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__member_ids
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_team__member_ids
+msgid "Team Members"
+msgstr "أعضاء الفريق"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.actions.act_window,name:fb_wajiz_maintenance.maintenance_team_action_settings
+msgid "Teams"
+msgstr "الفرق"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.actions.act_window,name:fb_wajiz_maintenance.maintenance_todo_action
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_equipment__todo
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_equipment_category__todo
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_request__todo
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_todo_line__todo
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.maintenance_request_form
+msgid "Todo"
+msgstr "قائمة المهام"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_request__todo_do
+msgid "Todo Do"
+msgstr "فعل قائمة المهام"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_request__todolines
+msgid "Todolines"
+msgstr "سطور قائمة المهام"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.ui.menu,name:fb_wajiz_maintenance.menu_todo
+msgid "Todos"
+msgstr "قوائم المهام"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model,name:fb_wajiz_maintenance.model_stock_picking
+msgid "Transfer"
+msgstr "الشحنة"
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.maintenance_request_form
+msgid "Transfer Spareparts"
+msgstr "شحنة قطع الغيار"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,help:fb_wajiz_maintenance.field_maintenance_spareparts__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_sparepart_line__product_uom
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts_line__product_uom
+msgid "UOM"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#. odoo-python
+#: code:addons/fb_wajiz_maintenance/models.py:0
+#, python-format
+msgid "Unspecified kind"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.actions.act_window,name:fb_wajiz_maintenance.action_fb_wajiz_mass_editing_maintinance_wizard2
+msgid "Update Address / Generate Plans"
+msgstr "تحديث العناوين وقوائم المهام وتوليد الخطط"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_stock_location__user_id
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_stock_picking_type__user_id
+msgid "User"
+msgstr "المستخدم"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,field_description:fb_wajiz_maintenance.field_maintenance_spareparts__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields,help:fb_wajiz_maintenance.field_maintenance_spareparts__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields.selection,name:fb_wajiz_maintenance.selection__maintenance_todo_line__maintenance_strategy__weekly
+msgid "Weekly"
+msgstr "اسبوعي"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model.fields.selection,name:fb_wajiz_maintenance.selection__maintenance_todo_line__maintenance_strategy__yearly
+msgid "Yearly"
+msgstr "سنوي"
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.maintenance_branch_form
+msgid "branches"
+msgstr "النوادي"
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model,name:fb_wajiz_maintenance.model_fb_wajiz_mass_editing_wizard
+msgid "fb_wajiz.mass.editing.wizard"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.res_config_settings_view_form_firebits_maintenance
+msgid "maintenance"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model,name:fb_wajiz_maintenance.model_maintenance_branch
+msgid "maintenance.branch"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model,name:fb_wajiz_maintenance.model_maintenance_sparepart
+msgid "maintenance.sparepart"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model,name:fb_wajiz_maintenance.model_maintenance_sparepart_line
+msgid "maintenance.sparepart.line"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model,name:fb_wajiz_maintenance.model_maintenance_spareparts_line
+msgid "maintenance.spareparts.line"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model,name:fb_wajiz_maintenance.model_maintenance_todo
+msgid "maintenance.todo"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model:ir.model,name:fb_wajiz_maintenance.model_maintenance_todo_line
+msgid "maintenance.todo.line"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.main_request_temp
+msgid "التوقيع الاول"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.main_request_temp
+msgid "التوقيع الثاني"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.main_request_temp
+msgid "العنوان"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.main_request_temp
+msgid "الفني"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.main_request_temp
+msgid "المرحلة"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.main_request_temp
+msgid "المواضيع"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.main_request_temp
+msgid "الموظف"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.main_request_temp
+msgid "تاريخ الطلب"
+msgstr ""
+
+#. module: fb_wajiz_maintenance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_maintenance.main_request_temp
+msgid "تقرير طلبات الصيانة"
+msgstr ""

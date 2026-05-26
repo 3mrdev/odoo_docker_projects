@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fb_zkteco_device_manager,fb_zkteco_device manager,fb_zkteco_client.model_fb_zkteco_device,fb_zkteco_client.group_zkteco,1,1,1,1
+access_fb_zkteco_attendance_manager,fb_zkteco_attendance manager,fb_zkteco_client.model_fb_zkteco_attendance,fb_zkteco_client.group_zkteco,1,1,1,1

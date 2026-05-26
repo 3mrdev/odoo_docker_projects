@@ -1,0 +1,51 @@
+// Booking specific SCSS
+
+.s_booking_search {
+    border-radius: 12px !important;
+    background-color: #fff;
+    
+    .border-end-md {
+        @media (min-width: 768px) {
+            border-right: 1px solid #dee2e6;
+        }
+        
+        @media (max-width: 767px) {
+            border-bottom: 1px solid #dee2e6;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+        }
+    }
+
+    input, select {
+        color: #333;
+        font-weight: 500;
+        &:focus {
+            box-shadow: none;
+            border-color: transparent;
+            outline: none;
+        }
+        &::placeholder {
+            color: #adb5bd;
+            font-weight: 400;
+        }
+    }
+}
+
+.o_booking_card {
+    border-radius: 12px;
+    border: 1px solid #eff2f5 !important;
+    transition: all 0.2s ease-in-out;
+    
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.08) !important;
+    }
+
+    .bg-light {
+        background-color: #f8f9fa !important;
+    }
+    
+    .badge {
+        font-size: 0.85rem;
+    }
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="hrb_property_generate_units_wizard_view_form" model="ir.ui.view">
+            <field name="name">hrb.property.generate.units.wizard.view.form</field>
+            <field name="model">hrb.property.generate.units.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Generate Units">
+                    <group>
+                        <field name="property_id" invisible="1" />
+                        <field name="number_of_units" />
+                        <field name="product_id"
+                            domain="[('type', '=', 'service'),('recurring_invoice', '=', True)]"
+                            options="{'no_create': True, 'no_open': True}" />
+                        <field name="unit_price" />
+                    </group>
+                    <footer>
+                        <button name="action_generate_units" string="Generate" type="object"
+                            class="btn-primary" />
+                        <button string="Cancel" class="btn-secondary" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="hrb_property_generate_units_wizard_action" model="ir.actions.act_window">
+            <field name="name">Generate Units</field>
+            <field name="res_model">hrb.property.generate.units.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

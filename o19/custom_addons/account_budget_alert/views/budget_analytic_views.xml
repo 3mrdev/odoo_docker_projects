@@ -1,0 +1,44 @@
+<odoo>
+    <record id="view_budget_analytic_form_inherit" model="ir.ui.view">
+        <field name="name">budget.analytic.form.view</field>
+        <field name="model">budget.analytic</field>
+        <field name="inherit_id" ref="account_budget.view_budget_analytic_form" />
+        <field name="arch" type="xml">
+
+            <xpath expr="//sheet" position="before">
+                <div class="alert alert-warning mb-3" role="alert">
+                    <i class="fa fa-warning" title="Warning"/>
+                    <b>If the budget alert type is 'Block' or 'Warning':</b> The user will be blocked or warned from posting the transaction for all the budget lines.
+                    <b>If the budget alert type is 'None':</b> You can define the alert type for each budget line separately.
+                </div>
+            </xpath>
+            
+            <field name="budget_type" position="after">
+                <field name="budget_alert_type"
+                    groups="account_budget_alert.group_budget_alert_user"
+                    readonly="state != 'draft'" />
+            </field>
+
+            <xpath expr="//field[@name='budget_line_ids']/list" position="attributes">
+                <attribute name="open_form_view">True</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='budget_line_ids']/list/field[@name='budget_amount']"
+                position="after">
+                <field name="budget_alert_type" optional="show"
+                    groups="account_budget_alert.group_budget_alert_user" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_budget_line_form_inherit" model="ir.ui.view">
+        <field name="name">budget.line.form.view</field>
+        <field name="model">budget.line</field>
+        <field name="inherit_id" ref="account_budget.view_budget_line_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="after">
+                <chatter />
+            </xpath>
+        </field>
+    </record>
+</odoo>

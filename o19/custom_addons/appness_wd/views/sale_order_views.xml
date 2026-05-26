@@ -1,0 +1,33 @@
+<odoo>
+    <record id="view_order_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_template_id']"
+                position="before">
+                <field name="barcode" string="Barcode" optional="show" />
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list/field[@name='discount']" position="after">
+                <field name="discount_amount" string="Disc. Amount" widget="monetary"
+                    optional="show" />
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_subtotal']"
+                position="before">
+                <field name="tax_amount" string="Tax Amount" widget="monetary" optional="show" />
+            </xpath>
+            <xpath expr="//group[@name='note_group']" position="before">
+                <group name="discount_group" col="8" class="mt-2 mt-md-0">
+                    <group colspan="4" class="order-1 order-lg-0">
+                    </group>
+                    <group colspan="4" class="oe_subtotal_footer order-0 order-lg-1">
+                        <field name="amount_undiscounted" string="Amount Before Discount"
+                            widget="monetary" invisible="total_discount == 0" />
+                        <field name="total_discount" string="Total Discount" widget="monetary"
+                            invisible="total_discount == 0" />
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

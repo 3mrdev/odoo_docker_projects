@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Rating Actions -->
+    <record id="action_logspace_rating" model="ir.actions.act_window">
+        <field name="name">Ratings &amp; Reviews</field>
+        <field name="res_model">logspace.rating</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Customer ratings and reviews will appear here!
+            </p>
+        </field>
+    </record>
+
+    <!-- Rating Tree View -->
+    <record id="view_logspace_rating_list" model="ir.ui.view">
+        <field name="name">logspace.rating.list</field>
+        <field name="model">logspace.rating</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="order_id"/>
+                <field name="provider_id"/>
+                <field name="customer_id"/>
+                <field name="overall_rating"/>
+                <field name="timeliness_rating"/>
+                <field name="driver_behavior_rating"/>
+                <field name="vehicle_condition_rating"/>
+                <field name="create_date"/>
+                <field name="is_published"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Rating Form View -->
+    <record id="view_logspace_rating_form" model="ir.ui.view">
+        <field name="name">logspace.rating.form</field>
+        <field name="model">logspace.rating</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="order_id"/>
+                            <field name="provider_id" readonly="1"/>
+                            <field name="customer_id" readonly="1"/>
+                            <field name="create_date" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="is_published"/>
+                        </group>
+                    </group>
+                    <group string="Ratings">
+                        <group>
+                            <field name="overall_rating"/>
+                            <field name="average_rating" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="timeliness_rating"/>
+                            <field name="driver_behavior_rating"/>
+                            <field name="vehicle_condition_rating"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="comments"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

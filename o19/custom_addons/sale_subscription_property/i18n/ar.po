@@ -1,0 +1,955 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_subscription_property
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e-20251222\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-18 15:47+0000\n"
+"PO-Revision-Date: 2026-04-18 15:47+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_kanban
+msgid "<i class=\"fa fa-check-circle-o\"/> Free:"
+msgstr "<i class=\"fa fa-check-circle-o\"/> متاح:"
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_kanban
+msgid "<i class=\"fa fa-clock-o\"/> Rented:"
+msgstr "<i class=\"fa fa-clock-o\"/> مؤجر:"
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_kanban
+msgid "<i class=\"fa fa-wrench\"/> Maintenance:"
+msgstr "<i class=\"fa fa-wrench\"/> صيانة:"
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_unit_view_form
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_form
+msgid ""
+"<span class=\"o_form_label o_td_label o_address_type\" name=\"address_name\">\n"
+"                                            <span>Address</span>\n"
+"                                        </span>"
+msgstr ""
+"<span class=\"o_form_label o_td_label o_address_type\" name=\"address_name\">\n"
+"                                            <span>العنوان</span>\n"
+"                                        </span>"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__message_needaction
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__message_needaction
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__activity_ids
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__activity_ids
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__activity_exception_decoration
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__activity_exception_decoration
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__activity_state
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__activity_state
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__activity_type_icon
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__activity_type_icon
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__address_link
+msgid "Address Link"
+msgstr "رابط العنوان"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__address_location_details_id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__address_location_details_id
+msgid "Address/Location Details"
+msgstr "تفاصيل العنوان/الموقع"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__address_location_details_link
+msgid "Address/Location Details Link"
+msgstr "رابط تفاصيل العنوان/الموقع"
+
+#. module: sale_subscription_property
+#: model:res.groups,name:sale_subscription_property.group_hrb_property_admin
+msgid "Administrator"
+msgstr "مدير"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__analytic_account_id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__analytic_account_id
+msgid "Analytic Account"
+msgstr "الحساب التحليلي"
+
+#. module: sale_subscription_property
+#: model:ir.model,name:sale_subscription_property.model_res_area
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__area_id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__area_id
+msgid "Area"
+msgstr "المنطقة"
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.res_area_form
+msgid "Area Info"
+msgstr "معلومات المنطقة"
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.res_area_form
+msgid "Area's Name"
+msgstr "اسم المنطقة"
+
+#. module: sale_subscription_property
+#: model:ir.actions.act_window,name:sale_subscription_property.res_area_action
+#: model:ir.ui.menu,name:sale_subscription_property.res_area_menu
+msgid "Areas"
+msgstr "المناطق"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__message_attachment_count
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__message_attachment_count
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.res_area_form
+msgid "Basic Info"
+msgstr "المعلومات الأساسية"
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_generate_units_wizard_view_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.res_config_settings_view_form_inherit_property
+msgid "Centralize your Property"
+msgstr "مركزية الممتلكات الخاصة بك"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,help:sale_subscription_property.field_hrb_property__country_enforce_cities
+#: model:ir.model.fields,help:sale_subscription_property.field_hrb_property_unit__country_enforce_cities
+msgid ""
+"Check this box to ensure every address created in that country has a 'City' "
+"chosen in the list of the country's cities."
+msgstr "اختر هذا المربع لضمان أن كل عنوان تم إنشاؤه في هذا البلد لديه 'مدينة' "
+"مختارة في قائمة مدن البلد."
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__city
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__city_id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__city
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__city_id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__city_id
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_unit_view_form
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_form
+msgid "City"
+msgstr "المدينة"
+
+#. module: sale_subscription_property
+#: model:ir.model,name:sale_subscription_property.model_res_company
+msgid "Companies"
+msgstr "الشركات"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__company_id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: sale_subscription_property
+#: model:ir.model,name:sale_subscription_property.model_res_config_settings
+msgid "Config Settings"
+msgstr "تهيئة الإعدادات"
+
+#. module: sale_subscription_property
+#: model:ir.ui.menu,name:sale_subscription_property.hrb_property_configuration_menu
+msgid "Configuration"
+msgstr "الإعدادات"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__country_id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__country_id
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_unit_view_form
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_form
+msgid "Country"
+msgstr "الدولة"
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_form
+msgid "Create Date"
+msgstr "تاريخ الإنشاء"
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_unit_view_form
+msgid "Create Rent"
+msgstr "إنشاء عقد إيجار"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__create_uid
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_generate_units_wizard__create_uid
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_type__create_uid
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__create_uid
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__create_date
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_generate_units_wizard__create_date
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_type__create_date
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__create_date
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__date
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.res_config_settings_view_form_inherit_property
+msgid "Default Property Analytic Plan"
+msgstr "الخطة التحليلية الافتراضية للعقار"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_account_move__display_name
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__display_name
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_generate_units_wizard__display_name
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_type__display_name
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__display_name
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__display_name
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_company__display_name
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:sale_subscription_property.field_sale_order__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__donor_terms_and_conditions
+msgid "Donor Terms and Conditions"
+msgstr "شروط وأحكام المانح"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields.selection,name:sale_subscription_property.selection__hrb_property__status__draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__country_enforce_cities
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__country_enforce_cities
+msgid "Enforce Cities"
+msgstr "فرض المدن"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__message_follower_ids
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__message_follower_ids
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__message_partner_ids
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__message_partner_ids
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,help:sale_subscription_property.field_hrb_property__activity_type_icon
+#: model:ir.model.fields,help:sale_subscription_property.field_hrb_property_unit__activity_type_icon
+#: model:ir.model.fields,help:sale_subscription_property.field_res_area__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: sale_subscription_property
+#: model:ir.model.fields.selection,name:sale_subscription_property.selection__hrb_property_unit__status__free
+msgid "Free"
+msgstr "متاح"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__free_unit_count
+msgid "Free Units"
+msgstr "الوحدات المتاحة"
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_generate_units_wizard_view_form
+msgid "Generate"
+msgstr "إنشاء"
+
+#. module: sale_subscription_property
+#: model:ir.model,name:sale_subscription_property.model_hrb_property_generate_units_wizard
+msgid "Generate Property Units Wizard"
+msgstr "إنشاء وحدات العقار"
+
+#. module: sale_subscription_property
+#: model:ir.actions.server,name:sale_subscription_property.generate_sequence_number_action_wizard
+msgid "Generate Sequence Number"
+msgstr "إنشاء رقم تسلسلي"
+
+#. module: sale_subscription_property
+#: model:ir.actions.act_window,name:sale_subscription_property.hrb_property_generate_units_wizard_action
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_generate_units_wizard_view_form
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_form
+msgid "Generate Units"
+msgstr "إنشاء الوحدات"
+
+#. module: sale_subscription_property
+#: model:ir.module.category,description:sale_subscription_property.hrb_property_category
+#: model:ir.module.category,name:sale_subscription_property.hrb_property_category
+#: model:res.groups.privilege,name:sale_subscription_property.res_groups_privilege_hrb_property
+msgid "HRB Property"
+msgstr "إدارة العقارات"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__has_message
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__has_message
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_form
+msgid "Hold"
+msgstr "إيقاف مؤقت"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_account_move__id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_generate_units_wizard__id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_type__id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_company__id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_config_settings__id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_sale_order__id
+msgid "ID"
+msgstr "المُعرف"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__activity_exception_icon
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__activity_exception_icon
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__activity_exception_icon
+msgid "Icon"
+msgstr "أيقونة"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,help:sale_subscription_property.field_hrb_property__activity_exception_icon
+#: model:ir.model.fields,help:sale_subscription_property.field_hrb_property_unit__activity_exception_icon
+#: model:ir.model.fields,help:sale_subscription_property.field_res_area__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,help:sale_subscription_property.field_hrb_property__message_needaction
+#: model:ir.model.fields,help:sale_subscription_property.field_hrb_property_unit__message_needaction
+#: model:ir.model.fields,help:sale_subscription_property.field_res_area__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا تم التحديد، فإن الرسائل الجديدة تتطلب اهتمامك."
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,help:sale_subscription_property.field_hrb_property__message_has_error
+#: model:ir.model.fields,help:sale_subscription_property.field_hrb_property__message_has_sms_error
+#: model:ir.model.fields,help:sale_subscription_property.field_hrb_property_unit__message_has_error
+#: model:ir.model.fields,help:sale_subscription_property.field_hrb_property_unit__message_has_sms_error
+#: model:ir.model.fields,help:sale_subscription_property.field_res_area__message_has_error
+#: model:ir.model.fields,help:sale_subscription_property.field_res_area__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا تم التحديد، فإن بعض الرسائل بها خطأ في التسليم."
+
+#. module: sale_subscription_property
+#: model:ir.model.fields.selection,name:sale_subscription_property.selection__hrb_property__status__in_progress
+msgid "In Progress"
+msgstr "قيد التنفيذ"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__internal_reference
+msgid "Internal Reference"
+msgstr "الرقم المرجعي الداخلي"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__responsible_invoice_address_updated
+msgid "Invoice Address Updated"
+msgstr "تم تحديث عنوان الفاتورة"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__invoices
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_form
+msgid "Invoices"
+msgstr "الفواتير"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__invoices_count
+msgid "Invoices Count"
+msgstr "عدد الفواتير"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__message_is_follower
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__message_is_follower
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__message_is_follower
+msgid "Is Follower"
+msgstr "هل هو متابع"
+
+#. module: sale_subscription_property
+#. odoo-python
+#: code:addons/sale_subscription_property/models/hrb_property_unit.py:0
+msgid "It cannot be deleted while it is under rent or on hold."
+msgstr "لا يمكن حذفه أثناء تأجيره أو إيقافه مؤقتًا."
+
+#. module: sale_subscription_property
+#: model:ir.model,name:sale_subscription_property.model_account_move
+msgid "Journal Entry"
+msgstr "قيد اليومية"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__land_number
+msgid "Land Number"
+msgstr "رقم الأرض"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__write_uid
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_generate_units_wizard__write_uid
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_type__write_uid
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__write_uid
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__write_date
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_generate_units_wizard__write_date
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_type__write_date
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__write_date
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_unit_view_form
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_form
+msgid "Location"
+msgstr "الموقع"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__maintenance_unit_count
+msgid "Maintenance Units"
+msgstr "الوحدات للصيانة"
+
+#. module: sale_subscription_property
+#: model:ir.ui.menu,name:sale_subscription_property.hrb_property_managment_menu
+msgid "Managment"
+msgstr "الإدارة"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__message_has_error
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__message_has_error
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__message_ids
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__message_ids
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__my_activity_date_deadline
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__my_activity_date_deadline
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__name
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_type__name
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__name
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__activity_date_deadline
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__activity_date_deadline
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__activity_summary
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__activity_summary
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__activity_type_id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__activity_type_id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__notes
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_form
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__message_needaction_counter
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__message_needaction_counter
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_generate_units_wizard__number_of_units
+msgid "Number of Units"
+msgstr "عدد الوحدات"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__message_has_error_counter
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__message_has_error_counter
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,help:sale_subscription_property.field_hrb_property__message_needaction_counter
+#: model:ir.model.fields,help:sale_subscription_property.field_hrb_property_unit__message_needaction_counter
+#: model:ir.model.fields,help:sale_subscription_property.field_res_area__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,help:sale_subscription_property.field_hrb_property__message_has_error_counter
+#: model:ir.model.fields,help:sale_subscription_property.field_hrb_property_unit__message_has_error_counter
+#: model:ir.model.fields,help:sale_subscription_property.field_res_area__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: sale_subscription_property
+#: model:ir.model.fields.selection,name:sale_subscription_property.selection__hrb_property__status__on_hold
+#: model:ir.model.fields.selection,name:sale_subscription_property.selection__hrb_property_unit__status__on_hold
+msgid "On Hold"
+msgstr "متوقف مؤقتًا"
+
+#. module: sale_subscription_property
+#. odoo-python
+#: code:addons/sale_subscription_property/models/hrb_property.py:0
+msgid ""
+"Please configure the default analytic plan for properties in the settings."
+msgstr "يرجى تكوين الخطة التحليلية الافتراضية للعقارات في الإعدادات."
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__price
+msgid "Price"
+msgstr "السعر"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__product_id
+msgid "Product"
+msgstr "المنتج"
+
+#. module: sale_subscription_property
+#: model:ir.actions.act_window,name:sale_subscription_property.hrb_property_action
+#: model:ir.model.fields,field_description:sale_subscription_property.field_account_bank_statement_line__property_id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_account_move__property_id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_generate_units_wizard__property_id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__property_id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_sale_order__property_id
+#: model:ir.ui.menu,name:sale_subscription_property.hrb_property_menu_root
+#: model:ir.ui.menu,name:sale_subscription_property.hrb_property_property_menu
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_form
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_list
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.res_config_settings_view_form_inherit_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.sale_order_view_form_inherit_hrb_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.view_move_form_inherit_hrb_property
+msgid "Property"
+msgstr "العقار"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_config_settings__property_analytic_plan
+msgid "Property Analytic Plan"
+msgstr "الخطة التحليلية للعقارات"
+
+#. module: sale_subscription_property
+#: model:ir.model,name:sale_subscription_property.model_hrb_property
+msgid "Property Information"
+msgstr "معلومات العقار"
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_form
+msgid "Property Name..."
+msgstr "اسم العقار..."
+
+#. module: sale_subscription_property
+#: model:ir.model,name:sale_subscription_property.model_hrb_property_type
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__property_type_id
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_type_view_form
+msgid "Property Type"
+msgstr "نوع العقار"
+
+#. module: sale_subscription_property
+#: model:ir.actions.act_window,name:sale_subscription_property.hrb_property_type_action
+#: model:ir.ui.menu,name:sale_subscription_property.hrb_property_type_menu
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_type_view_list
+msgid "Property Types"
+msgstr "أنواع العقارات"
+
+#. module: sale_subscription_property
+#: model:ir.model,name:sale_subscription_property.model_hrb_property_unit
+#: model:ir.model.fields,field_description:sale_subscription_property.field_sale_order__property_unit_id
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_unit_view_form
+msgid "Property Unit"
+msgstr "وحدة العقار"
+
+#. module: sale_subscription_property
+#: model:ir.actions.act_window,name:sale_subscription_property.hrb_property_unit_action
+#: model:ir.ui.menu,name:sale_subscription_property.hrb_property_unit_menu
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_unit_view_list
+msgid "Property Units"
+msgstr "وحدات العقار"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__rating_ids
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__rating_ids
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__rating_ids
+msgid "Ratings"
+msgstr ""
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__rented_unit_count
+msgid "Rented Units"
+msgstr "الوحدات المؤجرة"
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_form
+msgid "Reset to Draft"
+msgstr "إعادة إلى المسودة"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__responsible_id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__responsible_id
+msgid "Responsible"
+msgstr "المسؤول"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__activity_user_id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__activity_user_id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__message_has_sms_error
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__message_has_sms_error
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: sale_subscription_property
+#: model:ir.model,name:sale_subscription_property.model_sale_order
+msgid "Sales Order"
+msgstr "أمر البيع"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__sequence_number
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__sequence_number
+msgid "Sequence Number"
+msgstr "رقم التسلسل"
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_unit_view_form
+msgid "Set to Free"
+msgstr "تعيين إلى متاح"
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_unit_view_form
+msgid "Set to Under Maintenance"
+msgstr "تعيين إلى تحت الصيانة"
+
+#. module: sale_subscription_property
+#: model:ir.actions.act_window,name:sale_subscription_property.action_property_config
+#: model:ir.ui.menu,name:sale_subscription_property.property_config
+msgid "Settings"
+msgstr "الإعدادات"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_account_bank_statement_line__show_properties_features
+#: model:ir.model.fields,field_description:sale_subscription_property.field_account_move__show_properties_features
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__show_properties_features
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__show_properties_features
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_company__show_properties_features
+#: model:ir.model.fields,field_description:sale_subscription_property.field_sale_order__show_properties_features
+msgid "Show Properties Features"
+msgstr "عرض ميزات العقارات"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields.selection,name:sale_subscription_property.selection__hrb_property__status__sold
+#: model:ir.model.fields.selection,name:sale_subscription_property.selection__hrb_property_unit__status__sold
+msgid "Sold"
+msgstr "مباع"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__state_id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__state_id
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_unit_view_form
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_form
+msgid "State"
+msgstr "الحالة"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__status
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__status
+msgid "Status"
+msgstr "الحالة"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,help:sale_subscription_property.field_hrb_property__activity_state
+#: model:ir.model.fields,help:sale_subscription_property.field_hrb_property_unit__activity_state
+#: model:ir.model.fields,help:sale_subscription_property.field_res_area__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__street
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__street
+msgid "Street"
+msgstr "الشارع"
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_unit_view_form
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_form
+msgid "Street 2..."
+msgstr "الشارع 2..."
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_unit_view_form
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_form
+msgid "Street..."
+msgstr "الشارع..."
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__street2
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__street2
+msgid "Street2"
+msgstr "الشارع 2"
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_form
+msgid "Submit"
+msgstr "إرسال"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__subscription_count
+msgid "Subscription Count"
+msgstr "عدد الاشتراكات"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__subscriptions
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__subscription_ids
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_unit_view_form
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_form
+msgid "Subscriptions"
+msgstr "الاشتراكات"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__subscriptions_count
+msgid "Subscriptions Count"
+msgstr "عدد الاشتراكات"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__tag_ids
+msgid "Tags"
+msgstr "العلامات"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__tenant_id
+msgid "Tenant"
+msgstr "المستأجر"
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_unit_view_form
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_form
+msgid ""
+"The property feature is not activated in this company. if you wish to use it"
+" please tell your admin to activiate it in this company."
+msgstr "ميزة العقارات غير مفعلة في هذه الشركة. إذا كنت ترغب في استخدامها يرجى إخبار المسؤول بتفعيلها في الشركة."
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_form
+msgid "Total"
+msgstr "المجموع"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__units_total_rent
+msgid "Total Rent"
+msgstr "إجمالي الإيجار"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,help:sale_subscription_property.field_hrb_property__activity_exception_decoration
+#: model:ir.model.fields,help:sale_subscription_property.field_hrb_property_unit__activity_exception_decoration
+#: model:ir.model.fields,help:sale_subscription_property.field_res_area__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع النشاط الاستثنائي في السجل."
+
+#. module: sale_subscription_property
+#: model:ir.model.fields.selection,name:sale_subscription_property.selection__hrb_property_unit__status__under_maintenance
+msgid "Under Maintenance"
+msgstr "قيد الصيانة"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields.selection,name:sale_subscription_property.selection__hrb_property_unit__status__under_rent
+msgid "Under Rent"
+msgstr "قيد الإيجار"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_account_bank_statement_line__property_unit_id
+#: model:ir.model.fields,field_description:sale_subscription_property.field_account_move__property_unit_id
+msgid "Unit"
+msgstr "الوحدة"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__unit_count
+msgid "Unit Count"
+msgstr "عدد الوحدات"
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_unit_view_form
+msgid "Unit Name..."
+msgstr "اسم الوحدة..."
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_generate_units_wizard__unit_price
+msgid "Unit Price"
+msgstr "سعر الوحدة"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_generate_units_wizard__product_id
+msgid "Unit Product"
+msgstr "منتج الوحدة"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__unit_type_id
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_form
+msgid "Unit Type"
+msgstr "نوع الوحدة"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__unit_ids
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_form
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_kanban
+msgid "Units"
+msgstr "الوحدات"
+
+#. module: sale_subscription_property
+#: model:res.groups,name:sale_subscription_property.group_hrb_property_user
+msgid "User"
+msgstr "المستخدم"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__valuation
+msgid "Valuation"
+msgstr "التقييم"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__website_message_ids
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__website_message_ids
+#: model:ir.model.fields,field_description:sale_subscription_property.field_res_area__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,help:sale_subscription_property.field_hrb_property__website_message_ids
+#: model:ir.model.fields,help:sale_subscription_property.field_hrb_property_unit__website_message_ids
+#: model:ir.model.fields,help:sale_subscription_property.field_res_area__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: sale_subscription_property
+#. odoo-python
+#: code:addons/sale_subscription_property/models/hrb_property.py:0
+msgid "You can only delete a Property that is in draft state."
+msgstr "لا يمكن حذف عقار إلا إذا كان في حالة المسودة."
+
+#. module: sale_subscription_property
+#. odoo-python
+#: code:addons/sale_subscription_property/models/sale_order.py:0
+msgid ""
+"You cannot confirm a subscription for a unit that has another confirmed "
+"subscription."
+msgstr "لا يمكن تأكيد اشتراك لوحدة لديها اشتراك مؤكد آخر."
+
+#. module: sale_subscription_property
+#. odoo-python
+#: code:addons/sale_subscription_property/models/hrb_property.py:0
+msgid "You cannot delete a Property that has invoices."
+msgstr "لا يمكن حذف عقار لديه فواتير."
+
+#. module: sale_subscription_property
+#. odoo-python
+#: code:addons/sale_subscription_property/models/hrb_property.py:0
+msgid "You cannot delete a Property that has subscriptions."
+msgstr "لا يمكن حذف عقار لديه اشتراكات."
+
+#. module: sale_subscription_property
+#. odoo-python
+#: code:addons/sale_subscription_property/models/hrb_property.py:0
+msgid "You cannot delete a Property that has units."
+msgstr "لا يمكن حذف عقار لديه وحدات."
+
+#. module: sale_subscription_property
+#. odoo-python
+#: code:addons/sale_subscription_property/models/hrb_property_unit.py:0
+msgid "You cannot delete a property that has subscriptions."
+msgstr "لا يمكن حذف عقار لديه اشتراكات."
+
+#. module: sale_subscription_property
+#. odoo-python
+#: code:addons/sale_subscription_property/models/sale_order.py:0
+msgid ""
+"You cannot resume a subscription for a unit that has another running "
+"subscription."
+msgstr "لا يمكن استئناف اشتراك لوحدة لديها اشتراك جاري آخر."
+
+#. module: sale_subscription_property
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_unit_view_form
+#: model_terms:ir.ui.view,arch_db:sale_subscription_property.hrb_property_view_form
+msgid "ZIP"
+msgstr "الرمز البريدي"
+
+#. module: sale_subscription_property
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property__zip
+#: model:ir.model.fields,field_description:sale_subscription_property.field_hrb_property_unit__zip
+msgid "Zip"
+msgstr "الرمز البريدي"

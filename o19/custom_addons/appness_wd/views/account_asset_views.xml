@@ -1,0 +1,22 @@
+<odoo>
+    <record id="view_account_asset_form_inherit_wd" model="ir.ui.view">
+        <field name="name">account.asset.form.inherit.wd</field>
+        <field name="model">account.asset</field>
+        <field name="inherit_id" ref="account_asset.view_account_asset_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='main_page']/group[1]" position="before">
+                <group>
+                    <group>
+                        <field name="employee_id" string="Employee"/>
+                    </group>
+                </group>
+            </xpath>
+            <field name="analytic_distribution" position="replace">
+                <field name="analytic_both" widget="boolean_toggle"/>
+                <field name="analytic_distribution" invisible="not analytic_both" groups="analytic.group_analytic_accounting" widget="analytic_distribution" options="{'account_field': 'account_depreciation_expense_id', 'business_domain': 'general'}" readonly="0"/>
+                <field name="analytic_distribution_credit" invisible="analytic_both" groups="analytic.group_analytic_accounting" widget="analytic_distribution" options="{'account_field': 'account_depreciation_expense_id', 'business_domain': 'general'}" readonly="0"/>
+                <field name="analytic_distribution_debit" invisible="analytic_both" groups="analytic.group_analytic_accounting" widget="analytic_distribution" options="{'account_field': 'account_depreciation_expense_id', 'business_domain': 'general'}" readonly="0"/>
+            </field>
+        </field>
+    </record>
+</odoo>

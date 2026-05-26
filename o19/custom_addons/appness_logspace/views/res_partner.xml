@@ -1,0 +1,36 @@
+<odoo>
+    <data>
+
+        <!-- <record id="res_partner_family_filter_inherit" model="ir.ui.view">
+            <field name="name">res.partner.family.filter.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="family_seq"/>
+                    <field name="member_seq"/>
+                </field>
+            </field>
+        </record> -->
+
+        <record id="res_partner_family_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.family.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                
+                <xpath expr="//sheet/group[1]" position="before">
+                    <group>
+                        <group string="Reference Info">
+                            <field name="is_logspace_customer" string="Is a Logspace Customer ?"/>
+                            <field name="is_logspace_provider" string="Is a Logspace Provider ?"/>
+                            <field name="allow_editing_portal" string="Allow Editing Portal ?"/>
+                        </group>
+                    </group>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

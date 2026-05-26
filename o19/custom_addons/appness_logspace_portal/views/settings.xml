@@ -1,0 +1,19 @@
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form_portal" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.appness_logspace_portal</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="appness_logspace.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//app[@name='appness_logspace']" position="inside">
+                    <block title="Logspace Portal (Logspace)">
+                        <setting id="attachment_size_limit" help="Files Size Limit (MB)">
+                            <field name="attachment_size_limit"/>
+                        </setting>
+                    </block>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

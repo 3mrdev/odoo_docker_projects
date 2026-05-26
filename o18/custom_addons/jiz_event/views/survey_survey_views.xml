@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="view_survey_survey_form_inherit_jiz_event" model="ir.ui.view">
+            <field name="name">survey.survey.form.inherit.jiz_event</field>
+            <field name="model">survey.survey</field>
+            <field name="inherit_id" ref="survey.survey_survey_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="event_id" invisible="not event_id" readonly="event_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

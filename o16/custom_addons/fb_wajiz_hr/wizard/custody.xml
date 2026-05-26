@@ -1,0 +1,127 @@
+<odoo>
+    <data>
+        <record id="view_custody_confirmation_wizard" model="ir.ui.view">
+            <field name="name">custody.confirmation.wizard.form</field>
+            <field name="model">custody.confirmation.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Custody Confirmation">
+                    <group>
+                        <field name="obligations" readonly="1"/>
+                        <field name="employee_id" readonly="1"/>
+                        <field name="custody_decision" required="1"/>
+                        <field name="department_id"/> 
+                    </group>
+                    <footer>
+                        <button string="Confirm" type="object" name="confirm" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_custody_confirmation_wizard_2" model="ir.ui.view">
+            <field name="name">custody.confirmation.wizard.form.2</field>
+            <field name="model">custody.confirmation.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Custody Confirmation Wizard">
+                    <div>
+                            <p>No obligations found for this employee.</p>
+                    </div>
+                    <group>
+                        <field name="employee_id" readonly="1"/>
+                        <field name="department_id"/> 
+                    </group>
+                    <footer>
+                        <button string="Confirm" type="object" name="confirm" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_custody_confirmation_wizard" model="ir.actions.act_window">
+            <field name="name">Custody Confirmation Wizard</field>
+            <field name="res_model">custody.confirmation.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="model_custody_confirmation_wizard"/>
+            <field name="binding_view_types">form</field>
+        </record>
+
+        <record id="action_custody_confirmation_wizard_2" model="ir.actions.act_window">
+            <field name="name">Change Department</field>
+            <field name="res_model">custody.confirmation.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="fb_wajiz_hr.view_custody_confirmation_wizard_2"/>
+            <field name="binding_model_id" ref="model_custody_confirmation_wizard"/>
+            <field name="binding_view_types">form</field>
+        </record>
+
+        <record id="action_check_employee_constraints" model="ir.actions.server">
+            <field name="name">Check Employee Constraints</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="binding_model_id" ref="hr.model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">
+                <![CDATA[
+                    for record in records:
+                        custody = env['hr.custody'].search([('employee', '=', record.id)])    
+                        vehicles = env['fleet.vehicle'].search([('driver_id.employee_ids', '=', record.id)])
+                        equipment = env['maintenance.equipment'].search([('employee_id', '=', record.id)])
+
+                        # Prepare messages for each category
+                        custody_message = ', '.join(custody.mapped('custody_name.name')) if custody.custody_name.name  else ''
+                        vehicle_message = ', '.join(vehicles.mapped('name')) if vehicles else ''
+                        equipment_message = ', '.join(equipment.mapped('name')) if equipment else ''
+
+                        # Construct the error message
+                        error_message = "This employee has the following obligations:\n"
+                        if custody_message:
+                            error_message += f"Custody: {custody_message}\n"
+                        if vehicle_message:
+                            error_message += f"Vehicles: {vehicle_message}\n"
+                        if equipment_message:
+                            error_message += f"Equipment: {equipment_message}\n"
+
+                        if custody or vehicles or equipment:
+                            action = env.ref('fb_wajiz_hr.action_custody_confirmation_wizard')  
+                            if action:
+                                action = action.read()[0]
+                                action['target'] = 'new'
+                                action['context'] = {'default_employee_id': record.id,'default_obligations': error_message}
+                            else:
+                                raise UserError("An error occurred: Action not found.")
+                        else:
+                            action = env.ref('fb_wajiz_hr.action_custody_confirmation_wizard_2')  
+                            if action:
+                                action = action.read()[0]
+                                action['target'] = 'new'
+                                action['context'] = {'default_employee_id': record.id}
+                            else:
+                                raise UserError("An error occurred: Action not found.")
+                ]]>
+            </field>
+        </record>
+        <!-- Inherit the hr.view_employee_form view -->
+        <record id="view_employee_form_inherit_department" model="ir.ui.view">
+            <field name="name">hr.employee.form.inherit.department</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='department_id']" position="attributes">
+                    <!-- Make department_id readonly -->
+                    <attribute name="attrs">{'readonly': [('id', '!=', False)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='department_id']" position="after">
+                    <!-- Add the Change Department button -->
+                    <button name="%(action_check_employee_constraints)d" 
+                            type="action" 
+                            string="Change Department" 
+                            class="oe_highlight"/>
+                            <br/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

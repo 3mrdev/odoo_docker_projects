@@ -1,0 +1,108 @@
+<odoo>
+    <data>
+
+         <record id="swms_case_list" model="ir.ui.view">
+            <field name="name">swms.case.list</field>
+            <field name="model">swms.case</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="research_date"/>
+                    <field name="name"/>
+                    <field name="researcher_id"/>
+                    <field name="list_id"/>
+                    <field name="request_id"/>
+                    <field name="state"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="swms_list_task_list" model="ir.ui.view">
+            <field name="name">swms.list.task.list</field>
+            <field name="model">swms.list.task</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="check"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="swms_case_form" model="ir.ui.view">
+            <field name="name">swms.case.form</field>
+            <field name="model">swms.case</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="button_approve" string="Approve" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                        <button name="button_draft" string="Reset to draft" type="object" invisible="state != 'approve'"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="row justify-content-between position-relative w-100 m-0 mb-2">
+                            <div class="oe_title mw-75 ps-0 pe-2">
+                                <h1 class="d-flex flex-row align-items-center">
+                                    <field name="name" placeholder="Case's Title" readonly="1" style="font-size: min(4vw, 2.6rem);"/>
+                                </h1>
+                                <h2>
+                                    <field name="list_id" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" placeholder="Choose Tasks List" readonly="state == 'approve'"/>
+                                </h2>
+                            </div>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="researcher_id" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="research_date" readonly="1"/>
+                                <field name="request_id" readonly="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Research">
+                                <group string="Taskslist"/>
+                                <field name="tasks_ids" no_create="1" readonly="state == 'approve'">
+                                    <list editable="bottom">
+                                        <field name="name" readonly="1"/>
+                                        <field name="check"/>
+                                    </list>
+                                </field>
+                                <group string="Research"/>
+                                <field name="description" readonly="state == 'approve'"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <!-- Chatter -->
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="swms_list_form" model="ir.ui.view">
+            <field name="name">swms.list.form</field>
+            <field name="model">swms.list</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="row justify-content-between position-relative w-100 m-0 mb-2">
+                            <div class="oe_title mw-75 ps-0 pe-2">
+                                <h1 class="d-flex flex-row align-items-center">
+                                    <field name="name" placeholder="List's Title" required="True" style="font-size: min(4vw, 2.6rem);"/>
+                                </h1>
+                            </div>
+                        </div>
+                        <notebook>
+                            <page string="Tasks">
+                                <field name="tasks_ids">
+                                    <list editable="bottom">
+                                        <field name="name"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

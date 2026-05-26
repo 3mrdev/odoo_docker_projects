@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Template for the custom page -->
+    <template id="booking_page_template" name="Booking Page">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty">
+                <t t-call="appness_logspace.s_booking_search"/>
+                    
+
+                <!-- Page Content: Available Trucks -->
+                <section class="s_text_block py-5 bg-white">
+                    <div class="container" style="max-width: 900px;">
+                        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+                            <div>
+                                <h4 class="fw-bold mb-1">Available Trucks</h4>
+                                <p class="text-muted small mb-0">4 trucks found</p>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <label class="me-2 text-muted fw-bold small text-nowrap">Sort by:</label>
+                                <select class="form-select form-select-sm shadow-none rounded-3" style="min-width: 120px;">
+                                    <option>Relevance</option>
+                                    <option>Price: Low to High</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Mockup Truck Item 1 -->
+                        <div class="card mb-4 o_booking_card overflow-hidden border-0 shadow-sm">
+                            <div class="row g-0">
+                                <div class="col-md-3 bg-light d-flex align-items-center justify-content-center p-4">
+                                    <div class="display-3">🚛</div>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="card-body p-4">
+                                        <h5 class="card-title fw-bold mb-1">TRUCK0001</h5>
+                                        <p class="card-text text-muted small mb-3"><i class="fa fa-map-marker me-1"></i> Muscat</p>
+                                        
+                                        <div class="mb-4 d-flex flex-wrap align-items-center gap-2">
+                                            <span class="badge bg-light text-secondary border fw-normal py-1 px-2"><i class="fa fa-cube me-1"></i>10 Ton</span>
+                                            <span class="badge fw-normal py-1 px-2" style="background-color: #f6edf4; color: var(--o-color-1, #714b67);">Flatbed</span>
+                                            <div class="d-inline-flex align-items-center text-muted small ms-ms-2"><i class="fa fa-paperclip me-1"></i> 10x20x30 m3</div>
+                                        </div>
+                                        
+                                        <div class="d-flex gap-2 justify-content-end">
+                                            <button class="btn btn-primary px-4 fw-medium text-nowrap rounded-3 flex-grow-1 flex-md-grow-0" style="min-width: 150px;">Book Now</button>
+                                            <button class="btn btn-outline-secondary px-3 fw-medium text-nowrap rounded-3">View Details</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Mockup Truck Item 2 -->
+                        <div class="card mb-4 o_booking_card overflow-hidden border-0 shadow-sm">
+                            <div class="row g-0">
+                                <div class="col-md-3 bg-light d-flex align-items-center justify-content-center p-4">
+                                    <div class="display-3">🚛</div>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="card-body p-4">
+                                        <h5 class="card-title fw-bold mb-1">TRUCK0002</h5>
+                                        <p class="card-text text-muted small mb-3"><i class="fa fa-map-marker me-1"></i> Muscat</p>
+                                        
+                                        <div class="mb-4 d-flex flex-wrap align-items-center gap-2">
+                                            <span class="badge bg-light text-secondary border fw-normal py-1 px-2"><i class="fa fa-cube me-1"></i>10 Ton</span>
+                                            <span class="badge fw-normal py-1 px-2" style="background-color: #f6edf4; color: var(--o-color-1, #714b67);">Flatbed</span>
+                                            <div class="d-inline-flex align-items-center text-muted small ms-ms-2"><i class="fa fa-paperclip me-1"></i> 10x20x30 m3</div>
+                                        </div>
+                                        
+                                        <div class="d-flex gap-2 justify-content-end">
+                                            <button class="btn btn-primary px-4 fw-medium text-nowrap rounded-3 flex-grow-1 flex-md-grow-0" style="min-width: 150px;">Book Now</button>
+                                            <button class="btn btn-outline-secondary px-3 fw-medium text-nowrap rounded-3">View Details</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="mt-5 d-flex justify-content-center">
+                            <ul class="pagination">
+                                <li class="page-item disabled"><a class="page-link border-0 text-muted shadow-none bg-transparent" href="#">Previous</a></li>
+                                <li class="page-item active"><a class="page-link border-0 rounded-circle text-center mx-1 shadow-none" style="width: 38px; height: 38px; line-height: 24px;" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link border-0 text-muted bg-transparent shadow-none" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link border-0 text-muted bg-transparent shadow-none" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link border-0 text-muted shadow-none bg-transparent" href="#">Next</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+</odoo>

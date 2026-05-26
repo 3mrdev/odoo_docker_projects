@@ -1,0 +1,68 @@
+<odoo>
+    <template id="report_purchaseorder_document_inherit_wd"
+        inherit_id="purchase.report_purchaseorder_document">
+        <!-- Columns -->
+        <xpath expr="//th[@name='th_description']" position="before">
+            <th name="th_barcode" class="text-end">Barcode</th>
+        </xpath>
+        <xpath expr="//th[@name='th_discount']" position="after">
+            <th name="th_discount_amount" class="text-end">
+                <span>Disc.% Amount</span>
+            </th>
+        </xpath>
+        <xpath expr="//th[@name='th_taxes']" position="after">
+            <th name="th_taxes_amount" class="text-end">
+                <span>Taxes Amount</span>
+            </th>
+        </xpath>
+        <xpath expr="//th[@name='th_subtotal']" position="after">
+            <th name="th_subtotal_tax_inc" class="text-end">
+                <span>Tax Inc.</span>
+            </th>
+        </xpath>
+
+        <!-- Rows -->
+        <xpath expr="//td[@id='product']" position="before">
+            <td name="td_product_barcode" class="text-end">
+                <span t-field="line.barcode" class="text-nowrap"></span>
+            </td>
+        </xpath>
+        <xpath expr="//table[hasclass('o_main_table')]/tbody/t/tr/t/td[5]" position="after">
+            <td name="td_product_discount_amount" class="text-end">
+                <span class="text-align-bottom">
+                    <span t-field="line.discount_amount" />
+                </span>
+            </td>
+        </xpath>
+        <xpath expr="//table[hasclass('o_main_table')]/tbody/t/tr/t/td[7]" position="after">
+            <td name="td_product_taxes_amount" class="text-end">
+                <span t-field="line.tax_amount"></span>
+            </td>
+        </xpath>
+        <xpath expr="//table[hasclass('o_main_table')]/tbody/t/tr/t/td[9]" position="after">
+            <td name="td_product_subtotal_tax_inc" class="text-end">
+                <span t-field="line.price_total"></span>
+            </td>
+        </xpath>
+        <xpath expr="//table[hasclass('o_total_table')]/t[1]" position="before">
+            <tr class="o_total_amount_before_discount" t-if="o.total_discount > 0">
+                <td>
+                    <span>Amount Before Discount</span>
+                </td>
+                <td class="text-end">
+                    <span t-field="o.amount_before_discount"
+                        t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"></span>
+                </td>
+            </tr>
+            <tr class="o_total_discount" t-if="o.total_discount > 0">
+                <td>
+                    <span>Total Discount</span>
+                </td>
+                <td class="text-end">
+                    <span t-field="o.total_discount"
+                        t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"></span>
+                </td>
+            </tr>
+        </xpath>
+    </template>
+</odoo>

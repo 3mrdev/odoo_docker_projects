@@ -1,0 +1,33 @@
+<odoo>
+    <data>
+        <record id="view_gen_cert_form_wizard" model="ir.ui.view">
+            <field name="name">gen.cert.form.wizard.jiz_elearning</field>
+            <field name="model">jiz.gen.cert</field>
+            <field name="arch" type="xml">
+                <form string="Generate Certificates">
+                    <sheet>
+                        <group>
+                            <field name="channel_id" invisible="1"/>
+                            <field name="survey_id" required="1"/>
+                        </group>
+                        <notebook>
+                            <page string="New Certificates">
+                                <field name="new_scores_ids" string="New Certificates">
+                                    <list editable="bottom" create="false" delete="false">
+                                        <field name="student_id"/>
+                                        <field name="score"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <footer>
+                        <button name="action_generate_certificates" string="Generate Certificates" type="object" class="oe_highlight"/>
+                        <button name="view_old_certificates" string="View Old Certificates" type="object"/>
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Logspace Security Rules
+        =======================
+        This file contains record rules for access control:
+        - Portal users see only their own data
+        - Public users see approved providers only
+        - Customers see their own orders, tickets, refunds
+    -->
+
+    <!-- ============================================================================
+         RES.PARTNER (Provider) Rules
+         ============================================================================ -->
+
+    <!-- Portal users can see approved providers -->
+    <record id="rule_res_partner_provider_portal" model="ir.rule">
+        <field name="name">Providers - Portal Public View</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="domain_force">[
+            ('is_provider', '=', True),
+            ('state', '=', 'approved')
+        ]</field>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+        <field name="perm_read">True</field>
+        <field name="perm_write">False</field>
+        <field name="perm_create">False</field>
+        <field name="perm_unlink">False</field>
+    </record>
+
+    <!-- Public users can see approved providers -->
+    <record id="rule_res_partner_provider_public" model="ir.rule">
+        <field name="name">Providers - Public View</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="domain_force">[
+            ('is_provider', '=', True),
+            ('state', '=', 'approved')
+        ]</field>
+        <field name="groups" eval="[(4, ref('base.group_public'))]"/>
+        <field name="perm_read">True</field>
+        <field name="perm_write">False</field>
+        <field name="perm_create">False</field>
+        <field name="perm_unlink">False</field>
+    </record>
+
+    <!-- Portal users can edit their own partner record -->
+    <record id="rule_res_partner_own_portal" model="ir.rule">
+        <field name="name">Own Partner Record - Portal</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="domain_force">[
+            ('id', '=', user.partner_id.id)
+        ]</field>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+        <field name="perm_read">True</field>
+        <field name="perm_write">True</field>
+        <field name="perm_create">False</field>
+        <field name="perm_unlink">False</field>
+    </record>
+
+    <!-- ============================================================================
+         SALE.ORDER (Logspace Orders) Rules
+         ============================================================================ -->
+
+    <!-- Portal users see only their own Logspace orders -->
+    <record id="rule_sale_order_logspace_portal" model="ir.rule">
+        <field name="name">Logspace Orders - Portal Own Orders</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="domain_force">[
+            ('is_logspace_order', '=', True),
+            ('partner_id', '=', user.partner_id.id)
+        ]</field>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+        <field name="perm_read">True</field>
+        <field name="perm_write">False</field>
+        <field name="perm_create">False</field>
+        <field name="perm_unlink">False</field>
+    </record>
+
+    <!-- Internal users see all Logspace orders -->
+    <record id="rule_sale_order_logspace_internal" model="ir.rule">
+        <field name="name">Logspace Orders - Internal</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="domain_force">[
+            ('is_logspace_order', '=', True)
+        ]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="perm_read">True</field>
+        <field name="perm_write">True</field>
+        <field name="perm_create">True</field>
+        <field name="perm_unlink">False</field>
+    </record>
+
+    <!-- ============================================================================
+         HELPDESK.TICKET (Logspace Tickets) Rules
+         ============================================================================ -->
+
+    <!-- Portal users see only their own Logspace tickets -->
+    <record id="rule_helpdesk_ticket_logspace_portal" model="ir.rule">
+        <field name="name">Logspace Tickets - Portal Own Tickets</field>
+        <field name="model_id" ref="helpdesk.model_helpdesk_ticket"/>
+        <field name="domain_force">[
+            ('is_logspace_ticket', '=', True),
+            ('partner_id', '=', user.partner_id.id),
+            ('show_to_customer', '=', True)
+        ]</field>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+        <field name="perm_read">True</field>
+        <field name="perm_write">False</field>
+        <field name="perm_create">True</field>
+        <field name="perm_unlink">False</field>
+    </record>
+
+    <!-- Internal users see all Logspace tickets -->
+    <record id="rule_helpdesk_ticket_logspace_internal" model="ir.rule">
+        <field name="name">Logspace Tickets - Internal</field>
+        <field name="model_id" ref="helpdesk.model_helpdesk_ticket"/>
+        <field name="domain_force">[
+            ('is_logspace_ticket', '=', True)
+        ]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="perm_read">True</field>
+        <field name="perm_write">True</field>
+        <field name="perm_create">True</field>
+        <field name="perm_unlink">False</field>
+    </record>
+
+    <!-- ============================================================================
+         RATING Rules
+         ============================================================================ -->
+
+    <!-- Portal users can see published ratings and their own -->
+    <record id="rule_logspace_rating_portal" model="ir.rule">
+        <field name="name">Ratings - Portal View</field>
+        <field name="model_id" ref="model_logspace_rating"/>
+        <field name="domain_force">[
+            '|',
+                ('is_published', '=', True),
+                ('customer_id', '=', user.partner_id.id)
+        ]</field>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+        <field name="perm_read">True</field>
+        <field name="perm_write">False</field>
+        <field name="perm_create">True</field>
+        <field name="perm_unlink">False</field>
+    </record>
+
+    <!-- ============================================================================
+         REFUND Rules
+         ============================================================================ -->
+
+    <!-- Portal users see only their own refunds -->
+    <record id="rule_logspace_refund_portal" model="ir.rule">
+        <field name="name">Refunds - Portal Own</field>
+        <field name="model_id" ref="model_logspace_refund"/>
+        <field name="domain_force">[
+            ('customer_id', '=', user.partner_id.id)
+        ]</field>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+        <field name="perm_read">True</field>
+        <field name="perm_write">False</field>
+        <field name="perm_create">True</field>
+        <field name="perm_unlink">False</field>
+    </record>
+
+    <!-- ============================================================================
+         NOTIFICATION Rules
+         ============================================================================ -->
+
+    <!-- Portal users see only their own notifications -->
+    <record id="rule_logspace_notification_portal" model="ir.rule">
+        <field name="name">Notifications - Portal Own</field>
+        <field name="model_id" ref="model_logspace_notification"/>
+        <field name="domain_force">[
+            ('user_id', '=', user.id)
+        ]</field>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+        <field name="perm_read">True</field>
+        <field name="perm_write">True</field>
+        <field name="perm_create">False</field>
+        <field name="perm_unlink">False</field>
+    </record>
+
+    <!-- ============================================================================
+         NEW MODELS - Provider Fleet Summary, Time Frames, Special Instructions
+         ============================================================================ -->
+
+    <!-- Fleet Summary - Public read for approved providers -->
+    <record id="rule_logspace_fleet_summary_public" model="ir.rule">
+        <field name="name">Fleet Summary - Public Read</field>
+        <field name="model_id" ref="model_logspace_provider_fleet_summary"/>
+        <field name="domain_force">[
+            ('partner_id.is_provider', '=', True),
+            ('partner_id.state', '=', 'approved')
+        ]</field>
+        <field name="groups" eval="[(4, ref('base.group_public'))]"/>
+        <field name="perm_read">True</field>
+        <field name="perm_write">False</field>
+        <field name="perm_create">False</field>
+        <field name="perm_unlink">False</field>
+    </record>
+
+    <!-- Time Frames - Public read for approved providers -->
+    <record id="rule_logspace_time_frame_public" model="ir.rule">
+        <field name="name">Time Frames - Public Read</field>
+        <field name="model_id" ref="model_logspace_provider_time_frame"/>
+        <field name="domain_force">[
+            ('partner_id.is_provider', '=', True),
+            ('partner_id.state', '=', 'approved')
+        ]</field>
+        <field name="groups" eval="[(4, ref('base.group_public'))]"/>
+        <field name="perm_read">True</field>
+        <field name="perm_write">False</field>
+        <field name="perm_create">False</field>
+        <field name="perm_unlink">False</field>
+    </record>
+
+    <!-- Special Instructions - Public read for active ones from approved providers -->
+    <record id="rule_logspace_special_instruction_public" model="ir.rule">
+        <field name="name">Special Instructions - Public Read</field>
+        <field name="model_id" ref="model_logspace_provider_special_instruction"/>
+        <field name="domain_force">[
+            ('partner_id.is_provider', '=', True),
+            ('partner_id.state', '=', 'approved'),
+            ('is_active', '=', True)
+        ]</field>
+        <field name="groups" eval="[(4, ref('base.group_public'))]"/>
+        <field name="perm_read">True</field>
+        <field name="perm_write">False</field>
+        <field name="perm_create">False</field>
+        <field name="perm_unlink">False</field>
+    </record>
+
+</odoo>

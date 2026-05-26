@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+kas_transfer_branch_user,kas.transfer.branch.user,model_kas_transfer_branch,purchase.group_purchase_user,1,1,1,0
+kas_transfer_branch_admin,kas.transfer.branch.admin,model_kas_transfer_branch,purchase.group_purchase_manager,1,1,1,1
+kas_transfer_branch_line_user,kas.transfer.branch.line.user,model_kas_transfer_branch_line,purchase.group_purchase_user,1,1,1,0
+kas_transfer_branch_line_admin,kas.transfer.branch.line.admin,model_kas_transfer_branch_line,purchase.group_purchase_manager,1,1,1,1
+purchase_order_branch_transfer_user,purchase.order.branch.transfer.user,model_purchase_order_branch_transfer,purchase.group_purchase_user,1,1,1,0
+purchase_order_branch_transfer_admin,purchase.order.branch.transfer.admin,model_purchase_order_branch_transfer,purchase.group_purchase_manager,1,1,1,1

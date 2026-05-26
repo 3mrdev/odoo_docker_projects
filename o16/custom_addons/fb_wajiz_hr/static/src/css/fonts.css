@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 'Cairo Regular';
+    src: url('/fb_wajiz_hr/static/src/fonts/cairo/Cairo-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Cairo Bold';
+    src: url('/fb_wajiz_hr/static/src/fonts/cairo/Cairo-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Changa Regular';
+    src: url('/fb_wajiz_hr/static/src/fonts/changa/ChangaOne-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Changa Bold';
+    src: url('/fb_wajiz_hr/static/src/fonts/changa/ChangaOne-Bold.ttf') format('truetype');
+}
+
+.wajiz-font1 {
+    font-family: 'Changa Regular';
+}
+.wajiz-font2 {
+    font-family: 'Cairo Regular';
+}

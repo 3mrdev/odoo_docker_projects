@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="approval_project_request_view_form_inherit" model="ir.ui.view">
+        <field name="name">approval.project.request.view.form.inherit</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals.approval_request_view_form" />
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='amount']" position="after">
+                <field name="project_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="project_embedded_action_project_approvals" model="ir.embedded.actions">
+        <field name="parent_res_model">project.project</field>
+        <field name="sequence">11</field>
+        <field name="name">Approvals</field>
+        <field name="parent_action_id" ref="project.act_project_project_2_project_task_all"/>
+        <field name="action_id" eval="False"/>
+        <field name="python_method">action_open_project_approvals</field>
+        <field name="context">{"from_embedded_action": true}</field>
+        <field name="groups_ids" eval="[(4, ref('approvals.group_approval_user'))]" />
+    </record>
+
+    <record id="project_embedded_action_update_approvals" model="ir.embedded.actions">
+        <field name="parent_res_model">project.project</field>
+        <field name="sequence">26</field>
+        <field name="name">Approvals</field>
+        <field name="parent_action_id" ref="project.project_update_all_action"/>
+        <field name="action_id" eval="False"/>
+        <field name="python_method">action_open_project_approvals</field>
+        <field name="context">{"from_embedded_action": true}</field>
+        <field name="groups_ids" eval="[(4, ref('approvals.group_approval_user'))]" />
+    </record>
+</odoo>

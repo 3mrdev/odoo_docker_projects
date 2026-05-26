@@ -1,0 +1,45 @@
+{
+    "name":"Appness Western Door",
+    "author":"Appness Technology",
+    "license":"LGPL-3",
+    "version":"1.0",
+    "data":[
+        "security/ir_groups.xml",
+        "security/purchase_groups.xml",
+        "security/ir.model.access.csv",
+        "views/wd_customer_credit_level_views.xml",
+        "views/sale_order_views.xml",
+        "views/purchase_order_views.xml",
+        "views/stock_picking_views.xml",
+        "views/account_move_views.xml",
+        "views/account_asset_views.xml",
+        "views/res_partner_views.xml",
+        "views/wd_standard_views.xml",
+        "reports/external_layout_bubble.xml",
+        "reports/report_saleorder_document.xml",
+        "reports/report_invoice_document.xml",
+        "reports/report_purchaseorder_document.xml",
+        "reports/report_delivery_document.xml",
+        "views/res_config_settings_views.xml",
+        "views/product_template_views.xml"
+    ],
+    "depends":[
+        "sale",
+        "sales_team",
+        "crm",
+        "account",
+        "accountant",
+        "account_asset",
+        "purchase",
+        "stock",
+        'point_of_sale',
+        'pos_loyalty',
+        "hr",
+        "social_media"
+    ],
+    'assets': {
+        'point_of_sale._assets_pos': [
+            'appness_wd/static/src/**/*',
+        ],
+    },
+}

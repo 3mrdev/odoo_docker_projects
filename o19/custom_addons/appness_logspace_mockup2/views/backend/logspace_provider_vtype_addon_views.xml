@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Provider Vehicle Type Addon Action -->
+    <record id="action_logspace_provider_vtype_addon" model="ir.actions.act_window">
+        <field name="name">Vehicle Type Add-ons</field>
+        <field name="res_model">logspace.provider.vehicle.type.addon</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'group_by': ['provider_id', 'vehicle_type_id']}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure provider-specific add-ons for vehicle types!
+            </p>
+            <p>Each provider can offer their own set of add-ons per vehicle type with custom pricing.</p>
+        </field>
+    </record>
+
+    <!-- Provider Vehicle Type Addon List View -->
+    <record id="view_logspace_provider_vtype_addon_tree" model="ir.ui.view">
+        <field name="name">logspace.provider.vehicle.type.addon.tree</field>
+        <field name="model">logspace.provider.vehicle.type.addon</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="provider_id" domain="[('is_provider', '=', True)]"/>
+                <field name="vehicle_type_id"/>
+                <field name="addon_id"/>
+                <field name="master_price" string="Master Price"/>
+                <field name="provider_price"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="is_active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Provider Vehicle Type Addon Form View -->
+    <record id="view_logspace_provider_vtype_addon_form" model="ir.ui.view">
+        <field name="name">logspace.provider.vehicle.type.addon.form</field>
+        <field name="model">logspace.provider.vehicle.type.addon</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="provider_id" domain="[('is_provider', '=', True)]"/>
+                            <field name="vehicle_type_id"/>
+                            <field name="addon_id"/>
+                        </group>
+                        <group>
+                            <field name="master_price" string="Master Price"/>
+                            <field name="provider_price"/>
+                            <field name="currency_id"/>
+                            <field name="sequence"/>
+                            <field name="is_active"/>
+                        </group>
+                    </group>
+                    <group string="Add-on Details">
+                        <field name="addon_description" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

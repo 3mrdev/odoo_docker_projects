@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Evaluation Category (wd.standard) -->
+        <record id="wd_standard_view_form" model="ir.ui.view">
+            <field name="name">wd.standard.view.form</field>
+            <field name="model">wd.standard</field>
+            <field name="arch" type="xml">
+                <form string="Evaluation Category">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="weight"/>
+                        </group>
+                        <notebook>
+                            <page string="Metrics">
+                                <field name="scale_ids"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="wd_standard_view_list" model="ir.ui.view">
+            <field name="name">wd.standard.view.list</field>
+            <field name="model">wd.standard</field>
+            <field name="arch" type="xml">
+                <list string="Evaluation Categories">
+                    <field name="name"/>
+                    <field name="weight"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="wd_standard_action" model="ir.actions.act_window">
+            <field name="name">Evaluation Categories</field>
+            <field name="res_model">wd.standard</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <!-- Evaluation Metric (wd.standard.scale)-->
+        <record id="wd_standard_scale_view_form" model="ir.ui.view">
+            <field name="name">wd.standard.scale.view.form</field>
+            <field name="model">wd.standard.scale</field>
+            <field name="arch" type="xml">
+                <form string="Evaluation Metric">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="standard_id"/>
+                            <field name="evaluation_weight"/>
+                            <field name="active" widget="boolean_toggle" invisible="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="wd_standard_scale_view_list" model="ir.ui.view">
+            <field name="name">wd.standard.scale.view.list</field>
+            <field name="model">wd.standard.scale</field>
+            <field name="arch" type="xml">
+                <list string="Evaluation Metrics">
+                    <field name="name"/>
+                    <field name="standard_id"/>
+                    <field name="evaluation_weight"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- <record id="wd_standard_scale_view_list_filter" model="ir.ui.view">
+            <field name="name">wd.standard.scale.view.list.filter</field>
+            <field name="model">wd.standard.scale</field>
+            <field name="arch" type="xml">
+                <search string="Evaluation Metrics">
+                    <group expand="0" string="Group By">
+                        <filter string="Category" name="standard_id" domain="" context="{'group_by':'standard_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record> -->
+
+        <record id="wd_standard_scale_action" model="ir.actions.act_window">
+            <field name="name">Evaluation Metrics</field>
+            <field name="res_model">wd.standard.scale</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{'group_by':'standard_id'}</field>
+        </record>
+
+        <menuitem
+            id="customer_evaluation_menu"
+            name="Customer Evaluation"
+            sequence="7"
+            parent="crm.crm_menu_config"
+            groups="appness_wd.group_evaluation_manager">
+
+            <menuitem 
+                id="wd_standard_menu" 
+                name="Evaluation Categories" 
+                action="wd_standard_action" 
+                groups="appness_wd.group_evaluation_manager"
+                sequence="10"/>
+
+            <menuitem 
+                id="wd_standard_scale_menu" 
+                name="Evaluation Metrics" 
+                action="wd_standard_scale_action" 
+                groups="appness_wd.group_evaluation_manager"
+                sequence="20"/>
+
+        </menuitem>
+
+    </data>
+</odoo>

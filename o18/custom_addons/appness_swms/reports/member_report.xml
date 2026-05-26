@@ -1,0 +1,125 @@
+<odoo>
+    <data>
+        <template id="member_template">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="text-center">
+                        <h1>تقرير الفرد</h1>
+                        <h1>Family Member Report</h1>
+                    </div>
+                    <br/><br/>
+                    <table class="table text-center">
+                        <tr>
+                            <td>Family Name</td>
+                            <td>3270</td>
+                            <td>اسم الاسرة</td>
+                        </tr>
+                        <tr>
+                            <td>Date From</td>
+                            <td t-esc="from_date">2024-04-01</td>
+                            <td>تاريخ بداية التقرير</td>
+                        </tr>
+                        <tr>
+                            <td>Date to</td>
+                            <td t-esc="to_date">2024-04-01</td>
+                            <td>تاريخ نهاية التقرير</td>
+                        </tr>
+                        <tr>
+                            <td>Sponser Name</td>
+                            <td t-esc="sponser">صباح عيد طلق العقاب</td>
+                            <td>اسم الكفيل</td>
+                        </tr>
+                    </table>
+                    <br/><br/>
+                    <table class="table text-center">
+                        <tr>
+                            <td>Description</td>
+                            <td></td>
+                            <td>الوصف</td>
+                        </tr>
+                        <tr>
+                            <td>Family No.</td>
+                            <td>4,700.000</td>
+                            <td>رقم الاسرة</td>
+                        </tr>
+                        <tr>
+                            <td>National ID</td>
+                            <td>4,700.000</td>
+                            <td>الرقم المدني</td>
+                        </tr>
+                        <tr>
+                            <td>Gender</td>
+                            <td>0.000</td>
+                            <td>الجنس</td>
+                        </tr>
+                        <tr>
+                            <td>Relationship</td>
+                            <td >4,700.000</td>
+                            <td>العلاقة</td>
+                        </tr>
+                        <tr>
+                            <td>Marital Status</td>
+                            <td style="color:red;">( 246.750 )</td>
+                            <td>الحالة الاجتماعية</td>
+                        </tr>
+                        <tr>
+                            <td>Age</td>
+                            <td style="color:red;">( 83.160 )</td>
+                            <td>العمر</td>
+                        </tr>
+                        <tr>
+                            <td>Field of Work</td>
+                            <td style="color:red;">( 2,308.734 )</td>
+                            <td>مجال العمل</td>
+                        </tr>
+                        <tr>
+                            <td>Employeer</td>
+                            <td style="color:red;">( 2,638.644 )</td>
+                            <td>المشغل</td>
+                        </tr>
+                        <tr>
+                            <td>Employment Date</td>
+                            <td>2,061.356</td>
+                            <td>تاريخ التوظيف</td>
+                        </tr>
+                        <tr>
+                            <td>Certificate Level</td>
+                            <td style="color:red;">( 246.750 )</td>
+                            <td>الدرجة العلمية</td>
+                        </tr>
+                        <tr>
+                            <td>Field of Study</td>
+                            <td>2,061.356</td>
+                            <td>مجال الدراسة</td>
+                        </tr>
+                        <tr>
+                            <td>School</td>
+                            <td>2,061.356</td>
+                            <td>المدرسة</td>
+                        </tr>
+                        <tr>
+                            <td>School Class</td>
+                            <td>2,061.356</td>
+                            <td>الفصل الدراسي</td>
+                        </tr>
+                        <tr>
+                            <td>Address Area</td>
+                            <td>2,061.356</td>
+                            <td>المنظقة</td>
+                        </tr>
+                        <tr>
+                            <td>Address City</td>
+                            <td>2,061.356</td>
+                            <td>المدينة</td>
+                        </tr>
+                        <tr>
+                            <td>Address Country</td>
+                            <td>2,061.356</td>
+                            <td>البلد</td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

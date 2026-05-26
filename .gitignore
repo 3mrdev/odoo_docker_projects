@@ -1,0 +1,21 @@
+# Odoo code folders
+**/addons/
+**/enterprise_addons/
+**/odoo/
+
+# Data folders
+**/odoo-db-data/
+**/odoo-web-data/
+
+# Python
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+.Python
+
+# Environment
+.env
+
+# macOS
+.DS_Store

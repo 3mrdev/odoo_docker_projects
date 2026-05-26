@@ -1,0 +1,25 @@
+// Receipt Orderline Header Styling
+.pos-receipt {
+    .orderline-header {
+        // Match the orderline padding and structure
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+
+        .qty-header {
+            // Match qty column width in orderline
+            min-width: 2.5rem;
+        }
+
+        .price-header {
+            // Align right like prices in orderlines
+            text-align: right;
+            min-width: 4rem;
+        }
+    }
+}
+
+.pos-receipt .pos-receipt-logo {
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+}

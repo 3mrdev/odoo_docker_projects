@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+        <record id="swms_property_list" model="ir.ui.view">
+            <field name="name">swms.property.list</field>
+            <field name="model">swms.property</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="doc_type" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                    <field name="ownership_date"/>
+                    <field name="expire_date"/>
+                </list>
+            </field>
+        </record>
+    </data>
+</odoo>

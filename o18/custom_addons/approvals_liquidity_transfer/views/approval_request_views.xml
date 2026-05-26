@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="approval_liquidity_transfer_request_view_form_inherit" model="ir.ui.view">
+        <field name="name">approval.liquidity.transfer.request.view.form.inherit</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals.approval_request_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_get_attachment_view']" position="after">
+                <button name="action_open_journal_entries" type="object"
+                    class="oe_stat_button" icon="fa-credit-card"
+                    invisible="journal_entries_count == 0">
+                    <field name="journal_entries_count" string="Journal Entries" widget="statinfo"/>
+                </button>
+            </xpath>
+            <xpath expr="//button[@name='action_confirm']" position="after">
+                <button name="action_create_journal_entries" type="object"
+                    groups="account.group_account_user"
+                    string="Create Journal Entries" class="btn-primary"
+                    data-hotkey="t" invisible="approval_type != 'liquidity_transfer' or request_status != 'approved' or journal_entries_count &gt; 0"/>
+            </xpath>
+            <field name="amount" position="before">
+                <field name="journal_source" domain="[('type','in',['bank','cash'])]" readonly="request_status != 'new'" required="approval_type == 'liquidity_transfer'" groups="account.group_account_user"/>
+                <field name="journal_destination" domain="[('type','in',['bank','cash'])]" readonly="request_status != 'new'" required="approval_type == 'liquidity_transfer'" groups="account.group_account_user"/>
+            </field>
+        </field>
+    </record>
+</odoo>

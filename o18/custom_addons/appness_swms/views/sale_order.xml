@@ -1,0 +1,47 @@
+<odoo>
+    <data>
+        <record id="sale_order_sponsership_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.sponsership.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+                <div name="button_box" position="after">
+                    <group invisible="not is_swms">
+                        <group>
+                            <field name="is_swms" readonly="1" string="Is SWMS ?" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                </div>
+
+                <field name="partner_id" position="replace">
+                    <field name="partner_id" domain="[('is_family','=',False)]" widget="res_partner_many2one" invisible="is_swms" context="{'res_partner_search_mode': 'customer', 'show_address': 1, 'show_vat': True}" placeholder="Type to find a customer..." readonly="state in ['cancel', 'sale']"/>
+                    <field name="partner_id" domain="[('is_family','=',False)]" string="Sponser" invisible="not is_swms" widget="res_partner_many2one" context="{'res_partner_search_mode': 'customer', 'show_address': 1, 'show_vat': True}" placeholder="Type to find a sponser..." readonly="state in ['cancel', 'sale']"/>
+                </field>
+
+                <xpath expr="//notebook/page[1]" position="after">
+                    <page string="SWMS" invisible="not is_swms">
+                        <group>
+                            <group>
+                                <field name="request_id" readonly="1" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" required="is_swms == True"/>
+                                <field name="family" readonly="1" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" required="is_swms == True"/>
+                                <field name="card_id" string="Lulu Card No." invisible="show_member" readonly="0" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                            </group>
+                            <group>
+                                <field name="show_member" invisible="1"/>
+                                <field name="family_member" readonly="1" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" invisible="not family or not show_member"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+
+                <button name="prepare_renewal_order" position="attributes">
+                    <attribute name="groups">appness_swms.group_renew_sponsership</attribute>
+                </button>
+            <!-- <button string="Reopen" name="reopen_order" type="object" data-hotkey="o" invisible="not is_subscription or subscription_state != '6_churn' or state != 'sale'"/>
+                <button name="478" type="action" string="Close" invisible="subscription_state not in ['3_progress', '4_paused'] or not id" data-hotkey="z"/> -->
+            </field>
+        </record>
+    </data>
+</odoo>
+

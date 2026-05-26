@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="purchase_order_view_form_inherit_kas_pos" model="ir.ui.view">
+            <field name="name">purchase.order.form.inherit.kas_pos</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button name="action_view_pickings_branch" type="object" class="oe_stat_button" icon="fa-exchange" invisible="pickings_branch_count == 0">
+                        <field name="pickings_branch_count" widget="statinfo" string="Pickings Branch"/>
+                    </button>
+                    <button name="action_view_branch_transfers" type="object" class="oe_stat_button" icon="fa-exchange" invisible="branch_transfers_count == 0">
+                        <field name="branch_transfers_count" widget="statinfo" string="Branch Transfers"/>
+                    </button>
+                </xpath>
+                <xpath expr="//header" position="inside">
+                    <button name="action_transfer_to_branches" string="Transfer To Branches" type="object" class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/list/field[@name='product_id']" position="after">
+                    <button name="action_transfer_to_branches" icon="fa-exchange" type="object"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

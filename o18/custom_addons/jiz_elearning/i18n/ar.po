@@ -1,0 +1,173 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* jiz_elearning
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e-20250725\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-18 12:36+0000\n"
+"PO-Revision-Date: 2025-08-18 12:36+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: jiz_elearning
+#: model_terms:ir.ui.view,arch_db:jiz_elearning.view_gen_cert_form_wizard
+msgid "Cancel"
+msgstr "الغاء"
+
+#. module: jiz_elearning
+#: model:ir.model.fields,field_description:jiz_elearning.field_survey_user_input__certificate_score
+msgid "Certificate Score"
+msgstr "نتيجة الشهادة"
+
+#. module: jiz_elearning
+#: model:ir.model.fields,field_description:jiz_elearning.field_jiz_gen_cert__channel_id
+msgid "Channel"
+msgstr "الدورة"
+
+#. module: jiz_elearning
+#: model:ir.model,name:jiz_elearning.model_res_partner
+msgid "Contact"
+msgstr "جهة الاتصال"
+
+#. module: jiz_elearning
+#: model:ir.model,name:jiz_elearning.model_slide_channel
+msgid "Course"
+msgstr "دورة"
+
+#. module: jiz_elearning
+#: model:ir.model.fields,field_description:jiz_elearning.field_jiz_gen_cert__create_uid
+#: model:ir.model.fields,field_description:jiz_elearning.field_jiz_gen_cert_scores__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: jiz_elearning
+#: model:ir.model.fields,field_description:jiz_elearning.field_jiz_gen_cert__create_date
+#: model:ir.model.fields,field_description:jiz_elearning.field_jiz_gen_cert_scores__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: jiz_elearning
+#: model_terms:ir.ui.view,arch_db:jiz_elearning.slide_channel_view_form_inherit_jiz_elearning
+msgid "Deadline:"
+msgstr "تاريخ الانتهاء:"
+
+#. module: jiz_elearning
+#: model:ir.model.fields,field_description:jiz_elearning.field_jiz_gen_cert__display_name
+#: model:ir.model.fields,field_description:jiz_elearning.field_jiz_gen_cert_scores__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: jiz_elearning
+#: model:ir.model.fields,field_description:jiz_elearning.field_slide_slide__feedback
+msgid "Feedback for Student"
+msgstr "فيدباك للطالب"
+
+#. module: jiz_elearning
+#: model:ir.model,name:jiz_elearning.model_jiz_gen_cert
+#: model:ir.model.fields,field_description:jiz_elearning.field_jiz_gen_cert_scores__gen_cert_id
+msgid "Generate Certificate"
+msgstr "توليد الشهادة"
+
+#. module: jiz_elearning
+#: model:ir.model,name:jiz_elearning.model_jiz_gen_cert_scores
+msgid "Generate Certificate Scores"
+msgstr "توليد نتائج الشهادة"
+
+#. module: jiz_elearning
+#: model_terms:ir.ui.view,arch_db:jiz_elearning.slide_channel_view_form_inherit_jiz
+#: model_terms:ir.ui.view,arch_db:jiz_elearning.view_gen_cert_form_wizard
+msgid "Generate Certificates"
+msgstr "توليد الشهادات"
+
+#. module: jiz_elearning
+#: model:ir.model.fields,field_description:jiz_elearning.field_jiz_gen_cert__id
+#: model:ir.model.fields,field_description:jiz_elearning.field_jiz_gen_cert_scores__id
+msgid "ID"
+msgstr ""
+
+#. module: jiz_elearning
+#: model:ir.model.fields,field_description:jiz_elearning.field_res_partner__is_student
+#: model:ir.model.fields,field_description:jiz_elearning.field_res_users__is_student
+msgid "Is Student"
+msgstr "هل هو طالب"
+
+#. module: jiz_elearning
+#: model:ir.model.fields,field_description:jiz_elearning.field_jiz_gen_cert__write_uid
+#: model:ir.model.fields,field_description:jiz_elearning.field_jiz_gen_cert_scores__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: jiz_elearning
+#: model:ir.model.fields,field_description:jiz_elearning.field_jiz_gen_cert__write_date
+#: model:ir.model.fields,field_description:jiz_elearning.field_jiz_gen_cert_scores__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: jiz_elearning
+#: model_terms:ir.ui.view,arch_db:jiz_elearning.view_gen_cert_form_wizard
+msgid "New Certificates"
+msgstr "شهادات جديدة"
+
+#. module: jiz_elearning
+#: model:ir.model.fields,field_description:jiz_elearning.field_jiz_gen_cert__new_scores_ids
+msgid "New Scores"
+msgstr "نتائج جديدة"
+
+#. module: jiz_elearning
+#: model:ir.model.fields,field_description:jiz_elearning.field_jiz_gen_cert_scores__score
+msgid "Score"
+msgstr "النتيجة"
+
+#. module: jiz_elearning
+#: model_terms:ir.ui.view,arch_db:jiz_elearning.certification_report_view_general_inherit_jiz_elearning
+msgid "Score:"
+msgstr "النتيجة:"
+
+#. module: jiz_elearning
+#: model:ir.model,name:jiz_elearning.model_slide_slide
+msgid "Slides"
+msgstr "الشرائح"
+
+#. module: jiz_elearning
+#: model:ir.model.fields,field_description:jiz_elearning.field_jiz_gen_cert_scores__student_id
+msgid "Student"
+msgstr "الطالب"
+
+#. module: jiz_elearning
+#: model_terms:ir.ui.view,arch_db:jiz_elearning.slide_slide_view_form_inherit_jiz
+msgid "Student Information"
+msgstr "معلومات الطالب"
+
+#. module: jiz_elearning
+#: model:ir.actions.act_window,name:jiz_elearning.jiz_students_action
+#: model:ir.ui.menu,name:jiz_elearning.jiz_students_menu
+#: model_terms:ir.ui.view,arch_db:jiz_elearning.slide_channel_view_form_inherit_jiz
+msgid "Students"
+msgstr "الطلاب"
+
+#. module: jiz_elearning
+#: model:ir.model.fields,field_description:jiz_elearning.field_slide_slide__deadline
+msgid "Submission Deadline"
+msgstr "تاريخ الانتهاء للواجب"
+
+#. module: jiz_elearning
+#: model:ir.model.fields,field_description:jiz_elearning.field_jiz_gen_cert__survey_id
+#: model:ir.model.fields,field_description:jiz_elearning.field_slide_channel__survey_id
+msgid "Survey"
+msgstr "الاستطلاع"
+
+#. module: jiz_elearning
+#: model:ir.model,name:jiz_elearning.model_survey_user_input
+msgid "Survey User Input"
+msgstr "مُدخلات مستخدم الاستطلاع"
+
+#. module: jiz_elearning
+#: model_terms:ir.ui.view,arch_db:jiz_elearning.view_gen_cert_form_wizard
+msgid "View Old Certificates"
+msgstr "عرض الشهادات القديمة"

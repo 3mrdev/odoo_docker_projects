@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ========================================================================= -->
+    <!-- Job Position Form View Extension -->
+    <!-- ========================================================================= -->
+    <record id="view_hr_job_form_inherit_logspace" model="ir.ui.view">
+        <field name="name">hr.job.form.inherit.logspace</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='department_id']" position="after">
+                <field name="show_in_portal" widget="boolean_toggle"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ========================================================================= -->
+    <!-- Job Position List View Extension -->
+    <!-- ========================================================================= -->
+    <record id="view_hr_job_list_inherit_logspace" model="ir.ui.view">
+        <field name="name">hr.job.list.inherit.logspace</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="inside">
+                <field name="show_in_portal" widget="boolean_toggle" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <!-- ========================================================================= -->
+    <!-- Contact Roles Menu (Logspace-specific Job Positions) -->
+    <!-- ========================================================================= -->
+    <record id="action_logspace_contact_roles" model="ir.actions.act_window">
+        <field name="name">Contact Roles</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.job</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create contact roles for Logspace providers
+            </p>
+            <p>
+                Define roles like Owner, Manager, Driver, Dispatcher, Accountant, etc.
+                <br/>
+                Enable "Show in Portal" to make contacts with this role visible to customers.
+            </p>
+        </field>
+    </record>
+
+</odoo>

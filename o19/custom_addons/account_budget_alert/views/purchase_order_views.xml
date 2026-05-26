@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="purchase_order_form_inherit_budget_alert" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit.budget.alert</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="after">
+                <div class="alert alert-danger" role="alert" invisible="not is_above_budget_alert">
+                    You have exceeded the analytic budget. <button class="oe_link" type="object"
+                        name="action_budget_alert" style="padding: 0; vertical-align: baseline;">
+                    click here to for more details</button>
+                </div>
+                <div class="alert alert-danger" role="alert"
+                    invisible="not is_above_financial_budget_alert"> You have exceeded the financial
+                    budget. <button class="oe_link" type="object"
+                        name="action_budget_alert" style="padding: 0; vertical-align: baseline;">
+                    click here to for more details</button>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list" position="attributes">
+                <attribute name="decoration-danger">is_above_financial_budget_alert</attribute>
+                <attribute name="decoration-warning">is_above_budget_alert</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

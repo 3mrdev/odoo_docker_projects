@@ -1,0 +1,56 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-04-15 12:03+0000\n"
+"PO-Revision-Date: 2023-04-15 12:06+0000\n"
+"Last-Translator: \n"
+"Language-Team: Unknown\n"
+"Language: zxx\n"
+"Plural-Forms: nplurals=2; plural=n!=1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"X-Loco-Source-Locale: en_TR\n"
+"X-Loco-Parser: loco_parse_po\n"
+"X-Generator: Loco https://localise.biz/"
+
+#. module: maintenance_request_report
+#: model:ir.actions.report,print_report_name:maintenance_request_report.maintenance_request_report
+msgid "'Maintenance Request - %s' % (object.name)"
+msgstr "'طلب صيانة - %s' % (object.name)"
+
+#. module: maintenance_request_report
+#: model_terms:ir.ui.view,arch_db:maintenance_request_report.report_maintenance_request_document
+msgid "Authorized Signature: ___________________________"
+msgstr "توقيع المعتمد: ___________________________"
+
+#. module: maintenance_request_report
+#: model_terms:ir.ui.view,arch_db:maintenance_request_report.report_maintenance_request_document
+msgid "Description"
+msgstr "الوصف"
+
+#. module: maintenance_request_report
+#: model:ir.actions.report,name:maintenance_request_report.maintenance_request_report
+msgid "Maintenance Request"
+msgstr "طلب الصيانة"
+
+#. module: maintenance_request_report
+#: model_terms:ir.ui.view,arch_db:maintenance_request_report.report_maintenance_request_document
+msgid "Maintenance Request:"
+msgstr "طلب الصيانة:"
+
+#. module: maintenance_request_report
+#: model_terms:ir.ui.view,arch_db:maintenance_request_report.report_maintenance_request_document
+msgid "Print By:"
+msgstr "تم الطباعة بواسطة:"
+
+#. module: maintenance_request_report
+#: model_terms:ir.ui.view,arch_db:maintenance_request_report.report_maintenance_request_document
+msgid "Print Date:"
+msgstr "تاريخ الطباعة:"
+
+#. module: maintenance_request_report
+#: model_terms:ir.ui.view,arch_db:maintenance_request_report.report_maintenance_request_document
+msgid "Signature Date: ____________________"
+msgstr "تاريخ التوقيع: ____________________"

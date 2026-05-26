@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Price Matrix Actions -->
+    <record id="action_logspace_price_matrix" model="ir.actions.act_window">
+        <field name="name">Price Matrix</field>
+        <field name="res_model">logspace.price.matrix</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure pricing for your zones and vehicle types!
+            </p>
+        </field>
+    </record>
+
+    <!-- Price Matrix List View -->
+    <record id="view_logspace_price_matrix_tree" model="ir.ui.view">
+        <field name="name">logspace.price.matrix.tree</field>
+        <field name="model">logspace.price.matrix</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="provider_id" domain="[('is_provider', '=', True)]"/>
+                <field name="zone_from_id"/>
+                <field name="zone_to_id"/>
+                <field name="vehicle_type_id"/>
+                <field name="vechile_in_zone_count" optional="show"/>
+                <field name="distance_km" optional="show"/>
+                <field name="provider_price"/>
+                <field name="platform_fee"/>
+                <field name="customer_price" readonly="1"/>
+                <field name="is_active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Price Matrix Form View -->
+    <record id="view_logspace_price_matrix_form" model="ir.ui.view">
+        <field name="name">logspace.price.matrix.form</field>
+        <field name="model">logspace.price.matrix</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="provider_id" domain="[('is_provider', '=', True)]"/>
+                            <field name="vehicle_type_id"/>
+                            <field name="currency_id"/>
+                        </group>
+                        <group>
+                            <field name="zone_from_id"/>
+                            <field name="zone_to_id"/>
+                            <field name="vechile_in_zone_count"/>
+                            <field name="distance_km"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Pricing">
+                            <field name="provider_price"/>
+                            <field name="platform_fee"/>
+                            <field name="customer_price" readonly="1"/>
+                        </group>
+                        <group string="Status">
+                            <field name="is_active"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

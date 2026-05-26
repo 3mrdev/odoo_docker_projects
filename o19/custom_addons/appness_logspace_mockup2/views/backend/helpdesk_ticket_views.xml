@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ========================================================================= -->
+    <!-- Helpdesk Ticket Form View Extension -->
+    <!-- ========================================================================= -->
+    <record id="view_helpdesk_ticket_form_inherit_logspace" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.form.inherit.logspace</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Add Logspace checkbox after priority -->
+            <xpath expr="//field[@name='priority']" position="after">
+                <field name="is_logspace_ticket" widget="boolean_toggle"/>
+            </xpath>
+
+            <!-- Logspace fields in a new page -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Logspace" invisible="not is_logspace_ticket">
+                    <group>
+                        <field name="logspace_order_id"/>
+                        <field name="logspace_ticket_type"/>
+                        <field name="logspace_provider_id" readonly="1"/>
+                        <field name="guest_email" readonly="1"/>
+                        <field name="show_to_customer" widget="boolean_toggle"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ========================================================================= -->
+    <!-- Helpdesk Ticket List View Extension -->
+    <!-- ========================================================================= -->
+    <record id="view_helpdesk_ticket_list_inherit_logspace" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.list.inherit.logspace</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_tickets_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="inside">
+                <field name="is_logspace_ticket" invisible="1"/>
+                <field name="logspace_order_id" invisible="not is_logspace_ticket" optional="hide"/>
+                <field name="logspace_ticket_type" invisible="not is_logspace_ticket" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ========================================================================= -->
+    <!-- Helpdesk Ticket Search View (Standalone) -->
+    <!-- ========================================================================= -->
+    <record id="view_helpdesk_ticket_search_logspace" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.search.logspace</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="logspace_order_id"/>
+                <field name="logspace_ticket_type"/>
+                <separator/>
+                <filter name="filter_logspace" string="Logspace Tickets" domain="[('is_logspace_ticket', '=', True)]"/>
+                <separator/>
+                <filter name="group_by_logspace_type" string="Logspace Category" context="{'group_by': 'logspace_ticket_type'}"/>
+                <filter name="group_by_logspace_order" string="Logspace Order" context="{'group_by': 'logspace_order_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- ========================================================================= -->
+    <!-- Logspace Tickets Action -->
+    <!-- ========================================================================= -->
+    <record id="action_helpdesk_ticket_logspace" model="ir.actions.act_window">
+        <field name="name">Logspace Tickets</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">helpdesk.ticket</field>
+        <field name="view_mode">list,form,kanban,activity</field>
+        <field name="search_view_id" ref="view_helpdesk_ticket_search_logspace"/>
+        <field name="context">{
+            'default_is_logspace_ticket': True,
+            'search_default_filter_logspace': 1,
+        }</field>
+        <field name="domain">[('is_logspace_ticket', '=', True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Logspace support ticket
+            </p>
+        </field>
+    </record>
+
+</odoo>

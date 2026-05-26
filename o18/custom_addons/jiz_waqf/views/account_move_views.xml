@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_move_form_inherit_waqf" model="ir.ui.view">
+        <field name="name">account.move.form.inherit.waqf</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Waqf" name="waqf">
+                    <group>
+                        <field name="waqf_id"/>
+                        <field name="unit_id"/>
+                        <field name="sell_waqf_id" string="Choose only if you want to sell the waqf" readonly="state != 'draft'"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

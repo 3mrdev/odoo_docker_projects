@@ -1,0 +1,636 @@
+<odoo>
+    <data>
+
+        <record id="res_partner_family_filter_inherit" model="ir.ui.view">
+            <field name="name">res.partner.family.filter.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="family_seq"/>
+                    <field name="member_seq"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="res_partner_family_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.family.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//sheet" position="before">
+                    <div class="alert alert-danger w-100 d-flex align-items-center" role="alert" invisible="not noti_documents">
+                        <field name="noti_documents" readonly="1"/>
+                        <button name="check_documents" type="object" title="Refresh" class="alert-link" icon="fa-refresh"/>
+                    </div>
+                </xpath>
+
+                <field name="image_1920" position="after">
+                    <group>
+                        <field name="is_sponser" string="Is a Sponser ?" invisible="is_family"/>
+                        <!-- <field name="is_family" string="Family or Member ?" readonly="1" invisible="not is_family"/> -->
+                    </group>
+                </field>
+
+                <xpath expr="//field[@id='company']" position="replace">
+                    <field id="company" options="{'line_breaks': False}" widget="text" class="text-break" name="name" default_focus="1" placeholder="e.g. Father Full Name" invisible="not is_company" required="type == 'contact'"/>
+                </xpath>
+                <xpath expr="//field[@id='individual']" position="replace">
+                    <field id="individual" options="{'line_breaks': False}" widget="text" class="text-break" name="name" default_focus="1" placeholder="e.g. Member First Name" invisible="is_company" required="type == 'contact'"/>
+                </xpath>
+                
+                <field name="company_type" position="replace">
+                    <!-- <field name="family_type" widget="radio" options="{'horizontal': true}" invisible="not is_family" readonly="1"/> -->
+                    <field name="company_type" widget="radio" options="{'horizontal': true}" invisible="is_family"/>
+                </field>
+
+                <field name="parent_id" position="replace">
+                    <field name="parent_id" widget="res_partner_many2one" placeholder="Family Name..." required="is_family and not is_company" domain="[('is_family', '=', True),('is_company', '=', True)]" context="{'default_is_company': True, 'show_vat': True, 'default_user_id': user_id}" invisible="(((is_company and not parent_id) or company_name) and company_name != '') or not is_family"/>
+                    <field name="parent_id" widget="res_partner_many2one" placeholder="Company Name..." domain="[('is_company', '=', True)]" context="{'default_is_company': True, 'show_vat': True, 'default_user_id': user_id}" invisible="(((is_company and not parent_id) or company_name) and company_name != '') or is_family"/>
+                </field>
+
+                <xpath expr="//sheet/group[2]" position="replace">
+                    <group invisible="not is_family">
+                        <group string="Reference Info">
+                            <field name="family_seq" invisible="company_type != 'company'" readonly="1"/>
+                            <field name="member_seq" invisible="company_type != 'person'" readonly="1"/>
+                            <field name="has_analytic_account" invisible="1"/> 
+                            <field name="analytic_account_id" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" invisible="not has_analytic_account"/> 
+                            <field name="analytic_account_balance" invisible="not has_analytic_account"/>
+                            <field name="civil_number"/>
+                            <field name="accommodation_type"/>
+                            <field name="building_type"/>
+                            <field name="professional_status"/>
+                            <field name="category_id" widget="many2many_tags" options="{'color_field': 'color'}" placeholder="e.g. &quot;B2B&quot;, &quot;VIP&quot;, &quot;Consulting&quot;, ..."/>
+                        </group>
+                        <group string="Basic Info">
+                            <field name="gender" widget="radio" options="{'horizontal': true}" readonly="is_company"/>
+                            <field name="relationship" widget="radio" options="{'horizontal': true}" readonly="is_company"/>
+                            <field name="relationship_other" invisible="not relationship == 'other'"/>
+                            <field name="marital" widget="radio" options="{'horizontal': true}" readonly="is_company"/>
+                            <field name="is_dead" string="is Dead?" invisible="not is_family or not is_company"/>
+                            <field name="is_orphan" invisible="not is_orphan"/>
+                            <field name="allow_editing_portal" string="Allow Editing? (Portal)" groups="appness_swms.group_allow_edit_portal"/>
+                            <field name="family_responsible_id" string="Responsible Researcher"/>
+                        </group>
+                    </group>
+                    <group invisible="is_family">
+                        <group>
+                            <span class="o_form_label o_td_label o_address_type" name="address_name">
+                                <field name="type" invisible="is_company" readonly="user_ids" required="not is_company" class="fw-bold"/>
+                                <span invisible="not is_company">Address</span>
+                            </span>
+                            <div class="o_address_format">
+                                <field name="street" placeholder="Street..." class="o_address_street" readonly="type == 'contact' and parent_id"/>
+                                <field name="street2" placeholder="Street 2..." class="o_address_street" readonly="type == 'contact' and parent_id"/>
+                                <field name="area_id" placeholder="Area" class="o_address_area" domain="[('city_id', '=', city_id)]" readonly="type == 'contact' and parent_id"/>
+                                <field name="city_id" placeholder="City" class="o_address_city" domain="[('country_id', '=', country_id)]" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" invisible="not country_enforce_cities" readonly="type == 'contact' and parent_id" context="{'default_country_id': country_id, 'default_state_id': state_id, 'default_zipcode': zip}"/>
+                                <field name="city" placeholder="City" class="o_address_city" readonly="type == 'contact' and parent_id" invisible="country_enforce_cities and (city_id or city in ('', False))"/>
+                                <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True,'no_create': True}" readonly="type == 'contact' and parent_id" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                                <field name="zip" placeholder="ZIP" class="o_address_zip" readonly="type == 'contact' and parent_id"/>
+                                <div name="partner_address_country" class="d-flex justify-content-between">
+                                    <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" readonly="type == 'contact' and parent_id"/>
+                                </div>
+                            </div>
+                            <field name="vat" placeholder="e.g. BE0477472701" readonly="parent_id"/>
+                        </group>
+                        <group>
+                            <field name="function" placeholder="e.g. Sales Director" invisible="is_company"/>
+                            <field name="phone" widget="phone"/>
+                            <field name="mobile" widget="phone"/>
+                            <field name="email" widget="email" context="{'gravatar_image': True}" required="user_ids"/>
+                            <field name="website" string="Website" widget="url" placeholder="e.g. https://www.odoo.com"/>
+                            <field name="title" options="{&quot;no_open&quot;: True}" placeholder="e.g. Mister" invisible="is_company"/>
+                            <field name="lang" invisible="active_lang_count &lt;= 1"/>
+                            <field name="category_id" widget="many2many_tags" options="{'color_field': 'color'}" placeholder="e.g. &quot;B2B&quot;, &quot;VIP&quot;, &quot;Consulting&quot;, ..."/>
+                        </group>
+                    </group>
+                </xpath>
+
+                <xpath expr="//notebook/page[1]" position="replace">
+                    <page string="Family Members" name="family_members" autofocus="autofocus" invisible="not is_family" groups="helpdesk.group_helpdesk_user">
+                        <field name="child_ids" mode="kanban" readonly="1" context="{'default_parent_id': id,'default_is_family': True,'default_company_type': 'person','default_family_type': 'member', 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_lang': lang, 'default_user_id': user_id, 'default_type': 'contact'}">
+                            <kanban color="color">
+                                <field name="color"/>
+                                <field name="type"/>
+                                <field name="is_company"/>
+                                <templates>
+                                    <t t-name="card" class="flex-row">
+                                        <aside class="o_kanban_aside_full">
+                                            <field name="avatar_128" class="o_kanban_image_fill w-100" widget="image" options="{'img_class': 'object-fit-cover'}" alt="Member image"/>
+                                        </aside>
+                                        <main class="ps-2 ps-md-0">
+                                            <field name="name" class="fw-bold"/>
+                                            <field name="function"/>
+                                            <field name="email" widget="email"/>
+                                            <div t-if="record.type.raw_value != 'contact'">
+                                                <div>
+                                                    <field class="me-1" name="zip"/>
+                                                    <field name="city"/>
+                                                </div>
+                                                <field class="me-1" name="state_id"/>
+                                                <field name="country_id"/>
+                                            </div>
+                                            <div t-if="record.phone.raw_value">Phone: <field name="phone"/></div>
+                                            <div t-if="record.mobile.raw_value">Mobile: <field name="mobile"/></div>
+                                        </main>
+                                    </t>
+                                </templates>
+                            </kanban>
+                            <form string="Member / Address">
+                                <sheet>
+                                    <field name="type" required="1" readonly="1" widget="radio" options="{'horizontal': true}"/>
+                                    <div class="text-muted oe_edit_only">
+                                        <p class="mb-0" invisible="type != 'contact'">
+                                            <span>Use this to organize the member details of members of a given family.</span>
+                                        </p>
+                                        <!-- <p class="mb-0" invisible="type != 'invoice'">
+                                            <span>Preferred address for all invoices. Selected by default when you invoice an order that belongs to this company.</span>
+                                        </p>
+                                        <p class="mb-0" invisible="type != 'delivery'">
+                                            <span>Preferred address for all deliveries. Selected by default when you deliver an order that belongs to this company.</span>
+                                        </p>
+                                        <p class="mb-0" invisible="type != 'other'">
+                                            <span>Other address for the company (e.g. subsidiary, ...)</span>
+                                        </p> -->
+                                    </div>
+                                    <hr/>
+                                    <group>
+                                        <group>
+                                            <field name="name" string="Member Name" required="type == 'contact'" placeholder="e.g. New Member First Name"/>
+                                            <field name="marital" widget="radio" options="{'horizontal': true}"/>
+                                            <!-- <field name="family_type" required="1" readonly="1" widget="radio" options="{'horizontal': true}"/> -->
+                                            <!-- <field name="company_type" required="1" readonly="1" widget="radio" options="{'horizontal': true}"/> -->
+                                            <!-- <field name="title" options="{'no_open': True}" placeholder="e.g. Mr." invisible="type != 'contact'"/> -->
+                                            <!-- <field name="function" placeholder="e.g. Sales Director" invisible="type != 'contact'"/> -->
+                                            <!-- <label for="street" string="Address" invisible="type == 'contact'"/>
+                                            <div invisible="type == 'contact'">
+                                                <div class="o_address_format" name="div_address">
+                                                    <field name="street" placeholder="Street..." class="o_address_street"/>
+                                                    <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                                    <field name="city" placeholder="City" class="o_address_city"/>
+                                                    <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True,'no_create': True}" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                                                    <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                                    <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                                </div>
+                                            </div> -->
+                                        </group>
+                                        <group>
+                                            <field name="gender" widget="radio" options="{'horizontal': true}"/>
+                                            <field name="relationship" widget="radio" options="{'horizontal': true}"/>
+                                            
+                                            <!-- <field name="email" widget="email"/>
+                                            <field name="phone" widget="phone"/>
+                                            <field name="mobile" widget="phone"/> -->
+                                            <field name="company_id" invisible="1"/>    <!-- Need to save value from parented record, cf onchange -->
+                                        </group>
+                                    </group>
+                                    <group>
+                                        <field name="comment" placeholder="Internal notes..." nolabel="1"/>
+                                    </group>
+                                    <field name="lang" invisible="True"/>  <!-- Need to add lang to save default value from parented record -->
+                                </sheet>
+                            </form>
+                        </field>
+                    </page>
+                    <page string="Contacts &amp; Addresses" name="contact_addresses" autofocus="autofocus" invisible="is_family">
+                        <field name="child_ids" mode="kanban" context="{'default_parent_id': id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_lang': lang, 'default_user_id': user_id, 'default_type': 'other'}">
+                            <kanban color="color">
+                                <field name="color"/>
+                                <field name="type"/>
+                                <field name="is_company"/>
+                                <templates>
+                                    <t t-name="card" class="flex-row">
+                                        <aside class="o_kanban_aside_full">
+                                            <field name="avatar_128" class="o_kanban_image_fill w-100" widget="image" options="{'img_class': 'object-fit-cover'}" alt="Contact image"/>
+                                        </aside>
+                                        <main class="ps-2 ps-md-0">
+                                            <field name="name" class="fw-bold"/>
+                                            <field name="function"/>
+                                            <field name="email" widget="email"/>
+                                            <div t-if="record.type.raw_value != 'contact'">
+                                                <div>
+                                                    <field class="me-1" name="zip"/>
+                                                    <field name="city"/>
+                                                </div>
+                                                <field class="me-1" name="state_id"/>
+                                                <field name="country_id"/>
+                                            </div>
+                                            <div t-if="record.phone.raw_value">Phone: <field name="phone"/></div>
+                                            <div t-if="record.mobile.raw_value">Mobile: <field name="mobile"/></div>
+                                        </main>
+                                    </t>
+                                </templates>
+                            </kanban>
+                            <form string="Contact / Address">
+                                <sheet>
+                                    <field name="type" required="1" widget="radio" options="{'horizontal': true}"/>
+                                    <div class="text-muted oe_edit_only">
+                                        <p class="mb-0" invisible="type != 'contact'">
+                                            <span>Use this to organize the contact details of employees of a given company (e.g. CEO, CFO, ...).</span>
+                                        </p>
+                                        <p class="mb-0" invisible="type != 'invoice'">
+                                            <span>Preferred address for all invoices. Selected by default when you invoice an order that belongs to this company.</span>
+                                        </p>
+                                        <p class="mb-0" invisible="type != 'delivery'">
+                                            <span>Preferred address for all deliveries. Selected by default when you deliver an order that belongs to this company.</span>
+                                        </p>
+                                        <p class="mb-0" invisible="type != 'other'">
+                                            <span>Other address for the company (e.g. subsidiary, ...)</span>
+                                        </p>
+                                    </div>
+                                    <hr/>
+                                    <group>
+                                        <group>
+                                            <field name="name" string="Contact Name" required="type == 'contact'" placeholder="e.g. New Address"/>
+                                            <field name="title" options="{'no_open': True}" placeholder="e.g. Mr." invisible="type != 'contact'"/>
+                                            <field name="function" placeholder="e.g. Sales Director" invisible="type != 'contact'"/>
+                                            <label for="street" string="Address" invisible="type == 'contact'"/>
+                                            <div invisible="type == 'contact'">
+                                                <div class="o_address_format" name="div_address">
+                                                    <field name="street" placeholder="Street..." class="o_address_street"/>
+                                                    <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                                    <field name="area_id" placeholder="Area" class="o_address_area" domain="[('city_id', '=', city_id)]" readonly="type == 'contact' and parent_id"/>
+                                                    <field name="city_id" placeholder="City" class="o_address_city" domain="[('country_id', '=', country_id)]" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" invisible="not country_enforce_cities" readonly="type == 'contact' and parent_id" context="{'default_country_id': country_id, 'default_state_id': state_id, 'default_zipcode': zip}"/>
+                                                    <field name="city" placeholder="City" class="o_address_city" readonly="type == 'contact' and parent_id" invisible="country_enforce_cities and (city_id or city in ('', False))"/>
+                                                    <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True,'no_create': True}" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                                                    <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                                    <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                                </div>
+                                            </div>
+                                        </group>
+                                        <group>
+                                            <field name="email" widget="email"/>
+                                            <field name="phone" widget="phone"/>
+                                            <field name="mobile" widget="phone"/>
+                                            <field name="company_id" invisible="1"/>    <!-- Need to save value from parented record, cf onchange -->
+                                        </group>
+                                    </group>
+                                    <group>
+                                        <field name="comment" placeholder="Internal notes..." nolabel="1"/>
+                                    </group>
+                                    <field name="lang" invisible="True"/>  <!-- Need to add lang to save default value from parented record -->
+                                </sheet>
+                            </form>
+                        </field>
+                    </page>
+                    <page string="General Info" invisible="not is_family" groups="helpdesk.group_helpdesk_user">
+                        <group string="More Info">
+                            <group>
+                                <span class="o_form_label o_td_label o_address_type" name="address_name">
+                                    <field name="type" invisible="is_company" readonly="user_ids" required="not is_company" class="fw-bold"/>
+                                    <span invisible="not is_company">Address</span>
+                                </span>
+                                <div class="o_address_format">
+                                    <field name="street" placeholder="Street..." class="o_address_street" readonly="type == 'contact' and parent_id"/>
+                                    <field name="street2" placeholder="Street 2..." class="o_address_street" readonly="type == 'contact' and parent_id"/>
+                                    <field name="country_enforce_cities" invisible="1"/>
+                                    <field name="area_id" placeholder="Area" class="o_address_area" domain="[('city_id', '=', city_id)]" readonly="type == 'contact' and parent_id"/>
+                                    <field name="city_id" placeholder="City" class="o_address_city" domain="[('country_id', '=', country_id)]" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" invisible="not country_enforce_cities" readonly="type == 'contact' and parent_id" context="{'default_country_id': country_id, 'default_state_id': state_id, 'default_zipcode': zip}"/>
+                                    <field name="city" placeholder="City" class="o_address_city" readonly="type == 'contact' and parent_id" invisible="country_enforce_cities and (city_id or city in ('', False))"/>
+                                    <field name="state_id" class="o_address_state" placeholder="State" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" readonly="type == 'contact' and parent_id" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                                    <field name="zip" placeholder="ZIP" class="o_address_zip" readonly="type == 'contact' and parent_id"/>
+                                    <div name="partner_address_country" class="d-flex justify-content-between">
+                                        <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" readonly="type == 'contact' and parent_id"/>
+                                    </div>
+                                </div>
+                                <field name="vat" placeholder="e.g. BE0477472701" readonly="parent_id"/>
+                            </group>
+                            <group>
+                                <field name="function" placeholder="e.g. Sales Director" invisible="is_company"/>
+                                <field name="phone" widget="phone"/>
+                                <field name="mobile" widget="phone"/>
+                                <field name="email" widget="email" context="{'gravatar_image': True}" required="user_ids"/>
+                                <field name="website" string="Website" widget="url" placeholder="e.g. https://www.odoo.com"/>
+                                <field name="title" options="{&quot;no_open&quot;: True}" placeholder="e.g. Mister" invisible="is_company"/>
+                                <field name="lang" invisible="active_lang_count &lt;= 1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Personal Info">
+                                <field name="birthday"/>
+                                <field name="age"/>
+                            </group>
+                            <group string="Employment Info">
+                                <field name="work_field"/>
+                                <field name="employer"/>
+                                <field name="employment_date"/>
+                            </group>
+                            <group string="Education Info">
+                                <field name="certificate"/>
+                                <field name="study_field" invisible="certificate in ['basic','middle','high']"/>
+                                <field name="study_school"/>
+                                <field name="study_class"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page string="SWMS" invisible="not is_family" groups="helpdesk.group_helpdesk_user">
+                        <group string="Income">
+                        </group>
+                        <field name="income_sources">
+                            <list editable="bottom">
+                                <field name="doc_type" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" required="1"/>
+                                <field name="amount"/>
+                                <field name="interval" string="Every" optional="hide"/>
+                                <field name="frequency"/>
+                            </list>
+                        </field>
+                        <group string="Obligations">
+                        </group>
+                        <field name="obligations">
+                            <list editable="bottom">
+                                <field name="doc_type" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" required="1"/>
+                                <field name="creditor_name"/>
+                                <field name="creditor_phone"/>
+                                <field name="amount"/>
+                                <field name="total_amount"/>
+                                <field name="remaining_amount"/>
+                                <field name="payment_method"/>
+                                <field name="interval" string="Every" optional="hide"/>
+                                <field name="frequency"/>
+                            </list>
+                        </field>
+                        <group string="Properties">
+                        </group>
+                        <field name="properties">
+                            <list editable="bottom">
+                                <field name="doc_type" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" required="1"/>
+                                <field name="ownership_date"/>
+                                <field name="expire_date" optional="hide"/>
+                            </list>
+                        </field>
+                        <group string="Financial Summary">
+                            <group>
+                                <field name="total_income"/>
+                                <field name="total_obligations"/>
+                            </group>
+                            <group>
+                                <field name="net_worth"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page string="Card History" invisible="not is_family or not is_company">
+                        <field name="card_history" readonly="1">
+                            <list editable="bottom" decoration-danger="account_move_type == 'in_refund'" decoration-success="account_move_type == 'in_invoice'">
+                                <field name="date"/>
+                                <field name="name" string="Description" optional="hide"/>
+                                <field name="account_move_type" column_invisible="1"/>
+                                <field name="account_move_id" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                                <field name="card_id" string="Lulu Card No." options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                                <field name="request_id" optional="show" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                                <field name="currency_id" column_invisible="1"/>
+                                <field name="amount" sum="Total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            </list>
+                        </field>
+                    </page>
+                    <page string="Sponserships" invisible="not is_sponser" groups="sales_team.group_sale_salesman">
+                        <field name="sponserships_sponser" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                    </page>
+                    <page string="Sponserships" invisible="not is_family or not is_company" groups="sales_team.group_sale_salesman">
+                        <field name="sponserships_family" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                    </page>
+                    <page string="Sponserships" invisible="not is_family or is_company" groups="sales_team.group_sale_salesman">
+                        <field name="sponserships_member" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                    </page>
+                    <page string="Documents" invisible="not is_family" groups="helpdesk.group_helpdesk_user">
+                        <field name="documents" mode="kanban" context="{'default_partner_id': id}">
+                            <kanban js_class="documents_kanban" create="false" sample="1">
+                                <field name="id"/>
+                                <field name="active"/>
+                                <field name="mimetype"/>
+                                <field name="favorited_ids"/>
+                                <field name="attachment_id"/>
+                                <field name="res_id"/>
+                                <field name="folder_id"/>
+                                <field name="lock_uid"/>
+                                <field name="type"/>
+                                <field name="shortcut_document_id"/>
+                                <field name="create_uid"/>
+                                <field name="url"/>
+                                <field name="url_preview_image"/>
+                                <field name="checksum"/>
+                                <field name="name"/>
+                                <field name="display_name"/>
+                                <field name="res_model_name"/>
+                                <field name="res_model"/>
+                                <field name="activity_state"/>
+                                <field name="is_multipage"/>
+                                <field name="thumbnail_status"/>
+                                <field name="user_permission"/>
+                                <field name="access_token"/>
+                                <field name="access_url"/>
+                                <field name="access_via_link"/>
+                                <field name="access_internal"/>
+                                <field name="is_access_via_link_hidden"/>
+                                <field name="available_embedded_actions_ids" groups="base.group_user"/>
+                                <field name="partner_id"/>
+                                <field name="file_size"/>
+                                <field name="alias_name"/>
+                                <field name="alias_domain_id"/>
+                                <field name="alias_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/> <!-- fetch `color` too -->
+                                <templates>
+                                    <t t-name="card">
+                                        <div draggable="true" class="o_documents_pre_18_1 d-flex flex-column o_kanban_attachment o_documents_attachment h-100 pb-2"
+                                            t-attf-class="#{record.is_multipage.raw_value ? 'o_kanban_stack' : ''}" t-att-data-id="record.id.raw_value">
+                                            <t t-set="fileRequest" t-value="record.type.raw_value === 'binary' and !record.attachment_id.raw_value and !record.shortcut_document_id.raw_value"/>
+                                            <div t-if="record.type.raw_value != 'folder'" t-attf-class="#{fileRequest ? 'o_request_image' : ''}">
+                                                <t t-set="hasStoredThumbnail" t-value="record.thumbnail_status.raw_value === 'present'"/>
+                                                <!-- should be made more generic if we support different websites for videos -->
+                                                <t t-set="youtubeUrlMatch" t-value="record.url.raw_value ? record.url.raw_value.match('youtu(?:\.be|be\.com)/(?:.*v(?:/|=)|(?:.*/)?)([a-zA-Z0-9-_]{11})') : false"/>
+                                                <t t-set="youtubeVideoToken" t-value="youtubeUrlMatch ? youtubeUrlMatch.length > 1 ? youtubeUrlMatch[1] : false : false"/>
+                                                <div name="document_preview" class="o_kanban_image_wrapper d-flex justify-content-center position-relative" t-att-title="fileRequest ? 'Upload file' : ''">
+                                                    <field name="is_favorited" nolabel="1" widget="boolean_favorite" class="position-absolute top-0 end-0 p-1 pt-2"/>
+                                                    <img t-if="youtubeVideoToken" class="w-100 h-100" alt="Document"
+                                                        t-attf-src="https://img.youtube.com/vi/{{youtubeVideoToken}}/0.jpg"/>
+                                                    <a t-elif="record.type.raw_value =='url'" target="_blank" t-att-href="record.url.raw_value" class="o_kanban_image_wrapper">
+                                                        <img t-if="record.url_preview_image.raw_value" class="w-100 h-100"
+                                                            t-att-src="record.url_preview_image.raw_value" t-att-alt="record.name.raw_value"/>
+                                                        <t t-else="">
+                                                            <span class="fa fa-link fa-3x text-muted"/>
+                                                        </t>
+                                                    </a>
+                                                    <t t-elif="hasStoredThumbnail">
+                                                        <t t-set="unique" t-value="record.checksum.value ? record.checksum.value.slice(-8) : ''"/>
+                                                        <img t-attf-src="/documents/thumbnail/#{record.access_token.raw_value}?unique=#{unique}" class="w-100 h-100" alt="Document preview"/>
+                                                    </t>
+                                                    <div t-elif="fileRequest" class="fa fa-upload fa-3x text-muted">
+                                                        <input type="file" class="o_input_file o_hidden o_kanban_replace_document"/>
+                                                    </div>
+                                                    <div t-else="!hasStoredThumbnail" class="o_image o_image_thumbnail" t-att-data-mimetype="record.mimetype.value"/>
+                                                </div>
+                                            </div>
+                                            <div class="flex-shrink-1 flex-auto">
+                                                <t t-set="discoverable" t-value="record.access_via_link.raw_value === 'none'
+                                                    or record.access_internal.raw_value !== 'none' or !record.is_access_via_link_hidden.raw_value"/>
+                                                <div t-if="record.type.raw_value == 'folder'" class="d-flex align-items-center text-truncate p-2 pb-0">
+                                                    <t t-if="record.shortcut_document_id.raw_value">
+                                                        <i class="fa fa-external-link me-2" title="This is a shortcut"/>
+                                                    </t>
+                                                    <i t-else="" class="fa fa-folder-o me-2" title="This is a folder"/>
+                                                    <i t-if="!discoverable" class="fa fa-eye-slash me-1" title="Must have the link to access"/>
+                                                    <field name="name" class="text-truncate me-1" required="True" string="Document"/>
+                                                    <field name="is_favorited" nolabel="1" widget="boolean_favorite" class="ms-auto"/>
+                                                </div>
+                                                <div t-else="" class="p-2 pb-0">
+                                                    <div t-att-title="record.name.raw_value" class="fw-bolder w-100 d-flex align-items-center">
+                                                        <a t-if="record.type.raw_value == 'url'" t-att-href="record.url.raw_value" class="me-1" t-att-title="record.url.raw_value">
+                                                            <i class="fa fa-link"/>
+                                                        </a>
+                                                        <div class="d-flex flex-grow-1 align-items-center gap-2 overflow-hidden">
+                                                            <field name="name" class="text-truncate" required="True" string="Document"/>
+                                                            <t t-if="record.shortcut_document_id.raw_value">
+                                                                <i class="fa fa-external-link text-gray-500" title="This is a shortcut"/>
+                                                            </t>
+                                                            <t t-if="record.lock_uid.raw_value">
+                                                                <i class="fa fa-lock" t-att-title="record.lock_uid.value"/>
+                                                            </t>
+                                                        </div>
+                                                        <div class="d-flex d-flex-row align-items-center ms-2 gap-2">
+                                                            <i t-if="!discoverable" class="fa fa-eye-slash" title="Must have the link to access"/>
+                                                            <field name="activity_ids" widget="kanban_activity"/>
+                                                            <field name="owner_id" widget="many2one_avatar_user"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="o_kanban_record_body text-truncate">
+                                                        <t t-if="record.res_model_name.raw_value &amp;&amp; record.res_model.raw_value !== 'documents.document'">
+                                                            <t t-if="record.res_name.raw_value">
+                                                                <field name="res_name" class="text-muted"/>
+                                                            </t>
+                                                            <t t-elif="fileRequest">
+                                                                <span><b> Request</b></span>
+                                                            </t>
+                                                        </t>
+                                                        <t t-elif="fileRequest">
+                                                            <span><b>Requested Document</b></span>
+                                                        </t>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex align-items-center text-truncate p-2 pb-0">
+                                                    <span><b> Type: </b></span><field name="doc_type"/>
+                                                </div>
+                                                <div class="d-flex align-items-center text-truncate p-2 pb-0">
+                                                    <span><b> Issuance Date: </b></span><field name="issuance_date"/>
+                                                </div>
+                                                <div class="d-flex align-items-center text-truncate p-2 pb-0">
+                                                    <span><b> Expire Date: </b></span><field name="expire_date"/>
+                                                </div>
+                                            </div>
+                                            <footer t-if="record.type.raw_value != 'folder' and record.tag_ids.raw_value.length" class="d-flex px-2">
+                                                <field name="tag_ids" class="d-block text-wrap" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                            </footer>
+                                        </div>
+                                        <t t-if="record.is_multipage.raw_value">
+                                            <div class="o_kanban_stack"/>
+                                            <div class="o_kanban_stack"/>
+                                        </t>
+                                    </t>
+                                </templates>
+                            </kanban>
+                            <form create="false">
+                                <header>
+                                    <button type="object" name="access_content" string="Access" class="oe_highlight" invisible="not url"/>
+                                    <button type="object" name="access_content" string="Download" class="oe_highlight" invisible="type != 'binary'"/>
+                                    <button type="object" name="toggle_lock" string="Lock" invisible="lock_uid"/>
+                                    <button type="object" name="toggle_lock" string="Unlock" invisible="not lock_uid"/>
+                                    <button type="object" name="action_unarchive" string="Restore" invisible="active"/>
+                                </header>
+                                <sheet>
+                                    <div class="oe_button_box" name="button_box">
+                                        <button name="open_resource" type="object" class="oe_stat_button" icon="fa-external-link" invisible="not res_id or res_model in [False, 'documents.document']">
+                                            <div class="o_field_widget o_stat_info">
+                                                <span class="o_stat_text">Related <br/> Record</span>
+                                            </div>
+                                        </button>
+                                    </div>
+                                    <widget name="web_ribbon" title="Moved to trash" bg_color="text-bg-danger" invisible="active"/>
+                                    <field name="thumbnail" nolabel="1" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;:&quot;thumbnail&quot;}" invisible="not thumbnail"/>
+                                    <div class="oe_title" aria-label="Name">
+                                        <h1>
+                                            <field name="name" class="oe_inline" placeholder="Document Name" required="True" readonly="is_locked"/> <i class="fa fa-lock oe_inline" title="Locked" invisible="not lock_uid"/>
+                                        </h1>
+                                    </div>
+                                    <field name="is_locked" invisible="1"/>
+                                    <field name="active" invisible="1"/>
+                                    <field name="res_id" invisible="1"/>
+                                    <field name="res_model" invisible="1"/>
+                                    <group>
+                                        <group>
+                                            <field name="datas" string="File" filename="name" invisible="type in ['url', 'folder']" readonly="is_locked"/>
+                                            <field name="url" invisible="type != 'url'" readonly="is_locked"/>
+                                            <field name="folder_id" widget="documents_folder_many2one"
+                                                domain="[('type', '=', 'folder'), ('shortcut_document_id', '=', False)]"
+                                                options="{'no_create_edit': True, 'no_create': True}"/>
+                                            <field name="owner_id" widget="many2one_avatar_user" readonly="is_locked"/>
+                                            <field name="partner_id" widget="many2one_avatar_user"/>
+                                            <field name="tag_ids" widget="many2many_tags"
+                                                options="{'color_field': 'color'}"/>
+                                        </group>
+                                        <group>
+                                            <field name="type" readonly="1"/>
+                                            <field name="doc_type"/>
+                                            <field name="issuance_date" required="doc_type.issuance_date_is_mandatory == True"/>
+                                            <field name="expire_date" required="doc_type.expire_date_is_mandatory == True"/>
+                                            <field name="is_expired" readonly="1"/>
+                                            <field name="is_archived" readonly="1"/>
+                                            <field name="create_date"/>
+                                            <field name="create_uid" widget="many2one_avatar_user"/>
+                                            <field name="lock_uid" readonly="1" invisible="not lock_uid"/>
+                                        </group>
+                                    </group>
+                                    <group groups="base.group_no_one">
+                                        <field name="company_id" groups="base.group_multi_company"/>
+                                        <field name="file_size" invisible="type != 'binary'"/>
+                                        <field name="mimetype" invisible="type != 'binary'"/>
+                                    </group>
+                                    <group>
+                                        <field name="create_activity_option"/>
+                                    </group>
+                                    <group string="Activity" name="activity" autofocus="autofocus" invisible="not create_activity_option">
+                                        <group>
+                                            <field name="create_activity_type_id" options="{'no_create': True, 'no_open': True}" required="create_activity_option"/>
+                                            <field name="create_activity_summary" placeholder="e.g. Discuss proposal"/>
+                                        </group>
+                                        <group>
+                                            <label for="create_activity_date_deadline_range"/>
+                                            <div class="o_row">
+                                                <field name="create_activity_date_deadline_range"/>
+                                                <field name="create_activity_date_deadline_range_type"/>
+                                            </div>
+                                            <field name="create_activity_user_id"/>
+                                        </group>
+                                        <group>
+                                            <field name="create_activity_note" placeholder="Log a note..."/>
+                                        </group>
+                                    </group>
+                                </sheet>
+                                <chatter/>
+                                <footer class="justify-content-between">
+                                    <div class="btn-group">
+                                        <button class="btn btn-primary me-2 rounded w-auto" special="save" data-hotkey="q">Save</button>
+                                        <button class="btn btn-secondary rounded w-auto" special="cancel" data-hotkey="x">Discard</button>
+                                    </div>
+                                </footer>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- server action action_reassign_all_requests_to_family_responsible -->
+        <record model="ir.actions.server" id="action_reassign_all_requests_to_family_responsible">
+            <field name="name">Reassign All Requests to Family Responsible</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="groups_id" eval="[Command.link(ref('appness_swms.group_reassign_all_requests_to_family_responsible'))]"/>
+            <field name="binding_model_id" ref="base.model_res_partner" />
+            <field name="binding_view_types">form,list</field>
+            <field name="state">code</field>
+            <field name="code">
+if records:
+    action = records.action_reassign_all_requests_to_family_responsible()
+            </field>
+        </record>
+
+    </data>
+</odoo>

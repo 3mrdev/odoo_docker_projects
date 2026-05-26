@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Purchase Order Form View - Add dimensions to line -->
+    <record id="purchase_order_form_view_volume" model="ir.ui.view">
+        <field name="name">purchase.order.form.volume</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_unit']"
+                position="after">
+                <field name="is_volume_tracked" column_invisible="1" />
+                <field name="volume_length"
+                    invisible="not is_volume_tracked"
+                    optional="show"
+                    groups="stock_volume_tracking.group_volume_only"
+                    readonly="state in ('purchase', 'to approve', 'cancel') or is_downpayment"
+                    string="L (cm)" />
+                <field name="volume_width"
+                    invisible="not is_volume_tracked"
+                    optional="show"
+                    groups="stock_volume_tracking.group_volume_only"
+                    readonly="state in ('purchase', 'to_approve', 'cancel') or is_downpayment"
+                    string="W (cm)" />
+                <field name="volume_height"
+                    invisible="not is_volume_tracked"
+                    optional="show"
+                    groups="stock_volume_tracking.group_volume_only"
+                    readonly="state in ('purchase', 'to_approve', 'cancel') or is_downpayment"
+                    string="H (cm)" />
+                <field name="volume_display" 
+                    invisible="not is_volume_tracked" 
+                    readonly="1"
+                    groups="stock_volume_tracking.group_volume_only" 
+                    optional="show"/>
+                <field name="volume"
+                    invisible="not is_volume_tracked"
+                    optional="hide"
+                    groups="stock_volume_tracking.group_volume_only"
+                    readonly="1"
+                    string="Volume" />
+                <field name="volume_total"
+                    invisible="not is_volume_tracked"
+                    optional="hide"
+                    groups="stock_volume_tracking.group_volume_only"
+                    readonly="1"
+                    string="Total Volume" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Purchase Order Line Form View (popup) -->
+    <record id="purchase_order_line_form_view_volume" model="ir.ui.view">
+        <field name="name">purchase.order.line.form.volume</field>
+        <field name="model">purchase.order.line</field>
+        <field name="inherit_id" ref="purchase.purchase_order_line_form2" />
+        <field name="arch" type="xml">
+            <field name="price_unit" position="after">
+                <field name="is_volume_tracked" invisible="1" />
+                <label for="volume_length" string="Dim (L × W × H)"
+                    invisible="not is_volume_tracked"
+                    groups="stock_volume_tracking.group_volume_only" />
+                <div class="o_row" invisible="not is_volume_tracked"
+                    groups="stock_volume_tracking.group_volume_only">
+                    <field name="volume_length" placeholder="Length" class="oe_inline" readonly="1" />
+                    <span>×</span>
+                    <field name="volume_width" placeholder="Width" class="oe_inline" readonly="1" />
+                    <span>×</span>
+                    <field name="volume_height" placeholder="Height" class="oe_inline" readonly="1" />
+                </div>
+                <field name="volume_display" invisible="not is_volume_tracked" readonly="1"
+                    groups="stock_volume_tracking.group_volume_only" />
+                <field name="volume" invisible="not is_volume_tracked" readonly="1"
+                    groups="stock_volume_tracking.group_volume_only" />
+                <field name="volume_total" invisible="not is_volume_tracked" readonly="1"
+                    groups="stock_volume_tracking.group_volume_only" />
+            </field>
+        </field>
+    </record>
+
+</odoo>

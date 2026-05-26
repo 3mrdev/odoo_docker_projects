@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Base module provides:
+        1. Common journal entry counter field (journal_entries_count)
+        2. Common journal entries relation field (journal_ids)
+        3. Common smart button to view journal entries
+
+        Each child module adds its own "Create Journal Entries" button
+        with type-specific visibility to avoid interference.
+    -->
+    <record id="approval_request_view_form_inherit_base" model="ir.ui.view">
+        <field name="name">approval.request.view.form.inherit.base</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals.approval_request_view_form" />
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_get_attachment_view']" position="after">
+                <button name="action_open_payments" type="object"
+                    class="oe_stat_button" icon="fa-money"
+                    groups="account.group_account_user"
+                    invisible="payments_count == 0">
+                    <field name="payments_count" string="Payments"
+                        widget="statinfo" />
+                </button>
+                <button name="action_open_journal_entries" type="object"
+                    class="oe_stat_button" icon="fa-credit-card"
+                    groups="account.group_account_user"
+                    invisible="journal_entries_count == 0">
+                    <field name="journal_entries_count" string="Journal Entries"
+                        widget="statinfo" />
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,19 @@
+<odoo>
+    <data>
+        <template id="slide_channel_view_form_inherit_jiz_elearning" inherit_id="website_ora_elearning.slide_content_detailed_inherit_ora">
+             <div id="lessonAssessment" position="inside">
+                <br/><br/><br/>
+                <h4 t-if="slide.deadline">Deadline: <span t-field="slide.deadline" t-options="{'widget': 'date','format': 'd MMM Y'}"/></h4>
+             </div>
+        </template>
+
+        <template id="certification_report_view_general_inherit_jiz_elearning" inherit_id="survey.certification_report_view_general">
+            <!-- <span class="certification-name" position="after">
+                Score: <t t-esc="user_input.certificate_score"/>
+            </span> -->
+            <xpath expr="//span[hasclass('certification-name')]" position="after"><br/>
+                Score: <t t-esc="user_input.certificate_score"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,40 @@
+<odoo>
+    <data>
+        
+        <record id="swms_request_website_menu" model="website.menu">
+            <field name="name">Submit a request for assistance</field>
+            <field name="url">/swms/services</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">90</field>
+        </record>
+
+        <record id="swms_conf_stepper_action" model="ir.actions.act_window">
+            <field name="name">Form Steppers</field>
+            <field name="res_model">swms.stepper</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="swms_conf_stepper_step_action" model="ir.actions.act_window">
+            <field name="name">Steps</field>
+            <field name="res_model">swms.stepper.step</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem
+            id="swms_conf_menu_stepper"
+            name="Portal Forms"
+            sequence="-1"
+            action="swms_conf_stepper_action"
+            parent="appness_swms.swms_conf_menu"
+            groups="helpdesk.group_helpdesk_manager"/>
+
+        <!-- <menuitem
+            id="swms_conf_menu_steps"
+            name="Portal Form Steps"
+            sequence="-1"
+            action="swms_conf_stepper_step_action"
+            parent="appness_swms.swms_conf_menu"
+            groups="helpdesk.group_helpdesk_manager"/> -->
+
+    </data>
+</odoo>

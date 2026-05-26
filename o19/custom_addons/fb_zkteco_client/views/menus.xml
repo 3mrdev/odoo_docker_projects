@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+
+        <record id="zkteco_device_action" model="ir.actions.act_window">
+            <field name="name">Devices</field>
+            <field name="res_model">fb.zkteco.device</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="zkteco_attendance_action" model="ir.actions.act_window">
+            <field name="name">Attendance</field>
+            <field name="res_model">fb.zkteco.attendance</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem id="root_menu" name="BioTime">
+            <menuitem id="device_menu" name="Devices" action="zkteco_device_action"/>
+            <menuitem id="attendance_menu" name="Attendance" action="zkteco_attendance_action"/>
+        </menuitem>
+
+    </data>
+</odoo>

@@ -1,0 +1,213 @@
+<odoo>
+    
+    <template id="portal_odoo_sidebar_remove" name="Remove Odoo form Portal sidebar " inherit_id="portal.portal_record_sidebar">
+        <xpath expr="//div[hasclass('o_portal_sidebar_content')]" position="replace">
+            <div class="o_portal_sidebar_content flex-grow-1 mb-4 mb-lg-0 pe-lg-4" id="sidebar_content">
+                <div t-if="title" class="position-relative d-flex align-items-center justify-content-md-center justify-content-lg-between flex-wrap gap-2">
+                    <t t-out="title"/>
+                </div>
+                <t t-if="entries" t-out="entries"/>
+                <!-- <div class="d-none d-lg-block mt-5 small text-center text-muted">
+                    Powered by <a target="_blank" href="http://www.odoo.com?utm_source=db&amp;utm_medium=portal" title="odoo"><img src="/web/static/img/logo.png" alt="Odoo Logo" height="15"/></a>
+                </div> -->
+            </div>
+        </xpath>
+    </template>
+
+    <template id="appness_logspace_portal.side_content_redirect" name="Edit profile redirect" inherit_id="portal.side_content">        
+        <xpath expr="//a" position="replace">
+            <t t-set="is_logspace_customer" t-value="request.env.user.partner_id.is_logspace_customer"/>
+            <a t-if="not is_logspace_customer" role="button" href="/my/account" class="btn btn-link p-0 mt-3"><i class="fa fa-pencil"/> Edit information</a>
+            <a t-if="is_logspace_customer" role="button" href="/my/logspace_account/1" class="btn btn-link p-0 mt-3"><i class="fa fa-pencil"/> Edit information</a>
+        </xpath>
+    </template>
+
+    <template id="portal_my_home_menu_logspace_request" name="Portal layout : Logspace requests menu entries" inherit_id="portal.portal_breadcrumbs" priority="50">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'logspace_request_page'" t-attf-class="breadcrumb-item #{'active ' if not logspace_request else ''}">
+                <a t-if="logspace_request" t-attf-href="/my/requests?{{ keep_query() }}">Requests</a>
+                <t t-else="">Requests</t>
+            </li>
+            <li t-if="logspace_request" class="breadcrumb-item active text-truncate"> 
+                <span t-field="logspace_request.name"/> (#<span t-field="logspace_request.request_seq"/>)
+            </li>
+            <!-- (#<span t-field="logspace_request.ticket_ref"/>) -  -->
+            <li t-if="page_name == 'logspace_services'" t-attf-class="breadcrumb-item #active">
+                Services
+            </li>
+            <li t-if="page_name == 'logspace_service'" t-attf-class="breadcrumb-item #active">
+                <a t-attf-href="/logspace/services?{{ keep_query() }}">Services</a>
+                / Service <span t-esc="service_id"/> Details
+            </li>
+        </xpath>
+    </template>
+
+    <template id="portal.portal_my_home" name="My Portal">
+        <t t-call="portal.portal_layout">
+            <t t-set="my_details" t-value="True"/>
+            <div class="o_portal_my_home">
+                <div class="oe_structure" id="oe_structure_portal_my_home_1"/>
+                <div class="o_portal_docs row g-2">
+                    <div t-if="portal_alert_category_enable" class="o_portal_category row g-2 mt-3" id="portal_alert_category"/>
+                    <div t-if="portal_client_category_enable" class="o_portal_category row g-2 mt-3" id="portal_client_category"/>
+                    <div t-if="portal_service_category_enable" class="o_portal_category row g-2 mt-3" id="portal_service_category"/>
+                    <div t-if="portal_vendor_category_enable" class="o_portal_category row g-2 mt-3" id="portal_vendor_category"/>
+                    <div class="o_portal_category row g-2 mt-3" id="portal_common_category">
+                        <t t-call="portal.portal_docs_entry" t-if="False"/>
+                        <t t-set="is_logspace_customer" t-value="request.env.user.partner_id.is_logspace_customer"/>
+                        <t t-if="not is_logspace_customer" t-call="portal.portal_docs_entry">
+                            <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+                            <t t-set="title">Connection &amp; Security</t>
+                            <t t-set="text">Configure your connection parameters</t>
+                            <t t-set="url" t-value="'/my/security'"/>
+                            <t t-set="config_card" t-value="True"/>
+                        </t>
+                    </div>
+                    <div class="o_portal_doc_spinner spinner-border text-o-color-2 align-self-center mt-5"/>
+                </div>
+            </div>
+            <div class="oe_structure" id="oe_structure_portal_my_home_2"/>
+        </t>
+    </template>
+
+    <!-- <template id="helpdesk.portal_my_home_helpdesk_ticket" name="Helpdesk Tickets" customize_show="True" inherit_id="portal.portal_my_home" priority="50">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_service_category_enable" t-value="True"/>
+        </xpath>
+        <div id="portal_service_category" position="inside">
+            <t t-set="is_logspace_customer" t-value="request.env.user.partner_id.is_logspace_customer"/>
+            <t t-if="not is_logspace_customer" t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/helpdesk/static/src/img/tickets.svg'"/>
+                <t t-set="title">Tickets</t>
+                <t t-set="text">Follow all your helpdesk tickets</t>
+                <t t-set="url" t-value="'/my/tickets'"/>
+                <t t-set="placeholder_count" t-value="'ticket_count'"/>
+            </t>
+        </div>
+    </template> -->
+
+    <template id="sale.portal_my_home_sale" name="Quotations / Sales Orders" customize_show="True" inherit_id="portal.portal_my_home" priority="20">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_client_category_enable" t-value="True"/>
+            <t t-set="portal_alert_category_enable" t-value="True"/>
+        </xpath>
+        <div id="portal_alert_category" position="inside">
+            <t t-set="is_logspace_customer" t-value="request.env.user.partner_id.is_logspace_customer"/>
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="bg_color" t-value="'alert alert-primary align-items-center'"/>
+                <t t-set="placeholder_count" t-value="'quotation_count'"/>
+                <t t-set="title">Quotations to review</t>
+                <t t-set="url" t-value="'/my/quotes'"/>
+                <t t-set="show_count" t-value="True"/>
+            </t>
+        </div>
+        <div id="portal_client_category" position="inside">
+            <t t-set="is_logspace_customer" t-value="request.env.user.partner_id.is_logspace_customer"/>
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/sale/static/src/img/bag.svg'"/>
+                <t t-set="title">Your Orders</t>
+                <t t-set="url" t-value="'/my/orders'"/>
+                <t t-set="text">Follow, view or pay your orders</t>
+                <t t-set="placeholder_count" t-value="'order_count'"/>
+            </t>
+        </div>
+    </template>
+
+    <template id="account.portal_my_home_invoice" name="Invoices / Bills" inherit_id="portal.portal_my_home" customize_show="True" priority="30">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_client_category_enable" t-value="True"/>
+            <t t-set="portal_vendor_category_enable" t-value="True"/>
+        </xpath>
+        <div id="portal_client_category" position="inside">
+            <t t-set="is_logspace_customer" t-value="request.env.user.partner_id.is_logspace_customer"/>
+            <t t-if="not is_logspace_customer" t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/account/static/src/img/Bill.svg'"/>
+                <t t-set="title">Your Invoices</t>
+                <t t-set="url" t-value="'/my/invoices?filterby=invoices'"/>
+                <t t-set="text">Follow, download or pay your invoices</t>
+                <t t-set="placeholder_count" t-value="'invoice_count'"/>
+            </t>
+        </div>
+        <div id="portal_vendor_category" position="inside">
+            <t t-set="is_logspace_customer" t-value="request.env.user.partner_id.is_logspace_customer"/>
+            <t t-if="not is_logspace_customer" t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/account/static/src/img/Bill.svg'"/>
+                <t t-set="title">Our Invoices</t>
+                <t t-set="url" t-value="'/my/invoices?filterby=bills'"/>
+                <t t-set="text">Follow, download or pay our invoices</t>
+                <t t-set="placeholder_count" t-value="'bill_count'"/>
+            </t>
+        </div>
+    </template>
+
+    <template id="portal_dashboard" name="Logspace Requests" customize_show="True" inherit_id="portal.portal_my_home" priority="50">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_service_category_enable" t-value="True"/>
+            <t t-set="portal_alert_category_enable" t-value="True"/>
+        </xpath>
+        <!-- TODO: Show required document updates and notifications to the user in portal -->
+        <div id="portal_alert_category" position="inside">
+            <t t-set="is_logspace_customer" t-value="request.env.user.partner_id.is_logspace_customer"/>
+            <t t-if="is_logspace_customer" t-call="portal.portal_docs_entry">
+                <t t-set="bg_color" t-value="'alert alert-danger align-items-center'"/>
+                <t t-set="placeholder_count" t-value="'expired_documents_count'"/>
+                <t t-set="title">Documents to update in your family profile</t>
+                <t t-set="text">You have expired documents that need to be renewed .. please click here!</t>
+                <t t-set="url" t-value="'/my/logspace_account/1'"/>
+                <t t-set="show_count" t-value="True"/>
+            </t>
+            <t t-if="is_logspace_customer" t-call="portal.portal_docs_entry">
+                <t t-set="bg_color" t-value="'alert alert-danger align-items-center'"/>
+                <t t-set="placeholder_count" t-value="'missing_documents_count'"/>
+                <t t-set="title">Missing Documents in your family profile</t>
+                <t t-set="text">You have missing documents that you need to upload .. please click here!</t>
+                <t t-set="url" t-value="'/my/logspace_account/1'"/>
+                <t t-set="show_count" t-value="True"/>
+            </t>
+            <t t-if="is_logspace_customer" t-call="portal.portal_docs_entry">
+                <t t-set="bg_color" t-value="'alert alert-danger align-items-center'"/>
+                <t t-set="placeholder_count" t-value="'services_expired_documents_count'"/>
+                <t t-set="title">Documents to update in your assistance requests</t>
+                <t t-set="text">You have expired documents that need to be renewed .. please click here!</t>
+                <t t-set="url" t-value="'/my/requests'"/>
+                <t t-set="show_count" t-value="True"/>
+            </t>
+            <t t-if="is_logspace_customer" t-call="portal.portal_docs_entry">
+                <t t-set="bg_color" t-value="'alert alert-danger align-items-center'"/>
+                <t t-set="placeholder_count" t-value="'services_missing_documents_count'"/>
+                <t t-set="title">Missing Documents in your assistance requests</t>
+                <t t-set="text">You have missing documents that you need to upload .. please click here!</t>
+                <t t-set="url" t-value="'/my/requests'"/>
+                <t t-set="show_count" t-value="True"/>
+            </t>
+            <!-- <t t-if="is_logspace_customer" t-call="portal.portal_docs_entry">
+                <t t-set="bg_color" t-value="'alert alert-primary align-items-center'"/>
+                <t t-set="placeholder_count" t-value="'missing_information_count'"/>
+                <t t-set="title">Missing Information</t>
+                <t t-set="text">You have missing information that need enter !</t>
+                <t t-set="url" t-value="'/my/logspace_account/1'"/>
+                <t t-set="show_count" t-value="True"/>
+            </t> -->
+        </div>
+
+        <div id="portal_service_category" position="inside">
+            <t t-set="is_logspace_customer" t-value="request.env.user.partner_id.is_logspace_customer"/>
+            <div t-if="is_logspace_customer" class="o_portal_index_card col-md-6 order-2">
+                <a href="/my/requests" class="d-flex gap-2 gap-md-3 py-3 pe-2 px-md-3 h-100 rounded text-decoration-none bg-100">
+                    <div class="o_portal_icon">
+                        <!-- <img t-attf-src="#{'/appness_logspace_portal/static/img/helphand.png'}"/> -->
+                         <img src="data:image/png;base64,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"/>
+                    </div>
+                    <div>
+                        <div class="mt-0 mb-1 fs-5 fw-normal lh-1">
+                            <span>Requests</span>
+                        </div>
+                        <div class="opacity-75">
+                            Follow all your service requests
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </template>
+</odoo>

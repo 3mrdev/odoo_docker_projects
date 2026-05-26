@@ -1,0 +1,28 @@
+<odoo>
+    <record id="view_product_template_form_inherit" model="ir.ui.view">
+        <field name="name">product.template.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="GS1 Certificates" groups="appness_gs1.group_certificates_user">
+                    <group>
+                        <group>
+                            <field name="is_gln_cert" widget="boolean_toggle"
+                                string="Is GLN Certificate?" />
+                            <field name="max_gln_certs" string="Max GLN Certificates" />
+                        </group>
+                    </group>
+                </page>
+                <page name="ROP Letter" groups="appness_gs1.group_rop_letter_user">
+                    <group>
+                        <group>
+                            <field name="is_rop_letter" widget="boolean_toggle"
+                                string="Is ROP Letter?" />
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Provider Actions -->
+    <record id="action_logspace_provider" model="ir.actions.act_window">
+        <field name="name">Providers</field>
+        <field name="res_model">logspace.provider</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{'search_default_pending': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first logistics provider!
+            </p>
+        </field>
+    </record>
+
+    <!-- Provider Kanban View -->
+    <record id="view_logspace_provider_kanban" model="ir.ui.view">
+        <field name="name">logspace.provider.kanban</field>
+        <field name="model">logspace.provider</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="state"/>
+                <field name="vehicle_count"/>
+                <field name="rating"/>
+                <field name="review_count"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_content">
+                                <div class="o_kanban_header">
+                                    <span class="o_kanban_title">
+                                        <strong><t t-esc="record.name.value"/></strong>
+                                    </span>
+                                    <span class="float-end">
+                                        <span class="badge rounded-pill"
+                                              t-attf-class="{{ record.state.raw_value == 'draft' ? 'bg-secondary' : (record.state.raw_value == 'pending' ? 'bg-warning' : (record.state.raw_value == 'approved' ? 'bg-success' : (record.state.raw_value == 'suspended' ? 'bg-dark' : 'bg-danger'))) }}">
+                                            <t t-esc="record.state.value"/>
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="text-muted">
+                                    <t t-if="record.phone" t-esc="record.phone"/>
+                                </div>
+                                <div class="mt-2">
+                                    <span><i class="fa fa-truck text-primary"/> <t t-esc="record.vehicle_count.value"/> vehicles</span>
+                                </div>
+                                <div class="mt-1" t-if="record.rating.raw_value > 0">
+                                    <span class="text-warning">
+                                        <i class="fa fa-star"/>
+                                        <t t-esc="record.rating.value"/>
+                                        (<t t-esc="record.review_count.value"/> reviews)
+                                    </span>
+                                </div>
+                                <div class="mt-2" t-if="record.state.raw_value == 'pending'">
+                                    <button class="btn btn-success btn-sm" name="action_approve" type="object">Approve</button>
+                                    <button class="btn btn-danger btn-sm" name="action_reject" type="object">Reject</button>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Provider List View -->
+    <record id="view_logspace_provider_tree" model="ir.ui.view">
+        <field name="name">logspace.provider.tree</field>
+        <field name="model">logspace.provider</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="state" widget="badge" decoration-success="state=='approved'" decoration-warning="state=='pending'" decoration-danger="state in ['rejected','suspended']" decoration-muted="state=='draft'"/>
+                <field name="phone"/>
+                <field name="vehicle_count"/>
+                <field name="rating" optional="show"/>
+                <field name="city"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Provider Form View -->
+    <record id="view_logspace_provider_form" model="ir.ui.view">
+        <field name="name">logspace.provider.form</field>
+        <field name="model">logspace.provider</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button string="Submit" name="action_submit" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button string="Approve" name="action_approve" type="object" class="oe_highlight" invisible="state != 'pending'"/>
+                    <button string="Reject" name="action_reject" type="object" invisible="state != 'pending'"/>
+                    <button string="Resubmit" name="action_resubmit" type="object" invisible="state != 'rejected'"/>
+                    <button string="Suspend" name="action_suspend" type="object" invisible="state != 'approved'"/>
+                    <button string="Reactivate" name="action_reactivate" type="object" invisible="state != 'suspended'"/>
+                    <button name="action_download_vehicles_excel" string="Download Vehicles Import Excel Template" type="object" class="btn btn-primary"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,pending,approved,rejected,suspended"/>
+                </header>
+                <sheet>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Provider Name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="cr_number"/>
+                            <field name="years_experience"/>
+                            <field name="tax_id"/>
+                            <field name="is_verified"/>
+                            <field name="platform_fee_percentage" widget="percentage"/>
+                        </group>
+                        <group>
+                            <field name="phone"/>
+                            <field name="email"/>
+                            <field name="city"/>
+                            <field name="country_id"/>
+                            <field name="website" widget="url"/>
+                            
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Fleet">
+                            <field name="vehicle_ids">
+                                <list editable="bottom">
+                                    <field name="name" readonly="1"/>
+                                    <field name="plate_number"/>
+                                    <field name="vehicle_type_id"/>
+                                    <field name="zone_id"/>
+                                    <field name="is_active"/>
+                                </list>
+                            </field>
+                        </page>
+                        <!-- Note: Vehicle Type Add-ons now managed via res.partner -->
+
+                        <page string="Documents">
+                            <group>
+                                <group>
+                                    <field name="approval_date"/>
+                                    <field name="rejection_reason" invisible="state != 'rejected'"/>
+                                    <field name="suspension_reason" invisible="state != 'suspended'"/>
+                                </group>
+                            </group>
+                            <separator string="Attachments"/>
+                            <p class="text-muted">Upload documents using the chatter/attachment feature below.</p>
+                        </page>
+                        <page string="Pricing">
+                            <button class="btn btn-link" type="action" name="%(appness_logspace_mockup2.action_logspace_price_matrix)d">
+                                <i class="fa fa-external-link"/> Open Price Matrix
+                            </button>
+                            <field name="price_matrix_ids" readonly="1">
+                                <list>
+                                    <field name="zone_from_id"/>
+                                    <field name="zone_to_id"/>
+                                    <field name="vehicle_type_id"/>
+                                    <field name="vechile_in_zone_count" optional="show"/>
+                                    <field name="distance_km" optional="show"/>
+                                    <field name="provider_price"/>
+                                    <field name="platform_fee"/>
+                                    <field name="customer_price"/>
+                                    <field name="provider_id"/>
+                                </list>
+                            </field>
+                        </page>
+
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,108 @@
+<odoo>
+    <data>
+
+        <record id="logspace_documents_documents_list" model="ir.ui.view">
+            <field name="name">documents.documents.list.inherit</field>
+            <field name="model">documents.document</field>
+            <field name="inherit_id" ref="documents.documents_view_list_main"/>
+            <field name="arch" type="xml">
+                <field name="tag_ids" position="before">
+                    <field name="doc_type" optional="show"/>
+                    <field name="issuance_date" optional="hide"/>
+                    <field name="expire_date" optional="show"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="logspace_documents_documents_form" model="ir.ui.view">
+            <field name="name">documents.documents.form.inherit</field>
+            <field name="model">documents.document</field>
+            <field name="inherit_id" ref="documents.document_view_form_rename"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="inside">
+                    <group>
+                        <field name="doc_type"/>
+                        <field name="issuance_date" required="doc_type.issuance_date_is_mandatory == True"/>
+                        <field name="expire_date" required="doc_type.expire_date_is_mandatory == True"/>
+                    </group>
+                    <group>
+                        <field name="is_expired" readonly="1"/>
+                        <field name="is_archived" readonly="1"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="logspace_document_type_form" model="ir.ui.view">
+            <field name="name">logspace.document.type.form</field>
+            <field name="model">logspace.document.type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="row justify-content-between position-relative w-100 m-0 mb-2">
+                            <div class="oe_title mw-75 ps-0 pe-2">
+                                <h1 class="d-flex flex-row align-items-center">
+                                    <field name="name" placeholder="Type's Name" required="True" style="font-size: min(4vw, 2.6rem);"/>
+                                </h1>
+                                <h2>
+                                    <field name="type" widget="radio" options="{'horizontal': true}"/>
+                                </h2>
+                            </div>
+                        </div>
+                        <notebook>
+                            <page string="Basic Info">
+                                <group>
+                                    <group string="Documents Filters">
+                                        <field name="is_mandatory" widget="boolean_toggle" help="Check this only if this document is required at all times"/>
+                                        <field name="family_type" widget="radio" options="{'horizontal': true}" invisible="type == 'service'"/>
+                                        <field name="services" widget="many2many_tags" domain="[('type','=','service'),('is_logspace','=',True)]"  options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" invisible="type != 'service'"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Description">
+                                <field name="description"/>
+                            </page>
+                            <page string="Document Expirations and Notifications">
+                                <group string="Document Expirations">
+                                    <group string="Issunance Dats">
+                                        <field name="issuance_date_is_visible" widget="boolean_toggle"/>
+                                        <field name="issuance_date_is_mandatory" widget="boolean_toggle"/>
+                                        <field name="max_issuance_date"/>
+                                    </group>
+                                    <group string="Expiration Date">
+                                        <field name="expire_date_is_visible" widget="boolean_toggle"/>
+                                        <field name="expire_date_is_mandatory" widget="boolean_toggle"/>
+                                        <field name="max_expire_date"/>
+                                    </group>
+                                </group>
+                                <group string="Notifications">
+                                    <group>
+                                        <field name="message_partner_ids" string="Who to Notify !?" widget="many2many_tags_email" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                                        <field name="choose_activity_type_id" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <!-- Chatter -->
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="logspace_document_type_list" model="ir.ui.view">
+            <field name="name">logspace.document.type.list</field>
+            <field name="model">logspace.document.type</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="is_mandatory"/>
+                    <field name="services" widget="many2many_tags" optional="hide"/>
+                    <field name="choose_activity_type_id"/>
+                </list>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

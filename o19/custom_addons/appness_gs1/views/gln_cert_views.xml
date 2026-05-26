@@ -1,0 +1,20 @@
+<odoo>
+
+    <record id="gln_cert_view_order_line_list_rop_letter" model="ir.ui.view">
+        <field name="name">gln.cert.order.line.list.rop_letter</field>
+        <field name="model">gln.cert</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="order_id_domain" string="Order Domain" column_invisible="1" />
+                <field name="order_id" string="Order" optional="hide" />
+                <field name="sale_order_line_id" string="Order Line"
+                    domain="[('order_id', '=', order_id_domain),('product_id.is_gln_cert', '=', True)]" />
+                <field name="name" string="GLN" />
+                <field name="latitude" string="Latitude" />
+                <field name="longitude" string="Longitude" />
+                <field name="location_name" string="Location Name" />
+            </list>
+        </field>
+    </record>
+
+</odoo>

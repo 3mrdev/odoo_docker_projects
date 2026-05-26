@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.pos_enhanced_features</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='pos_inventory_section']" position="before">
+                <block title="Flavor Mix Features" id="pos_flavor_mix_section" groups="pos_enhanced_features.group_flavor_value_limit,pos_enhanced_features.group_flavor_clickable_card,pos_enhanced_features.group_flavor_multi_attribute">
+                    <setting string="Flavor Value Limit"
+                             help="Enable per-value maximum limit in the flavor mix popup"
+                             groups="pos_enhanced_features.group_flavor_value_limit">
+                        <field name="pos_flavor_value_limit_enabled"/>
+                    </setting>
+                    <setting string="Flavor Clickable Card"
+                             help="Make flavor cards clickable to increment quantity"
+                             groups="pos_enhanced_features.group_flavor_clickable_card">
+                        <field name="pos_flavor_clickable_card_enabled"/>
+                    </setting>
+                    <setting string="Flavor Multi Attribute"
+                             help="Show multiple attribute groups in the flavor mix popup"
+                             groups="pos_enhanced_features.group_flavor_multi_attribute">
+                        <field name="pos_flavor_multi_attribute_enabled"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

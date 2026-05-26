@@ -1,0 +1,254 @@
+<odoo>
+    <data>
+
+        <record id="crm_team_dashboard_action_main" model="ir.actions.act_window">
+            <field name="name">Sales Teams</field>
+            <field name="res_model">crm.team</field>
+            <field name="view_mode">kanban,form</field>
+            <field name="domain" eval="[('is_logspace', '=', True)]"/>
+            <field name="context">{'in_sales_app': True}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Define a new sales team
+                </p><p>
+                    Use Sales Teams to organize your sales departments.
+                    Each team will work with a separate pipeline.
+                </p>
+            </field>
+        </record>
+
+        <record id="logspace_services_action" model="ir.actions.act_window">
+            <field name="name">Services</field>
+            <field name="path">logspace-services</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">kanban,list,form,activity</field>
+            <field name="domain">[('is_logspace','=',True),('type','=','service')]</field>
+            <field name="context">{'default_is_logspace': True, 'default_type': 'service','default_sale_ok': True,'default_purchase_ok': False}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new service
+                </p>
+            </field>
+        </record>
+
+        <record id="logspace_customers_action" model="ir.actions.act_window">
+            <field name="name">Customers</field>
+            <field name="path">logspace-customers</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,list,form,activity</field>
+            <field name="domain" eval="[('is_logspace_customer', '=', True)]"/>
+            <field name="context">{
+                'default_is_logspace_customer': True,
+            }</field>
+        </record>
+
+        <record id="logspace_providers_action" model="ir.actions.act_window">
+            <field name="name">Providers</field>
+            <field name="path">logspace-providers</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,list,form,activity</field>
+            <field name="domain" eval="[('is_logspace_provider', '=', True)]"/>
+            <field name="context">{'default_is_logspace_provider': True}</field>
+        </record>
+
+        <record id="logspace_conf_doc_type_action" model="ir.actions.act_window">
+            <field name="name">Document Types</field>
+            <field name="path">logspace-document-types</field>
+            <field name="res_model">logspace.document.type</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="logspace_conf_area_action" model="ir.actions.act_window">
+            <field name="name">Areas</field>
+            <field name="path">logspace-areas</field>
+            <field name="res_model">logspace.area</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <!-- Sales Inherit: Start -->
+        <record id="sale_order_action_logspace" model="ir.actions.act_window">
+            <field name="name">Offers</field>
+            <field name="path">offers</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_id" ref="sale.view_quotation_tree_with_onboarding"/>
+            <field name="view_mode">list,kanban,form,calendar,pivot,graph,activity</field>
+            <field name="search_view_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+            <field name="context">{'default_is_logspace': 1,'search_default_my_quotation': 1}</field>
+            <field name="domain">[('is_logspace','=',True)]</field>
+            <field name="help" type="html">
+                <br/>
+                <h2>
+                Beat competitors with stunning quotations!
+                </h2><p>
+                Boost sales with online payments or signatures, upsells, and a great customer portal.
+                </p>
+                <a
+                    role="button"
+                    class="btn btn-secondary"
+                    href="https://www.odoo.com/documentation/master/_downloads/56a93429515b36105d952e1d2b802f9e/sample_quotation.pdf"
+                    target="_blank"
+                >
+                    Check a sample. It's clean!
+                </a>
+            </field>
+        </record>
+
+        <record id="sale_order_action_view_quotation_tree_logspace" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">list</field>
+            <field name="view_id" ref="sale.view_quotation_tree_with_onboarding"/>
+            <field name="act_window_id" ref="sale_order_action_logspace"/>
+        </record>
+
+        <record id="sale_order_action_view_quotation_kanban_logspace" model="ir.actions.act_window.view">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="sale.view_quotation_kanban_with_onboarding"/>
+            <field name="act_window_id" ref="sale_order_action_logspace"/>
+        </record>
+        <!-- Sales Inherit: End -->
+
+        <!-- web_icon="helpdesk,static/description/icon.png" -->
+        <menuitem
+            id="menu_logspace_root"
+            name="Logspace"
+            sequence="90"
+            web_icon="appness_logspace,static/description/helphand.png"
+            groups="sales_team.group_sale_salesman">
+
+            <menuitem
+                id="helpdesk_menu_team_dashboard"
+                name="Overview"
+                action="crm_team_dashboard_action_main"
+                sequence="5"
+                groups="sales_team.group_sale_salesman"/>
+
+            <menuitem
+                id="sale_order_menu_main"
+                name="Offers"
+                sequence="10">
+
+                <menuitem
+                    id="sale_order_menu_my"
+                    name="My Offers"
+                    action="sale_order_action_logspace"
+                    sequence="10"/>
+
+                <menuitem
+                    id="sale_order_menu_all"
+                    name="All Offers"
+                    action="sale_order_action_logspace"
+                    sequence="20"/>
+
+            </menuitem>
+
+            <!-- <menuitem
+                id="sale_order_report_menu_main"
+                name="Reporting"
+                sequence="20">
+
+            </menuitem> -->
+
+            <menuitem
+                id="logspace_menu_config"
+                name="Configuration"
+                sequence="100"
+                groups="sales_team.group_sale_manager">
+
+                <menuitem
+                    id="logspace_conf_menu_settings"
+                    name="Settings"
+                    sequence="0"
+                    action="appness_logspace.configuration_action"
+                    groups="sales_team.group_sale_manager"/>
+
+                <menuitem
+                    id="crm_team_menu"
+                    name="Logspace Teams"
+                    action="crm_team_dashboard_action_main"
+                    sequence="1"
+                    groups="sales_team.group_sale_manager"/>
+
+            </menuitem>
+
+        </menuitem>
+
+        <menuitem
+            id="logspace_menu"
+            name="Logspace"
+            sequence="6"
+            parent="menu_logspace_root"
+            groups="sales_team.group_sale_salesman"/>
+
+        <menuitem
+            id="logspace_menu_services"
+            name="Services"
+            action="logspace_services_action"
+            sequence="1"
+            parent="logspace_menu"
+            groups="sales_team.group_sale_salesman"/>
+
+        <menuitem
+            id="logspace_menu_customers"
+            name="Customers"
+            action="logspace_customers_action"
+            sequence="2"
+            parent="logspace_menu"
+            groups="sales_team.group_sale_salesman"/>
+
+        <menuitem
+            id="logspace_menu_providers"
+            name="Providers"
+            action="logspace_providers_action"
+            sequence="3"
+            parent="logspace_menu"
+            groups="sales_team.group_sale_salesman"/>
+
+        <menuitem
+            id="logspace_conf_menu"
+            name="Logspace"
+            sequence="50"
+            parent="logspace_menu_config"
+            groups="sales_team.group_sale_manager">
+
+            <menuitem
+                id="logspace_conf_menu_doc_type"
+                name="Document Types"
+                action="logspace_conf_doc_type_action"
+                groups="sales_team.group_sale_manager"/>
+
+            <menuitem
+                id="logspace_conf_menu_country"
+                name="Countries"
+                action="base.action_country"
+                groups="sales_team.group_sale_manager"/>
+
+            <menuitem
+                id="logspace_conf_menu_state"
+                name="States"
+                action="base.action_country_state"
+                groups="sales_team.group_sale_manager"/>
+
+            <menuitem
+                id="logspace_conf_menu_city"
+                name="Cities"
+                action="base_address_extended.action_res_city_tree"
+                groups="sales_team.group_sale_manager"/>
+
+            <menuitem
+                id="logspace_conf_menu_area"
+                name="Areas"
+                action="logspace_conf_area_action"
+                groups="sales_team.group_sale_manager"/>
+
+        </menuitem>
+
+        <menuitem
+            id="contacts_menu_area"
+            name="Areas"
+            action="logspace_conf_area_action"
+            parent="contacts.menu_localisation"
+            groups="sales_team.group_sale_manager"/>
+
+    </data>
+</odoo>

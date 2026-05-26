@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Screen 9: Login -->
+    <template id="mockup_login_page" name="Login">
+        <t t-call="appness_logspace_mockup.mockup_layout">
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-5">
+                        <div class="card shadow border-0">
+                            <div class="card-body p-5">
+                                <h3 class="text-center text-primary mb-4">Welcome Back</h3>
+                                <form action="/mockup/my/profile" method="GET">
+                                    <div class="mb-3">
+                                        <label class="form-label">Phone or Email</label>
+                                        <input type="text" class="form-control" placeholder="+966500000000"/>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label">Password</label>
+                                        <input type="password" class="form-control" placeholder="********"/>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100 mb-3">Sign In</button>
+                                    <div class="text-center">
+                                        <span class="text-muted">Don't have an account? </span>
+                                        <a href="/mockup/signup" class="text-primary text-decoration-none">Sign Up</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Screen 10: Sign Up -->
+    <template id="mockup_signup_page" name="Sign Up">
+        <t t-call="appness_logspace_mockup.mockup_layout">
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-5">
+                        <div class="card shadow border-0">
+                            <div class="card-body p-5">
+                                <h3 class="text-center text-primary mb-4">Create Account</h3>
+                                <form action="/mockup/my/profile" method="GET">
+                                    <div class="mb-3">
+                                        <label class="form-label">Full Name</label>
+                                        <input type="text" class="form-control" placeholder="John Doe"/>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Phone Number</label>
+                                        <input type="text" class="form-control" placeholder="+966500000000"/>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label">Password</label>
+                                        <input type="password" class="form-control" placeholder="********"/>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100 mb-3">Sign Up</button>
+                                    <div class="text-center">
+                                        <span class="text-muted">Already have an account? </span>
+                                        <a href="/mockup/login" class="text-primary text-decoration-none">Sign In</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

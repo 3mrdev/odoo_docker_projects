@@ -1,0 +1,12 @@
+<odoo>
+    <record id="sale_subscription_expire_cron_check_subscription_expiry" model="ir.cron">
+        <field name="name">Subscription Expiry: Notify Subscription Expiry</field>
+        <field name="model_id" ref="model_sale_order" />
+        <field name="state">code</field>
+        <field name="code">model._cron_check_subscription_expiry(days=7)</field>
+        <field name="user_id" ref="base.user_root" />
+        <field name='interval_number'>1</field>
+        <field name='interval_type'>days</field>
+        <field name="priority">1</field>
+    </record>
+</odoo>

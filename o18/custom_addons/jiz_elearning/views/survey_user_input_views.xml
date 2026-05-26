@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="view_survey_user_input_form_inherit_jiz_elearning" model="ir.ui.view">
+            <field name="name">survey.user_input.form.inherit.jiz_elearning</field>
+            <field name="model">survey.user_input</field>
+            <field name="inherit_id" ref="survey.survey_user_input_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='access_token']" position="after">
+                    <field name="certificate_score" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

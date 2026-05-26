@@ -1,0 +1,132 @@
+<odoo>
+    <data>
+        <!-- Add credit level dropdown to partner's Invoicing tab - Credit Limits section -->
+        <record id="view_partner_form_credit_level" model="ir.ui.view">
+            <field name="name">res.partner.form.credit.level</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="account.view_partner_property_form" />
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <!-- Add Credit Level field in the Credit Limits group (only visible when credit
+                limit feature is enabled) -->
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="credit_level_id"
+                        options="{'no_create_edit': True}"
+                        groups="account.group_account_invoice,account.group_account_readonly,sales_team.group_sale_salesman,sales_team.group_sale_manager" />
+                </xpath>
+                <!-- Make credit_limit readonly when a level is selected, but force save the value -->
+                <xpath expr="//group[@name='credit_limits']//field[@name='credit_limit']"
+                    position="attributes">
+                    <attribute name="readonly">credit_level_id</attribute>
+                    <attribute name="force_save">1</attribute>
+                </xpath>
+                <!-- Make use_partner_credit_limit readonly when a level is selected -->
+                <xpath
+                    expr="//group[@name='credit_limits']//field[@name='use_partner_credit_limit']"
+                    position="attributes">
+                    <attribute name="readonly">credit_level_id</attribute>
+                    <attribute name="force_save">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Add credit level to partner list view as optional column -->
+        <record id="view_partner_tree_credit_level" model="ir.ui.view">
+            <field name="name">res.partner.tree.credit.level</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='email']" position="after">
+                    <field name="credit_level_id"
+                        optional="hide"
+                        groups="account.group_account_invoice,account.group_account_readonly,sales_team.group_sale_salesman,sales_team.group_sale_manager" />
+                </xpath>
+            </field>
+        </record>
+
+        <!-- TODO: Fix this error in next update
+        raise ValueError(f"Compute method failed to assign {missing_recs}.{self.name}")
+        ValueError: Compute method failed to assign account.move.line(<NewId
+        0x710879053e80>,).sequence_number -->
+
+        <!-- Evaluation form customizations -->
+        <record id="view_partner_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <button name="action_submit_for_evaluation" string="Start Evaluation"
+                            type="object" class="oe_highlight"
+                            invisible="is_evaluation_stage or user_id != uid"
+                            groups="appness_wd.group_evaluation_user" />
+                        <button name="action_accept" string="Accept Evaluation" type="object"
+                            class="oe_highlight" invisible="not is_evaluation_stage"
+                            groups="appness_wd.group_evaluation_manager" />
+                    </header>
+                </xpath>
+                <xpath expr="//div[@name='button_box']/button[1]" position="before">
+                    <button class="oe_stat_button" type="object" icon="fa-star">
+                        <div class="o_form_field o_stat_info">
+                            <span class="o_stat_value">
+                                <field name="total_evaluation_score" /> / <field
+                                    name="evaluation_score_percentage_total" />
+                            </span>
+                            <span class="o_stat_text"> Evaluation <field
+                                    name="evaluation_score_percentage" widget="float"
+                                    class="oe_inline" />
+                                <span class="oe_grey">%</span>
+                            </span>
+                        </div>
+                    </button>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page string="Evaluation" name="evaluation" invisible="not is_evaluation_stage">
+                        <field name="is_evaluation_stage" invisible="1" />
+                        <field name="evaluation_ids" widget="section_and_note_one2many"
+                            readonly="user_id != uid">
+                            <list editable="bottom" create="false" delete="false"
+                                decoration-danger="not scale_weight_matched">
+                                <field name="sequence" widget="handle" />
+                                <field name="display_type" column_invisible="True" />
+                                <field name="name" widget="section_and_note_text" readonly="1" />
+                                <field name="scale_id" readonly="1" />
+                                <field name="scale_weight" readonly="not parent.is_evaluation_stage" />
+                                <field name="scale_weight_matched" column_invisible="1" />
+                                <button name="reset_scale_weight" type="object" class="oe_highlight"
+                                    icon="fa-refresh" title="Refresh"
+                                    invisible="scale_weight_matched or not parent.is_evaluation_stage" />
+                                <field name="score" widget="radio" options="{'horizontal': true}" />
+                                <field name="weighted_score" readonly="1" />
+                                <field name="category_score" readonly="1" />
+                                <field name="subtotal_category_score" optional="hide" />
+                            </list>
+                        </field>
+                        <group class="oe_subtotal_footer oe_right" colspan="2"
+                            name="evaluation_total">
+                            <div class="d-flex">
+                                <label for="total_evaluation_score" class="me-auto" />
+                                <span class="h2">
+                                    <field name="total_evaluation_score" widget="float"
+                                        class="oe_inline" />
+                                    <span class="oe_grey p-2"> /</span>
+                                    <field name="evaluation_score_percentage_total" widget="float"
+                                        class="oe_inline" />
+                                </span>
+                            </div>
+                            <div class="d-flex">
+                                <label for="evaluation_score_percentage" class="me-auto" />
+                                <span class="h2">
+                                    <field name="evaluation_score_percentage" widget="float"
+                                        class="oe_inline" />
+                                    <span class="oe_grey p-2"> %</span>
+                                </span>
+                            </div>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

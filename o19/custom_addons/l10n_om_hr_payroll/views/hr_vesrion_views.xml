@@ -1,0 +1,108 @@
+<odoo>
+
+    <record id="hr_contract_template_form_view_wd" model="ir.ui.view">
+        <field name="name">hr.contract.template.form.wd</field>
+        <field name="model">hr.version</field>
+        <field name="inherit_id" ref="hr.hr_contract_template_form_view" />
+        <field name="arch" type="xml">
+            <separator name="schedule" position="before">
+                <label name="housing_allowance" for="housing_allowance" />
+                <div name="housing_allowance" class="o_row">
+                    <field name="housing_allowance" class="o_hr_narrow_field text-muted" />
+                    <span class="text-muted">/ month</span>
+                </div>
+                <label name="transportation_allowance" for="transportation_allowance" />
+                <div name="transportation_allowance" class="o_row">
+                    <field name="transportation_allowance" class="o_hr_narrow_field text-muted" />
+                    <span class="text-muted">/ month</span>
+                </div>
+                <label name="telephone_allowance" for="telephone_allowance" />
+                <div name="telephone_allowance" class="o_row">
+                    <field name="telephone_allowance" class="o_hr_narrow_field text-muted" />
+                    <span class="text-muted">/ month</span>
+                </div>
+                <label name="utility_allowance" for="utility_allowance" />
+                <div name="utility_allowance" class="o_row">
+                    <field name="utility_allowance" class="o_hr_narrow_field text-muted" />
+                    <span class="text-muted">/ month</span>
+                </div>
+                <label name="electricity_allowance" for="electricity_allowance" />
+                <div name="electricity_allowance" class="o_row">
+                    <field name="electricity_allowance" class="o_hr_narrow_field text-muted" />
+                    <span class="text-muted">/ month</span>
+                </div>
+                <label name="water_allowance" for="water_allowance" />
+                <div name="water_allowance" class="o_row">
+                    <field name="water_allowance" class="o_hr_narrow_field text-muted" />
+                    <span class="text-muted">/ month</span>
+                </div>
+                <label name="communication_allowance" for="communication_allowance" />
+                <div name="communication_allowance" class="o_row">
+                    <field name="communication_allowance" class="o_hr_narrow_field text-muted" />
+                    <span class="text-muted">/ month</span>
+                </div>
+                <label name="nature_of_work_allowance" for="nature_of_work_allowance" />
+                <div name="nature_of_work_allowance" class="o_row">
+                    <field name="nature_of_work_allowance" class="o_hr_narrow_field text-muted" />
+                    <span class="text-muted">/ month</span>
+                </div>
+                <label name="technician_allowance" for="technician_allowance" />
+                <div name="technician_allowance" class="o_row">
+                    <field name="technician_allowance" class="o_hr_narrow_field text-muted" />
+                    <span class="text-muted">/ month</span>
+                </div>
+                <label name="high_cost_of_living_allowance" for="high_cost_of_living_allowance" />
+                <div name="high_cost_of_living_allowance" class="o_row">
+                    <field name="high_cost_of_living_allowance" class="o_hr_narrow_field text-muted" />
+                    <span class="text-muted">/ month</span>
+                </div>
+                <label name="shift_allowance" for="shift_allowance" />
+                <div name="shift_allowance" class="o_row">
+                    <field name="shift_allowance" class="o_hr_narrow_field text-muted" />
+                    <span class="text-muted">/ month</span>
+                </div>
+                <label name="motivational_allowance" for="motivational_allowance" />
+                <div name="motivational_allowance" class="o_row">
+                    <field name="motivational_allowance" class="o_hr_narrow_field text-muted" />
+                    <span class="text-muted">/ month</span>
+                </div>
+                <label name="meals_allowance" for="meals_allowance" />
+                <div name="meals_allowance" class="o_row">
+                    <field name="meals_allowance" class="o_hr_narrow_field text-muted" />
+                    <span class="text-muted">/ month</span>
+                </div>
+                <label name="overtime_allowance" for="overtime_allowance" />
+                <div name="overtime_allowance" class="o_row">
+                    <field name="overtime_allowance" class="o_hr_narrow_field text-muted" />
+                    <span class="text-muted">/ month</span>
+                </div>
+                <label name="overtime_by_hour" for="overtime_by_hour" />
+                <div name="overtime_by_hour" class="o_row">
+                    <field name="overtime_by_hour" class="o_hr_narrow_field text-muted" />
+                    <span class="text-muted">/ hour</span>
+                </div>
+                <label name="medical_allowance" for="medical_allowance" />
+                <div name="medical_allowance" class="o_row">
+                    <field name="medical_allowance" class="o_hr_narrow_field text-muted" />
+                    <span class="text-muted">/ month</span>
+                </div>
+                <label name="air_fare_allowance" for="air_fare_allowance" />
+                <div name="air_fare_allowance" class="o_row">
+                    <field name="air_fare_allowance" class="o_hr_narrow_field text-muted" />
+                    <span class="text-muted">/ month</span>
+                </div>
+                <label name="other_allowance" for="other_allowance" />
+                <div name="other_allowance" class="o_row">
+                    <field name="other_allowance" class="o_hr_narrow_field text-muted" />
+                    <span class="text-muted">/ month</span>
+                </div>
+                <label name="total_payroll_amount" for="total_payroll_amount" />
+                <div name="total_payroll_amount" class="o_row">
+                    <field name="total_payroll_amount" class="o_hr_narrow_field text-muted" />
+                    <span class="text-muted">/ month</span>
+                </div>
+            </separator>
+        </field>
+    </record>
+
+</odoo>

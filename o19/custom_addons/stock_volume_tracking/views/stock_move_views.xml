@@ -1,0 +1,79 @@
+<odoo>
+    <!-- Stock Move Form View (Detailed Operations popup) -->
+    <record id="stock_move_form_operations_view_volume" model="ir.ui.view">
+        <field name="name">stock.move.form.operations.volume</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_stock_move_operations" />
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="is_volume_tracked" invisible="1"
+                    groups="stock_volume_tracking.group_volume_only" />
+                <label for="volume_length" string="Volumn in cm (L×W×H)"
+                    invisible="not is_volume_tracked or not display_assign_serial"
+                    groups="stock_volume_tracking.group_volume_only" />
+                <div class="o_row" invisible="not is_volume_tracked or not display_assign_serial"
+                    groups="stock_volume_tracking.group_volume_only">
+                    <field name="volume_length" placeholder="Length" class="oe_inline" readonly="1" force_save="1"/>
+                    <span>×</span>
+                    <field name="volume_width" placeholder="Width" class="oe_inline" readonly="1" force_save="1"/>
+                    <span>×</span>
+                    <field name="volume_height" placeholder="Height" class="oe_inline" readonly="1" force_save="1"/>
+                </div>
+                <field name="volume_display" 
+                    string="Line/Square/Cubic"
+                    invisible="not is_volume_tracked or not display_assign_serial"
+                    groups="stock_volume_tracking.group_volume_only"/>
+                <!-- <field name="volume"
+                    invisible="not is_volume_tracked or not display_assign_serial"
+                    string="Volume"
+                    groups="stock_volume_tracking.group_volume_only" />
+                <field name="volume_total"
+                    invisible="not is_volume_tracked or not display_assign_serial"
+                    string="Volume Total"
+                    groups="stock_volume_tracking.group_volume_only" /> -->
+            </field>
+        </field>
+    </record>
+
+        <record id="stock_move_tree_view_volume" model="ir.ui.view">
+        <field name="name">stock.move.tree.volume</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_tree" />
+        <field name="arch" type="xml">
+            <field name="product_uom_qty" position="after">
+                <field name="is_volume_tracked" column_invisible="True"
+                    groups="stock_volume_tracking.group_volume_only" />
+                <field name="volume_length"
+                    invisible="not is_volume_tracked or picking_code not in ['incoming', 'outgoing']"
+                    optional="show"
+                    string="L (cm)"
+                    groups="stock_volume_tracking.group_volume_only" />
+                <field name="volume_width"
+                    invisible="not is_volume_tracked or picking_code not in ['incoming', 'outgoing']"
+                    optional="show"
+                    string="W (cm)"
+                    groups="stock_volume_tracking.group_volume_only" />
+                <field name="volume_height"
+                    invisible="not is_volume_tracked or picking_code not in ['incoming', 'outgoing']"
+                    optional="show"
+                    string="H (cm)"
+                    groups="stock_volume_tracking.group_volume_only" />
+                <field name="volume_display"
+                    invisible="not is_volume_tracked or picking_code not in ['incoming', 'outgoing']"
+                    optional="show"
+                    groups="stock_volume_tracking.group_volume_only" />
+                <field name="volume"
+                    invisible="not is_volume_tracked or picking_code not in ['incoming', 'outgoing']"
+                    optional="hide"
+                    string="Volume"
+                    groups="stock_volume_tracking.group_volume_only" />
+                <field name="volume_total"
+                    invisible="not is_volume_tracked or picking_code not in ['incoming', 'outgoing']"
+                    optional="hide"
+                    string="Volume Total"
+                    sum="Total Volume"
+                    groups="stock_volume_tracking.group_volume_only" />
+            </field>
+        </field>
+    </record>
+</odoo>

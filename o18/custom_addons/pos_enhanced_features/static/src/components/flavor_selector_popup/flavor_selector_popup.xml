@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+<t t-name="pos_enhanced_features.FlavorSelectorPopup" owl="1">
+    <Dialog title="'Select Options'">
+        <div class="row justify-content-center mb-4">
+            Qty:
+            <div class="btn-group btn-group-sm w-40 rounded-pill border border-light-subtle bg-white shadow-sm">
+                <button
+                    t-on-click.prevent="decrementQuantity"
+                    class="btn btn-light rounded-start-pill fw-bold">
+                    −
+                </button>
+                <span class="btn btn-outline-secondary bg-white text-dark fw-semibold disabled">
+                    <t t-esc="state.quantity" />
+                </span>
+                <button
+                    t-on-click.prevent="incrementQuantity"
+                    class="btn btn-light rounded-end-pill fw-bold">
+                    +
+                </button>
+            </div>
+        </div>
+
+        <t t-foreach="attributeGroups" t-as="group" t-key="group.id">
+            <div class="row justify-content-center mt-3 bg-light py-2 rounded">
+                <h5 class="m-0 fw-bold text-center">
+                    <t t-esc="group.name"/> (<t t-esc="state.totals[group.id]"/>/<t t-esc="group.maxQty"/>)
+                </h5>
+            </div>
+
+            <div class="flavor-grid container-fluid mt-3 mb-4">
+                <div class="row gy-3">
+                    <t t-foreach="group.flavors" t-as="flavor" t-key="flavor.id">
+                        <div class="col-6 col-md-4">
+                            <div t-on-click="onCardClick"
+                                 t-att-data-id="flavor.id"
+                                 t-att-data-attr-id="group.id"
+                                 t-attf-class="flavor-card card text-center shadow-sm border-0 rounded-4 p-2 h-100 position-relative overflow-hidden {{ featureFlags.clickableCardEnabled ? 'flavor-clickable' : '' }} {{ isFlavorMaxed(group, flavor) ? 'flavor-maxed' : '' }}"
+                                 t-attf-style="background-image: url('data:image/jpeg;base64,#{flavor.image_url}');">
+                                <div class="flavor-overlay position-absolute top-0 start-0 w-100 h-100"></div>
+                                <div class="card-body d-flex flex-column justify-content-between p-1">
+                                    <img t-if="flavor.image_url" style="object-fit: contain;" class="text-center w-100" t-attf-src="data:image/jpeg;base64,#{flavor.image_url}" height="100px"/>
+                                    <img t-if="!flavor.image_url" style="object-fit: contain;" class="text-center w-100" t-attf-src="data:image/jpeg;base64,#{flavor.product_image_url}" height="100px"/>
+                                    
+                                    <h6 class="flavor-name mb-2 mt-2 text-uppercase text-truncate" style="font-size: 0.85rem;" t-esc="flavor.name" />
+                                    <span t-if="flavor.price_extra" class="badge bg-secondary mb-2 mx-auto"><t t-esc="pos.env.utils.formatCurrency(flavor.price_extra)" /></span>
+
+                                    <!-- Per-value limit badge: "X left" -->
+                                    <span t-if="featureFlags.valueLimitEnabled and flavor.mix_max_value_qty > 0"
+                                          t-attf-class="badge mb-2 mx-auto {{ getFlavorRemaining(group, flavor) === 0 ? 'bg-danger' : 'bg-warning text-dark' }}">
+                                        <t t-esc="getFlavorRemaining(group, flavor)"/> left
+                                    </span>
+
+                                    <div class="btn-group btn-group-sm w-100 rounded-pill border border-light-subtle bg-white shadow-sm mt-auto">
+                                        <button
+                                            t-att-data-id="flavor.id"
+                                            t-att-data-attr-id="group.id"
+                                            t-on-click.prevent.stop="decrementFlavor"
+                                            class="btn btn-light rounded-start-pill fw-bold">
+                                            −
+                                        </button>
+                                        <span class="btn btn-outline-secondary bg-white text-dark fw-semibold disabled px-1">
+                                            <t t-esc="state.selected[group.id][flavor.id] || 0" />
+                                        </span>
+                                        <button
+                                            t-att-data-id="flavor.id"
+                                            t-att-data-attr-id="group.id"
+                                            t-on-click.prevent.stop="incrementFlavor"
+                                            class="btn btn-light rounded-end-pill fw-bold">
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+
+        <t t-set-slot="footer">
+            <div class="d-flex justify-content-end gap-2 mt-3">
+                <button class="btn btn-outline-secondary px-4 py-2" t-on-click="close">Cancel</button>
+                <button
+                    class="btn btn-success px-4 py-2"
+                    t-on-click="confirm"
+                    t-att-disabled="!isValid">
+                    Confirm
+                </button>
+            </div>
+        </t>
+    </Dialog>
+</t>
+
+</templates>

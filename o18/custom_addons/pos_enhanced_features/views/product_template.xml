@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_template_form_view" model="ir.ui.view">
+        <field name="name">product.template.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="point_of_sale.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='pos_categ_ids']" position="after">
+                <field name="is_flavor_mix"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_attribute_line_form" model="ir.ui.view">
+        <field name="name">product.template.attribute.line.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='attribute_line_ids']/list/field[@name='value_ids']" position="after">
+                <field name="mix_is_active" invisible="not parent.is_flavor_mix"
+                       groups="pos_enhanced_features.group_flavor_multi_attribute"/>
+                <field name="mix_max_qty" invisible="not parent.is_flavor_mix"
+                       groups="pos_enhanced_features.group_flavor_multi_attribute"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Add mix_max_value_qty to the PTAV list view (opened via "Configure" button) -->
+    <record id="product_template_attribute_value_view_tree" model="ir.ui.view">
+        <field name="name">product.template.attribute.value.view.list.inherit</field>
+        <field name="model">product.template.attribute.value</field>
+        <field name="inherit_id" ref="product.product_template_attribute_value_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='price_extra']" position="after">
+                <field name="mix_max_value_qty" string="Mix Limit" optional="hide"
+                       groups="pos_enhanced_features.group_flavor_value_limit"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_attribute_value_view_form" model="ir.ui.view">
+        <field name="name">product.template.attribute.value.view.form.inherit</field>
+        <field name="model">product.template.attribute.value</field>
+        <field name="inherit_id" ref="product.product_template_attribute_value_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='price_extra']" position="after">
+                <field name="mix_max_value_qty" string="Mix Limit"
+                       groups="pos_enhanced_features.group_flavor_value_limit"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

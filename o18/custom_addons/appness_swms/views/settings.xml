@@ -1,0 +1,61 @@
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.appness_swms</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="70"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <app data-string="SWMS" string="SWMS" name="appness_swms">
+                        <block title="Social Welfare (SWMS)">
+                            <setting id="family_analytic_plan" help="Default Analytic Plan for families">
+                                <field name="family_analytic_plan"/>
+                            </setting>
+                            <setting id="pause_days">
+                                <div title="0 days means automatic pause is disabled">
+                                    <label for="pause_days"/>
+                                    <field name="pause_days" class="text-center" style="width: 3rem;"/>
+                                    <div class="d-inline-block">days</div>
+                                </div>
+                                <div class="text-muted">
+                                    Default period during which the sponsership is valid and then the sponsership will be paused for family information update.
+                                    0 days means automatic pause is disabled
+                                </div>
+                            </setting>
+                            <setting id="orphan_age">
+                                <div>
+                                    <label for="orphan_age"/>
+                                    <field name="orphan_age" class="text-center" style="width: 3rem;"/>
+                                    <div class="d-inline-block">years</div>
+                                </div>
+                                <div class="text-muted">
+                                    Default age during which the sponsership is valid and then the sponsership will be stoped.
+                                </div>
+                            </setting>
+                            <setting id="needy_family_period">
+                                <div>
+                                    <label for="needy_family_period"/>
+                                    <field name="needy_family_period" class="text-center" style="width: 3rem;"/>
+                                    <div class="d-inline-block">months</div>
+                                </div>
+                                <div class="text-muted">
+                                    Default period during which the sponsership is valid and then the sponsership will be stoped.
+                                </div>
+                            </setting>
+                        </block>
+                    </app>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="configuration_action" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module': 'appness_swms', 'bin_size': False}</field>
+        </record>
+
+    </data>
+</odoo>

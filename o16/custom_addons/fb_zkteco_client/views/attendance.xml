@@ -1,0 +1,45 @@
+<odoo>
+    <data>
+
+        <record id="zkteco_attendance_form" model="ir.ui.view">
+            <field name="name">fb.zkteco.attendance.form</field>
+            <field name="model">fb.zkteco.attendance</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name" readonly="0"/>
+                            <field name="timestamp" readonly="0"/>
+                            <field name="device" readonly="0"/>
+                            <field name="check_type" readonly="0"/>
+                            <field name="sync" readonly="1"/>
+                            <field name="sync_timestamp" readonly="1"/>
+                            <field name="sync_error" readonly="1"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+						<field name="message_follower_ids"/>
+						<field name="activity_ids"/>
+						<field name="message_ids"/>
+					</div>
+                </form>
+            </field>
+        </record>
+
+        <record id="zkteco_attendance_list" model="ir.ui.view">
+            <field name="name">fb.zkteco.attendance.list</field>
+            <field name="model">fb.zkteco.attendance</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="timestamp"/>
+                    <field name="device"/>
+                    <field name="check_type"/>
+                    <field name="sync"/>
+                    <field name="sync_timestamp"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

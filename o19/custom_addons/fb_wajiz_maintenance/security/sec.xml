@@ -1,0 +1,246 @@
+<odoo>
+    <data noupdate="0">
+
+        <!-- <function name="write" model="ir.model.data"> 
+            <function name="search" model="ir.model.data"> 
+                <value eval="[('module', '=', 'maintenance'), ('name','=','equipment_rule_user')]"/> 
+            </function> 
+            <value eval="{'noupdate': False}"/> 
+        </function> -->
+
+        <!-- <record model="res.groups.privilege" id="res_groups_privilege_fb_wajiz_maintenance">
+            <field name="name">FB Wajiz Maintenance</field>
+            <field name="sequence">9</field>
+            <field name="category_id" ref="base.module_category_supply_chain" />
+        </record> -->
+
+        <record id="group_maintenance_user" model="res.groups">
+            <field name="name">Maintenance User</field>
+            <field name="privilege_id" ref="maintenance.res_groups_privilege_maintenance" />
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+            <field name="comment">The user will be able to manage equipment.</field>
+        </record>
+
+        <!-- <record id="group_maintenance_view" model="res.groups">
+            <field name="name">Maintenance View</field>
+        </record> -->
+
+        <record id="maintenance.group_equipment_manager" model="res.groups">
+            <field name="name">Equipment Manager</field>
+            <field name="sequence">10</field>
+            <field name="privilege_id" ref="maintenance.res_groups_privilege_maintenance"/>
+            <field name="implied_ids" eval="[(6,0, [ref('fb_wajiz_maintenance.group_maintenance_user')])]"/>
+            <field name="user_ids" eval="[(6,0,[])]"/>
+            <field name="comment">The manager will be able to manage equipment.</field>
+        </record>
+
+        <!-- HR officers and HR managers are not allowed to manage equipment -->
+        <record id="hr.group_hr_user" model="res.groups">
+            <field name="implied_ids" eval="[(3, ref('maintenance.group_equipment_manager'))]"/>
+        </record>
+
+        <!-- Purchase Users Payments Rules -->
+
+
+        <record id="products_owners" model="ir.rule">
+            <field name="name">Your Own Products Branch</field>
+            <field name="model_id" ref="stock.model_product_template"/>
+            <field eval="True" name="global"/>
+            <field name="domain_force">["|",('responsible_id','=',user.id),('responsible_id','=',False)]</field>
+            <field name="groups" eval="[(4,ref('group_maintenance_user'))]"/>
+        </record>
+
+        <record id="location_owners" model="ir.rule">
+            <field name="name">Your Own Location Branch</field>
+            <field name="model_id" ref="stock.model_stock_location"/>
+            <field eval="True" name="global"/>
+            <field name="domain_force">["|",('user_id','=',user.id),('user_id','=',False)]</field>
+            <field name="groups" eval="[(4,ref('group_maintenance_user'))]"/>
+        </record>
+
+        <record id="account_move_rule_group_purhcase" model="ir.rule">
+            <field name="name">Purchase Move</field>
+            <field name="model_id" ref="model_account_move"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('purchase.group_purchase_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="account_move_line_rule_group_readonly_purchase" model="ir.rule">
+            <field name="name">Purchase Move Line</field>
+            <field name="model_id" ref="account.model_account_move_line"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('purchase.group_purchase_user'))]"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="access_account_payment_purchase_user" model="ir.model.access">
+            <field name="name">account.payment access for Purchase User</field>
+            <field name="model_id" ref="account.model_account_payment"/>
+            <field name="group_id" ref="purchase.group_purchase_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="operation_owners" model="ir.rule">
+            <field name="name">Your Own Stock Operations Branch</field>
+            <field name="model_id" ref="stock.model_stock_picking_type"/>
+            <field eval="True" name="global"/>
+            <field name="domain_force">["|",('user_id','=',user.id),('user_id','=',False)]</field>
+            <field name="groups" eval="[(4,ref('group_maintenance_user'))]"/>
+        </record>
+
+        <record id="products_quant_owners" model="ir.rule">
+            <field name="name">Your Own Quant Branch</field>
+            <field name="model_id" ref="stock.model_stock_quant"/>
+            <field eval="True" name="global"/>
+            <field name="domain_force">["|",('product_id.responsible_id','=',user.id),('product_id.responsible_id','=',False)]</field>
+            <field name="groups" eval="[(4,ref('group_maintenance_user'))]"/>
+        </record>
+
+        <record id="products_owners_man" model="ir.rule">
+            <field name="name">Your Own Products Branch Manager</field>
+            <field name="model_id" ref="stock.model_product_template"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4,ref('maintenance.group_equipment_manager'))]"/>
+        </record>
+
+        <record id="location_owners_man" model="ir.rule">
+            <field name="name">Your Own Location Branch Manager</field>
+            <field name="model_id" ref="stock.model_stock_location"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4,ref('maintenance.group_equipment_manager'))]"/>
+        </record>
+
+        <record id="operation_owners_man" model="ir.rule">
+            <field name="name">Your Own Stock Operations Branch Manager</field>
+            <field name="model_id" ref="stock.model_stock_picking_type"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4,ref('maintenance.group_equipment_manager'))]"/>
+        </record>
+
+        <record id="products_quant_owners_man" model="ir.rule">
+            <field name="name">Your Own Quant Branch Manager</field>
+            <field name="model_id" ref="stock.model_stock_quant"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4,ref('maintenance.group_equipment_manager'))]"/>
+        </record>
+
+        <record id="maintenance_team_rule" model="ir.rule">
+            <field name="name">You can only see your own team rule</field>
+            <field name="model_id" ref="maintenance.model_maintenance_team"/>
+            <field name="domain_force">[('member_ids', 'in', [user.id])]</field>
+            <field name="groups" eval="[(4, ref('fb_wajiz_maintenance.group_maintenance_user'))]"/>
+        </record>
+
+        <record id="maintenance_request_rule" model="ir.rule">
+            <field name="name">You can only see your own team requests rule</field>
+            <field name="model_id" ref="maintenance.model_maintenance_request"/>
+            <field name="domain_force">[('member_ids', 'in', [user.id])]</field>
+            <field name="groups" eval="[(4, ref('fb_wajiz_maintenance.group_maintenance_user'))]"/>
+        </record>
+
+        <record id="maintenance_plan_rule" model="ir.rule">
+            <field name="name">You can only see your own team plans rule</field>
+            <field name="model_id" ref="maintenance_plan.model_maintenance_plan"/>
+            <field name="domain_force">[('member_ids', 'in', [user.id])]</field>
+            <field name="groups" eval="[(4, ref('fb_wajiz_maintenance.group_maintenance_user'))]"/>
+        </record>
+
+        <!-- <record id="maintenance_kind_rule" model="ir.rule">
+            <field name="name">You can only see your own team kinds rule</field>
+            <field name="model_id" ref="maintenance_plan.model_maintenance_kind"/>
+            <field name="domain_force">[('member_ids', 'in', [user.id])]</field>
+            <field name="groups" eval="[(4, ref('fb_wajiz_maintenance.group_maintenance_user'))]"/>
+        </record> -->
+
+        <record id="maintenance_sparepart_rule" model="ir.rule">
+            <field name="name">You can only see your own team sparepart rule</field>
+            <field name="model_id" ref="fb_wajiz_maintenance.model_maintenance_spareparts"/>
+            <field name="domain_force">[('member_ids', 'in', [user.id])]</field>
+            <field name="groups" eval="[(4, ref('fb_wajiz_maintenance.group_maintenance_user'))]"/>
+        </record>
+
+        <record id="maintenance.equipment_request_rule_user" model="ir.rule">
+            <field name="active" eval="False"/>
+        </record>
+
+        <record id="maintenance.equipment_rule_user" model="ir.rule">
+            <field name="active" eval="False"/>
+        </record>
+
+        <record id="maintenance_equipment_rule" model="ir.rule">
+            <field name="name">You can only see your own team equipment rule</field>
+            <field name="model_id" ref="maintenance.model_maintenance_equipment"/>
+            <field name="domain_force">[('member_ids', 'in', [user.id])]</field>
+            <field name="groups" eval="[(4, ref('fb_wajiz_maintenance.group_maintenance_user'))]"/>
+        </record>
+
+        <record id="maintenance_equipment_category_rule" model="ir.rule">
+            <field name="name">You can only see your own team equipment category rule</field>
+            <field name="model_id" ref="maintenance.model_maintenance_equipment_category"/>
+            <field name="domain_force">[('technician_user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('fb_wajiz_maintenance.group_maintenance_user'))]"/>
+        </record>
+
+        <record id="maintenance_team_rule_admin_user" model="ir.rule">
+            <field name="name">Administrator of maintenance teams</field>
+            <field name="model_id" ref="maintenance.model_maintenance_team"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('maintenance.group_equipment_manager'))]"/>
+        </record>
+
+        <record id="maintenance_plan_rule_admin_user" model="ir.rule">
+            <field name="name">Administrator of maintenance plans</field>
+            <field name="model_id" ref="maintenance_plan.model_maintenance_plan"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('maintenance.group_equipment_manager'))]"/>
+        </record>
+
+        <!-- <record id="maintenance_kind_rule_admin_user" model="ir.rule">
+            <field name="name">Administrator of maintenance kinds</field>
+            <field name="model_id" ref="maintenance_plan.model_maintenance_kind"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('maintenance.group_equipment_manager'))]"/>
+        </record> -->
+
+        <record id="maintenance_sparepart_rule_admin_user" model="ir.rule">
+            <field name="name">Administrator of maintenance sparepart</field>
+            <field name="model_id" ref="fb_wajiz_maintenance.model_maintenance_spareparts"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('maintenance.group_equipment_manager'))]"/>
+        </record>
+
+        <record id="maintenance_request_rule_admin_user" model="ir.rule">
+            <field name="name">Administrator of maintenance requests</field>
+            <field name="model_id" ref="maintenance.model_maintenance_request"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('maintenance.group_equipment_manager'))]"/>
+        </record>
+
+        <record id="maintenance_equipment_rule_admin_user" model="ir.rule">
+            <field name="name">Administrator of maintenance equipment</field>
+            <field name="model_id" ref="maintenance.model_maintenance_equipment"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('maintenance.group_equipment_manager'))]"/>
+        </record>
+
+        <record id="maintenance_equipment_category_rule_admin_user" model="ir.rule">
+            <field name="name">Administrator of maintenance equipment category</field>
+            <field name="model_id" ref="maintenance.model_maintenance_equipment_category"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('maintenance.group_equipment_manager'))]"/>
+        </record>
+
+    </data>
+
+</odoo>

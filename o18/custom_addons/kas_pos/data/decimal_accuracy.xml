@@ -1,0 +1,8 @@
+<odoo>
+    <data noupdate="1">
+        <record forcecreate="True" id="decimal_product_bom" model="decimal.precision">
+            <field name="name">BOM Product Unit of Measure</field>
+            <field name="digits">2</field>
+        </record>
+    </data>
+</odoo>

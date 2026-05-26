@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Common Stepper Component -->
+    <template id="mockup_stepper" name="Booking Stepper">
+        <div class="row mb-5 mt-4">
+            <div class="col-12 d-flex justify-content-between position-relative">
+                <div class="progress position-absolute" style="top: 50%; left: 0; right: 0; height: 3px; z-index: -1;">
+                    <div class="progress-bar bg-primary" role="progressbar" t-attf-style="width: #{(step - 1) * 33}%"/>
+                </div>
+                <div t-attf-class="rounded-circle d-flex align-items-center justify-content-center border #{step >= 1 and 'bg-primary text-white border-primary' or 'bg-white text-muted border-secondary'}" style="width: 40px; height: 40px;">1</div>
+                <div t-attf-class="rounded-circle d-flex align-items-center justify-content-center border #{step >= 2 and 'bg-primary text-white border-primary' or 'bg-white text-muted border-secondary'}" style="width: 40px; height: 40px;">2</div>
+                <div t-attf-class="rounded-circle d-flex align-items-center justify-content-center border #{step >= 3 and 'bg-primary text-white border-primary' or 'bg-white text-muted border-secondary'}" style="width: 40px; height: 40px;">3</div>
+                <div t-attf-class="rounded-circle d-flex align-items-center justify-content-center border #{step >= 4 and 'bg-primary text-white border-primary' or 'bg-white text-muted border-secondary'}" style="width: 40px; height: 40px;">4</div>
+            </div>
+            <div class="col-12 d-flex justify-content-between mt-2 text-muted small">
+                <span>Add-ons</span>
+                <span>Details</span>
+                <span>Checkout</span>
+                <span>Payment</span>
+            </div>
+        </div>
+    </template>
+
+    <!-- Screen 4: Add-ons -->
+    <template id="mockup_addons_page" name="Add-ons">
+        <t t-call="appness_logspace_mockup.mockup_layout">
+            <div class="container">
+                <t t-call="appness_logspace_mockup.mockup_stepper"><t t-set="step" t-value="1"/></t>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card shadow-sm border-0 mb-4">
+                            <div class="card-body">
+                                <h4>Select Add-ons</h4>
+                                <div class="form-check mt-4 mb-3 p-3 border rounded">
+                                    <input class="form-check-input ms-1" type="checkbox" id="addon1"/>
+                                    <label class="form-check-label ms-4 d-flex justify-content-between w-100" for="addon1">
+                                        <span>Packaging Service</span>
+                                        <span class="text-success">+$50</span>
+                                    </label>
+                                </div>
+                                <div class="form-check p-3 border rounded mb-3">
+                                    <input class="form-check-input ms-1" type="checkbox" id="addon2"/>
+                                    <label class="form-check-label ms-4 d-flex justify-content-between w-100" for="addon2">
+                                        <span>Insurance</span>
+                                        <span class="text-success">+$100</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body">
+                                <h5>Order Summary</h5>
+                                <div class="d-flex justify-content-between mt-3">
+                                    <span>Base Price</span>
+                                    <span>$150</span>
+                                </div>
+                                <hr/>
+                                <div class="d-flex justify-content-between fw-bold mb-4">
+                                    <span>Total</span>
+                                    <span class="text-primary">$150</span>
+                                </div>
+                                <a href="/mockup/details" class="btn btn-primary w-100">Next Step</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Screen 5: Details -->
+    <template id="mockup_details_page" name="Order Details">
+        <t t-call="appness_logspace_mockup.mockup_layout">
+            <div class="container">
+                <t t-call="appness_logspace_mockup.mockup_stepper"><t t-set="step" t-value="2"/></t>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card shadow-sm border-0 mb-4">
+                            <div class="card-body">
+                                <h4>Shipment Details</h4>
+                                <form class="mt-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Item Description</label>
+                                        <textarea class="form-control" rows="3" placeholder="What are we moving?"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Weight (kg)</label>
+                                        <input type="number" class="form-control" placeholder="100"/>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body">
+                                <a href="/mockup/checkout" class="btn btn-primary w-100">Next Step</a>
+                                <a href="/mockup/addons" class="btn btn-outline-secondary w-100 mt-2">Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Screen 6: Checkout / Summary -->
+    <template id="mockup_checkout_page" name="Checkout">
+        <t t-call="appness_logspace_mockup.mockup_layout">
+            <div class="container">
+                <t t-call="appness_logspace_mockup.mockup_stepper"><t t-set="step" t-value="3"/></t>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card shadow-sm border-0 mb-4 bg-light">
+                            <div class="card-body">
+                                <h4>Review Order</h4>
+                                <p class="mb-1 text-muted">Please confirm your details before payment.</p>
+                                <hr/>
+                                <h5>Route</h5>
+                                <p>Riyadh -> Jeddah</p>
+                                <h5>Details</h5>
+                                <p>Standard Flatbed - 100kg</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body">
+                                <h5>Total to Pay</h5>
+                                <h3 class="text-primary mb-4">$150</h3>
+                                <a href="/mockup/payment" class="btn btn-primary w-100">Proceed to Payment</a>
+                                <a href="/mockup/details" class="btn btn-outline-secondary w-100 mt-2">Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Screen 7: Payment -->
+    <template id="mockup_payment_page" name="Payment">
+        <t t-call="appness_logspace_mockup.mockup_layout">
+            <div class="container">
+                <t t-call="appness_logspace_mockup.mockup_stepper"><t t-set="step" t-value="4"/></t>
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body text-center p-5">
+                                <h4 class="mb-4">Select Payment Method</h4>
+                                <div class="d-grid gap-3">
+                                    <button class="btn btn-outline-primary btn-lg"><i class="fa fa-credit-card me-2"></i> Credit Card</button>
+                                    <button class="btn btn-outline-primary btn-lg"><i class="fa fa-apple me-2"></i> Apple Pay</button>
+                                    <button class="btn btn-outline-primary btn-lg">Wallet Balance</button>
+                                </div>
+                                <hr class="my-4"/>
+                                <a href="/mockup/done" class="btn btn-success btn-lg w-100">Confirm Payment</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Screen 8: Done -->
+    <template id="mockup_done_page" name="Order Confirmation">
+        <t t-call="appness_logspace_mockup.mockup_layout">
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 text-center">
+                        <div class="text-success mb-4">
+                            <i class="fa fa-check-circle" style="font-size: 80px;"></i>
+                        </div>
+                        <h2 class="text-primary mb-3">Order Confirmed!</h2>
+                        <p class="lead text-muted mb-4">Your order <strong t-out="order_number"/> has been successfully placed.</p>
+                        <a href="/mockup/my/orders" class="btn btn-primary btn-lg me-2">View Orders</a>
+                        <a href="/mockup/my/orders/track" class="btn btn-outline-primary btn-lg">Track Order</a>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

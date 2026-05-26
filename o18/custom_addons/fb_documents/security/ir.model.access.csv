@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fb_documents_fb_document_type_manager,fb.documents.fb_document_type,model_fb_document_type,fb_documents.group_fb_documents_manager,1,1,1,1
+access_fb_documents_ir_attachment_manager,fb.documents.ir_attachment,model_ir_attachment,fb_documents.group_fb_documents_manager,1,1,1,1
+access_fb_documents_hr_department_manager,fb.documents.hr_department,hr.model_hr_department,fb_documents.group_fb_documents_manager,1,1,1,1
+access_fb_documents_fb_document_type_user,fb.documents.fb_document_type,model_fb_document_type,fb_documents.group_fb_documents_user,1,1,1,0
+access_fb_documents_ir_attachment_user,fb.documents.ir_attachment,model_ir_attachment,fb_documents.group_fb_documents_user,1,1,1,0
+access_fb_documents_hr_department_user,fb.documents.hr_department,hr.model_hr_department,fb_documents.group_fb_documents_user,1,1,1,0
+

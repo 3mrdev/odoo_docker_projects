@@ -1,0 +1,36 @@
+<odoo>
+    <data noupdate="1">
+
+        <!-- Main sync job (every hour) -->
+        <record id="ir_cron_zkteco_attendance_sync" model="ir.cron">
+            <field name="name">ZKTeco: Attendance Sync</field>
+            <field name="model_id" ref="model_fb_zkteco_attendance"/>
+            <field name="state">code</field>
+            <field name="code">model.convert_to_hr_attendance()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="active">True</field>
+        </record>
+
+        <!-- Auto-close open attendances (daily at midnight) -->
+        <record id="ir_cron_auto_close_attendance" model="ir.cron">
+            <field name="name">ZKTeco: Auto Close Open Attendances</field>
+            <field name="model_id" ref="model_fb_zkteco_attendance"/>
+            <field name="state">code</field>
+            <field name="code">model.auto_close_open_attendances(days_back=1, default_end_time="16:00")</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="nextcall" eval="(DateTime.now() + timedelta(days=1)).replace(hour=0, minute=0, second=0)"/>
+        </record>
+
+        <!-- Cleanup job (daily) -->
+        <record id="ir_cron_zkteco_cleanup" model="ir.cron">
+            <field name="name">ZKTeco Attendance Cleanup</field>
+            <field name="model_id" ref="model_fb_zkteco_attendance"/>
+            <field name="state">code</field>
+            <field name="code">model.cleanup_old_synced_records(days_to_keep=30)</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+        </record>
+    </data>
+</odoo>

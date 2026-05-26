@@ -1,0 +1,40 @@
+<odoo>
+    <data>
+        
+        <record id="logspace_request_website_menu" model="website.menu">
+            <field name="name">Submit a request for assistance</field>
+            <field name="url">/logspace/services</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">90</field>
+        </record>
+
+        <record id="logspace_conf_stepper_action" model="ir.actions.act_window">
+            <field name="name">Form Steppers</field>
+            <field name="res_model">logspace.stepper</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="logspace_conf_stepper_step_action" model="ir.actions.act_window">
+            <field name="name">Steps</field>
+            <field name="res_model">logspace.stepper.step</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem
+            id="logspace_conf_menu_stepper"
+            name="Portal Forms"
+            sequence="-1"
+            action="logspace_conf_stepper_action"
+            parent="appness_logspace.logspace_conf_menu"
+            groups="sales_team.group_sale_manager"/>
+
+        <!-- <menuitem
+            id="logspace_conf_menu_steps"
+            name="Portal Form Steps"
+            sequence="-1"
+            action="logspace_conf_stepper_step_action"
+            parent="appness_logspace.logspace_conf_menu"
+            groups="sales_team.group_sale_manager"/> -->
+
+    </data>
+</odoo>

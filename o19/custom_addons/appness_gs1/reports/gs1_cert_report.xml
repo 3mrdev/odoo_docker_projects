@@ -1,0 +1,762 @@
+<odoo>
+
+    <record id="paperformat_cert" model="report.paperformat">
+        <field name="name">GS1 Certificates</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="disable_shrinking" eval="True" />
+        <field name="dpi">96</field>
+    </record>
+
+    <record id="action_report_gs1_cert_gln" model="ir.actions.report">
+        <field name="name">GLN Certificate</field>
+        <field name="model">gln.cert</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">appness_gs1.report_gs1_cert_document_gln</field>
+        <field name="report_file">appness_gs1.report_gs1_cert_document_gln</field>
+        <field name="print_report_name">'GLN Certificate - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="appness_gs1.model_gln_cert" />
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="appness_gs1.paperformat_cert" />
+        <field name="group_ids" eval="[(4, ref('appness_gs1.group_certificates_user'))]" />
+    </record>
+
+    <record id="action_report_gs1_cert_gcp" model="ir.actions.report">
+        <field name="name">GCP Certificate</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">appness_gs1.report_gs1_cert_document_gcp</field>
+        <field name="report_file">appness_gs1.report_gs1_cert_document_gcp</field>
+        <field name="print_report_name">'GCP Certificate - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="sale.model_sale_order" />
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="appness_gs1.paperformat_cert" />
+        <field name="group_ids" eval="[(4, ref('appness_gs1.group_certificates_user'))]" />
+    </record>
+
+    <template id="report_gs1_cert_document_gcp">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="doc">
+                <t t-set="line" t-value="doc" />
+                <t t-set="is_gcp" t-value="True" />
+                <t t-set="is_gln" t-value="False" />
+                <t t-call="appness_gs1.report_gs1_cert_document" />
+            </t>
+        </t>
+    </template>
+
+    <template id="report_gs1_cert_document_gln">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="doc">
+                <t t-set="line" t-value="doc" />
+                <t t-set="is_gcp" t-value="False" />
+                <t t-set="is_gln" t-value="doc.sale_order_line_id.product_id.is_gln_cert" />
+                <t t-call="appness_gs1.report_gs1_cert_document" />
+            </t>
+        </t>
+    </template>
+
+    <template id="report_gs1_cert_document">
+        <div t-if="is_gcp or is_gln" class="page"
+            style="page-break-after: always; position: relative; height: 210mm; width: 297mm; overflow: hidden; margin: 0; padding: 0;">
+
+            <!-- Styles -->
+            <style type="text/css">
+                @page {
+                size: A4 landscape;
+                margin: 0;
+                }
+                body {
+                margin: 0;
+                padding: 0;
+                }
+                .left-column {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 220px;
+                height: 170mm;
+                background: white;
+                padding: 20px;
+                box-sizing: border-box;
+                }
+                .right-column {
+                position: absolute;
+                left: 320px;
+                top: 0;
+                width: calc(297mm - 320px);
+                height: 210mm;
+                padding: 30px 40px;
+                box-sizing: border-box;
+                background: white;
+                }
+                .gs1-logo-container {
+                margin-bottom: 20px;
+                }
+                .gs1-logo {
+                max-width: 150px;
+                height: auto;
+                }
+                .tagline {
+                position: absolute;
+                top: 60px;
+                right: 40px;
+                font-size: 12px;
+                color: #58595B;
+                font-family: Arial, sans-serif;
+                }
+                .orange-bar {
+                width: 100%;
+                height: 8px;
+                background: #F26334;
+                margin-top: 90px;
+                margin-bottom: 20px;
+                }
+                h1.cert-title {
+                color: #F26334;
+                font-family: Arial, sans-serif;
+                font-size: 40px;
+                font-weight: 300;
+                margin: 0 0 30px 0;
+                letter-spacing: 0.5px;
+                }
+                .info-label {
+                color: #58595B;
+                font-size: 13px;
+                margin: 0 0 5px 0;
+                font-family: Arial, sans-serif;
+                }
+                .info-value {
+                color: #000;
+                font-size: 22px;
+                font-weight: bold;
+                margin: 0 0 5px 0;
+                font-family: Arial, sans-serif;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 8px;
+                }
+                .info-value-sm {
+                color: #000;
+                font-size: 16px;
+                font-style: italic;
+                margin: 0 0 5px 0;
+                font-family: Arial, sans-serif;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 8px;
+                }
+                .prefix-section {
+                margin: 30px 0 20px 0;
+                }
+                .prefix-label {
+                color: #58595B;
+                font-size: 13px;
+                margin: 0 0 8px 0;
+                font-family: Arial, sans-serif;
+                }
+                .prefix-value {
+                color: #F26334;
+                font-size: 32px;
+                font-weight: bold;
+                margin: 0 0 10px 0;
+                font-family: Arial, sans-serif;
+                letter-spacing: 1px;
+                }
+                .dates-section {
+                display: table;
+                width: 100%;
+                margin: 30px 0;
+                }
+                .date-column {
+                display: table-cell;
+                width: 50%;
+                vertical-align: top;
+                }
+                .date-label {
+                color: #58595B;
+                font-size: 13px;
+                margin: 0 0 5px 0;
+                font-family: Arial, sans-serif;
+                }
+                .date-value {
+                color: #F26334;
+                font-size: 14px;
+                font-weight: bold;
+                margin: 0 0 20px 0;
+                font-family: Arial, sans-serif;
+                }
+                .gln-section {
+                margin-top: 25px;
+                }
+                .coordinates {
+                margin-top: 20px;
+                }
+                .coordinate-label {
+                color: #58595B;
+                font-size: 13px;
+                margin: 0 0 5px 0;
+                font-family: Arial, sans-serif;
+                }
+                .coordinate-value {
+                color: #000;
+                font-size: 14px;
+                font-weight: bold;
+                margin: 0 0 15px 0;
+                font-family: Arial, sans-serif;
+                }
+                .footer-left {
+                position: absolute;
+                bottom: 20px;
+                left: 20px;
+                font-size: 9px;
+                color: #002C6C;
+                line-height: 1.6;
+                font-family: Arial, sans-serif;
+                }
+                .footer-left strong {
+                font-weight: bold;
+                }
+                .footer-left-section {
+                margin-bottom: 15px;
+                }
+                .footer-terms {
+                font-size: 7px;
+                text-align: justify;
+                color: #58595B;
+                line-height: 1.4;
+                }
+                .signature-section {
+                margin-top: 40px;
+                text-align: left;
+                margin-left: 0;
+                }
+                .signature-line {
+                border-top: 1px solid #000;
+                width: 180px;
+                padding-top: 10px;
+                margin-top: 50px;
+                display: inline-block;
+                }
+                .signature-name {
+                font-size: 12px;
+                font-weight: bold;
+                margin: 5px 0;
+                font-family: Arial, sans-serif;
+                }
+                .signature-title {
+                font-size: 10px;
+                color: #58595B;
+                font-family: Arial, sans-serif;
+                }
+                .purpose-text {
+                font-size: 9px;
+                color: #58595B;
+                margin: 30px 0 0 0;
+                line-height: 1.5;
+                font-family: Arial, sans-serif;
+                font-style: italic;
+                }
+                .decorative-image {
+                margin-top: 60px;
+                }
+                .decorative-image img {
+                width: 100%;
+                max-width: 180px;
+                }
+                .s1 {
+                color: black;
+                font-family: "Times New Roman", serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 10pt;
+                }
+
+                .s2 {
+                color: black;
+                font-family: "Times New Roman", serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 8pt;
+                vertical-align: 23pt;
+                }
+
+                .s3 {
+                color: black;
+                font-family: "Times New Roman", serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 10pt;
+                vertical-align: 23pt;
+                }
+
+                .s4 {
+                color: #F26334;
+                font-family: Arial, sans-serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 32pt;
+                }
+
+                .s5 {
+                color: #58595B;
+                font-family: Arial, sans-serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 10pt;
+                }
+
+                .s6 {
+                color: #58595B;
+                font-family: Verdana, sans-serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 16pt;
+                }
+
+                h1 {
+                color: #002C6C;
+                font-family: Arial, sans-serif;
+                font-style: normal;
+                font-weight: bold;
+                text-decoration: none;
+                font-size: 7pt;
+                }
+
+                .s7 {
+                color: #002C6C;
+                font-family: Arial, sans-serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 7pt;
+                }
+
+                .a,
+                a {
+                color: #002C6C;
+                font-family: Arial, sans-serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 7pt;
+                }
+
+                .s8 {
+                color: #58595B;
+                font-family: Arial, sans-serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 8pt;
+                }
+
+                .s9 {
+                color: #58595B;
+                font-family: Arial, sans-serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 16pt;
+                }
+
+                .s10 {
+                color: #F26334;
+                font-family: Verdana, sans-serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 16pt;
+                }
+
+                .s11 {
+                color: #F26334;
+                font-family: Verdana, sans-serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                margin-left: 6pt;
+                margin-right: 6pt;
+                font-size: 10pt;
+                }
+
+                .s12 {
+                color: #002C6C;
+                font-family: Arial, sans-serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 7pt;
+                vertical-align: -1pt;
+                }
+
+                .p,
+                p {
+                color: #58595B;
+                font-family: Arial, sans-serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 6pt;
+                margin: 0pt;
+                }
+
+                .s13 {
+                color: #58595B;
+                font-family: Arial, sans-serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 6pt;
+                }
+
+                .s14 {
+                color: black;
+                font-family: Arial, sans-serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 10pt;
+                }
+
+                .s15 {
+                color: black;
+                font-family: "Times New Roman", serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 8pt;
+                vertical-align: 23pt;
+                }
+
+                .s16 {
+                color: #58595B;
+                font-family: Verdana, sans-serif;
+                font-style: italic;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 12pt;
+                }
+
+                .s17 {
+                color: black;
+                font-family: Verdana, sans-serif;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: none;
+                font-size: 1pt;
+                }
+            </style>
+
+            <!-- LEFT COLUMN -->
+            <div class="left-column">
+                <!-- Logo (NO border/background) -->
+                <div class="gs1-logo-container">
+                    <img src="/appness_gs1/static/src/img/gs1_oman_logo.png"
+                        class="gs1-logo" alt="GS1 Oman" />
+                </div>
+
+                <!-- Decorative Image -->
+                <div class="decorative-image">
+                    <img src="/appness_gs1/static/src/img/shapes.png" alt="GS1 Icons" />
+                </div>
+
+                <!-- Footer Info -->
+                <div t-if="is_gcp" class="footer-left">
+                    <div class="footer-left-section">
+                        <strong t-esc="line.company_id.name">GS1 Oman</strong><br />
+                        <span
+                            t-esc="line.company_id.street"></span>, <span
+                            t-esc="line.company_id.street2"></span>, <br /><span
+                            t-esc="line.company_id.city"></span>, <span
+                            t-esc="line.company_id.state_id.name"></span>, <span
+                            t-esc="line.company_id.country_id.name"></span>
+                    </div>
+
+                    <div class="footer-left-section">
+                        <strong>T</strong>
+                        <span t-esc="line.company_id.phone"></span>
+                        <br />
+                        <strong>E</strong>
+                        <span t-esc="line.company_id.email"></span>
+                        <br />
+                        <strong>
+                            W</strong>
+                        <span t-esc="line.company_id.website"></span>
+                    </div>
+
+                    <div class="footer-left-section">
+                        <strong>Service Team</strong>
+                        <br />
+                        <t t-esc="line.company_id.phone2"></t>
+                    </div>
+                </div>
+                <div t-if="is_gln" class="footer-left">
+                    <div class="footer-left-section">
+                        <strong t-esc="line.order_id.company_id.name">GS1 Oman</strong><br />
+                        <span
+                            t-esc="line.order_id.company_id.street"></span>, <span
+                            t-esc="line.order_id.company_id.street2"></span>, <br /><span
+                            t-esc="line.order_id.company_id.city"></span>, <span
+                            t-esc="line.order_id.company_id.state_id.name"></span>, <span
+                            t-esc="line.order_id.company_id.country_id.name"></span>
+                    </div>
+
+                    <div class="footer-left-section">
+                        <strong>T</strong>
+                        <span t-esc="line.order_id.company_id.phone"></span>
+                        <br />
+                        <strong>E</strong>
+                        <span t-esc="line.order_id.company_id.email"></span>
+                        <br />
+                        <strong>
+                            W</strong>
+                        <span t-esc="line.order_id.company_id.website"></span>
+                    </div>
+
+                    <div class="footer-left-section">
+                        <strong>Service Team</strong>
+                        <br />
+                        <t t-esc="line.order_id.company_id.phone2"></t>
+                    </div>
+                </div>
+            </div>
+
+            <!-- P.O. Box 1186 Ruwi PC 112,<br /> Markaz Al Tijari Street, First-floor
+            OCCI,<br />
+            Ruwi, Muscat, Sultanate of Oman 
+            <div class="footer-left-section">
+            <strong>T</strong>
+            <span>+968 2476 3869</span>
+            <br />
+            <strong>E</strong>
+            <span>info@gs1oman.org</span>
+            <br />
+            <strong>
+                W</strong>
+            <span>www.gs1oman.org</span>
+            </div>
+
+            <div class="footer-left-section">
+            <strong>Service Team</strong>
+            <br />
+            <t t-esc="line.order_id.company_id.phone">+968 7222 6166</t>
+            </div> -->
+
+
+            <!-- RIGHT COLUMN -->
+            <div class="right-column">
+                <!-- Tagline -->
+                <div class="tagline">
+                    <img width="250" src="/appness_gs1/static/src/img/tagline.png" alt="tagline" />
+                </div>
+
+                <!-- Orange Bar -->
+                <div class="orange-bar"></div>
+
+                <!-- Certificate Title -->
+                <h1 class="cert-title">
+                    <t t-if="is_gcp">GCP Certificate</t>
+                    <t t-else="is_gln">GLN Certificate</t>
+                </h1>
+
+                <!-- Issued To -->
+                <p class="s5"
+                    style="padding-top: 5pt;padding-left: 6pt;text-indent: 0pt;text-align: left;">
+                    Issued to:
+                </p>
+                <p class="s6"
+                    style="padding-top: 3pt;padding-left: 6pt;text-indent: 0pt;text-align: left;">
+                    <t t-if="is_gcp" t-esc="doc.partner_id.name" />
+                    <t t-elif="is_gln" t-esc="doc.order_id.partner_id.name" />
+                </p>
+
+                <!-- Location (GLN only) -->
+                <t t-if="is_gln">
+                    <p class="s16"
+                        style="padding-top: 2pt;padding-left: 6pt;text-indent: 0pt;text-align: left;">
+                        Warehouse - <t t-esc="line.location_name or 'Unknown'" />
+                    </p>
+                </t>
+
+                <!-- Licensee -->
+                <p class="s8"
+                    style="padding-top: 5pt;padding-left: 6pt;text-indent: 0pt;text-align: left;">
+                    "Licensee" </p>
+
+                <!-- Lines -->
+                <p style="text-indent: 0pt;text-align: left;">
+                    <br />
+                </p>
+                <p
+                    style="padding-left: 6pt;text-indent: 0pt;line-height: 1pt;text-align: left;">
+                    <span>
+                        <img width="692" height="1"
+                            alt="image"
+                            t-attf-src="/appness_gs1/static/src/img/Image_103.png" />
+                    </span>
+                </p>
+
+                <!-- GS1 Company Prefix -->
+                <p class="s9"
+                    style="padding-top: 7pt;padding-left: 6pt;text-indent: 0pt;text-align: left;">GS1
+                    Company Preﬁx: <span class="s10">
+                        <t t-if="is_gcp"
+                            t-esc="line.gs1_company_prefix or 'Unknown'" />
+                        <t t-if="is_gln"
+                            t-esc="line.order_id.gs1_company_prefix or 'Unknown'" />
+                    </span>
+                </p>
+
+                <!-- Purpose Text -->
+                <p class="s8"
+                    style="padding-top: 2pt;padding-left: 6pt;text-indent: 0pt;line-height: 109%;text-align: left;">
+                    For use in creating GS1 Identiﬁcation Keys as detailed in the GS1
+                    General Speciﬁcation
+                    which can be found on the GS1 Oman website.</p>
+
+                <!-- Dates Section -->
+                <p class="s5"
+                    style="padding-top: 6pt;padding-left: 6pt;text-indent: 0pt;text-align: left;">
+                    <span> Issued on: <span
+                            class="s11">
+                            <t t-if="is_gcp"
+                                t-esc="line.last_paid_invoice_date.strftime('%m/%d/%Y') if line.last_paid_invoice_date else 'Unknown'" />
+                            <t t-if="is_gln"
+                                t-esc="line.order_id.last_paid_invoice_date.strftime('%m/%d/%Y') if line.order_id.last_paid_invoice_date else 'Unknown'" />
+                        </span>
+                    </span>
+                    <span style="padding-left: 190pt;"> Expires: <span
+                            class="s11">
+                            <t t-if="is_gcp"
+                                t-esc="datetime.date(line.last_paid_invoice_date.year, 12, 31).strftime('%d/%m/%Y') if line.last_paid_invoice_date else 'Unknown'" />
+                            <t t-if="is_gln"
+                                t-esc="datetime.date(line.order_id.last_paid_invoice_date.year, 12, 31).strftime('%d/%m/%Y') if line.order_id.last_paid_invoice_date else 'Unknown'" />
+                        </span>
+                    </span>
+                </p>
+
+                <p
+                    style="padding-left: 6pt;text-indent: 0pt;line-height: 1pt;text-align: left;">
+                    <span>
+                        <img width="692" height="1"
+                            alt="image"
+                            t-attf-src="/appness_gs1/static/src/img/Image_104.png" />
+                    </span>
+                </p>
+
+                <!-- GLN Section (GLN Certificate Only) -->
+                <t t-if="is_gln">
+                    <p class="s9"
+                        style="padding-top: 4pt;padding-left: 6pt;text-indent: 0pt;text-align: left;">Global
+                        Location Number (GLN): <span class="s10">
+                            <t t-esc="line.name or 'Unknown'" />
+                        </span>
+                    </p>
+
+                    <!-- Coordinates -->
+                    <p class="s5"
+                        style="padding-top: 11pt;padding-left: 6pt;text-indent: 0pt;text-align: left;">
+                        <span> Latitude: <span
+                                class="s11">
+                                <t t-esc="line.latitude or 'Unknown'" />
+                            </span>
+                        </span>
+                        <span style="padding-left: 210pt;"> Longitude: <span
+                                class="s11">
+                                <t t-esc="line.longitude or 'Unknown'" />
+                            </span>
+                        </span>
+                    </p>
+
+                    <p style="text-indent: 0pt;text-align: left;">
+                        <br />
+                    </p>
+                    <p class="s17"
+                        style="padding-left: 6pt;text-indent: 0pt;line-height: 1pt;text-align: left;">
+                        <span>
+                            <img width="342"
+                                height="1" alt="image"
+                                t-attf-src="/appness_gs1/static/src/img/Image_105.png" />
+                        </span>
+                        <span style="padding-left: 12pt;">
+                            <img
+                                width="342" height="1" alt="image"
+                                t-attf-src="/appness_gs1/static/src/img/Image_106.png" />
+                        </span>
+                    </p>
+                </t>
+
+                <p style="text-indent: 0pt;text-align: left;">
+                    <br />
+                </p>
+                <p
+                    style="padding-left: 12pt; padding-top: 20pt;text-indent: 0pt;text-align: left;">
+                    <span>
+                        <!-- <img width="93" height="46" alt="image"
+                            t-attf-src="/appness_gs1/static/src/img/Image_107.png" /> -->
+                        <t t-if="is_gcp">
+                            <img
+                                t-if="line.manager_signature.sign_signature"
+                                height="100"
+                                t-attf-src="data:image/png;base64,{{line.manager_signature.sign_signature}}" />
+                        </t>
+                        <t t-if="is_gln">
+                            <img
+                                t-if="line.order_id.manager_signature.sign_signature"
+                                height="100"
+                                t-attf-src="data:image/png;base64,{{line.order_id.manager_signature.sign_signature}}" />
+                        </t>
+                    </span>
+                </p>
+                <p style="text-indent: 0pt;text-align: left;">
+                    <br />
+                </p>
+
+                <!-- Signature Section (LEFT aligned, not far right) -->
+                <p class="s8"
+                    style="padding-left: 6pt;text-indent: 0pt;text-align: left;">
+                    <t t-if="is_gcp">
+                        <t t-esc="line.manager_signature.name or 'Unknown'" />
+                    </t>
+                    <t t-if="is_gln">
+                        <t t-esc="line.order_id.manager_signature.name or 'Unknown'" />
+                    </t>
+                </p>
+                <p class="s8"
+                    style="padding-left: 6pt;text-indent: 0pt;text-align: left;">CEO,
+                    GS1 MO Oman</p>
+                <p style="padding-top: 1pt;text-indent: 0pt;text-align: left;">
+                    <br />
+                </p>
+                <p style="text-indent: 0pt;text-align: left;">
+                    <span>
+                        <img width="699" height="1" alt="image"
+                            t-attf-src="/appness_gs1/static/src/img/Image_108.png" />
+                    </span>
+                </p>
+
+                <!-- Terms Text -->
+                <div class="footer-terms"> The GS1 Company Prefix shown above is licenced for the
+                    sole use of the member named on this certificate. Transfer of numbers formed
+                    from this prefix to other companies is prohibited, including but not limited to
+                    selling, renting, leasing or donating all or a portion of these numbers. The
+                    licence to this prefix is valid for as long is the company named is a member of
+                    GS1 Oman. Membership must be renewed annually if use of the prefix and
+                    corresponding numbers is to continue. Variable measure company prefix numbers,
+                    coupon issuer numbers and GTIN-8 numbers are notified separately but are subject
+                    to the same licence conditions.<br /><br /> This certificate and its associated
+                    schedules remain the property of GS1 Oman. </div>
+            </div>
+        </div>
+    </template>
+</odoo>

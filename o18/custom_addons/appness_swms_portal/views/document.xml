@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+
+        <record id="swms_document_type_form_inherit_portal" model="ir.ui.view">
+            <field name="name">swms.document.type.form</field>
+            <field name="model">swms.document.type</field>
+            <field name="inherit_id" ref="appness_swms.swms_document_type_form"/>
+            <field name="arch" type="xml">
+                <field name="family_type" position="after">
+                    <field name="code" placeholder="ex. birth_certificate"
+                        help="Used to get the file uploads in Portal Form (Tip: use small Letters without blank spaces)" />
+                    <field name="steps_ids" widget="many2many_tags" invisible="type not in ['family','service']" help="Show in Portal Form in the Step Page"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="swms_document_type_list_inherit_portal" model="ir.ui.view">
+            <field name="name">swms.document.type.list.inherit.portal</field>
+            <field name="model">swms.document.type</field>
+            <field name="inherit_id" ref="appness_swms.swms_document_type_list"/>
+            <field name="arch" type="xml">
+                <field name="is_mandatory" position="after">
+                    <field name="code" readonly="1"/>
+                    <field name="steps_ids" widget="many2many_tags" readonly="1"/>
+                </field>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="approval_category_view_form_inherit_stock_material" model="ir.ui.view">
+        <field name="name">approval.category.view.form.inherit.stock.material</field>
+        <field name="model">approval.category</field>
+        <field name="inherit_id" ref="approvals.approval_category_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='approval_type']" position="after">
+                <!-- Source Warehouse Configuration -->
+                <field name="source_warehouse_ids"
+                    widget="many2many_tags"
+                    invisible="approval_type != 'stock_material'"
+                    options="{'no_create': True}"
+                    groups="stock.group_stock_user" />
+
+                <!-- Source Location Configuration -->
+                <field name="source_location_ids"
+                    widget="many2many_tags"
+                    invisible="approval_type != 'stock_material'"
+                    options="{'no_create': True}"
+                    groups="stock.group_stock_user"
+                    domain="[('usage', '=', 'internal'), '|', ('warehouse_id', '=', False), ('warehouse_id', 'in', source_warehouse_ids)]" />
+
+                <!-- Destination Warehouse Configuration -->
+                <field name="dest_warehouse_ids"
+                    widget="many2many_tags"
+                    invisible="approval_type != 'stock_material'"
+                    options="{'no_create': True}"
+                    groups="stock.group_stock_user" />
+
+                <!-- Destination Location Configuration -->
+                <field name="dest_location_ids"
+                    widget="many2many_tags"
+                    invisible="approval_type != 'stock_material'"
+                    options="{'no_create': True}"
+                    groups="stock.group_stock_user"
+                    domain="[('usage', '=', 'internal'), '|', ('warehouse_id', '=', False), ('warehouse_id', 'in', dest_warehouse_ids)]" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

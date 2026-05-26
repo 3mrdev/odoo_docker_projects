@@ -1,0 +1,63 @@
+<odoo>
+    <data>
+        <record id="swms_team_form_inherit" model="ir.ui.view">
+            <field name="name">swms.helpdesk.team.form.inherit</field>
+            <field name="model">helpdesk.team</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_team_view_form"/>
+            <field name="arch" type="xml">
+                <field name="assign_method" position="after">
+                    <div class="mt16 d-flex" name="is_family_responsible">
+                        <label for="is_family_responsible"/>
+                        <field name="is_family_responsible"/>
+                    </div>
+                </field>
+                <xpath expr="//field[@name='company_id'][2]" position="after">
+                    <h2 class="mt32">Social Welfare (SWMS)</h2>
+                    <div class="row mt16 o_settings_container">
+                        <setting id="swms_service" help="Track the serivces on requests">
+                            <field name="service" domain="[('is_swms','=',True)]" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                        </setting>
+                        <setting id="stages_allowed_to_edit_portal" help="These are the stages that are allowed to be edited in portal" invisible="not service">
+                            <field name="stages_allowed_to_edit_portal" widget="many2many_tags" domain="[('team_ids','in',id)]" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                        </setting>
+                        <setting id="swms_is_swms" help="Track the SWMS requests" invisible="not service">
+                            <field name="is_swms" string="Is SWMS ?"/>
+                        </setting>
+                        <setting id="swms_sequence" help="Track the sequence on requests" invisible="not service">
+                            <field name="sequence_id"/>
+                        </setting>
+                    </div>
+                    <h2 class="mt32" invisible="not service">Action Stages</h2>
+                    <div class="row mt16 o_settings_container" invisible="not service">
+                        <setting help="Choose a unique stage for each action don't repeat the stage" >
+                            <field name="is_draft_stage" domain="[('team_ids','in',id)]" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                        </setting>
+                        <setting help="Choose a unique stage for each action don't repeat the stage" >
+                            <field name="is_approve_stage" domain="[('team_ids','in',id)]" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                        </setting>
+                        <setting help="Choose a unique stage for each action don't repeat the stage" >
+                            <field name="is_done_stage" domain="[('team_ids','in',id)]" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                        </setting>
+                        <setting help="Choose a unique stage for each action don't repeat the stage">
+                            <field name="is_reject_stage" domain="[('team_ids','in',id)]" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                        </setting>
+                        <setting help="Choose a unique stage for each action don't repeat the stage">
+                            <field name="is_cancel_stage" domain="[('team_ids','in',id)]" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                        </setting>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="swms_team_kanban_inherit" model="ir.ui.view">
+            <field name="name">helpdesk.team.kanban.inherit</field>
+            <field name="model">helpdesk.team</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_team_view_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//kanban" position="attributes">
+                    <attribute name="js_class"></attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

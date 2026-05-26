@@ -1,0 +1,8 @@
+<odoo>
+    <record id="ir_sequence_fb_document" model="ir.sequence">
+        <field name="name">fb.document</field>
+        <field name="code">fb.document</field>
+        <field name="prefix">DOC</field>
+        <field name="padding">5</field>
+    </record>
+</odoo>

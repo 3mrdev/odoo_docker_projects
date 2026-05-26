@@ -1,0 +1,63 @@
+<odoo>
+    <data>
+        <template id="families_template">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="text-center">
+                        <h1>تقرير الاسر</h1>
+                        <h1>Families Report</h1>
+                    </div>
+                    <br/><br/>
+                    <table class="table text-center">
+                        <tr>
+                            <td>
+                                Family No.
+                                <br/>
+                                رقم الاسرة
+                            </td>
+                            <td>
+                                Name
+                                <br/>
+                                الاسم
+                            </td>
+                            <td>
+                                Members Count
+                                <br/>
+                                عدد الافراد
+                            </td>
+                            <td>
+                                Income and Obligations
+                                <br/>
+                                الدخل والالتزامات
+                            </td>
+                            <td>
+                                Sponsorship Status
+                                <br/>
+                                حالة الكفالة
+                            </td>
+                            <td>
+                                Assigned Sponsor
+                                <br/>
+                                الكفيل المعين
+                            </td>
+                        </tr>
+                        <tr t-foreach="families" t-as="member">
+                            <td t-esc="member['family_no']"></td>
+                            <td t-esc="member['family_name']"></td>
+                            <td t-esc="member['members_count']"></td>
+                            <td>
+                                <span t-esc="member['total_income']"/> - <span t-esc="member['total_obligations']"/> = <span t-esc="member['total_net']"/>
+                            </td>
+                            <td t-esc="member['sponsorship_state']"></td>
+                            <td t-esc="member['sponsor']"></td>
+                        </tr>
+                        <!-- <tr>
+                            <td colspan="4">2308.730</td>
+                            <td colspan="1">Total Amount</td>
+                        </tr> -->
+                    </table>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

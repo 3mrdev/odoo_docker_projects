@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Base Layout for Mockup if we want to override header/footer or add standard wrapper -->
+    <template id="mockup_layout" name="Mockup Layout">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty bg-light">
+                <t t-out="0"/>
+            </div>
+        </t>
+    </template>
+</odoo>

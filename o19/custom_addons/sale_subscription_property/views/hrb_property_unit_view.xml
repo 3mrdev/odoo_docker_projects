@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="hrb_property_unit_view_form" model="ir.ui.view">
+            <field name="name">hrb.property.unit.view.form</field>
+            <field name="model">hrb.property.unit</field>
+            <field name="arch" type="xml">
+                <form string="Property Unit">
+                    <header invisible="not show_properties_features">
+                        <button name="action_create_rent" string="Create Rent" type="object"
+                            class="oe_highlight" invisible="status != 'free'" />
+                        <button name="action_set_under_maintenance"
+                            string="Set to Under Maintenance" type="object"
+                            invisible="status != 'free'" />
+                        <button name="action_set_free" string="Set to Free" type="object"
+                            invisible="status != 'under_maintenance'" />
+                        <field name="status" widget="statusbar"
+                            statusbar_visible="free,under_rent,under_maintenance" />
+                    </header>
+                    <div class="alert alert-info" role="alert" invisible="show_properties_features">
+                        The property feature is not activated in this company. if you wish to use it please tell your admin to activiate it in this company.
+                    </div>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box" invisible="not show_properties_features">
+                            <button name="action_view_subscriptions" type="object"
+                                class="oe_stat_button" icon="fa-book">
+                                <field name="subscription_count" widget="statinfo"
+                                    string="Subscriptions" />
+                            </button>
+                        </div>
+                        <div class="oe_title" invisible="not show_properties_features">
+                            <h1>
+                                <field name="name" placeholder="Unit Name..." />
+                            </h1>
+                        </div>
+                        <group invisible="not show_properties_features">
+                            <group>
+                                <field name="property_id" />
+                                <field name="internal_reference" />
+                                <field name="sequence_number" readonly="1" />
+                                <field name="unit_type_id" />
+                                <field name="product_id"
+                                    domain="[('type', '=', 'service'),('recurring_invoice', '=', True)]" />
+                                <field name="price"
+                                    groups="sale_subscription_property.group_hrb_property_admin" />
+                                <field name="price" readonly="1"
+                                    groups="!sale_subscription_property.group_hrb_property_admin" />
+                            </group>
+                            <group>
+                                <field name="tenant_id" readonly="status != 'free'" />
+                                <field name="responsible_id" />
+                                <field name="analytic_account_id"
+                                    groups="analytic.group_analytic_accounting" />
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="tag_ids" widget="many2many_tags"
+                                    options="{'color_field': 'color', 'no_create_edit': True}" />
+                            </group>
+                        </group>
+                        <notebook invisible="not show_properties_features">
+                            <page string="Location" name="location">
+                                <group>
+                                    <group>
+                                        <span class="o_form_label o_td_label o_address_type"
+                                            name="address_name">
+                                            <span>Address</span>
+                                        </span>
+                                        <div class="o_address_format" readonly="1">
+                                            <field name="country_enforce_cities" invisible="1" />
+                                            <field name="street" placeholder="Street..."
+                                                class="o_address_street" />
+                                            <field name="street2" placeholder="Street 2..."
+                                                class="o_address_street" />
+                                            <field name="zip" placeholder="ZIP"
+                                                class="o_address_zip" />
+                                            <field name="area_id"
+                                                domain="[('city_id', '=', city_id)]" />
+                                            <field name="city_id" placeholder="City"
+                                                class="o_address_city"
+                                                domain="[('state_id', '=?', state_id)]"
+                                                context="{'default_state_id': state_id, 'default_country_id': country_id}"
+                                                invisible="not country_enforce_cities" />
+                                            <field name="city" placeholder="City"
+                                                class="o_address_city"
+                                                invisible="country_enforce_cities and (city_id or city in ('', False))" />
+                                            <field name="state_id" class="o_address_state"
+                                                placeholder="State" options='{"no_open": True}' />
+                                            <field name="country_id" placeholder="Country"
+                                                class="o_address_country"
+                                                options='{"no_open": True, "no_create": True}' />
+                                        </div>
+                                    </group>
+                                    <group>
+                                        <field name="address_link" widget="url" />
+                                        <field name="address_location_details_id" />
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter invisible="not show_properties_features">
+                        <thread_view />
+                        <activities />
+                    </chatter>
+                </form>
+            </field>
+        </record>
+
+        <record id="hrb_property_unit_view_list" model="ir.ui.view">
+            <field name="name">hrb.property.unit.view.list</field>
+            <field name="model">hrb.property.unit</field>
+            <field name="arch" type="xml">
+                <list string="Property Units">
+                    <field name="name" />
+                    <field name="property_id" />
+                    <field name="unit_type_id" />
+                    <field name="status" />
+                    <field name="tenant_id" />
+                    <field name="price" />
+                </list>
+            </field>
+        </record>
+
+        <record id="hrb_property_unit_action" model="ir.actions.act_window">
+            <field name="name">Property Units</field>
+            <field name="res_model">hrb.property.unit</field>
+            <field name="view_mode">list,pivot,graph,form</field>
+        </record>
+
+        <record model="ir.actions.server" id="generate_sequence_number_action_wizard">
+            <field name="name">Generate Sequence Number</field>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="model_id" ref="model_hrb_property_unit"/>
+            <field name="binding_model_id" ref="model_hrb_property_unit"/>
+            <field name="binding_view_types">list</field>
+            <field name="code">
+              action = records.generate_sequence_number()
+            </field>
+        </record>
+
+        <menuitem id="hrb_property_unit_menu" name="Property Units"
+            parent="sale_subscription_property.hrb_property_managment_menu"
+            action="hrb_property_unit_action" sequence="20" />
+    </data>
+</odoo>

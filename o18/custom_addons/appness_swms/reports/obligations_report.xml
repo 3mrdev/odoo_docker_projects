@@ -1,0 +1,93 @@
+<odoo>
+    <data>
+        <template id="obligations_template">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="text-center">
+                        <h1>تقرير الالتزامات</h1>
+                        <h1>Obligations Report</h1>
+                    </div>
+                    <br/><br/>
+                    <table class="table text-center">
+                         <tr>
+                            <td>Sponser Name</td>
+                            <td t-esc="sponser">صباح عيد طلق العقاب</td>
+                            <td>اسم الكفيل</td>
+                        </tr>
+                        <tr>
+                            <td>Family Name</td>
+                            <td>3270</td>
+                            <td>اسم الاسرة</td>
+                        </tr>
+                        <tr>
+                            <td>Date From</td>
+                            <td t-esc="from_date">2024-04-01</td>
+                            <td>التاريخ من</td>
+                        </tr>
+                        <tr>
+                            <td>Date to</td>
+                            <td t-esc="to_date">2024-04-30</td>
+                            <td>التاريخ الي</td>
+                        </tr>
+                    </table>
+                    <br/><br/>
+                    <table class="table text-center">
+                        <tr>
+                            <td>
+                                Type
+                                <br/>
+                                نوع الالتزام
+                            </td>
+                            <td>
+                                Creditor
+                                <br/>
+                                الدائن
+                            </td>
+                            <td>
+                                Total Amount
+                                <br/>
+                                المبلغ الكلي
+                            </td>
+                            <td>
+                                Remaining Amount
+                                <br/>
+                                المبلغ المتبقي
+                            </td>
+                            <td>
+                                Payment Method
+                                <br/>
+                                طريقة الدفع
+                            </td>
+                            <td>
+                                Interval
+                                <br/>
+                                عدد التكرار
+                            </td>
+                            <td>
+                                Frequency
+                                <br/>
+                                معدل التكرار
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Name</td>
+                            <td>Other Income</td>
+                            <td>Creditor A</td>
+                            <td>20.000</td>
+                            <td>10.000</td>
+                            <td>Bank</td>
+                            <td>1</td>
+                            <td>Monthly</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"></td>
+                            <td colspan="1">2308.730</td>
+                            <td colspan="1">2308.730</td>
+                            <td colspan="3">Total Amount</td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,34 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_logspace_zone_user,Zone User,model_logspace_zone,base.group_user,1,0,0,0
+access_logspace_zone_manager,Zone Manager,model_logspace_zone,base.group_system,1,1,1,1
+access_logspace_vehicle_type_user,Vehicle Type User,model_logspace_vehicle_type,base.group_user,1,0,0,0
+access_logspace_vehicle_type_manager,Vehicle Type Manager,model_logspace_vehicle_type,base.group_system,1,1,1,1
+access_logspace_addon_user,Addon User,model_logspace_addon,base.group_user,1,0,0,0
+access_logspace_addon_manager,Addon Manager,model_logspace_addon,base.group_system,1,1,1,1
+access_logspace_provider_fleet_summary_user,Fleet Summary User,model_logspace_provider_fleet_summary,base.group_user,1,1,1,1
+access_logspace_provider_fleet_summary_public,Fleet Summary Public,model_logspace_provider_fleet_summary,base.group_public,1,0,0,0
+access_logspace_provider_time_frame_user,Time Frame User,model_logspace_provider_time_frame,base.group_user,1,1,1,1
+access_logspace_provider_time_frame_public,Time Frame Public,model_logspace_provider_time_frame,base.group_public,1,0,0,0
+access_logspace_provider_special_instruction_user,Special Instruction User,model_logspace_provider_special_instruction,base.group_user,1,1,1,1
+access_logspace_provider_special_instruction_public,Special Instruction Public,model_logspace_provider_special_instruction,base.group_public,1,0,0,0
+access_logspace_vehicle_user,Vehicle User,model_logspace_vehicle,base.group_user,1,1,1,1
+access_logspace_vehicle_public,Vehicle Public,model_logspace_vehicle,base.group_public,1,0,0,0
+access_logspace_price_matrix_user,Price Matrix User,model_logspace_price_matrix,base.group_user,1,1,1,1
+access_logspace_price_matrix_public,Price Matrix Public,model_logspace_price_matrix,base.group_public,1,0,0,0
+access_logspace_order_timeline_user,Order Timeline User,model_logspace_order_timeline,base.group_user,1,1,1,1
+access_logspace_order_timeline_public,Order Timeline Public,model_logspace_order_timeline,base.group_public,1,0,0,0
+access_logspace_rating_user,Rating User,model_logspace_rating,base.group_user,1,0,1,0
+access_logspace_rating_manager,Rating Manager,model_logspace_rating,base.group_system,1,1,1,1
+access_logspace_rating_portal,Rating Portal,model_logspace_rating,base.group_portal,1,0,1,0
+access_logspace_refund_user,Refund User,model_logspace_refund,base.group_user,1,0,1,0
+access_logspace_refund_manager,Refund Manager,model_logspace_refund,base.group_system,1,1,1,1
+access_logspace_refund_portal,Refund Portal,model_logspace_refund,base.group_portal,1,0,1,0
+access_logspace_notification_user,Notification User,model_logspace_notification,base.group_user,1,1,1,0
+access_logspace_notification_manager,Notification Manager,model_logspace_notification,base.group_system,1,1,1,1
+access_logspace_notification_portal,Notification Portal,model_logspace_notification,base.group_portal,1,1,1,0
+access_logspace_provider_user,Provider User (Legacy),model_logspace_provider,base.group_user,1,0,0,0
+access_logspace_provider_manager,Provider Manager (Legacy),model_logspace_provider,base.group_system,1,1,1,1
+access_logspace_ticket_user,Ticket User (Legacy),model_logspace_ticket,base.group_user,1,1,1,1
+access_logspace_ticket_manager,Ticket Manager (Legacy),model_logspace_ticket,base.group_system,1,1,1,1
+access_logspace_provider_vtype_addon_user,Provider VType Addon User,model_logspace_provider_vehicle_type_addon,base.group_user,1,0,0,0
+access_logspace_provider_vtype_addon_manager,Provider VType Addon Manager,model_logspace_provider_vehicle_type_addon,base.group_system,1,1,1,1

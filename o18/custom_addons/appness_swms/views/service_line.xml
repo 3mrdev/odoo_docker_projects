@@ -1,0 +1,72 @@
+<odoo>
+    <data>
+        <record id="swms_service_line_form" model="ir.ui.view">
+            <field name="name">swms.service.line.form</field>
+            <field name="model">swms.service.line</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button string="Reset to Draft" name="draft" type="object" invisible="state not in ['done','refused']" groups="base.group_no_one"/>
+                        <button string="Report it" name="reported" type="object" invisible="state != 'draft'"/>
+                        <button string="Submit" name="submitted" type="object" invisible="state != 'reported'" class="oe_highlight"/>
+                        <button string="Approve" name="approved" type="object" invisible="state != 'submitted'" class="oe_highlight"/>
+                        <button string="Waiting" name="waiting" type="object" invisible="state != 'approved'" class="oe_highlight"/>
+                        <button string="Done" name="done" type="object" invisible="state != 'waiting'" class="oe_highlight"/>
+                        <button string="Refuse" name="refused" type="object" invisible="state != 'submitted'"/>
+                        <field name="state" widget="statusbar" />
+                    </header>
+                    <sheet>
+                        <div class="row justify-content-between position-relative w-100 m-0 mb-2">
+                            <div class="oe_title mw-75 ps-0 pe-2">
+                                <h1 class="d-flex flex-row align-items-center">
+                                    <field name="name" style="font-size: min(4vw, 2.6rem);" readonly="1"/>
+                                </h1>
+                            </div>
+                        </div>
+                        <group>
+                            <group string="Family">
+                                <field name="product" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" string="Service" domain="[('is_swms','=',True)]" readonly="1"/>
+                                <field name="family" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" readonly="1"/>
+                                <field name="family_member" invisible="not family_member" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" readonly="1"/>
+                                <field name="birthday" invisible="not family_member"/>
+                                <field name="age" invisible="not family_member"/>
+                            </group>
+                            <group string="Linked with">
+                                <field name="lead" domain="[('is_swms','=',True),('is_available','=',True)]" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" readonly="state in ['done','refused']" required="state == 'waiting'"/>
+                                <field name="sponsership" domain="[('is_swms','=',True)]" options="{'no_create_edit': True, 'no_open': False, 'no_quick_create': True,'no_create': True}" readonly="1"/>
+                                <field name="request" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" readonly="1" required="state == 'waiting'"/>
+                                <field name="card_id" string="Lulu Card No." invisible="family_member" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" readonly="0"/>
+                                <div class="text-danger" invisible="not card_used or family_member"> 
+                                    This card is already used by a family if you confirm it will be automatically assigned to current family
+                                </div>
+                            </group>
+                            <group string="Misc.">
+                                <field name="create_date" readonly="1"/>
+                                <field name="approved_date" readonly="1"/>
+                                <field name="waiting_date" readonly="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <!-- Chatter -->
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="swms_service_line_list" model="ir.ui.view">
+            <field name="name">swms.service.line.list</field>
+            <field name="model">swms.service.line</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="product" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" string="Service"/>
+                    <field name="family" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                    <field name="family_member" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                    <field name="sponsership" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                    <field name="lead" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                    <field name="request" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                    <field name="state"/>
+                </list>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_obc_chassis_user,obc.chassis,appness_gs1.model_obc_chassis,appness_gs1.group_rop_letter_user,1,1,1,1
+access_gln_cert_user,gln.cert,appness_gs1.model_gln_cert,appness_gs1.group_rop_letter_user,1,1,1,1
+access_obc_vehicle_type_user,obc.vehicle.type,appness_gs1.model_obc_vehicle_type,appness_gs1.group_rop_letter_user,1,1,1,1

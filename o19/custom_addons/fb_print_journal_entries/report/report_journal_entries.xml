@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="paperformat_journal_entry_report_id" model="report.paperformat">
+            <field name="name">Journal Entry Report</field>
+            <field name="orientation">Landscape</field>
+            <field name="default">1</field>
+            <field name="format">A4</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">32</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_spacing">35</field>
+        </record>
+
+        <record id="journal_entry_report_all" model="ir.actions.report">
+            <field name="name">Print Journal Entries All</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">fb_print_journal_entries.journal_entry_report_template_all</field>
+            <field name="report_file">fb_print_journal_entries.journal_entry_report_template_all</field>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="paperformat_journal_entry_report_id"/>
+        </record>
+
+    </data>
+</odoo>

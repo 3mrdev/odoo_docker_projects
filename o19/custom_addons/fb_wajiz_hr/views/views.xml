@@ -1,0 +1,667 @@
+<odoo>
+    <data>
+
+        <record id="document_form" model="ir.ui.view">
+            <field name="name">hr.document.form</field>
+            <field name="model">hr.document</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="valid" type="object" string="Approve" invisible="state != 'draft'"/>
+                        <button name="draft" type="object" string="Reset to draft" invisible="state != 'canceled'"/>
+                        <button name="cancel" type="object" string="Cancel" invisible="state not in ['draft','valid','renew','expired']"/>
+                        <field name="state" widget="statusbar" />
+                    </header>
+                    <sheet>
+                        <field name="active" invisible="1" />
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active"/>
+                        <div class="oe_title">
+                            <h1 class="d-flex">
+                                <field name="name" placeholder="Document's Name" required="True"
+                                    style="font-size: min(4vw, 2.6rem);" />
+                                <div class="d-flex align-items-end fs-6"
+                                    style="height: min(4vw, 2.6rem); padding-bottom: 1px;">
+                                    <div id="hr_presence_status" class="ms-1">
+                                        <small role="img"
+                                            class="fa fa-fw fa-circle text-success o_button_icon hr_presence align-middle"
+                                            invisible="state != 'valid'"
+                                            aria-label="Valid" title="Valid" />
+                                        <small role="img"
+                                            class="fa fa-fw fa-circle-o text-muted o_button_icon hr_presence align-middle"
+                                            invisible="state != 'expired'"
+                                            aria-label="Expired" title="Expired" name="expired" />
+                                        <small role="img"
+                                            class="fa fa-fw fa-circle-o text-success o_button_icon hr_presence align-middle"
+                                            invisible="state != 'draft'"
+                                            aria-label="To define" title="To define" name="draft" />
+                                        <small role="img"
+                                            class="fa fa-fw fa-circle text-warning o_button_icon hr_presence align-middle"
+                                            invisible="state != 'canceled'"
+                                            aria-label="Canceled" title="Canceled" name="canceled" />
+                                        <small role="img"
+                                            class="fa fa-fw fa-circle text-warning o_button_icon hr_presence align-middle"
+                                            invisible="state != 'renew'"
+                                            aria-label="Renew" title="Renew" name="renew" />
+                                    </div>
+                                </div>
+                            </h1>
+                            <h2>
+                                <field name="number" placeholder="Document Number" />
+                            </h2>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="employee_id" invisible="vehicle_id"/>
+                                <field name="vehicle_id" invisible="employee_id"/>
+                                <field name="doc_type" domain="[('document_category', '=', 'employee')]" invisible="vehicle_id"/>
+                                <field name="doc_type" domain="[('document_category', '=', 'vehicle')]" invisible="employee_id"/>
+                                <field name="document" />
+                            </group>
+                            <group>
+                                <field name="begin_date" />
+                                <field name="begin_date_hijri" widget="date_hijri" />
+                                <field name="finish_date" />
+                                <field name="finish_date_hijri" widget="date_hijri" required="doc_type==6"/>
+                                <!-- TODO: make it dynamic -->
+                            </group>
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="fleet_vehicle_form_inherit_TD" model="ir.ui.view">
+            <field name="name">fleet.vehicle.form.inherit.td</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='location']" position="after">
+                    <field name="have_tracking_device" />
+                    <field name="have_chip_number" invisible="not have_tracking_device"/>
+                    <field name="device_number" invisible="not have_chip_number"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_approval_request_form" model="ir.ui.view">
+            <field name="name">approval.request.form.inherit</field>
+            <field name="model">approval.request</field>
+            <field name="inherit_id" ref="approvals.approval_request_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="department_id" />
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="view_approval_category_approver_list" model="ir.ui.view">
+            <field name="name">approval.category.approver.list.inherit</field>
+            <field name="model">approval.category.approver</field>
+            <field name="inherit_id" ref="approvals.approval_category_approver_view_tree" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="department_id" />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_fleet_vehicle_log_services_form_inherit" model="ir.ui.view">
+            <field name="name">fleet.vehicle.log.services.form.inherit</field>
+            <field name="model">fleet.vehicle.log.services</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_log_services_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vehicle_id']" position="attributes">
+                    <attribute name="domain">[["manager_id", "=", uid]]</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="fleet.fleet_vehicle_log_services_action" model="ir.actions.act_window">
+            <field name="name">Services</field>
+            <field name="res_model">fleet.vehicle.log.services</field>
+            <field name="view_mode">list,kanban,form,graph,pivot,activity</field>
+            <field name="domain">[('vehicle_id.manager_id', '=', uid)]</field>
+        </record>
+
+        <record id="fleet.fleet_vehicle_action" model="ir.actions.act_window">
+            <field name="name">Vehicles</field>
+            <field name="res_model">fleet.vehicle</field>
+            <field name="view_mode">kanban,list,form,pivot,activity</field>
+            <field name="domain"></field>
+        </record>
+
+        <record id="document_list" model="ir.ui.view">
+            <field name="name">hr.document.list</field>
+            <field name="model">hr.document</field>
+            <field name="arch" type="xml">
+                <list decoration-muted="state == 'canceled'" decoration-success="state == 'valid'"
+                    decoration-danger="state == 'expired'">
+                    <field name="employee_id" invisible="vehicle_id"/>
+                    <field name="vehicle_id" invisible="employee_id"/>
+                    <field name="number" />
+                    <field name="name" />
+                    <field name="doc_type" />
+                    <field name="begin_date" />
+                    <field name="finish_date" />
+                    <field name="state" />
+                </list>
+            </field>
+        </record>
+
+        <record id="document_kanban" model="ir.ui.view">
+            <field name="name">hr.document.kanban</field>
+            <field name="model">hr.document</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="id" />
+                    <field name="state" />
+                    <templates>
+                        <t t-name="card">
+                            <div
+                                class="oe_kanban_global_click o_kanban_record_has_image_fill o_hr_kanban_record">
+                                <div class="oe_kanban_details">
+                                    <div class="o_kanban_record_top">
+                                        <div class="o_kanban_record_headings">
+                                            <strong class="o_kanban_record_title">
+                                                <t t-if="record.state.raw_value">
+                                                    <div class="float-end"
+                                                        t-if="record.state.raw_value == 'valid'"
+                                                        name="valid">
+                                                        <span class="fa fa-circle text-success"
+                                                            role="img" aria-label="Valid"
+                                                            title="Valid" name="valid">
+                                                        </span>
+                                                    </div>
+                                                    <div class="float-end"
+                                                        t-if="record.state.raw_value == 'expired'"
+                                                        name="expired">
+                                                        <span class="fa fa-circle-o text-muted"
+                                                            role="img" aria-label="Expired"
+                                                            title="Expired" name="expired">
+                                                        </span>
+                                                    </div>
+                                                    <div class="float-end"
+                                                        t-if="record.state.raw_value == 'draft'"
+                                                        name="draft">
+                                                        <span class="fa fa-circle-o text-success"
+                                                            role="img" aria-label="To define"
+                                                            title="To define" name="draft">
+                                                        </span>
+                                                    </div>
+                                                    <div class="float-end"
+                                                        t-if="record.state.raw_value == 'canceled'"
+                                                        name="canceled">
+                                                        <span class="fa fa-circle text-warning"
+                                                            role="img" aria-label="Canceled"
+                                                            title="Canceled" name="canceled">
+                                                        </span>
+                                                    </div>
+                                                    <div class="float-end"
+                                                        t-if="record.state.raw_value == 'renew'"
+                                                        name="renew">
+                                                        <span class="fa fa-circle text-warning"
+                                                            role="img" aria-label="Renew"
+                                                            title="Renew" name="renew">
+                                                        </span>
+                                                    </div>
+                                                </t>
+                                                <field name="name" placeholder="Document's Name" />
+                                            </strong>
+                                            <span t-if="record.number.raw_value"
+                                                class="o_kanban_record_subtitle">
+                                                <field name="number" />
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <ul>
+                                        <li t-if="record.state.raw_value" class="o_text_overflow">
+                                            <field name="state" />
+                                        </li>
+                                        <br />
+                                        <li t-if="record.doc_type.raw_value" class="o_text_overflow">
+                                            <field name="doc_type" />
+                                        </li>
+                                        <br />
+                                        <li t-if="record.employee_id.raw_value"
+                                            class="o_text_overflow">
+                                            <field name="employee_id" />
+                                        </li>
+                                        <br />
+                                        <li t-if="record.vehicle_id.raw_value"
+                                            class="o_text_overflow">
+                                            <field name="vehicle_id" />
+                                        </li>
+                                        <br />
+                                        <li t-if="record.begin_date.raw_value"
+                                            class="o_text_overflow">
+                                            <field name="begin_date" />
+                                        </li>
+                                        <br />
+                                        <li t-if="record.finish_date.raw_value" class="o_force_ltr">
+                                            <field name="finish_date" />
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- <record id="attendance_report" model="ir.ui.view">
+            <field name="name">attendance.report</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Attendance Records">
+                        <field name="total_hours_not_attended" widget="one2many_list"
+                            options="{'no_create': True, 'no_open': True, 'no_edit': True}">
+                            <list>
+                                <field name="employee_id" />
+                                <field name="date" />
+                                <field name="day" />
+                                <field name="worked_hours" />
+                                <field name="absence_hours" />
+                            </list>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record> -->
+
+        <record id="view_attendance_report_wizard" model="ir.ui.view">
+            <field name="name">attendance.report.wizard.form</field>
+            <field name="model">attendance.report.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Employee Attendance Report">
+                    <div>
+                        <p>Please Select The Range for the Report:</p>
+                    </div>
+                    <group>
+                        <field name="employee_id" readonly="1" />
+                        <field name="date_from" />
+                        <field name="date_to" />
+                    </group>
+                    <footer>
+                        <button string="Print Report" type="object" name="print_report"
+                            class="btn-primary" />
+                        <button string="Cancel" class="btn-secondary" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_employee_attendance_report_wizard" model="ir.actions.act_window">
+            <field name="name">Absense Report</field>
+            <field name="res_model">attendance.report.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="fb_wajiz_hr.view_attendance_report_wizard" />
+            <field name="binding_model_id" ref="model_attendance_report_wizard" />
+            <field name="binding_view_types">form</field>
+        </record>
+
+        <record id="document_search" model="ir.ui.view">
+            <field name="name">hr.document.search</field>
+            <field name="model">hr.document</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="employee_id" />
+                    <field name="vehicle_id" />
+                    <field name="number" />
+                    <field name="name" />
+                    <field name="doc_type" />
+                    <field name="begin_date" />
+                    <field name="finish_date" />
+                    <field name="create_uid" string="Created by" />
+                    <separator />
+                    <filter string="Archived" name="Inactive" domain="[('active', '=', False)]" />
+                    <separator />
+                    <filter invisible="0" string="Late" name="docs_overdue"
+                        domain="[('finish_date', '&lt;', context_today().strftime('%Y-%m-%d'))]" />
+                    <filter invisible="0" string="Today" name="docs_today"
+                        domain="[('finish_date', '=', context_today().strftime('%Y-%m-%d'))]" />
+                    <filter invisible="0" string="Future" name="docs_upcoming_all"
+                        domain="[('finish_date', '&gt;', context_today().strftime('%Y-%m-%d'))]" />
+                    <separator />
+                    <group>
+                        <filter name="group_employee" string="Employee" domain="[]"
+                            context="{'group_by': 'employee_id'}" />
+                        <filter name="group_state" string="State" domain="[]"
+                            context="{'group_by': 'state'}" />
+                        <filter name="group_doc_type" string="Doc Type" domain="[]"
+                            context="{'group_by': 'doc_type'}" />
+                        <filter string="Begin Date" name="filter_begin_date" domain="[]"
+                            context="{'group_by':'begin_date'}" />
+                        <filter string="Finish Date" name="filter_finish_date" domain="[]"
+                            context="{'group_by':'finish_date'}" />
+                    </group>
+                    <searchpanel>
+                        <field name="company_id" groups="base.group_multi_company"
+                            icon="fa-building" enable_counters="1" />
+                        <field name="doc_type" icon="fa-address-card-o" enable_counters="1" />
+                        <field name="state" icon="fa-address-card-o" enable_counters="1" />
+                    </searchpanel>
+                </search>
+            </field>
+        </record>
+
+        <record id="hr_employee_form_inherit_wajiz" model="ir.ui.view">
+            <field name="name">hr.employee.form.inherit.wajiz</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form" />
+            <field name="arch" type="xml">
+                <field name="department_id" position="before">
+                    <field name="job_uid" groups="hr.group_hr_user" required="1"/>
+                    <field name="iban_number" groups="hr.group_hr_user" />
+                    <field name="job_residency" groups="hr.group_hr_user" />
+                </field>
+                <field name="employee_type" position="after">
+                    <label for="fixed_allowance" string="Fixed Allowance" groups="hr.group_hr_manager"/>
+                    <div class="o_row" name="fixed_allowance" groups="hr.group_hr_manager">
+                        <field name="fixed_allowance" nolabel="1"/>
+                        <span>/ month</span>
+                    </div>
+                    <label for="dynamic_allowance" string="Dynamic Allowance" groups="hr.group_hr_manager"/>
+                    <div class="o_row" name="dynamic_allowance" groups="hr.group_hr_manager">
+                        <field name="dynamic_allowance" nolabel="1"/>
+                        <span>/ month</span>
+                    </div>
+                    <field name="have_ins" groups="hr.group_hr_manager"/>
+                    <field name="insurance_type_id" invisible="not have_ins" required="have_ins" groups="hr.group_hr_manager"/>
+                    <field name="insurance_percentage" invisible="not have_ins" groups="hr.group_hr_manager"/>
+                </field>
+                <!-- <field name="km_home_work" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field> -->
+                <field name="spouse_birthdate" position="replace">
+                </field>
+                <field name="spouse_complete_name" position="replace">
+                </field>
+                <field name="permit_no" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="work_permit_expiration_date" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="certificate" position="attributes">
+                    <attribute name="string">Educational qualification</attribute>
+                </field>
+                <field name="study_field" position="before">
+                    <field name="study_school"/>
+                </field>
+                <xpath expr="//div[@name='div_km_home_work']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <!-- <xpath expr="//notebook" position="inside">
+                    <page string="Documents">
+                        <group>
+                            <group>
+                                <field name="related_document1" />
+                                <field name="related_document2" />
+                                <field name="related_document3" />
+                            </group>
+                            <group>
+                                <field name="related_document4" />
+                                <field name="related_document5" />
+                                <field name="related_document6" />
+                            </group>
+                        </group>
+                    </page>
+                </xpath> -->
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <field name="related_documents_count" invisible="1" groups="hr.group_hr_user"/>
+                    <button name="action_related_documents" class="oe_stat_button"
+                        icon="fa-file-text" type="object" help="Related Documnets" invisible="related_documents_count == -1" groups="hr.group_hr_user">
+                        <!-- TODO: check condition above -->
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value">
+                                <field name="related_documents_count" />
+                            </span>
+                            <span class="o_stat_text">Legal Docs</span>
+                        </div>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="fleet_vehicle_view_form_inherit_related_documents" model="ir.ui.view">
+            <field name="name">fleet.vehicle.form.inherit.related.documents</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <field name="related_documents_count" invisible="1"/>
+                    <button name="action_related_documents_for_vehicle" class="oe_stat_button"
+                        icon="fa-file-text" type="object" help="Related Documents" invisible="related_documents_count == -1">
+                        <!-- TODO: check condition above -->
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value">
+                                <field name="related_documents_count" />
+                            </span>
+                            <span class="o_stat_text">Legal Docs</span>
+                        </div>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="hr_employee_search_inherit_wajiz" model="ir.ui.view">
+            <field name="name">hr.employee.search.inherit.wajiz</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_filter" />
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="job_uid" />
+                    <field name="identification_id" />
+                    <field name="visa_no" />
+                </field>
+            </field>
+        </record>
+
+        <record id="hr_employee_public_form_inherit_wajiz" model="ir.ui.view">
+            <field name="name">hr.employee.public.form.inherit.wajiz</field>
+            <field name="model">hr.employee.public</field>
+            <field name="inherit_id" ref="hr.hr_employee_public_view_form" />
+            <field name="arch" type="xml">
+                <field name="department_id" position="before">
+                    <field name="job_uid" />
+                </field>
+            </field>
+        </record>
+
+        <record id="hr_employee_public_form_inherit_wajiz_documents" model="ir.ui.view">
+            <field name="name">hr.employee.public.form.inherit.wajiz.documents</field>
+            <field name="model">hr.employee.public</field>
+            <field name="inherit_id" ref="hr.hr_employee_public_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <field name="related_documents_count" invisible="1"/>
+                    <button name="action_related_documents" class="oe_stat_button"
+                        icon="fa-file-text" type="object" help="Related Documnets" invisible="related_documents_count == -1">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value">
+                                <field name="related_documents_count" />
+                            </span>
+                            <span class="o_stat_text">Legal Docs</span>
+                        </div>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+        <!-- TODO: check condition above -->
+
+        <record id="hr_custody_inherit_wajiz" model="ir.ui.view">
+            <field name="name">hr.custody.form.inherit.wajiz</field>
+            <field name="model">hr.custody</field>
+            <field name="inherit_id" ref="hr_custody.hr_custody_view_form" />
+            <field name="arch" type="xml">
+                <field name="company_id" position="after">
+                    <field name="cost" />
+                    <field name="attachment" />
+                </field>
+            </field>
+        </record>
+
+        <record id="hr_custody_pivot_inherit_wajiz" model="ir.ui.view">
+            <field name="name">hr.custody.pivot</field>
+            <field name="model">hr.custody</field>
+            <field name="arch" type="xml">
+                <pivot>
+                    <field name="cost" />
+                </pivot>
+            </field>
+        </record>
+
+        <record id="hr_document_action" model="ir.actions.act_window">
+            <field name="name">HR Documents</field>
+            <field name="res_model">hr.document</field>
+            <field name="view_mode">kanban,list,form</field>
+            <field name="context">{'search_default_group_doc_type': 1}</field>
+        </record>
+
+        <record id="hr_document_type_action" model="ir.actions.act_window">
+            <field name="name">HR Document Types</field>
+            <field name="res_model">hr.document.type</field>
+            <field name="view_mode">kanban,list,form</field>
+        </record>
+
+        <record id="action_resource_calendar" model="ir.actions.act_window">
+            <field name="name">Resource Calendar</field>
+            <field name="res_model">resource.calendar</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="res_partner_bank_action" model="ir.actions.act_window">
+            <field name="name">Bank Accounts</field>
+            <field name="res_model">res.partner.bank</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="hr_custody.hr_custody_action" model="ir.actions.act_window">
+            <field name="name">Custody</field>
+            <field name="res_model">hr.custody</field>
+            <field name="view_mode">list,pivot,form</field>
+            <field name="search_view_id" ref="hr_custody.hr_custody_view_search" />
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to Create a New Record.
+                </p>
+            </field>
+        </record>
+
+        <record id="view_employee_attendance_report_list" model="ir.ui.view">
+            <field name="name">employee.attendance.report.list</field>
+            <field name="model">employee.attendance.report</field>
+            <field name="arch" type="xml">
+                <list string="Employee Attendance Reports">
+                    <field name="identification_no" />
+                    <field name="employee_id" />
+                    <field name="department_id" />
+                    <field name="date" />
+                    <field name="day" />
+                    <field name="absence_hours" />
+                    <field name="worked_hours" />
+                    <field name="notes_id" />
+                    <field name="approval" />
+                </list>
+            </field>
+        </record>
+
+        <record id="view_employee_attendance_report_pivot" model="ir.ui.view">
+            <field name="name">employee.attendance.report.pivot</field>
+            <field name="model">employee.attendance.report</field>
+            <field name="arch" type="xml">
+                <pivot string="Employee Attendance Reports">
+                    <field name="date" type="row" />
+                    <field name="department_id" type="row" />
+                    <field name="employee_id" type="row" />
+                    <field name="notes_id" type="row" />
+                    <field name="worked_hours" type="measure" />
+                    <field name="absence_hours" type="measure" />
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_employee_attendance_report_form" model="ir.ui.view">
+            <field name="name">employee.attendance.report.form</field>
+            <field name="model">employee.attendance.report</field>
+            <field name="arch" type="xml">
+                <form string="Employee Attendance Report">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="employee_id" required="1" />
+                                <field name="date" required="1" />
+                                <field name="day" readonly="1" />
+                            </group>
+                            <group>
+                                <field name="worked_hours" />
+                                <field name="absence_hours" />
+                                <field name="identification_no" readonly="1" />
+                            </group>
+                        </group>
+                        <group>
+                            <field name="notes_id" />
+                            <field name="approval" />
+                            <field name="department_id" readonly="1" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_employee_attendance_report_view" model="ir.actions.act_window">
+            <field name="name">Employee Attendance Reports</field>
+            <field name="res_model">employee.attendance.report</field>
+            <field name="view_mode">list,form,pivot</field>
+            <field name="context">{'group_by': ['date:month', 'department_id', 'employee_id',
+                'notes_id']}</field>
+        </record>
+
+        <!-- <menuitem
+            id="employee_attendance_menu"
+            name="Monthly Biometric Report"
+            sequence="2"
+            groups="hr.group_hr_manager,hr.group_hr_user"
+            action="action_employee_attendance_report_view"
+            parent="hr.menu_hr_root"/> -->
+
+        <menuitem
+            id="hr_documents_menu"
+            name="HR Documents"
+            sequence="4"
+            groups="hr.group_hr_manager,hr.group_hr_user"
+            action="hr_document_action"
+            parent="hr.menu_hr_root" />
+
+        <menuitem
+            id="hr_document_type_menu"
+            name="Document Types"
+            sequence="5"
+            groups="hr.group_hr_manager,hr.group_hr_user"
+            action="hr_document_type_action"
+            parent="hr.menu_human_resources_configuration" />
+
+        <menuitem
+            id="resource_calendar_menu"
+            name="Working Time"
+            sequence="6"
+            groups="hr.group_hr_manager,hr.group_hr_user"
+            action="action_resource_calendar"
+            parent="hr.menu_human_resources_configuration" />
+
+        <menuitem
+            id="res_partner_bank_menu"
+            name="Bank Accounts"
+            sequence="7"
+            groups="hr.group_hr_manager,hr.group_hr_user"
+            action="res_partner_bank_action"
+            parent="hr.menu_human_resources_configuration" />
+
+    </data>
+</odoo>

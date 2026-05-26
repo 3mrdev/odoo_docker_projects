@@ -1,0 +1,21 @@
+<odoo>
+    <record id="view_res_company_form_inherit" model="ir.ui.view">
+        <field name="name">res.company.form.inherit</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='currency_id']" position="after">
+                <field name="phone2" />
+                <field name="allow_companies_only" />
+                <field name="tag_as_manufacturer" />
+                <field name="default_industry_on_partner_creation"
+                    invisible="not tag_as_manufacturer" />
+                <field name="show_gs1_cert" />
+                <field name="show_rop_letter" />
+                <field name="default_rop_letter_visual_guide" widget="image"
+                    invisible="not show_rop_letter" />
+                <field name="manager_signature" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

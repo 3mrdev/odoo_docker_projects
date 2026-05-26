@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="approval_loan_category_view_form_inherit" model="ir.ui.view">
+        <field name="name">approval.loan.category.view.form.inherit</field>
+        <field name="model">approval.category</field>
+        <field name="inherit_id" ref="approvals.approval_category_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='approval_type']" position="after">
+                <field name="default_loan_debit_account" invisible="approval_type != 'loan'"
+                    groups="account.group_account_user" />
+                <field name="default_loan_journal" domain="[('type','in',['bank','cash'])]"
+                    invisible="approval_type != 'loan'" groups="account.group_account_user" />
+                <field name="default_salary_adjustment_type" invisible="approval_type != 'loan'"
+                    groups="account.group_account_user" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

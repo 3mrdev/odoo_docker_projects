@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="kas_pos.ControlButtons" t-inherit="point_of_sale.ControlButtons" t-inherit-mode="extension">
+        <xpath expr="//button[@t-on-click='() => this.clickRefund()']" position="attributes">
+            <attribute name="t-if">pos.config.allow_refund_button</attribute>
+        </xpath>
+        <xpath expr="//button[@t-on-click='() => this.pos.onDeleteOrder(this.pos.get_order())']" position="attributes">
+            <attribute name="t-if">pos.config.allow_cancel_button</attribute>
+        </xpath>
+    </t>
+</templates>

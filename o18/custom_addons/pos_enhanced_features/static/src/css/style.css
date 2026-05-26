@@ -1,0 +1,42 @@
+.flavor-card {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    border-radius: 1rem;
+}
+
+.flavor-card:hover {
+    transform: translateY(-4px);
+}
+
+.flavor-card.flavor-clickable {
+    cursor: pointer;
+}
+
+.flavor-card.flavor-maxed {
+    opacity: 0.55;
+}
+
+.flavor-card.flavor-maxed:hover {
+    transform: none;
+}
+
+.flavor-overlay {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.7));
+    z-index: 1;
+    border-radius: 1rem;
+}
+
+.card-body {
+    position: relative;
+    z-index: 2;
+}
+
+.flavor-name {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #fff;
+    text-shadow: 0 0 3px rgba(0,0,0,0.7);
+}

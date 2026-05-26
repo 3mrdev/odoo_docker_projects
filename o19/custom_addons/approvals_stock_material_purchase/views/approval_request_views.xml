@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!-- SMART BUTTON: Stock Transfers Only                             -->
+    <!-- Note: Purchase Orders button already added by approvals_purchase -->
+    <!-- We only add the Stock Transfers button here                    -->
+    <!-- ============================================================ -->
+    <record id="approval_request_view_form_smart_buttons" model="ir.ui.view">
+        <field name="name">approval.request.view.form.smart.buttons</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals.approval_request_view_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Add Stock Transfers button in the button box -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+
+                <!-- Stock Transfers Smart Button -->
+                <button name="action_open_stock_transfers_combined"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-truck"
+                    title="Stock Transfers"
+                    groups="stock.group_stock_user"
+                    invisible="approval_type != 'stock_material_purchase' or stock_picking_count == 0">
+                    <field name="stock_picking_count"
+                        string="Stock Transfers"
+                        widget="statinfo" />
+                </button>
+
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- INFO BANNER ABOVE SHEET FOR COMBINED TYPE                       -->
+    <!-- ============================================================ -->
+    <record id="approval_request_view_form_info_banner" model="ir.ui.view">
+        <field name="name">approval.request.view.form.info.banner</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals.approval_request_view_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Add info banner above sheet for combined type -->
+            <xpath expr="//sheet" position="before">
+                <div class="alert alert-info mb-3"
+                     invisible="approval_type != 'stock_material_purchase' or request_status != 'approved'"
+                     role="alert">
+                    <i class="fa fa-info-circle" title="Info"/>
+                    <b>Stock + Purchase Workflow:</b> Source location comes from the PO receipt. Configure the destination below for the final transfer location.
+                </div>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- AUTO MODE STATUS INDICATOR - ABOVE SHEET                        -->
+    <!-- ============================================================ -->
+    <record id="approval_request_view_form_auto_status" model="ir.ui.view">
+        <field name="name">approval.request.view.form.auto.status</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals.approval_request_view_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Add auto mode status above sheet (below the info banner) -->
+            <xpath expr="//sheet" position="before">
+                <div class="alert alert-success mb-3"
+                     invisible="approval_type != 'stock_material_purchase' or
+                                transfer_creation_mode != 'auto_on_validate' or
+                                request_status != 'approved' or
+                                purchase_order_count == 0"
+                     role="alert">
+                    <i class="fa fa-magic" title="Auto Mode"/>
+                    <b>Auto-Transfer Mode:</b>
+                    <span invisible="has_pending_receipts" class="ms-2">
+                        <i class="fa fa-check-circle text-success"/>
+                        All receipts processed. Transfers created automatically.
+                    </span>
+                    <span invisible="not has_pending_receipts" class="ms-2">
+                        <i class="fa fa-hourglass-half text-warning"/>
+                        Waiting for PO receipts to be validated...
+                    </span>
+                </div>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- DESTINATION FIELDS FOR COMBINED TYPE (inline, no group)           -->
+    <!-- ============================================================ -->
+    <record id="approval_request_view_form_dest_fields" model="ir.ui.view">
+        <field name="name">approval.request.view.form.dest.fields</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals.approval_request_view_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Add destination fields inline after amount in the main group -->
+            <xpath expr="//field[@name='amount']" position="after">
+                <field name="dest_warehouse_id"
+                       invisible="approval_type != 'stock_material_purchase'"
+                       options="{'no_create': True}"
+                       groups="stock.group_stock_user"
+                       domain="[('id', 'in', available_dest_warehouse_ids)]"/>
+                <field name="dest_location_id"
+                       invisible="approval_type != 'stock_material_purchase'"
+                       options="{'no_create': True}"
+                       groups="stock.group_stock_user"
+                       domain="[('id', 'in', available_dest_location_ids)]"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- ACTION BUTTONS: Create RFQ + Transfer Material               -->
+    <!-- ============================================================ -->
+    <record id="approval_request_view_form_action_buttons" model="ir.ui.view">
+        <field name="name">approval.request.view.form.action.buttons</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals.approval_request_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//button[@name='action_confirm']" position="after">
+
+                <!-- Create RFQ's Button (visible for combined type) -->
+                <button name="action_create_rfq_combined"
+                    type="object"
+                    groups="purchase.group_purchase_user"
+                    string="Create RFQ's"
+                    class="btn-primary"
+                    icon="fa-shopping-cart"
+                    invisible="approval_type != 'stock_material_purchase' or request_status != 'approved' or purchase_order_count &gt; 0"/>
+
+                <!-- Transfer Material Button (Manual Mode Only) -->
+                <button name="action_create_transfer_combined"
+                    type="object"
+                    groups="stock.group_stock_user"
+                    string="Transfer Material"
+                    class="btn-primary"
+                    icon="fa-truck"
+                    invisible="approval_type != 'stock_material_purchase' or
+                               transfer_creation_mode != 'manual' or
+                               request_status != 'approved' or
+                               purchase_order_count == 0 or
+                               stock_picking_count &gt; 0"/>
+
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,60 @@
+<odoo>
+    <data>
+
+        <record id="swms_city_list" model="ir.ui.view">
+            <field name="name">res.city.list.inherit</field>
+            <field name="model">res.city</field>
+            <field name="inherit_id" ref="base_address_extended.view_city_tree"/>
+            <field name="arch" type="xml">
+                <field name="zipcode" position="after">
+                    <field name="swms_allow" widget="boolean_toggle"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="swms_state_list" model="ir.ui.view">
+            <field name="name">res.country.state.list</field>
+            <field name="model">res.country.state</field>
+            <field name="inherit_id" ref="base.view_country_state_tree"/>
+            <field name="arch" type="xml">
+                <field name="code" position="after">
+                    <field name="swms_allow" widget="boolean_toggle"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="swms_state_form" model="ir.ui.view">
+            <field name="name">res.country.state.form</field>
+            <field name="model">res.country.state</field>
+            <field name="inherit_id" ref="base.view_country_state_form"/>
+            <field name="arch" type="xml">
+                <field name="code" position="after">
+                    <field name="swms_allow" widget="boolean_toggle"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="swms_country_list" model="ir.ui.view">
+            <field name="name">res.country.list</field>
+            <field name="model">res.country</field>
+            <field name="inherit_id" ref="base.view_country_tree"/>
+            <field name="arch" type="xml">
+                <field name="code" position="after">
+                    <field name="swms_allow" widget="boolean_toggle"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="swms_country_form" model="ir.ui.view">
+            <field name="name">res.country.form</field>
+            <field name="model">res.country</field>
+            <field name="inherit_id" ref="base.view_country_form"/>
+            <field name="arch" type="xml">
+                <field name="code" position="after">
+                    <field name="swms_allow" widget="boolean_toggle"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

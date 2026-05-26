@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ========================================================================= -->
+    <!-- Sale Order Form View Extension -->
+    <!-- ========================================================================= -->
+    <record id="view_sale_order_form_inherit_logspace" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.logspace</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Add is_logspace_order checkbox in header -->
+            <xpath expr="//header" position="inside">
+                <field name="is_logspace_order" invisible="1"/>
+                <field name="logspace_state" widget="statusbar"
+                    invisible="not is_logspace_order"
+                    statusbar_visible="pending,confirmed,driver_assigned,in_transit,delivered"/>
+            </xpath>
+
+            <!-- Add Logspace checkbox to the form -->
+            <xpath expr="//group[@name='order_details']" position="inside">
+                <field name="is_logspace_order" widget="boolean_toggle"/>
+                <field name="is_guest_order" invisible="not is_logspace_order"/>
+            </xpath>
+
+            <!-- Logspace Provider Tabs -->
+            <xpath expr="//notebook" position="inside">
+                <!-- Provider & Vehicle Page -->
+                <page string="Provider &amp; Vehicle" invisible="not is_logspace_order">
+                    <group>
+                        <group>
+                            <field name="logspace_provider_id"/>
+                            <field name="logspace_vehicle_id"
+                                domain="[('provider_id', '=', logspace_provider_id), ('is_active', '=', True)]"/>
+                            <field name="logspace_driver_id"/>
+                            <field name="driver_phone"/>
+                        </group>
+                        <group>
+                            <field name="pickup_zone_id"/>
+                            <field name="dropoff_zone_id"/>
+                            <field name="scheduled_date"/>
+                            <field name="delivery_date" readonly="1" invisible="not delivery_date"/>
+                        </group>
+                    </group>
+                </page>
+
+                <!-- Contacts Page -->
+                <page string="Contacts" invisible="not is_logspace_order">
+                    <group>
+                        <group string="Pickup">
+                            <field name="pickup_contact_name"/>
+                            <field name="pickup_contact_phone"/>
+                            <field name="pickup_address"/>
+                        </group>
+                        <group string="Dropoff">
+                            <field name="dropoff_contact_name"/>
+                            <field name="dropoff_contact_phone"/>
+                            <field name="dropoff_address"/>
+                        </group>
+                    </group>
+                </page>
+
+                <!-- Scheduling Page -->
+                <page string="Scheduling" invisible="not is_logspace_order">
+                    <group>
+                        <field name="pickup_timeframe"/>
+                        <field name="dropoff_timeframe"/>
+                    </group>
+                </page>
+
+                <!-- Items Page -->
+                <page string="Items" invisible="not is_logspace_order">
+                    <group>
+                        <field name="item_description"/>
+                        <field name="special_instructions"/>
+                        <field name="estimated_weight_kg"/>
+                        <field name="item_quantity"/>
+                    </group>
+                    <group string="Add-ons">
+                        <field name="logspace_addon_ids" widget="many2many_tags"/>
+                    </group>
+                </page>
+
+                <!-- Verification Page -->
+                <page string="Verification" invisible="not is_logspace_order">
+                    <group>
+                        <field name="verification_code_pickup" readonly="1"/>
+                        <field name="verification_code_dropoff" readonly="1"/>
+                    </group>
+                </page>
+
+                <!-- Payment Page -->
+                <page string="Payment" invisible="not is_logspace_order">
+                    <group>
+                        <field name="payment_status"/>
+                        <field name="payment_method"/>
+                        <field name="transaction_ref"/>
+                    </group>
+                </page>
+            </xpath>
+
+            <!-- Add Logspace buttons to header -->
+            <xpath expr="//button[@name='action_confirm']" position="after">
+                <button name="action_logspace_confirm" string="Confirm Logspace Order"
+                    type="object" invisible="not is_logspace_order or logspace_state != 'pending'"/>
+                <button name="action_assign_driver" string="Assign Driver"
+                    type="object" invisible="not is_logspace_order or logspace_state != 'confirmed'"/>
+                <button name="action_start_transit" string="Start Transit"
+                    type="object" invisible="not is_logspace_order or logspace_state not in ('confirmed', 'driver_assigned')"/>
+                <button name="action_mark_delivered" string="Mark Delivered"
+                    type="object" invisible="not is_logspace_order or logspace_state != 'in_transit'"
+                    class="oe_highlight"/>
+                <button name="action_cancel_logspace" string="Cancel Order"
+                    type="object" invisible="not is_logspace_order or logspace_state in ('delivered', 'cancelled')"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ========================================================================= -->
+    <!-- Sale Order Tree View Extension -->
+    <!-- ========================================================================= -->
+    <record id="view_sale_order_tree_inherit_logspace" model="ir.ui.view">
+        <field name="name">sale.order.tree.inherit.logspace</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="is_logspace_order" invisible="1"/>
+                <field name="logspace_state" invisible="not is_logspace_order" optional="show"/>
+                <field name="logspace_provider_id" invisible="not is_logspace_order" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ========================================================================= -->
+    <!-- Sale Order Search View (Standalone for Logspace) -->
+    <!-- ========================================================================= -->
+    <record id="view_sale_order_search_logspace" model="ir.ui.view">
+        <field name="name">sale.order.search.logspace</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="logspace_provider_id"/>
+                <field name="logspace_state"/>
+                <separator/>
+                <filter name="filter_logspace" string="Logspace Orders" domain="[('is_logspace_order', '=', True)]"/>
+                <filter name="filter_guest" string="Guest Orders" domain="[('is_guest_order', '=', True)]"/>
+                <separator/>
+                <filter name="group_by_logspace_state" string="Logspace Status" context="{'group_by': 'logspace_state'}"/>
+                <filter name="group_by_provider" string="Provider" context="{'group_by': 'logspace_provider_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- ========================================================================= -->
+    <!-- Logspace Orders Action -->
+    <!-- ========================================================================= -->
+    <record id="action_sale_order_logspace" model="ir.actions.act_window">
+        <field name="name">Logspace Orders</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">list,form,calendar,kanban,activity</field>
+        <field name="search_view_id" ref="view_sale_order_search_logspace"/>
+        <field name="context">{
+            'default_is_logspace_order': True,
+            'search_default_filter_logspace': 1,
+        }</field>
+        <field name="domain">[('is_logspace_order', '=', True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Logspace logistics order
+            </p>
+        </field>
+    </record>
+
+</odoo>

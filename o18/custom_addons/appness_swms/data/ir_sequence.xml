@@ -1,0 +1,40 @@
+<odoo>
+    <data noupdate="1">
+
+        <record id="family_seq_id" model="ir.sequence">
+            <field name="name">Family Sequence</field>
+            <field name="code">family.seq</field>
+            <field name="prefix">F</field>
+            <field name="padding">6</field>
+        </record>
+
+        <record id="family_member_seq_id" model="ir.sequence">
+            <field name="name">Family Member Sequence</field>
+            <field name="code">member.seq</field>
+            <field name="prefix">M</field>
+            <field name="padding">6</field>
+        </record>
+
+        <record id="case_seq_id" model="ir.sequence">
+            <field name="name">Case Sequence</field>
+            <field name="code">case.seq</field>
+            <field name="prefix">R</field>
+            <field name="padding">6</field>
+        </record>
+
+        <record id="waiting_list_seq_id" model="ir.sequence">
+            <field name="name">Waiting List Sequence</field>
+            <field name="code">waiting.seq</field>
+            <field name="prefix">WL</field>
+            <field name="padding">6</field>
+        </record>
+
+        <record id="ir_sequence_swms" model="ir.sequence">
+            <field name="name">Default SWMS Services Sequence</field>
+            <field name="code">swms.sequence</field>
+            <field name="prefix">SWMS</field>
+            <field name="padding">5</field>
+            <field name="swms_allow" eval="True"/>
+        </record>
+    </data>
+</odoo>

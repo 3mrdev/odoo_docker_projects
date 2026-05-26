@@ -1,0 +1,19 @@
+<odoo>
+    <data>
+        <record id="mail_activity_data_approval" model="mail.activity.type">
+            <field name="name">SWMS: Approval</field>
+            <field name="icon">fa-check-circle</field>
+            <field name="sequence">4</field>
+            <field name="active">True</field>
+            <field name="res_model">helpdesk.ticket</field>
+        </record>
+
+        <record id="mail_activity_document_expire" model="mail.activity.type">
+            <field name="name">SWMS: Document Expired</field>
+            <field name="icon">fa-check-circle</field>
+            <field name="sequence">5</field>
+            <field name="active">True</field>
+            <field name="res_model">documents.document</field>
+        </record>
+    </data>
+</odoo>

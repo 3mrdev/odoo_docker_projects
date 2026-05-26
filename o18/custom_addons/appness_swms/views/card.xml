@@ -1,0 +1,75 @@
+<odoo>
+    <data>
+        <record id="swms_card_form" model="ir.ui.view">
+            <field name="name">swms.card.form</field>
+            <field name="model">swms.card</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div name="button_box" position="inside">
+                            <button name="action_see_history" type="object" class="oe_stat_button" icon="fa-pencil-square-o" invisible="history_count == 0">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_value"><field name="history_count"/></span>
+                                    <span class="o_stat_text">History</span>
+                                </div>
+                            </button>
+                            <button name="action_see_sponserships" type="object" class="oe_stat_button" icon="fa-users" invisible="sponserships_count == 0">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_value"><field name="sponserships_count"/></span>
+                                    <span class="o_stat_text">Sponserships</span>
+                                </div>
+                            </button>
+                        </div>
+                        <group>
+                            <field name="name" readonly="name" force_save="1"/>
+                            <field name="family_id" string="Last assigned Family" readonly="1" domain="[('is_family','=',True),('is_company','=',True)]" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                            <field name="card_used"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+        
+        <record id="swms_card_list" model="ir.ui.view">
+            <field name="name">swms.card.list</field>
+            <field name="model">swms.card</field>
+            <field name="arch" type="xml">
+                <list decoration-success="card_used == False">
+                    <field name="name" readonly="name" string="Lulu Card No."/>
+                    <field name="family_id" string="Last assigned Family" readonly="1" domain="[('is_family','=',True),('is_company','=',True)]" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                    <field name="card_used"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="swms_card_search" model="ir.ui.view">
+            <field name="name">swms.card.search</field>
+            <field name="model">swms.card</field>
+            <field name="arch" type="xml">
+                <search string="Card">
+                    <field name="name"/>
+                    <filter name="unarchive" string="Unarchive" domain="[('active','=',False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="swms_card_spending_list" model="ir.ui.view">
+            <field name="name">swms.card.spending.list</field>
+            <field name="model">swms.card.spending</field>
+            <field name="arch" type="xml">
+                <list editable="bottom" decoration-danger="account_move_type == 'in_refund'" decoration-success="account_move_type == 'in_invoice'">
+                    <field name="date"/>
+                    <field name="name" string="Description" optional="hide"/>
+                    <field name="account_move_type" column_invisible="1"/>
+                    <field name="account_move_id" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                    <field name="request_id" optional="show" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                    <field name="family_id" optional="show" domain="[('is_family','=',True),('is_company','=',True)]" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                    <field name="currency_id" column_invisible="1"/>
+                    <field name="amount" sum="Total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                </list>
+            </field>
+        </record>
+    </data>
+</odoo>

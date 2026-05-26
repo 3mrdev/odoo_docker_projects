@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ========================================================================= -->
+    <!-- Provider Form View - Inherits res.partner form -->
+    <!-- ========================================================================= -->
+    <record id="view_res_partner_provider_form" model="ir.ui.view">
+        <field name="name">res.partner.provider.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <!-- Add is_provider checkbox after name -->
+            <xpath expr="//sheet/div[1]" position="before">
+                <field name="is_provider" widget="boolean_toggle"/>
+            </xpath>
+
+            <!-- Add status bar after name -->
+            <xpath expr="//sheet" position="before">
+                <header invisible="not is_provider">
+                    <field name="state" widget="statusbar" options="{'clickable': '1'}" statusbar_visible="draft,pending,approved,rejected,suspended"/>
+                </header>
+            </xpath>
+
+            <!-- Provider-specific notebook pages -->
+            <xpath expr="//notebook" position="inside">
+                <!-- Business Info Page -->
+                <page string="Business Info" invisible="not is_provider">
+                    <group>
+                        <group string="Business Information">
+                            <field name="tax_id"/>
+                            <field name="cr_number"/>
+                            <field name="years_experience"/>
+                            <field name="platform_fee_percentage"/>
+                        </group>
+                        <group string="Status">
+                            <field name="is_approved_provider" readonly="1"/>
+                            <field name="approval_date" readonly="1"/>
+                            <field name="rejection_reason" invisible="state != 'rejected'"/>
+                            <field name="suspension_reason" invisible="state != 'suspended'"/>
+                        </group>
+                    </group>
+                </page>
+
+                <!-- Fleet Summary Page -->
+                <page string="Fleet Summary" invisible="not is_provider">
+                    <field name="fleet_summary_ids">
+                        <list editable="bottom">
+                            <field name="vehicle_type_id"/>
+                            <field name="fleet_count"/>
+                            <field name="capacity_tons"/>
+                            <field name="dimensions"/>
+                        </list>
+                    </field>
+                </page>
+
+                <!-- Time Frames Page -->
+                <page string="Time Frames" invisible="not is_provider">
+                    <field name="time_frame_ids">
+                        <list editable="bottom">
+                            <field name="vehicle_type_id"/>
+                            <field name="time_start" widget="float_time"/>
+                            <field name="time_end" widget="float_time"/>
+                            <field name="is_pickup"/>
+                            <field name="is_dropoff"/>
+                            <field name="name"/>
+                        </list>
+                    </field>
+                </page>
+
+                <!-- Special Instructions Page -->
+                <page string="Special Instructions" invisible="not is_provider">
+                    <field name="special_instruction_ids">
+                        <list editable="bottom">
+                            <field name="vehicle_type_id"/>
+                            <field name="instructions" widget="html"/>
+                            <field name="is_active"/>
+                        </list>
+                    </field>
+                </page>
+
+                <!-- Vehicles Page -->
+                <page string="Vehicles" invisible="not is_provider">
+                    <field name="logspace_vehicle_ids">
+                        <list editable="bottom">
+                            <field name="name"/>
+                            <field name="plate_number"/>
+                            <field name="vehicle_type_id"/>
+                            <field name="zone_id"/>
+                            <field name="is_active"/>
+                        </list>
+                    </field>
+                </page>
+
+                <!-- Price Matrix Page -->
+                <page string="Price Matrix" invisible="not is_provider">
+                    <field name="logspace_price_matrix_ids">
+                        <list editable="bottom">
+                            <field name="zone_from_id"/>
+                            <field name="zone_to_id"/>
+                            <field name="vehicle_type_id"/>
+                            <field name="distance_km"/>
+                            <field name="provider_price"/>
+                            <field name="is_active"/>
+                        </list>
+                    </field>
+                </page>
+
+                <!-- Vehicle Type Add-ons Page -->
+                <page string="Vehicle Type Add-ons" invisible="not is_provider">
+                    <field name="vehicle_type_addon_ids">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="vehicle_type_id"/>
+                            <field name="addon_id"/>
+                            <field name="provider_price"/>
+                            <field name="is_active"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ========================================================================= -->
+    <!-- Provider List View -->
+    <!-- ========================================================================= -->
+    <record id="view_res_partner_provider_tree" model="ir.ui.view">
+        <field name="name">res.partner.provider.list</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="is_provider" invisible="1"/>
+                <field name="state" widget="badge" decoration-success="state=='approved'" decoration-warning="state=='pending'" decoration-danger="state in ['rejected','suspended']"/>
+                <field name="is_approved_provider"/>
+                <field name="city"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="logspace_vehicle_count"/>
+                <field name="logspace_rating"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ========================================================================= -->
+    <!-- Provider Search View -->
+    <!-- ========================================================================= -->
+    <record id="view_res_partner_provider_search" model="ir.ui.view">
+        <field name="name">res.partner.provider.search</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="tax_id"/>
+                <field name="cr_number"/>
+                <separator/>
+                <filter name="filter_providers" string="Is Provider" domain="[('is_provider', '=', True)]"/>
+                <filter name="filter_approved" string="Approved" domain="[('is_provider', '=', True), ('state', '=', 'approved')]"/>
+                <filter name="filter_pending" string="Pending" domain="[('is_provider', '=', True), ('state', '=', 'pending')]"/>
+                <filter name="filter_rejected" string="Rejected" domain="[('is_provider', '=', True), ('state', '=', 'rejected')]"/>
+                <separator/>
+                <filter name="group_by_state" string="Status" context="{'group_by': 'state'}"/>
+                <filter name="group_by_years_experience" string="Experience" context="{'group_by': 'years_experience'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- ========================================================================= -->
+    <!-- Provider Action -->
+    <!-- ========================================================================= -->
+    <record id="action_res_partner_provider" model="ir.actions.act_window">
+        <field name="name">Logspace Providers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_ids" eval="[
+            (5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('view_res_partner_provider_tree')})
+        ]"/>
+        <field name="search_view_id" ref="view_res_partner_provider_search"/>
+        <field name="context">{'default_is_provider': True, 'default_is_company': True}</field>
+        <field name="domain">[('is_provider', '=', True)]</field>
+    </record>
+
+    <!-- ========================================================================= -->
+    <!-- All Partners Action (for comparison - shows all) -->
+    <!-- ========================================================================= -->
+    <record id="action_res_partner_all" model="ir.actions.act_window">
+        <field name="name">All Partners</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{}</field>
+    </record>
+
+</odoo>

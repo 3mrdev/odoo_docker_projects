@@ -1,0 +1,342 @@
+<odoo>
+    <template id="portal_swms_service_request" name="Service Request">
+        <t t-call="portal.portal_layout">
+            <div class="o_portal_security_body ">
+                <t t-set="additional_title">Service Request</t>
+                <t t-set="no_breadcrumbs" t-value="1"/>
+                <t t-set="my_details" t-value="False"/>
+                <div class="d-flex gap-2 my-3">
+                    <a t-if="not update_request" href="/swms/services" title="Go Back" class="btn btn-light px-2"><i class="oi oi-chevron-left"/></a>
+                    <a t-if="update_request" href="/my/requests" title="Go Back" class="btn btn-light px-2"><i class="oi oi-chevron-left"/></a>
+                    <h3 class="my-0" t-esc="service_name"></h3>
+                    <h3 t-if="request_seq" class="text-muted"> (#<span t-esc="request_seq"/>)</h3>
+                </div>
+            </div>
+            <div class="container padding-bottom-3x mb-1" style="padding-left: 30px; padding-right: 30px;">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="steps d-flex flex-wrap flex-sm-nowrap justify-content-between">
+                            <t t-set="count" t-value="1"/>
+                            <div t-foreach="steps" t-as="step" t-attf-class="step mt-2 mb-2 {{'completed' if page_id >= count else ''}}">
+                                 <t t-set="count" t-value="count+1"/>
+                                <div class="step-icon-wrap">
+                                <div class="step-icon"><i t-attf-class="{{'fa fa-check' if page_id >= count else step['icon']}}"></i></div>
+                                </div>
+                                <h4 class="step-title" t-esc="step['name']"></h4>
+                            </div>
+
+                            <!-- <div t-foreach="steps" t-as="step" t-attf-class="step mt-2 mb-2 {{'completed' if page_id >= count else ''}}">
+                                <a t-if="not update_request" t-attf-href="/swms/service_request/{{service_id}}/{{count}}">
+                                    <div class="step-icon-wrap">
+                                    <t t-set="count" t-value="count+1"/>
+                                    <div class="step-icon"><i t-attf-class="{{'fa fa-check' if page_id >= count else step['icon']}}"></i></div>
+                                    </div>
+                                    <h4 class="step-title" t-esc="step['name']"></h4>
+                                </a>
+                                <a t-if="update_request" t-attf-href="/swms/service_request/{{service_id}}/{{count}}/{{request_id}}">
+                                    <div class="step-icon-wrap">
+                                    <t t-set="count" t-value="count+1"/>
+                                    <div class="step-icon"><i t-attf-class="{{'fa fa-check' if page_id >= count else step['icon']}}"></i></div>
+                                    </div>
+                                    <h4 class="step-title" t-esc="step['name']"></h4>
+                                </a>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt16 o_project_portal_sidebar">
+                <!-- <t t-call="portal.portal_record_sidebar">
+                    <t t-set="classes" t-value="'col-lg-4 col-xxl-3 d-print-none'"/>
+
+                    <t t-set="entries">
+                        <div class="o_portal_index_card col-md-12 order-2">
+                            <div class="d-flex gap-2 gap-md-3 py-3 pe-2 px-md-3 h-100 rounded text-decoration-none">
+                                <div class="o_portal_icon">
+                                    <img t-attf-src="#{'/portal/static/src/img/portal-connection.svg'}"/>
+                                </div>
+                                <div>
+                                    <div class="mt-0 mb-1 fs-5 fw-normal lh-1">
+                                        <span t-esc="service_name"/>
+                                    </div>
+                                    <div class="opacity-75">
+                                        Follow all your service requests
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <div class="col-12 d-xl-block">
+                                <small class="form-text text-muted" t-esc="description"></small>
+                            </div>
+                            <div class="mt-4">
+                                <div t-attf-class="col-12 col-md-12 mt-3" >
+                                    <h6>
+                                        <small t-esc="service_desc" class="text-muted"></small>
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t> -->
+                <!-- class="o_portal_content col-12 col-lg-8 col-xxl-9 mt-5 mt-lg-0 -->
+                <div id="service_content" class="col-12">
+                    <div id="card">
+                        <div id="card_body">
+                            <form method="post" enctype="multipart/form-data">
+                                <div class="row o_portal_details">
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <t t-call="appness_swms_portal.portal_swms_form_fields"/>
+                                            <input type="hidden" name="redirect" t-att-value="redirect"/>
+                                        </div>
+                                        <div class="clearfix text-end mb-5">
+                                            <a t-attf-href="/my/requests" class="btn btn-light me-2">
+                                                Close
+                                            </a>
+                                            <a t-if="not update_request and page_id &gt; 1" t-attf-href="/swms/service_request/{{service_id}}/{{page_id-1 if page_id &gt; 1 else 1}}" class="btn btn-light me-2">
+                                                Discard and Back
+                                            </a>
+                                            <a t-if="update_request and page_id &gt; 1" t-attf-href="/swms/service_request/{{service_id}}/{{page_id-1 if page_id &gt; 1 else 1}}/{{request_id}}" class="btn btn-light me-2">
+                                                Discard and Back
+                                            </a>
+                                            <!-- <a t-if="page_id &lt; count-1" t-attf-href="/swms/service_request/{{service_id}}/{{page_id+1 if page_id &lt; count-1 else count-2}}" class="btn btn-primary me-2 float-end">
+                                                Next
+                                            </a> -->
+                                            <button t-if="page_id &lt; count-1" type="submit" class="btn btn-primary float-end">
+                                                Save and Next
+                                            </button>
+                                            <button t-if="page_id == count-1" type="submit" class="btn btn-primary float-end">
+                                                Save and Finish
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="o_portal_doc_spinner spinner-border text-o-color-2 align-self-center mt-5"/> -->
+        </t>
+    </template>
+
+    <template id="portal_swms_requests" name="My Requests">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Requests</t>
+            </t>
+            <div class="d-flex flex-column align-items-end">
+                <a t-attf-href="/swms/services?{{ keep_query() }}" class="btn btn-primary mb-2" role="button">New Request</a>
+            </div>
+            <div t-if="not grouped_tickets" class="alert alert-info">
+                There are currently no request for your account.
+            </div>
+            <t t-else="">
+                <t t-call="portal.portal_table">
+                    <thead>
+                        <tr>
+                            <th>Request</th>
+                            <th class="text-end" t-if="groupby != 'create_date'">Reported on</th>
+                            <!-- <th id="ticket_user_header" t-if="groupby != 'user_id'" class="ps-5">Assigned to</th> -->
+                            <th t-if="groupby != 'stage_id'" colspan="5" class="text-end">Stage</th>
+                        </tr>
+                    </thead>
+                    <t t-foreach="grouped_tickets" t-as="tickets">
+                        <tbody>
+                            <tr t-if="not groupby =='none'" class="table-light">
+                                <th t-if="groupby == 'stage_id'" colspan="5">
+                                    <span t-field="tickets[0].stage_id.name"/>
+                                </th>
+                                <th t-if="groupby == 'user_id'" colspan="5">
+                                    <span t-if="tickets[0].user_id" t-out="tickets[0].user_id.name"/>
+                                    <span t-else="">Unassigned</span>
+                                </th>
+                                <th t-if="groupby == 'team_id'" colspan="6">
+                                    <span t-field="tickets[0].team_id.name"/>
+                                </th>
+                                <th t-if="groupby == 'create_date'" colspan="5">
+                                    <span t-field="tickets[0].create_date"/>
+                                </th>
+                                <th t-if="groupby == 'kanban_state'" colspan="6">
+                                    <span t-if="tickets[0].kanban_state == 'normal'">In Progress</span>
+                                    <span t-elif="tickets[0].kanban_state == 'blocked'">Blocked</span>
+                                    <span t-else="tickets[0].kanban_state">Ready</span>
+                                </th>
+                                <th t-if="groupby == 'partner_id'" colspan="6">
+                                    <span t-if="tickets[0].partner_id" t-field="tickets[0].partner_id.name"/>
+                                    <span t-else="">No Customer</span>
+                                </th>
+                            </tr>
+                        </tbody>
+                        <t t-foreach="tickets" t-as="ticket">
+                            <tr>
+                                <td class="text-start"><a t-attf-href="/swms/request/#{ticket.id}"><small>#</small><!-- <t t-out="ticket.request_seq"/> - <span t-field="ticket.ticket_ref"/> --><span t-att-title="ticket.name" t-field="ticket.name"/></a></td>
+                                <td class="text-end" t-if="groupby != 'create_date'">
+                                    <span t-field="ticket.create_date" t-options='{"widget": "datetime", "hide_seconds": True}'/>
+                                </td>
+                                <!-- <td id="ticket_user_body" t-if="groupby != 'user_id'" class="ps-5 lh-1">
+                                    <img t-if="ticket.user_id" class="o_avatar o_portal_contact_img rounded" t-attf-src="#{image_data_uri(ticket.user_id.sudo().avatar_128)}" alt="Contact"/>
+                                    <span t-field="ticket.user_id"/>
+                                </td> -->
+                                <td t-if="groupby != 'stage_id'" class="text-end">
+                                    <span t-attf-class="badge rounded-pill fw-normal #{'text-bg-success' if ticket.stage_id.fold else 'text-bg-primary'}" t-esc="ticket.stage_id.name"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="requests_followup" name="SWMS Request">
+        <t t-call="portal.portal_layout">
+            <t t-set="title" t-value="swms_request.name"/>
+            <t t-set="wrapwrap_classes" t-value="'o_portal_bg_dark'"/>
+
+            <t t-set="o_portal_fullwidth_alert" groups="helpdesk.group_helpdesk_user">
+                <t t-call="portal.portal_back_in_edit_mode">
+                    <t t-set="backend_url" t-value="'/odoo/action-helpdesk.helpdesk_ticket_action_main_tree/%s?menu_id=%s' % (swms_request.id, swms_request.env.ref('helpdesk.helpdesk_ticket_menu_all').id)"/>
+                </t>
+            </t>
+
+            <div class="row mt16 o_project_portal_sidebar">
+                <t t-call="portal.portal_record_sidebar">
+                    <t t-set="classes" t-value="'col-lg-4 col-xxl-3 d-print-none'"/>
+
+                    <t t-set="entries">
+                        <div class="d-flex flex-column">
+                            <!-- <div class="d-flex flex-column align-items-end"></div> -->
+                            <div t-if="swms_request.team_id.allow_portal_ticket_closing and not swms_request.stage_id.fold and not swms_request.closed_by_partner" class="flex-grow-1">
+                                <div class="d-grid flex-sm-nowrap">
+                                    <button class="btn btn-light pt-1" data-bs-target="#helpdesk_ticket_close_modal" data-bs-toggle="modal">
+                                        Close Request
+                                    </button>
+                                </div>
+
+                                <div class="modal" tabindex="-1" role="dialog" id="helpdesk_ticket_close_modal">
+                                    <div class="modal-dialog mt-5" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Close request</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>We hope to have addressed your request satisfactorily. If you no longer need our assistance, please close this ticket. Thank you for your collaboration.</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a role="button" class="btn btn-primary" t-att-href="'/my/request/close/%s/%s' % (swms_request.id, swms_request.access_token)">Close Request</a>
+                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Discard</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="ticket-nav" class="flex-grow-1 p-0" t-ignore="true" role="complementary">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item" id="nav-header">
+                                        <a class="nav-link p-0" href="#card_header">
+                                            Request
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" id="nav-chat">
+                                        <a class="nav-link p-0" href="#ticket_chat">
+                                            History
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <a t-attf-href="/swms/service_request/{{service_id}}/1/{{request_id}}?{{ keep_query() }}" class="btn btn-primary mt-3 col-6" role="button">Edit Request</a>
+                            <div id="ticket-links" t-if="ticket_link_section" class="flex-grow-1" t-ignore="true" role="complementary" invisible="1">
+                                <ul class="nav flex-column">
+                                    <t t-foreach="sorted(ticket_link_section, key=lambda r: r['sequence'])" t-as="ticket_link">
+                                        <li class="nav-item">
+                                            <a class="nav-link p-0" t-att-href="'/my/request/%s' % swms_request.id">
+                                                <t t-out="ticket_link['title']"/>
+                                                <!-- '/my/ticket/%s' % ticket.id -->
+                                                <!-- ticket_link['access_url'] -->
+                                            </a>
+                                        </li>
+                                    </t>
+                                </ul>
+                            </div>
+
+                            <div t-if="swms_request.user_id or swms_request.partner_id" class="mt-4">
+                                <!-- <div t-attf-class="col-12 col-md-12" t-if="ticket.user_id">
+                                    <h6>
+                                        <small class="text-muted">Assigned to</small>
+                                    </h6>
+                                    <t t-call="portal.portal_my_contact">
+                                        <t t-set="_contactAvatar" t-value="image_data_uri(ticket.user_id.avatar_128)"/>
+                                        <t t-set="_contactName" t-value="ticket.user_id.name"/>
+                                    </t>
+                                </div> -->
+                                <div t-attf-class="col-12 col-md-12 {{ 'mt-3' if swms_request.user_id.name else '' }}" t-if="swms_request.partner_id">
+                                     <h6>
+                                        <small class="text-muted">Family</small>
+                                    </h6>
+                                    <t t-call="portal.portal_my_contact">
+                                        <t t-set="_contactAvatar" t-value="image_data_uri(swms_request.partner_id.avatar_128)"/>
+                                        <t t-set="_contactName" t-value="swms_request.partner_id.display_name"/>
+                                        <a t-attf-href="mailto:{{swms_request.partner_id.email}}" t-if="swms_request.partner_id.email"><div t-field="swms_request.partner_id" t-options='{"widget": "contact", "fields": ["email"]}'/></a>
+                                        <a t-attf-href="tel:{{swms_request.partner_id.phone}}" t-if="swms_request.partner_id.phone"><div t-field="swms_request.partner_id" t-options='{"widget": "contact", "fields": ["phone"]}'/></a>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+                <div id="ticket_content" class="o_portal_content col-12 col-lg-8 col-xxl-9 mt-5 mt-lg-0">
+                    <div t-if="ticket_closed" class="alert alert-success alert-dismissible d-print-none" role="status">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <span>Your request has successfully been closed. Thank you for your collaboration.</span>
+                    </div>
+                    <div id="card">
+                        <div id="card_header" class="container" data-anchor="true">
+                            <div class="row gs-0">
+                                <div class="col-md">
+                                    <h5 class="row justify-content-between">
+                                        <div class="col-md-9 text-truncate">
+                                            <span t-field="swms_request.name" class="h3"/>
+                                            <small class="text-muted"> (#<span t-field="swms_request.request_seq"/>)</small>
+                                            <!-- (#<span t-field="swms_request.ticket_ref"/>) -  -->
+                                        </div>
+                                        <div class="col col-auto">
+                                            <small>Stage:</small>
+                                            <small t-field="swms_request.stage_id.name" t-attf-class="badge rounded-pill smaller #{'text-bg-info' if swms_request.stage_id.fold else 'text-bg-light bg-200'}" title="Current stage of this request"/>
+                                        </div>
+                                        
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="card_body">
+                            <div class="row mb-4">
+                                <strong class="col-lg-3">Created on</strong>
+                                <span class="col-lg-9" t-field="swms_request.create_date" t-options='{"widget": "datetime", "hide_seconds": True}'/>
+                            </div>
+                            <div t-if="not is_html_empty(swms_request.description)" class="row mt-3" name="description">
+                                <div class="col-lg-12" t-field="swms_request.description"/>
+                            </div>
+
+                            <!-- TODO: Add more fields to portal -->
+                        </div>
+                    </div>
+
+                    <hr/>
+                    <div class="o_portal_messages_container" id="ticket_chat" data-anchor="true">
+                        <h3>Communication history</h3>
+                        <t t-call="portal.message_thread">
+                            <t t-set="token" t-value="swms_request.access_token"/>
+                            <!-- <t t-set="disable_composer" t-value="swms_request.stage_id.fold"/> -->
+                            <t t-set="disable_composer" t-value="True"/>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

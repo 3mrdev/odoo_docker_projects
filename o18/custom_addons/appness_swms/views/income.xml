@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <record id="swms_income_list" model="ir.ui.view">
+            <field name="name">swms.income.list</field>
+            <field name="model">swms.income</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="doc_type" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                    <field name="amount"/>
+                    <field name="interval" string="Every"/>
+                    <field name="frequency"/>
+                </list>
+            </field>
+        </record>
+    </data>
+</odoo>

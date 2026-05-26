@@ -1,0 +1,108 @@
+<odoo>
+    <data noupdate="0">
+        <!-- Maintenance team security group -->
+        <!-- <record id="group_maintenance_team" model="res.groups">
+            <field name="name">Maintenance Team</field>
+            <field name="category_id" ref="base.module_category_maintenance"/>
+        </record> -->
+
+        <!-- Maintenance request access rights -->
+        <!-- <record id="maintenance_request_access_maintenance_team" model="ir.model.access">
+            <field name="name">maintenance.request.access.maintenance.team</field>
+            <field name="model_id" ref="maintenance.model_maintenance_request"/>
+            <field name="group_id" ref="group_maintenance_team"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
+        </record> -->
+
+        <!-- Maintenance equipment access rights -->
+        <!-- <record id="maintenance_equipment_access_maintenance_team" model="ir.model.access">
+            <field name="name">maintenance.equipment.access.maintenance.team</field>
+            <field name="model_id" ref="maintenance.model_maintenance_equipment"/>
+            <field name="group_id" ref="group_maintenance_team"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
+        </record> -->
+        <!-- Maintenance team access rules for maintenance.equipment.category -->
+        <!-- <record id="maintenance_team_access_rule_equipment_category" model="ir.model.access">
+            <field name="name">maintenance.equipment.category.access.maintenance.team</field>
+            <field name="model_id" ref="maintenance.model_maintenance_equipment_category"/>
+            <field name="group_id" ref="group_maintenance_team"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="0"/>
+            <field name="perm_create" eval="0"/>
+            <field name="perm_unlink" eval="0"/>
+        </record>
+        <record id="maintenance_team_access_rule_equipment_category" model="ir.model.access">
+            <field name="name">maintenance.equipment.category.access.maintenance.team</field>
+            <field name="model_id" ref="maintenance_plan.model_maintenance_equipment_category"/>
+            <field name="group_id" ref="group_maintenance_team"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+        </record> -->
+                <!-- Maintenance kind access rights -->
+        <!-- <record id="maintenance_kind_access_maintenance_team" model="ir.model.access">
+            <field name="name">maintenance.kind.access.maintenance.team</field>
+            <field name="model_id" ref="maintenance_plan.model_maintenance_kind"/>
+            <field name="group_id" ref="group_maintenance_team"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
+        </record> -->
+
+        <!-- Maintenance request record rule -->
+        <!-- <record id="maintenance_request_record_rule_maintenance_team" model="ir.rule">
+            <field name="name">maintenance.request.rule.maintenance.team</field>
+            <field name="model_id" ref="maintenance.model_maintenance_request"/>
+            <field name="groups" eval="[(4, ref('group_maintenance_team'))]"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+        </record> -->
+
+        <!-- Maintenance equipment record rule -->
+        <!-- <record id="maintenance_equipment_record_rule_maintenance_team" model="ir.rule">
+            <field name="name">maintenance.equipment.rule.maintenance.team</field>
+            <field name="model_id" ref="maintenance.model_maintenance_equipment"/>
+            <field name="groups" eval="[(4, ref('group_maintenance_team'))]"/>
+            <field name="domain_force">[('team_id.user_id', '=', user.id)]</field>
+
+        </record> -->
+
+        <!-- Maintenance team record rule -->
+        
+        <!-- <record id="maintenance_team_record_rule_maintenance_team" model="ir.rule">
+            <field name="name">maintenance.team.rule.maintenance.team</field>
+            <field name="model_id" ref="maintenance.model_maintenance_team"/>
+            <field name="groups" eval="[(4, ref('group_maintenance_team'))]"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+        </record> -->
+
+<!--        <record id="maintenance_team_access_rule_employee" model="ir.model.access">
+            <field name="name">hr.employee.access.maintenance.team</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="group_id" ref="group_maintenance_team"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="0"/>
+            <field name="perm_create" eval="0"/>
+            <field name="perm_unlink" eval="0"/>
+        </record> -->
+
+        <!-- Maintenance team access rules for hr.employee.public -->
+<!--         <record id="maintenance_team_access_rule_employee_public" model="ir.model.access">
+            <field name="name">hr.employee.public.access.maintenance.team</field>
+            <field name="model_id" ref="hr.model_hr_employee_public"/>
+            <field name="group_id" ref="group_maintenance_team"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="0"/>
+            <field name="perm_create" eval="0"/>
+            <field name="perm_unlink" eval="0"/>
+        </record> -->
+
+    </data>
+</odoo>

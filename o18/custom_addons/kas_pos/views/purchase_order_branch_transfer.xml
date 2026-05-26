@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="purchase_order_branch_transfer_form" model="ir.ui.view">
+            <field name="name">purchase.order.branch.transfer.form.kas_pos</field>
+            <field name="model">purchase.order.branch.transfer</field>
+            <field name="arch" type="xml">
+                <form string="Purchase Order Branch Transfer">
+                    <sheet>
+                        <group>
+                            <field name="purchase_order_id"/>
+                            <field name="purchase_order_line_id"/>
+                            <field name="product_id"/>
+                            <field name="product_qty"/>
+                            <field name="branch_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="purchase_order_branch_transfer_list" model="ir.ui.view">
+            <field name="name">purchase.order.branch.transfer.list.kas_pos</field>
+            <field name="model">purchase.order.branch.transfer</field>
+            <field name="arch" type="xml">
+                <list string="Purchase Order Branch Transfer">
+                    <field name="purchase_order_id"/>
+                    <field name="purchase_order_line_id"/>
+                    <field name="product_id"/>
+                    <field name="product_qty"/>
+                    <field name="branch_id"/>
+                </list>
+            </field>
+        </record>
+    </data>
+</odoo>

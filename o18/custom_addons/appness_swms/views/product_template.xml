@@ -1,0 +1,70 @@
+<odoo>
+    <data>
+        <record id="swms_product_form_inherit" model="ir.ui.view">
+            <field name="name">swms.product.template.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view" />
+            <field name="arch" type="xml">
+
+                <div name="options" position="inside">
+                    <span class="d-inline-flex">
+                        <field name="is_swms" string="SWMS" />
+                        <label for="is_swms" />
+                    </span>
+                </div>
+
+                <xpath expr="//notebook/page[1]" position="before">
+                    <page string="SWMS" invisible="not is_swms"
+                        groups="helpdesk.group_helpdesk_user">
+                        <group>
+                            <group>
+                                <field name="recurring_invoice" string="Is Sponsership?"
+                                    widget="boolean_toggle" />
+                                <field name="action_types" widget="radio"
+                                    options="{'horizontal': true}" invisible="recurring_invoice" />
+                                <field name="plan_id"
+                                    invisible="not recurring_invoice and action_types != 'recurring'"
+                                    required="is_swms and (recurring_invoice or action_types == 'recurring')"
+                                    options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" />
+                                <field name="allowed_address">
+                                    <list editable="bottom">
+                                        <field name="country_id" class="o_address_country"
+                                            options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"
+                                            domain="[('swms_allow','=',True)]" />
+                                        <field name="state_ids" class="o_address_state"
+                                            placeholder="State"
+                                            options="{'no_open': True, 'no_quick_create': True,'no_create': True}"
+                                            context="{'country_id': country_id, 'default_country_id': country_id}"
+                                            widget="many2many_tags"
+                                            domain="[('swms_allow','=',True)]" />
+                                        <field name="city_ids" class="o_address_city"
+                                            options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"
+                                            domain="[('country_id', '=', country_id),('swms_allow','=',True)]"
+                                            context="{'default_country_id': country_id, 'default_state_ids': state_ids}"
+                                            widget="many2many_tags" />
+                                    </list>
+                                </field>
+                            </group>
+                            <group>
+                                <field name="is_published_swms" widget="boolean_toggle" />
+                                <field name="can_be_repeated" widget="boolean_toggle" />
+                                <!-- <field name="choose_activity_type_id" required="is_swms"
+                                options="{'no_create_edit': True, 'no_open': True,
+                                'no_quick_create': True,'no_create': True}"/>
+                                <field name="choose_activity_manager" required="is_swms" options="{'no_create_edit': True,
+                                'no_open': True, 'no_quick_create': True,'no_create': True}"/> -->
+                                <field name="sequence_id" required="is_swms"
+                                    options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"
+                                    domain="[('swms_allow','=',True)]" />
+                                <field name="budget_analytic_accounts_ids" widget="many2many_tags"
+                                    options="{'no_create_edit': True, 'no_open': True,'no_create': True}" />
+                                <field name="document_types" widget="many2many_tags"
+                                    options="{'no_create_edit': True, 'no_open': True,'no_create': True}" />
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

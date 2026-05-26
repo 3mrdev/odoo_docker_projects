@@ -1,0 +1,47 @@
+<odoo>
+    <data>
+        <record id="swms_crm_lead_form_inherit" model="ir.ui.view">
+            <field name="name">crm.lead.form.inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <field name="active" position="after">
+                    <group invisible="not is_swms">
+                        <group>
+                            <field name="is_swms" readonly="1" string="Is SWMS ?" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                </field>
+                <xpath expr="//group[@name='lead_partner']/field[@name='partner_id']" position="replace">
+                    <field name="partner_id" domain="[('is_family','=',False)]" widget="res_partner_many2one" context="{'default_name': contact_name,'default_title': title,'default_street': street,'default_street2': street2,'default_city': city,'default_state_id': state_id,'default_zip': zip,'default_country_id': country_id,'default_function': function,'default_phone': phone,'default_mobile': mobile,'default_email': email_from,'default_user_id': user_id,'default_team_id': team_id,'default_website': website,'default_lang': lang_code,'show_vat': True}" invisible="not is_partner_visible"/>
+                </xpath>
+                <xpath expr="//group[@name='opportunity_partner']/field[@name='partner_id']" position="replace">
+                   <field name="partner_id" domain="[('is_family','=',False)]" widget="res_partner_many2one" string="Contact" context="{'res_partner_search_mode': type == 'opportunity' and 'customer' or False,'default_name': contact_name or partner_name,'default_street': street,'default_is_company': type == 'opportunity' and contact_name == False,'default_company_name': type == 'opportunity' and partner_name,'default_street2': street2,'default_city': city,'default_title': title,'default_state_id': state_id,'default_zip': zip,'default_country_id': country_id,'default_function': function,'default_phone': phone,'default_mobile': mobile,'default_email': email_from,'default_user_id': user_id,'default_team_id': team_id,'default_website': website,'default_lang': lang_code,'show_vat': True,}"/>
+                </xpath>
+
+                <xpath expr="//notebook/page[1]" position="after">
+                    <page string="SWMS" invisible="not is_swms" groups="helpdesk.group_helpdesk_user">
+                        <group>
+                            <group>
+                                <field name="sponsered_qty" string="How many do you want to sponser?"/>
+                            </group>
+                            <group>
+                                <field name="is_available" string="Is Sponser Avaialble?"/>
+                            </group>
+                        </group>
+                        <field name="lines" readonly="1">
+                            <list editable="bottom">
+                                <field name="name" readonly="1"/>
+                                <field name="product" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}" string="Service" domain="[('is_swms','=',True)]"/>
+                                <field name="family" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                                <field name="family_member" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                                <field name="sponsership"/>
+                                <field name="state" readonly="1"/>
+                            </list>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

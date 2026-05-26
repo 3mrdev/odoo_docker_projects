@@ -1,0 +1,136 @@
+<odoo>
+    <template id="portal_logspace_services" name="All Services">
+        <t t-call="portal.portal_layout">
+            <t t-set="my_details" t-value="False"/>
+            <div class="o_portal_my_home">
+                <div class="o_portal_docs row g-2">
+                    <t t-if="not services">
+                        <div class="col-12">
+                            <div class="alert alert-info">
+                                Sorry but there is no services available in your area.
+                            </div>
+                        </div>
+                    </t>
+                    <t t-else="" t-foreach="services" t-as="service" >
+                    <!-- t-call="portal.portal_docs_entry" -->
+                        <!-- <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+                        <t t-set="title"><span t-esc="service.name"/></t>
+                        <t t-set="text"><span t-esc="service.description_sale"/></t>
+                        <t t-set="url" t-value="'/logspace/service/%s' % (service.id)"/>
+                        <t t-set="config_card" t-value="True"/> -->
+                        <div class="o_portal_index_card col-md-6 order-2">
+                            <a t-attf-href="/logspace/service/{{service.id}}" class="d-flex gap-2 gap-md-3 py-3 pe-2 px-md-3 h-100 rounded text-decoration-none bg-100">
+                                <div class="o_portal_icon">
+                                    <!-- <img t-attf-src="#{'/appness_logspace_portal/static/img/helphand.png'}"/> -->
+                                    <img src="data:image/png;base64,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"/>
+                                </div>
+                                <div>
+                                    <div class="mt-0 mb-1 fs-5 fw-normal lh-1">
+                                        <span t-esc="service.name"/>
+                                    </div>
+                                    <div class="opacity-75">
+                                        <span t-esc="service.description_sale"/>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </t>
+                    <div class="o_portal_doc_spinner spinner-border text-o-color-2 align-self-center mt-5"/>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal_logspace_service" name="Service Details">
+        <t t-call="portal.portal_layout">
+            <div class="o_portal_security_body w-md-75 w-lg-50 pb-5">
+                <t t-set="additional_title">Service Details</t>
+                <t t-set="no_breadcrumbs" t-value="1"/>
+                <t t-set="my_details" t-value="False"/>
+                <div class="d-flex gap-2 my-3">
+                    <a href="/logspace/services" title="Go Back" class="btn btn-light px-2"><i class="oi oi-chevron-left"/></a>
+                    <h3 class="my-0"><span t-esc="service_name"/></h3>
+                </div>
+            </div>
+            <div class="row mt16 o_project_portal_sidebar">
+                <t t-call="portal.portal_record_sidebar">
+                    <t t-set="classes" t-value="'col-lg-4 col-xxl-3 d-print-none'"/>
+
+                    <t t-set="entries">
+                        <div class="d-flex flex-column">
+                            <div id="ticket-nav" class="flex-grow-1 p-0" t-ignore="true" role="complementary">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item" id="nav-header">
+                                        <a class="nav-link p-0" href="#card_header">
+                                            Service Details
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" id="nav-chat">
+                                        <a class="nav-link p-0" href="#required_documents">
+                                            Required Documents
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="mt-4">
+                                <div t-attf-class="col-12 col-md-12 mt-3" >
+                                    <h6>
+                                        <small class="text-muted">Are you sure you have all the required documents ?</small>
+                                    </h6>
+                                    <a t-attf-href="/logspace/service_request/{{service_id}}/1?{{ keep_query() }}" class="btn btn-primary mb-2" role="button">Apply</a>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+                <div id="service_content" class="o_portal_content col-12 col-lg-8 col-xxl-9 mt-5 mt-lg-0">
+                    <div id="card">
+                        <div id="card_header" class="container" data-anchor="true">
+                            <div class="row gs-0">
+                                <div class="col-md">
+                                    <h5 class="row justify-content-between">
+                                        <div class="col-md-9 text-truncate">
+                                            <span t-esc="service_name" class="h3"/>
+                                            <!-- <small class="text-muted"> Follow all your service requests </small> -->
+                                        </div>
+                                        <div class="col col-auto">
+                                            <small>Status:</small>
+                                            <small t-attf-class="badge rounded-pill smaller #text-bg-light bg-200}" title="Service Status">Available</small>
+                                        </div>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="card_body">
+                            <div class="row mt-3" name="description">
+                                <div class="col-lg-12" t-esc="service_desc"/>
+                            </div>
+                        </div>
+                        <div id="required_documents" class="row mt-5">
+                            <h4>Required Documents</h4>
+                            <div class="row">
+                                <t t-foreach="required_documents" t-as="required_document">
+                                    <div class="o_portal_index_card col-12 col-md-6 order-2 mt-3">
+                                        <div class="d-flex gap-2 gap-md-3 py-3 pe-2 px-md-3 h-100 rounded text-decoration-none alert alert-primary align-items-center">
+                                            <div class="alert-link">
+                                                <div class="mt-0 mb-1 fs-5 fw-normal lh-1 d-flex gap-2">
+                                                    <span class="fw-bold">1</span>
+                                                    <span t-esc="required_document['name']"></span>
+                                                </div>
+                                                <div class="opacity-75">
+                                                    <span t-esc="required_document['description']"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="o_portal_doc_spinner spinner-border text-o-color-2 align-self-center mt-5"/> -->
+        </t>
+    </template>
+</odoo>

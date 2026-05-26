@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="hr_expense_view_form" model="ir.ui.view">
+            <field name="name">hr.expense.view.form</field>
+            <field name="model">hr.expense</field>
+            <field name="inherit_id" ref="hr_expense.hr_expense_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='analytic_distribution']" position="after">
+                    <field name="waqf_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

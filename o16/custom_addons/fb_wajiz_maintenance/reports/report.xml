@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="report.paperformat" id="paperformat_a4">
+        <field name="name">paperformat.land.report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_width">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">30</field>
+        <field name="margin_right">5</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report 
+        id="main_request_report"
+        name="fb_wajiz_maintenance.main_request_temp"
+        string="Requests Table Report"
+        model="maintenance.request"
+        paperformat="paperformat_a4"
+        report_type="qweb-pdf"/>
+
+    <template id="main_request_temp">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2 class="text-center">تقرير طلبات الصيانة</h2>
+                    <h2 class="text-center">Maintenance Requests Report</h2>
+                    
+                    <br/>
+                    <t t-set="count" t-value="0"/>
+                    <table class="table table-bordered table-sm">
+                        <thead>
+                            <tr>
+                                <!-- <th class="text-right">#</th> -->
+                                <th class="text-right">(Subject) المواضيع</th>
+                                <th class="text-right">(Request Date) تاريخ الطلب</th>
+                                <th class="text-right">(Employee) الموظف</th>
+                                <th class="text-right">(Technician) الفني</th>
+                                <th class="text-right">(Address) العنوان</th>
+                                <th class="text-right">(Stage) المرحلة</th>
+                            </tr>
+                        </thead>
+                        <tbody class="sale_tbody">
+                            <t t-foreach="docs" t-as="doc">
+                                <t t-set="count" t-value="count + 1"/>
+                                <tr>
+                                    <!-- <td><span t-esc="count"> </span></td> -->
+                                    <td><span t-field="doc.name"> </span></td>
+                                    <td><span t-field="doc.request_date"> </span></td>
+                                    <td><span t-field="doc.employee_id"> </span></td>
+                                    <td><span t-field="doc.user_id"> </span></td>
+                                    <td><span t-field="doc.address_id"> </span></td>
+                                    <td><span t-field="doc.stage_id"> </span></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <br/>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-right">(First Signature) التوقيع الاول</th>
+                                <th class="text-right">(Second Signature) التوقيع الثاني</th>
+                            </tr>
+                        </thead>
+                        <tbody class="sale_tbody">
+                            <tr>
+                                <td><span style="border-bottom: 4px dotted black; width: 200px; height:30px;"/></td>
+                                <td><span style="border-bottom: 4px dotted black; width: 200px; height:30px;"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <report
+        id="report_maintenance_equipment_spareparts"
+        model="maintenance.equipment"
+        string="Spareparts History Report"
+        report_type="qweb-pdf"
+        name="fb_wajiz_maintenance.report_maintenance_spareparts_template"
+        file="fb_wajiz_maintenance.report_maintenance_spareparts_template"
+    />
+
+    <template id="report_maintenance_spareparts_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <style>
+                    @font-face {
+                        font-family: 'Noto Sans Arabic';
+                        src: url('/path/to/NotoSansArabic.ttf') format('truetype');
+                    }
+                    body {
+                        font-family: 'Noto Sans Arabic', sans-serif;
+                        direction: rtl;
+                        text-align: right;
+                    }
+                </style>
+
+                <t t-foreach="doc_ids" t-as="equipment_id">
+                    <t t-set="equipment" t-value="env['maintenance.equipment'].browse(equipment_id)"/>
+                    <div class="page">
+                        <h2 class="text-center">تقرير قطع الغيار لـ <t t-esc="equipment.name" /> </h2>
+                        
+                        <table class="table table-bordered" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th style="border: 1px solid black; padding: 8px;">التاريخ</th>
+                                    <th style="border: 1px solid black; padding: 8px;">الشحنة</th>
+                                    <th style="border: 1px solid black; padding: 8px;">نوع العملية</th>
+                                    <th style="border: 1px solid black; padding: 8px;">المنتج</th>
+                                    <th style="border: 1px solid black; padding: 8px;">الكمية</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="equipment.sparepart_ids" t-as="sparepart">
+                                    <tr>
+                                        <td style="border: 1px solid black; padding: 8px;">
+                                            <t t-esc="sparepart.date.strftime('%Y-%m-%d')"/>
+                                        </td>
+                                        <td style="border: 1px solid black; padding: 8px;">
+                                            <t t-esc="sparepart.picking_id.name"/>
+                                        </td>
+                                        <td style="border: 1px solid black; padding: 8px;">
+                                            <t t-esc="sparepart.picking_code"/>
+                                        </td>
+                                        <td style="border: 1px solid black; padding: 8px;">
+                                            <t t-esc="sparepart.product_id.name"/>
+                                        </td>
+                                        <td style="border: 1px solid black; padding: 8px;">
+                                            <t t-esc="sparepart.product_uom_qty"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4" style="border: 1px solid black; padding: 8px; text-align: right;">الإجمالي:</td>
+                                    <td style="border: 1px solid black; padding: 8px;">
+                                        <t t-esc="sum(sparepart.product_uom_qty for sparepart in equipment.sparepart_ids)"/>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+    <record id="action_print_spareparts_report" model="ir.actions.server">
+        <field name="name">Print Spareparts Report</field>
+        <field name="model_id" ref="model_maintenance_equipment"/>
+        <field name="binding_type">action</field>
+        <field name="binding_model_id" ref="model_maintenance_equipment"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = env.ref('fb_wajiz_maintenance.report_maintenance_equipment_spareparts').report_action(records)
+        </field>
+    </record>
+
+</odoo>

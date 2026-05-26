@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- <report
+        id="action_employee_attendance_report"
+        model="hr.employee"
+        string="Employee Attendance Report"
+        report_type="qweb-pdf"
+        name="fb_wajiz_hr.attendance_report_template"
+        file="fb_wajiz_hr.attendance_report_template"
+        /> -->
+
+        <!--<record id="action_employee_attendance_report" model="ir.actions.report">
+            <field name="name">Employee Attendance Report</field>
+            <field name="model">employee.attendance.report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">fb_wajiz_hr.attendance_report_template</field>
+            <field name="report_file">fb_wajiz_hr.attendance_report_template</field>
+        </record>-->
+
+    <template id="attendance_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <style>
+                    @font-face {
+                        font-family: 'Noto Sans Arabic';
+                        src: url('/path/to/NotoSansArabic.ttf') format('truetype');
+                    }
+                    body {
+                        font-family: 'Noto Sans Arabic', sans-serif;
+                        direction: rtl;
+                        text-align: right;
+                    }
+                </style>
+
+                <t t-foreach="doc_ids" t-as="employee_id">
+                    <t t-set="employee" t-value="env['hr.employee'].browse(employee_id)"/>
+                    <div class="page">
+                        <h2 class="text-center">Employee Attendance Report for <t t-esc="employee.name" /> </h2>                      
+                        <table class="table table-bordered" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th style="border: 1px solid black; padding: 8px;">التاريخ</th>
+                                    <th style="border: 1px solid black; padding: 8px;">اليوم</th>
+                                    <th style="border: 1px solid black; padding: 8px;">عدد ساعات العمل</th>
+                                    <th style="border: 1px solid black; padding: 8px;">عدد ساعات الغياب</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="total_worked_hours" t-value="0"/>
+                                <t t-set="total_absence_hours" t-value="0"/>
+                                
+                                <t t-foreach="employee.total_hours_not_attended" t-as="record">
+                                    <tr>
+                                        <td style="border: 1px solid black; padding: 8px;">
+                                            <t t-esc="record.date"/>
+                                        </td>
+                                        <td style="border: 1px solid black; padding: 8px;">
+                                            <t t-esc="record.day"/>
+                                        </td>
+                                        <td style="border: 1px solid black; padding: 8px;">
+                                            <t t-set="worked_hours" t-value="record.worked_hours or 0"/>
+                                            <t t-esc="'{:.2f}'.format(worked_hours)"/>
+                                            <t t-set="total_worked_hours" t-value="total_worked_hours + worked_hours"/>
+                                        </td>
+                                        <td style="border: 1px solid black; padding: 8px;">
+                                            <t t-set="absence_hours" t-value="record.absence_hours or 0"/>
+                                            <t t-esc="'{:.2f}'.format(absence_hours)"/>
+                                            <t t-set="total_absence_hours" t-value="total_absence_hours + absence_hours"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+
+                <!-- Display total on the last page -->
+                <div class="page">
+                    <h2 class="text-center">Totals</h2>
+                    <table class="table table-bordered" style="width: 100%; border-collapse: collapse;">
+                        <tfoot>
+                            <tr>
+                                <td colspan="2" style="border: 1px solid black; padding: 8px; text-align: right;">إجمالي ساعات العمل:</td>
+                                <td style="border: 1px solid black; padding: 8px;">
+                                    <t t-esc="'{:.2f}'.format(total_worked_hours)"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="border: 1px solid black; padding: 8px; text-align: right;">إجمالي ساعات الغياب:</td>
+                                <td style="border: 1px solid black; padding: 8px;">
+                                    <t t-esc="'{:.2f}'.format(total_absence_hours)"/>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+      <!--  <template id="attendance_report_template">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2>Employee Attendance Report</h2>
+                    <p>Date Range: <t t-esc="date_from"/> to <t t-esc="date_to"/></p>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Employee</th>
+                                <th>Date</th>
+                                <th>Day</th>
+                                <th>Worked Hours</th>
+                                <th>Absence Hours</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="docs" t-as="record">
+                                <tr>
+                                    <td><t t-esc="record.employee_id.name"/></td>
+                                    <td><t t-esc="record.date"/></td>
+                                    <td><t t-esc="record.day"/></td>
+                                    <td><t t-esc="record.worked_hours"/></td>
+                                    <td><t t-esc="record.absence_hours"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </template> -->
+    <!-- <record id="action_print_attendance_report" model="ir.actions.server">
+        <field name="name">Print Employee Attendance Report</field>
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="binding_type">action</field>
+        <field name="binding_model_id" ref="model_hr_employee"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = env.ref('fb_wajiz_hr.action_employee_attendance_report').report_action(records)
+        </field>
+    </record> -->
+
+
+        <!-- <report
+        id="action_monthly_biometric_report"
+        model="employee.attendance.report"
+        string="Monthly Biometric Report"
+        report_type="qweb-pdf"
+        name="fb_wajiz_hr.biometric_report_template"
+        file="fb_wajiz_hr.biometric_report_template"
+        /> -->
+
+    <template id="biometric_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <style>
+                    @font-face {
+                        font-family: 'Noto Sans Arabic';
+                        src: url('/path/to/NotoSansArabic.ttf') format('truetype');
+                    }
+                    body {
+                        font-family: 'Noto Sans Arabic', sans-serif;
+                        direction: rtl;
+                        text-align: right;
+                    }
+                </style>
+
+                <!-- Title Page -->
+                <div class="page">
+                    <h2 class="text-center">تقرير البصمة الشهري</h2>
+                </div>
+
+                <t t-foreach="doc_ids" t-as="employee_id">
+                    <t t-set="employee" t-value="env['employee.attendance.report'].browse(employee_id)"/>
+                    <t t-set="department" t-value="employee.department_id"/>
+                    <div class="page">
+                    </div>
+                </t>
+
+                <!-- Display total on the last page -->
+                <div class="page">
+                </div>
+            </t>
+        </t>
+    </template>
+
+        <record id="action_print_biometric_report" model="ir.actions.server">
+            <field name="name">Print Monthly Biometric Report</field>
+            <field name="model_id" ref="model_employee_attendance_report"/>
+            <field name="binding_type">action</field>
+            <field name="binding_model_id" ref="model_employee_attendance_report"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = env.ref('fb_wajiz_hr.biometric_report_template').report_action(records)
+            </field>
+        </record>
+
+    </data>
+</odoo>

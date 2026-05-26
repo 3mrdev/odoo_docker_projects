@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_inherit_appness_gs1" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.appness.gs1</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <block name="catalog_setting_container" position="before">
+                <block title="Subscription Expiry" name="subscription_expiry_setting_container">
+                    <setting id="subscription_expiry_domain"
+                        title="Domain to filter subscription orders"
+                        help="Domain to filter subscription orders">
+                        <field name="subscription_expiry_domain" widget="domain"
+                            options="{'model': 'sale.order'}" optional="hide" />
+                    </setting>
+                </block>
+            </block>
+        </field>
+    </record>
+</odoo>

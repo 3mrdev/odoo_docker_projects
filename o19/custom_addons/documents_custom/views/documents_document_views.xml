@@ -1,0 +1,38 @@
+<odoo>
+    <record id="documents_documents_list_inherit" model="ir.ui.view">
+        <field name="name">documents.documents.list.inherit</field>
+        <field name="model">documents.document</field>
+        <field name="inherit_id" ref="documents.documents_view_list_main"/>
+        <field name="arch" type="xml">
+            <field name="tag_ids" position="before">
+                <field name="ref" optional="show"/>
+                <field name="issued_by" optional="show"/>
+                <field name="issue_date" optional="show"/>
+                <field name="expiry_date" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="documents_documents_form_rename_inherit" model="ir.ui.view">
+        <field name="name">documents.documents.form.inherit</field>
+        <field name="model">documents.document</field>
+        <field name="inherit_id" ref="documents.document_view_form_rename"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <group>
+                    <group>
+                        <field name="ref"/>
+                        <field name="issued_by"/>
+                    </group>
+                    <group>
+                        <field name="issue_date"/>
+                        <field name="expiry_date"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="remarks"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

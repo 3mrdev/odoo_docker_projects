@@ -1,0 +1,42 @@
+<odoo>
+    <data>
+
+        <record id="jiz_documents_documents_list" model="ir.ui.view">
+            <field name="name">documents.documents.list.inherit</field>
+            <field name="model">documents.document</field>
+            <field name="inherit_id" ref="documents.documents_view_list_main"/>
+            <field name="arch" type="xml">
+                <field name="tag_ids" position="before">
+                    <field name="doc_type" optional="show"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="jiz_documents_documents_form" model="ir.ui.view">
+            <field name="name">documents.documents.form.inherit</field>
+            <field name="model">documents.document</field>
+            <field name="inherit_id" ref="documents.document_view_form"/>
+            <field name="arch" type="xml">
+                <field name="type" position="after">
+                    <field name="doc_type" invisible="res_model not in ['crm.lead', 'jiz.waqf']" domain="[('type', '=', 'waqf')]" options="{'no_create_edit': True,'no_open': True,'no_quick_create': True}" required="1"/>
+                    <field name="doc_type" invisible="res_model != 'helpdesk.ticket'" domain="[('type', '=', 'ataa')]" options="{'no_create_edit': True,'no_open': True,'no_quick_create': True}" required="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="jiz_documents_documents_kanban" model="ir.ui.view">
+            <field name="name">documents.documents.kanban.inherit</field>
+            <field name="model">documents.document</field>
+            <field name="inherit_id" ref="documents.document_view_kanban"/>
+            <field name="arch" type="xml">
+                <footer class="d-flex px-2"  position="replace">
+                    <footer t-if="record.type.raw_value != 'folder'" class="d-flex px-2"  position="replace">
+                        <field name="doc_type" widget="badge" decoration-warning="True"/>
+                        <field t-if="record.tag_ids.raw_value.length" name="tag_ids" class="d-block text-wrap" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                    </footer>
+                </footer>
+            </field>
+        </record>
+
+    </data>
+</odoo>

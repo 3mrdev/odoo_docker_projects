@@ -1,0 +1,22 @@
+<odoo>
+    <data noupdate="1">
+
+        <record model="res.groups.privilege" id="res_groups_privilege_budget_alert">
+            <field name="name">Budget Alert</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="group_budget_alert_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="privilege_id" ref="res_groups_privilege_budget_alert" />
+        </record>
+
+        <record id="group_budget_alert_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="privilege_id" ref="res_groups_privilege_budget_alert" />
+            <field name="implied_ids"
+                eval="[(4, ref('account_budget_alert.group_budget_alert_user'))]" />
+        </record>
+
+    </data>
+</odoo>

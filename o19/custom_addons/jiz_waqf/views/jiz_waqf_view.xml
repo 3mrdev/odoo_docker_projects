@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="jiz_waqf_view_kanban" model="ir.ui.view">
+            <field name="name">jiz.waqf.kanban</field>
+            <field name="model">jiz.waqf</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_dashboard o_waqf_kanban" default_group_by="status" groups_draggable="0" records_draggable="0">
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="waqf_sequence_number"/>
+                    <field name="use_type_id"/>
+                    <field name="unit_count"/>
+                    <field name="free_unit_count"/>
+                    <field name="rented_unit_count"/>
+                    <field name="maintenance_unit_count"/>
+                    <templates>
+                        <t t-name="card">
+                            <div class="oe_kanban_global_click">
+                                <div class="o_kanban_card_header">
+                                    <div class="o_kanban_card_header_title">
+                                        <div class="o_primary">
+                                            <span><t t-esc="record.waqf_sequence_number.value"/> - <t t-esc="record.name.value"/></span>
+                                        </div>
+                                        <!-- <div>
+                                            <span class="text-success fw-bold"><t t-esc="record.use_type_id.name"/></span>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div class="container o_kanban_card_content mt-4" invisible="not use_type_is_rent">
+                                    <div class="row">
+                                        <div class="col-6 o_kanban_primary_left">
+                                            <button class="btn btn-primary" name="action_view_units" type="object">
+                                                <t t-esc="record.unit_count.value"/> Units
+                                            </button>
+                                        </div>
+                                        <div class="col-6 o_kanban_primary_right">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <span class="text-success fw-bold"><i class="fa fa-check-circle-o"/> Free: <t t-esc="record.free_unit_count.value"/></span>
+                                                </div>
+                                                <div class="col-12">
+                                                    <span class="text-warning fw-bold"><i class="fa fa-clock-o"/> Rented: <t t-esc="record.rented_unit_count.value"/></span>
+                                                </div>
+                                                <div class="col-12">
+                                                    <span class="text-danger fw-bold"><i class="fa fa-wrench"/> Maintenance: <t t-esc="record.maintenance_unit_count.value"/></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="jiz_waqf_view_form" model="ir.ui.view">
+            <field name="name">jiz.waqf.view.form</field>
+            <field name="model">jiz.waqf</field>
+            <field name="arch" type="xml">
+                <form string="Waqf">
+                    <header>
+                        <button name="action_submit" string="Submit" type="object" class="oe_highlight" invisible="status != 'draft'"/>
+                        <button name="action_hold" string="Hold" type="object" invisible="status not in ['in_progress', 'sold']"/>
+                        <!-- <button name="action_sell" string="Sell" type="object" class="oe_highlight" invisible="status != 'in_progress'"/> -->
+                        <button name="action_reset_to_draft" string="Reset to Draft" type="object" invisible="status not in ['on_hold', 'sold']"/>
+                        <button name="%(jiz_waqf.jiz_waqf_generate_units_wizard_action)d" string="Generate Units" type="action" class="oe_highlight" context="{'default_waqf_id': id}" invisible="not use_type_is_rent or status in ['on_hold', 'sold']"/>
+                        <button name="action_create_asset" string="Create Asset" type="object" class="oe_highlight" invisible="asset_id != False"/>
+                        <field name="status" widget="statusbar" statusbar_visible="draft,in_progress,sold"/>
+                    </header>
+                    <div class="alert alert-danger w-100 d-flex align-items-center" role="alert" invisible="not noti_documents">
+                        <field name="noti_documents" readonly="1"/>
+                        <button name="check_documents" type="object" class="alert-link" icon="fa-refresh" title="Refresh Data"/>
+                    </div>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_open_attachments" type="object" class="oe_stat_button" icon="fa-file-text-o">
+                                <field name="document_count" widget="statinfo" string="Documents"/>
+                            </button>
+                            <button name="action_view_opportunity" type="object" class="oe_stat_button" icon="fa-star" invisible="opportunity_count == 0">
+                                <field name="opportunity_count" widget="statinfo" string="Opportunity"/>
+                            </button>
+                            <button name="action_view_asset" type="object" class="oe_stat_button" icon="fa-building-o" invisible="asset_count == 0">
+                                <field name="asset_count" widget="statinfo" string="Asset"/>
+                            </button>
+                            <button name="action_view_units" type="object" class="oe_stat_button" icon="fa-building-o" invisible="unit_count == 0">
+                                <field name="unit_count" widget="statinfo" string="Units"/>
+                            </button>
+                            <button name="action_view_waqf_invoices" type="object" class="oe_stat_button" icon="fa-file-text-o" invisible="waqf_invoices_count == 0">
+                                <field name="waqf_invoices_count" widget="statinfo" string="Waqf Invoices"/>
+                            </button>
+                            <button name="action_view_waqf_subscriptions" type="object" class="oe_stat_button" icon="fa-file-text-o" invisible="waqf_subscriptions_count == 0">
+                                <field name="waqf_subscriptions_count" widget="statinfo" string="Waqf Subscriptions"/>
+                            </button>
+                            <button name="action_view_sell_invoices" type="object" class="oe_stat_button" icon="fa-file-text-o" invisible="sell_invoices_count == 0 and status != 'sold'">
+                                <field name="sell_invoices_count" widget="statinfo" string="Sell Invoices"/>
+                            </button>
+                            <button name="action_view_project" type="object" class="oe_stat_button" icon="fa-puzzle-piece" invisible="project_count == 0">
+                                <field name="project_count" widget="statinfo" string="Project"/>
+                            </button>
+                            <button name="action_view_purchase" type="object" class="oe_stat_button" icon="fa-credit-card" invisible="purchase_count == 0">
+                                <field name="purchase_count" widget="statinfo" string="Purchase"/>
+                            </button>
+                            <button name="action_view_expense" type="object" class="oe_stat_button" icon="fa-money" invisible="expense_count == 0">
+                                <field name="expense_count" widget="statinfo" string="Expense"/>
+                            </button>
+                        </div>
+                        <group>
+                            <field name="waqf_sequence_number" readonly="1"/>
+                        </group>
+                        <div class="oe_title">
+                            <h1><field name="name" placeholder="Waqf Name..." readonly="status != 'draft'"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="waqf_endower_contact_id" readonly="status != 'draft'"/>
+                                <field name="land_number" readonly="status != 'draft'" required="1"/>
+                                <field name="waqf_type_id" readonly="status != 'draft'" required="1"/>
+                                <field name="use_type_id" readonly="status != 'draft'" required="1"/>
+                                <field name="asset_model_id" readonly="status != 'draft'" required="1"/>
+                                <field name="company_id" groups="base.group_multi_company" readonly="status != 'draft'"/>
+                                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
+                            </group>
+                            <group>
+                                <field name="create_date" string="Create Date" readonly="1"/>
+                                <field name="waqf_date" groups="jiz_waqf.group_jiz_waqf_admin"/>
+                                <field name="waqf_date" readonly="1" groups="!jiz_waqf.group_jiz_waqf_admin"/>
+                                <field name="responsible_id" readonly="0" groups="jiz_waqf.group_jiz_waqf_admin"/>
+                                <field name="responsible_id" readonly="status != 'draft'" groups="!jiz_waqf.group_jiz_waqf_admin"/>
+                                <!-- <field name="invoice_address_id" readonly="status != 'draft'"/> -->
+                                <field name="waqf_valuation" readonly="status != 'draft'"/>
+                                <field name="approximate_sale_amount" readonly="0" groups="jiz_waqf.group_jiz_waqf_admin" invisible="status != 'sold'"/>
+                                <field name="approximate_sale_amount" readonly="status != 'draft'" groups="!jiz_waqf.group_jiz_waqf_admin" invisible="status != 'sold'"/>
+                                <field name="sell_amount" string="Actual Sale Amount" invisible="status != 'sold'"/>
+                                <field name="analytic_account_id" groups="analytic.group_analytic_accounting" readonly="status != 'draft'"/>
+                                <field name="asset_bill_id" readonly="1" invisible="not asset_id or not asset_bill_id"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Units" name="units">
+                                <field name="unit_ids" readonly="status != 'draft'">
+                                    <list>
+                                        <field name="name"/>
+                                        <field name="product_id" string="Unit Type"/>
+                                        <field name="tenant_id"/>
+                                        <field name="price" sum="Total"/>
+                                        <field name="status"/>
+                                    </list>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="rent_total" invisible="not use_type_is_rent">
+                                    <div class="d-flex">
+                                        <label for="units_total_rent" class="me-auto"/>
+                                        <span class="h2">
+                                            <field name="units_total_rent" widget="float" class="oe_inline"/>
+                                            <!-- <span class="oe_grey p-2"> %</span> -->
+                                        </span>
+                                    </div>
+                                </group>
+                            </page>
+                            <page string="Donor Terms &amp; Conditions" name="terms_and_conditions">
+                                <field name="donor_terms_and_conditions" readonly="status != 'draft'"/>
+                            </page>
+                            <page string="Notes" name="notes">
+                                <field name="notes" readonly="status != 'draft'"/>
+                            </page>
+                            <page string="Location" name="location">
+                                <group>
+                                    <group>
+                                        <span class="o_form_label o_td_label o_address_type" name="address_name">
+                                            <span>Address</span>
+                                        </span>
+                                        <div class="o_address_format" readonly="1">
+                                            <field name="country_enforce_cities" invisible="1"/>
+                                            <field name="street" placeholder="Street..." class="o_address_street"/>
+                                            <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                            <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                            <field name="area_id" domain="[('city_id', '=', city_id)]"/>
+                                            <field name="city_id" placeholder="City" class="o_address_city" domain="[('state_id', '=?', state_id)]" context="{'default_state_id': state_id, 'default_country_id': country_id}" invisible="not country_enforce_cities"/>
+                                            <field name="city" placeholder="City" class="o_address_city" invisible="country_enforce_cities and (city_id or city in ('', False))"/>
+                                            <field name="state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
+                                            <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                                        </div>
+                                    </group>
+                                    <group>
+                                        <field name="address_location_details_link" widget="url" readonly="status != 'draft'"/>
+                                        <field name="address_location_details_id" readonly="status != 'draft'"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter>
+                        <thread_view/>
+                        <activities/>
+                    </chatter>
+                </form>
+            </field>
+        </record>
+
+        <record id="jiz_waqf_view_list" model="ir.ui.view">
+            <field name="name">jiz.waqf.view.list</field>
+            <field name="model">jiz.waqf</field>
+            <field name="arch" type="xml">
+                <list string="Waqf">
+                    <field name="name"/>
+                    <field name="waqf_sequence_number"/>
+                    <field name="waqf_endower_contact_id"/>
+                    <field name="waqf_type_id"/>
+                    <field name="use_type_id"/>
+                    <field name="status"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="jiz_waqf_action" model="ir.actions.act_window">
+            <field name="name">Waqf</field>
+            <field name="res_model">jiz.waqf</field>
+            <field name="view_mode">kanban,list,pivot,graph,form</field>
+        </record>
+
+        <record id="jiz_waqf_team_action" model="ir.actions.act_window">
+            <field name="name">Waqf Type</field>
+            <field name="res_model">crm.team</field>
+            <field name="view_mode">kanban,form</field>
+            <field name="domain">[('use_opportunities', '=', True)]</field>
+        </record>
+
+        <record id="jiz_waqf_lead_action" model="ir.actions.act_window">
+            <field name="name">Waqf Pipeline</field>
+            <field name="res_model">crm.lead</field>
+            <field name="view_mode">kanban,list,graph,pivot,form,calendar,activity</field>
+            <field name="domain">[('type','=','opportunity'),('team_id','=',1),('waqf_type', '=', 'in_kind')]</field>
+            <field name="context">{'default_type': 'opportunity','default_team_id': 1, 'search_default_assigned_to_me': 1}</field>
+        </record>
+
+        <menuitem id="jiz_waqf_crm_team_menu" name="Waqf Type" parent="crm.crm_menu_sales" action="jiz_waqf_team_action" sequence="-1"/>
+
+        <menuitem id="jiz_waqf_menu_root" name="Waqf" sequence="26" web_icon="jiz_waqf,static/description/waqf.png"/>
+        <!-- <menuitem id="jiz_waqf_team_menu" name="Overview" parent="jiz_waqf_menu_root" action="jiz_waqf_team_action" sequence="10"/> -->
+        <menuitem id="jiz_waqf_lead_menu" name="Pipeline" parent="jiz_waqf_menu_root" action="jiz_waqf_lead_action" sequence="10"/>
+        <menuitem id="jiz_waqf_managment_menu" name="Managment" parent="jiz_waqf_menu_root" sequence="20"/>
+        <menuitem id="jiz_waqf_waqf_menu" name="Waqf" parent="jiz_waqf_managment_menu" action="jiz_waqf_action" sequence="10"/>
+        <menuitem id="jiz_waqf_configuration_menu" name="Configuration" parent="jiz_waqf_menu_root" sequence="100" groups="jiz_waqf.group_jiz_waqf_admin"/>
+    </data>
+</odoo>

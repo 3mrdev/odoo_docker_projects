@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.appness_logspace</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="70"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <app data-string="Logspace" string="Logspace" name="appness_logspace">
+                        <block title="Logspace">
+                            Soon...
+                        </block>
+                    </app>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="configuration_action" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="context">{'module': 'appness_logspace'}</field>
+        </record>
+
+    </data>
+</odoo>

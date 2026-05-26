@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+        <record id="swms_project_project_form_inherit" model="ir.ui.view">
+            <field name="name">project.project.form.inherit</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <widget name="web_ribbon" position="before">
+                    <group>
+                        <group>
+                            <field name="is_swms" readonly="0" string="Is SWMS ?" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                </widget>
+
+                <xpath expr="//notebook/page[1]" position="after">
+                    <!-- groups="helpdesk.group_helpdesk_user" -->
+                    <page string="SWMS" invisible="not is_swms">
+                        <group>
+                            <group>
+                                <field name="request_id" domain="[('is_swms','=',True)]" readonly="0" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                                <field name="family_id" string="Family"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,14 @@
+<odoo>
+    <record id="group_fb_documents" model="ir.module.category">
+        <field name="name">Documents</field>
+    </record>
+    <record id="group_fb_documents_manager" model="res.groups">
+        <field name="name">Documents Manager</field>
+        <field name="category_id" ref="group_fb_documents"/>
+    </record>
+    <record id="group_fb_documents_user" model="res.groups">
+        <field name="name">Documents User</field>
+        <field name="category_id" ref="group_fb_documents"/>
+    </record>
+    
+</odoo>

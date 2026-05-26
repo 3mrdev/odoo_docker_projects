@@ -1,0 +1,1542 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* fb_wajiz_hr
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e-20250819\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-19 19:49+0000\n"
+"PO-Revision-Date: 2026-01-19 19:49+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.document_form
+msgid ""
+"<small role=\"img\" class=\"fa fa-fw fa-circle text-success o_button_icon hr_presence align-middle\" attrs=\"{'invisible': [('state', '!=', 'valid')]}\" aria-label=\"Valid\" title=\"Valid\"/>\n"
+"                                        <small role=\"img\" class=\"fa fa-fw fa-circle-o text-muted o_button_icon hr_presence align-middle\" attrs=\"{'invisible': [('state', '!=', 'expired')]}\" aria-label=\"Expired\" title=\"Expired\" name=\"expired\"/>\n"
+"                                        <small role=\"img\" class=\"fa fa-fw fa-circle-o text-success o_button_icon hr_presence align-middle\" attrs=\"{'invisible': [('state', '!=', 'draft')]}\" aria-label=\"To define\" title=\"To define\" name=\"draft\"/>\n"
+"                                        <small role=\"img\" class=\"fa fa-fw fa-circle text-warning o_button_icon hr_presence align-middle\" attrs=\"{'invisible': [('state', '!=', 'canceled')]}\" aria-label=\"Canceled\" title=\"Canceled\" name=\"canceled\"/>\n"
+"                                        <small role=\"img\" class=\"fa fa-fw fa-circle text-warning o_button_icon hr_presence align-middle\" attrs=\"{'invisible': [('state', '!=', 'renew')]}\" aria-label=\"Renew\" title=\"Renew\" name=\"renew\"/>"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.document_kanban
+msgid ""
+"<span class=\"fa fa-circle text-success\" role=\"img\" aria-label=\"Valid\" title=\"Valid\" name=\"valid\">\n"
+"                                                            </span>"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.document_kanban
+msgid ""
+"<span class=\"fa fa-circle text-warning\" role=\"img\" aria-label=\"Canceled\" title=\"Canceled\" name=\"canceled\">\n"
+"                                                            </span>"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.document_kanban
+msgid ""
+"<span class=\"fa fa-circle text-warning\" role=\"img\" aria-label=\"Renew\" title=\"Renew\" name=\"renew\">\n"
+"                                                            </span>"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.document_kanban
+msgid ""
+"<span class=\"fa fa-circle-o text-muted\" role=\"img\" aria-label=\"Expired\" title=\"Expired\" name=\"expired\">\n"
+"                                                            </span>"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.document_kanban
+msgid ""
+"<span class=\"fa fa-circle-o text-success\" role=\"img\" aria-label=\"To define\" title=\"To define\" name=\"draft\">\n"
+"                                                            </span>"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.fleet_vehicle_view_form_inherit_related_documents
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.hr_employee_form_inherit_wajiz
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.hr_employee_public_form_inherit_wajiz_documents
+msgid "<span class=\"o_stat_text\">Legal Docs</span>"
+msgstr "‫<span class=\"“o_stat_text”\">اوراق قانونية</span>"
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.hr_contract_form_inherit
+msgid "<span>/ month</span>"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_payslip__bio_absence_days
+msgid "Absence Days"
+msgstr "ايام الغياب"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report__absence_hours
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_payslip__absence_hours
+msgid "Absence Hours"
+msgstr "ساعات الغياب"
+
+#. module: fb_wajiz_hr
+#: model:ir.actions.act_window,name:fb_wajiz_hr.action_employee_attendance_report_wizard
+msgid "Absense Report"
+msgstr "تقرير الغياب"
+
+#. module: fb_wajiz_hr
+#. odoo-python
+#: code:addons/fb_wajiz_hr/reports/bio_attendance.py:0
+#: code:addons/fb_wajiz_hr/reports/bio_attendance.py:0
+#, python-format
+msgid "Absent"
+msgstr "غياب"
+
+#. module: fb_wajiz_hr
+#. odoo-python
+#: code:addons/fb_wajiz_hr/reports/bio_attendance.py:0
+#, python-format
+msgid "Absent 1 day At"
+msgstr "في غياب يوم"
+
+#. module: fb_wajiz_hr
+#. odoo-python
+#: code:addons/fb_wajiz_hr/reports/bio_attendance.py:0
+#, python-format
+msgid "Absent with reason"
+msgstr "غياب بسبب"
+
+#. module: fb_wajiz_hr
+#. odoo-python
+#: code:addons/fb_wajiz_hr/reports/bio_attendance.py:0
+#, python-format
+msgid "Absent without reason"
+msgstr "غياب بدون سبب"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_custody_property__active
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_custody__active
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__active
+msgid "Active"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__address_home_id
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_base__address_home_id
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_public__address_home_id
+msgid "Address"
+msgstr "العنوان"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report__approval
+msgid "Approval"
+msgstr "الموافقة"
+
+#. module: fb_wajiz_hr
+#: model:ir.model,name:fb_wajiz_hr.model_approval_category_approver
+msgid "Approval Type Approver"
+msgstr "مُعتمِد نوع الموافقة "
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.document_form
+msgid "Approve"
+msgstr "تم الموافقة"
+
+#. module: fb_wajiz_hr
+#. odoo-python
+#: code:addons/fb_wajiz_hr/reports/bio_attendance.py:0
+#, python-format
+msgid "Approved"
+msgstr "تم الموافقة"
+
+#. module: fb_wajiz_hr
+#: model:ir.model,name:fb_wajiz_hr.model_approval_approver
+msgid "Approver"
+msgstr "مُعتَمِد "
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields.selection,name:fb_wajiz_hr.selection__employee_attendance_report_wizard__month__4
+msgid "April"
+msgstr "أبريل"
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.document_form
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.document_search
+msgid "Archived"
+msgstr "مؤرِشف"
+
+#. module: fb_wajiz_hr
+#. odoo-python
+#: code:addons/fb_wajiz_hr/reports/bio_attendance.py:0
+#, python-format
+msgid "At"
+msgstr "في"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_custody__attachment
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__id_attachment_id
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__passport_attachment_id
+msgid "Attachment"
+msgstr "المرفق"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: fb_wajiz_hr
+#: model:ir.model,name:fb_wajiz_hr.model_attendance_notes
+msgid "Attendance Notes"
+msgstr "ملاحظات الحضور"
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.attendance_report
+msgid "Attendance Records"
+msgstr "سجلات الحضور"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__total_hours_not_attended
+msgid "Attendance Report"
+msgstr "تقرير الحضور"
+
+#. module: fb_wajiz_hr
+#: model:ir.model,name:fb_wajiz_hr.model_report_fb_wajiz_hr_attendance_report_view
+msgid "Attendance Report Template"
+msgstr "قالب تقرير الحضور"
+
+#. module: fb_wajiz_hr
+#: model:ir.model,name:fb_wajiz_hr.model_attendance_report_wizard
+msgid "Attendance Report Wizard"
+msgstr "نافذة تقرير الحضور"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__attendance_state
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_base__attendance_state
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_public__attendance_state
+msgid "Attendance Status"
+msgstr "حالة الحضور"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields.selection,name:fb_wajiz_hr.selection__employee_attendance_report_wizard__month__8
+msgid "August"
+msgstr "اغسطس"
+
+#. module: fb_wajiz_hr
+#: model:ir.actions.act_window,name:fb_wajiz_hr.res_partner_bank_action
+#: model:ir.ui.menu,name:fb_wajiz_hr.res_partner_bank_menu
+msgid "Bank Accounts"
+msgstr "الحسابات البنكية"
+
+#. module: fb_wajiz_hr
+#: model:ir.model,name:fb_wajiz_hr.model_hr_employee_base
+msgid "Basic Employee"
+msgstr "الموظف الأساسي"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__begin_date
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.document_search
+msgid "Begin Date"
+msgstr "تاريخ البداية"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__begin_date_hijri
+msgid "Begin Date Hijri"
+msgstr "تاريخ البداية بالهجري"
+
+#. module: fb_wajiz_hr
+#: model:ir.actions.act_window,name:fb_wajiz_hr.action_bio_attendance_report_wizard
+#: model:ir.actions.report,name:fb_wajiz_hr.bio_attendance_report_action
+#: model:ir.ui.menu,name:fb_wajiz_hr.fb_bio_attendance_menu
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.bio_attendance_report_wizard
+msgid "Bio Attendance Report"
+msgstr "تقرير الحضور الرقمي"
+
+#. module: fb_wajiz_hr
+#: model:ir.model,name:fb_wajiz_hr.model_report_fb_wajiz_hr_bio_attendance_report_view
+msgid "Bio Attendance Report Template"
+msgstr "قالب تقرير الحضور الرقمي"
+
+#. module: fb_wajiz_hr
+#: model:ir.actions.act_window,name:fb_wajiz_hr.action_biometric_report_wizard
+#: model:ir.actions.report,name:fb_wajiz_hr.biometric_report_action
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.biometric_report_wizard
+msgid "Biometric Report"
+msgstr "تقرير الحضور الرقمي"
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.bio_attendance_report_wizard
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.biometric_report_wizard
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.document_form
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.view_attendance_report_wizard
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.view_custody_confirmation_wizard
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.view_custody_confirmation_wizard_2
+msgid "Cancel"
+msgstr "الغاء"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields.selection,name:fb_wajiz_hr.selection__hr_document__state__canceled
+msgid "Canceled"
+msgstr "تم الالغاء"
+
+#. module: fb_wajiz_hr
+#: model:ir.actions.report,name:fb_wajiz_hr.card_report
+msgid "Card"
+msgstr "البطاقة"
+
+#. module: fb_wajiz_hr
+#: model:ir.actions.act_window,name:fb_wajiz_hr.action_custody_confirmation_wizard_2
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.view_employee_form_inherit_department
+msgid "Change Department"
+msgstr "تغيير القسم"
+
+#. module: fb_wajiz_hr
+#: model:ir.actions.server,name:fb_wajiz_hr.action_check_employee_constraints
+msgid "Check Employee Constraints"
+msgstr "تحقق من قيود الموظف"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__last_check_in
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_base__last_check_in
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_public__last_check_in
+msgid "Check In"
+msgstr "تسجيل الحضور"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__last_check_out
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_base__last_check_out
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_public__last_check_out
+msgid "Check Out"
+msgstr "تسجيل الخروج"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields.selection,name:fb_wajiz_hr.selection__hr_employee_base__attendance_state__checked_in
+msgid "Checked in"
+msgstr "تسجيل الدخول"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields.selection,name:fb_wajiz_hr.selection__hr_employee_base__attendance_state__checked_out
+msgid "Checked out"
+msgstr "تسجيل الخروج"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__company_id
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_document__company_id
+msgid "Company"
+msgstr "شركة"
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.view_custody_confirmation_wizard
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.view_custody_confirmation_wizard_2
+msgid "Confirm"
+msgstr "تأكيد"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__contract_id
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_employee__contract_id
+msgid "Contract"
+msgstr "العقد"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_custody__cost
+msgid "Cost"
+msgstr "التكلفة"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_attendance_notes__create_uid
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_attendance_report_wizard__create_uid
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_custody_confirmation_wizard__create_uid
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report__create_uid
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report_wizard__create_uid
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_fb_bio_attendance_report_wizard__create_uid
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__create_uid
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document_type__create_uid
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_insurance_type__create_uid
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.document_search
+msgid "Created by"
+msgstr "تم الانشاء بواسطة"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_attendance_notes__create_date
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_attendance_report_wizard__create_date
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_custody_confirmation_wizard__create_date
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report__create_date
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report_wizard__create_date
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_fb_bio_attendance_report_wizard__create_date
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__create_date
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document_type__create_date
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_insurance_type__create_date
+msgid "Created on"
+msgstr "تم الانشاء في"
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.view_custody_confirmation_wizard
+msgid "Custody Confirmation"
+msgstr "تأكيد العهدة"
+
+#. module: fb_wajiz_hr
+#: model:ir.actions.act_window,name:fb_wajiz_hr.action_custody_confirmation_wizard
+#: model:ir.model,name:fb_wajiz_hr.model_custody_confirmation_wizard
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.view_custody_confirmation_wizard_2
+msgid "Custody Confirmation Wizard"
+msgstr "نافذة تأكيد العهدة"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_attendance_notes__date
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report__date
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report__day
+msgid "Day"
+msgstr "اليوم"
+
+#. module: fb_wajiz_hr
+#. odoo-python
+#: code:addons/fb_wajiz_hr/reports/bio_attendance.py:0
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document_type__days
+#, python-format
+msgid "Days"
+msgstr "ايام"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields.selection,name:fb_wajiz_hr.selection__employee_attendance_report_wizard__month__12
+msgid "December"
+msgstr "ديسمبر"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_custody_confirmation_wizard__custody_decision
+msgid "Decision"
+msgstr " القرار"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_approval_approver__department_id
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_approval_category_approver__department_id
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_custody_confirmation_wizard__department_id
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report__department_id
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__department_id
+msgid "Department"
+msgstr "القسم"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_approval_approver__department_id
+msgid "Department associated with this approver."
+msgstr "القسم المرتبط بهذا الموافقة."
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_fb_bio_attendance_report_wizard__departments
+msgid "Departments"
+msgstr "الاقسام"
+
+#. module: fb_wajiz_hr
+#: model:ir.model,name:fb_wajiz_hr.model_hr_departure_wizard
+msgid "Departure Wizard"
+msgstr "معالج المغادرة"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_attendance_notes__description
+msgid "Description"
+msgstr "الوصف"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_fleet_vehicle__device_number
+msgid "Device Number"
+msgstr "رقم الجهاز"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_payslip__bio_diff_minutes
+msgid "Diff Hours"
+msgstr "فرق الساعات"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_attendance_notes__display_name
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_attendance_report_wizard__display_name
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_custody_confirmation_wizard__display_name
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report__display_name
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report_wizard__display_name
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_fb_bio_attendance_report_wizard__display_name
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__display_name
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document_type__display_name
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_insurance_type__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__doc_type
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.document_search
+msgid "Doc Type"
+msgstr "نوع المستند"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__document
+msgid "Document"
+msgstr "المستند"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document_type__document_category
+msgid "Document Category"
+msgstr "فئة المستند"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__number
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.document_form
+msgid "Document Number"
+msgstr "رقم المستند"
+
+#. module: fb_wajiz_hr
+#: model:ir.ui.menu,name:fb_wajiz_hr.hr_document_type_menu
+msgid "Document Types"
+msgstr "أنواع المستندات"
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.document_form
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.document_kanban
+msgid "Document's Name"
+msgstr "اسم المستند"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_fleet_vehicle__documents
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__documents
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_public__documents
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.hr_employee_form_inherit_wajiz
+msgid "Documents"
+msgstr "المستندات"
+
+#. module: fb_wajiz_hr
+#: model:ir.actions.server,name:fb_wajiz_hr.documents_reminder_cron_ir_actions_server
+#: model:ir.cron,cron_name:fb_wajiz_hr.documents_reminder_cron
+msgid "Documents Reminder"
+msgstr "تنبيهات المستندات"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_contract__have_ins
+msgid "Does he\\she have insurance ?"
+msgstr "هل هو او هي تمتلك التأمين"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields.selection,name:fb_wajiz_hr.selection__hr_document__state__draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_contract__dynamic_allowance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.hr_contract_form_inherit
+msgid "Dynamic Allowance"
+msgstr "علاوة متغيرة"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_payslip__bio_early_minutes
+msgid "Early Hours"
+msgstr "ساعات المبكرة"
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.hr_employee_form_inherit_wajiz
+msgid "Educational body"
+msgstr "الهيئة التعليمية"
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.hr_employee_form_inherit_wajiz
+msgid "Educational qualification"
+msgstr "المؤهل العلمي"
+
+#. module: fb_wajiz_hr
+#: model:ir.model,name:fb_wajiz_hr.model_hr_employee
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_attendance_notes__employee_id
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_attendance_report_wizard__employee_id
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_custody_confirmation_wizard__employee_id
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report__employee_id
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__employee_id
+#: model:ir.model.fields.selection,name:fb_wajiz_hr.selection__hr_document_type__document_category__employee
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.document_search
+msgid "Employee"
+msgstr "الموظف"
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.view_attendance_report_wizard
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.view_employee_attendance_report_form
+msgid "Employee Attendance Report"
+msgstr "تقرير حضور الموظفين"
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.attendance_report_template
+msgid "Employee Attendance Report for"
+msgstr "تقرير حضور الموظفين ل"
+
+#. module: fb_wajiz_hr
+#: model:ir.actions.act_window,name:fb_wajiz_hr.action_employee_attendance_report_view
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.view_employee_attendance_report_pivot
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.view_employee_attendance_report_tree
+msgid "Employee Attendance Reports"
+msgstr "تقرير حضور الموظفين"
+
+#. module: fb_wajiz_hr
+#: model:ir.model,name:fb_wajiz_hr.model_hr_contract
+msgid "Employee Contract"
+msgstr "عقد الموظف"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_employee__joining_date
+msgid "Employee joining date computed from the contract start date"
+msgstr "يتم احتساب تاريخ انضمام الموظف من تاريخ بدء العقد"
+
+#. module: fb_wajiz_hr
+#. odoo-python
+#: code:addons/fb_wajiz_hr/models/models.py:0
+#, python-format
+msgid "Employees Documents"
+msgstr "مستندات الموظفين"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_attendance_report_wizard__date_to
+msgid "End Date"
+msgstr "تاريخ الانتهاء"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_employee__address_home_id
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_employee_base__address_home_id
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_employee_public__address_home_id
+msgid ""
+"Enter here the private address of the employee, not the one linked to your "
+"company."
+msgstr "قم بإدخال العنوان الخاص بالموظف هنا، لا العنوان المرتبط بشركتك. "
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields.selection,name:fb_wajiz_hr.selection__hr_document__state__expired
+msgid "Expired"
+msgstr "منتهية الصلاحية"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__id_expiry_date
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__passport_expiry_date
+msgid "Expiry Date"
+msgstr "تاريخ الانتهاء"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_employee__id_expiry_date
+msgid "Expiry date of Identification ID"
+msgstr "تاريخ انتهاء معرف الهوية"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_employee__passport_expiry_date
+msgid "Expiry date of Passport ID"
+msgstr "تاريخ انتهاء صلاحية جواز السفر"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__fam_ids
+msgid "Family"
+msgstr "عائلة"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_employee__fam_ids
+msgid "Family Information"
+msgstr "معلومات العائلة"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields.selection,name:fb_wajiz_hr.selection__employee_attendance_report_wizard__month__2
+msgid "February"
+msgstr "فبراير"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__finish_date
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.document_search
+msgid "Finish Date"
+msgstr "تاريخ الانتهاء"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__finish_date_hijri
+msgid "Finish Date Hijri"
+msgstr "تاريخ الانتهاء بالهجري"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_contract__fixed_allowance
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.hr_contract_form_inherit
+msgid "Fixed Allowance"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__message_follower_ids
+msgid "Followers"
+msgstr "المتابعين"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "الشركاء المتابعين"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_document__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#. odoo-python
+#: code:addons/fb_wajiz_hr/reports/bio_attendance.py:0
+#, python-format
+msgid "From"
+msgstr "من"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_fb_bio_attendance_report_wizard__from_date
+msgid "From Date"
+msgstr "من تاريخ"
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.document_search
+msgid "Future"
+msgstr "المستقبل"
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.bio_attendance_report_wizard
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.biometric_report_wizard
+msgid "Get Report"
+msgstr "الحصول على التقرير"
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.document_search
+msgid "Group By"
+msgstr "جمع بواسطة"
+
+#. module: fb_wajiz_hr
+#: model:ir.actions.act_window,name:fb_wajiz_hr.hr_document_type_action
+msgid "HR Document Types"
+msgstr "أنواع المستندات"
+
+#. module: fb_wajiz_hr
+#: model:ir.actions.act_window,name:fb_wajiz_hr.hr_document_action
+#: model:ir.ui.menu,name:fb_wajiz_hr.hr_documents_menu
+msgid "HR Documents"
+msgstr "مستندات الموارد البشرية"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__has_message
+msgid "Has Message"
+msgstr "لدية رسالة"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_fleet_vehicle__have_tracking_device
+msgid "Have Tracking Device?"
+msgstr "ھل السیارة لدیھا جھاز تتبع؟"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__hours_last_month
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_base__hours_last_month
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_public__hours_last_month
+msgid "Hours Last Month"
+msgstr "الساعات في الشهر الماضي "
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__hours_last_month_display
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_base__hours_last_month_display
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_public__hours_last_month_display
+msgid "Hours Last Month Display"
+msgstr "عرض ساعات الشهر الماضي "
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__hours_today
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_base__hours_today
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_public__hours_today
+msgid "Hours Today"
+msgstr "الساعات اليوم "
+
+#. module: fb_wajiz_hr
+#: model:ir.model,name:fb_wajiz_hr.model_hr_custody
+msgid "Hr Custody Management"
+msgstr "إدارة حراسة الموارد البشرية"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_attendance_notes__id
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_attendance_report_wizard__id
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_custody_confirmation_wizard__id
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report__id
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report_wizard__id
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_fb_bio_attendance_report_wizard__id
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__id
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document_type__id
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_insurance_type__id
+msgid "ID"
+msgstr "رقم الهوية"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__activity_exception_icon
+msgid "Icon"
+msgstr "الرمز"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_document__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "رمز يشير إلى نشاط استثناء."
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report__identification_no
+msgid "Identification No"
+msgstr "رقم الهوية"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_document__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا تم اختياره، فإن الرسائل الجديدة تتطلب انتباهك."
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_document__message_has_error
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_document__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا تم اختياره، فإن بعض الرسائل لها خطأ في تسليمها."
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_contract__insurance_percentage
+msgid "Insurance Percentage"
+msgstr "نسبة التأمين"
+
+#. module: fb_wajiz_hr
+#: model:ir.model,name:fb_wajiz_hr.model_hr_insurance_type
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_contract__insurance_type_id
+msgid "Insurance Type"
+msgstr "نوع التأمين"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__message_is_follower
+msgid "Is Follower"
+msgstr "إذا تم اختياره، فإن الرسائل الجديدة تتطلب انتباهك."
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields.selection,name:fb_wajiz_hr.selection__employee_attendance_report_wizard__month__1
+msgid "January"
+msgstr "يناير"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__job_residency
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_base__job_residency
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_public__job_residency
+msgid "Job (Residency)"
+msgstr "الوظيفة (الإقامة)"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__job_uid
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_base__job_uid
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_public__job_uid
+msgid "Job Uid"
+msgstr "الرقم الوظيفي"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__joining_date
+msgid "Joining Date"
+msgstr "تاريخ الانضمام"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields.selection,name:fb_wajiz_hr.selection__employee_attendance_report_wizard__month__7
+msgid "July"
+msgstr "يوليوس"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields.selection,name:fb_wajiz_hr.selection__employee_attendance_report_wizard__month__6
+msgid "June"
+msgstr "يونيو"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__last_attendance_id
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_base__last_attendance_id
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_public__last_attendance_id
+msgid "Last Attendance"
+msgstr "آخر حضور "
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_attendance_notes____last_update
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_attendance_report_wizard____last_update
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_custody_confirmation_wizard____last_update
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report____last_update
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report_wizard____last_update
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_fb_bio_attendance_report_wizard____last_update
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document____last_update
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document_type____last_update
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_insurance_type____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_attendance_notes__write_uid
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_attendance_report_wizard__write_uid
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_custody_confirmation_wizard__write_uid
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report__write_uid
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report_wizard__write_uid
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_fb_bio_attendance_report_wizard__write_uid
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__write_uid
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document_type__write_uid
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_insurance_type__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_attendance_notes__write_date
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_attendance_report_wizard__write_date
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_custody_confirmation_wizard__write_date
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report__write_date
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report_wizard__write_date
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_fb_bio_attendance_report_wizard__write_date
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__write_date
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document_type__write_date
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_insurance_type__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#. odoo-python
+#: code:addons/fb_wajiz_hr/reports/bio_attendance.py:0
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.document_search
+#, python-format
+msgid "Late"
+msgstr "متاخر"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_payslip__bio_late_minutes
+msgid "Late Hours"
+msgstr "ساعات التأخير"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "المرفق"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields.selection,name:fb_wajiz_hr.selection__employee_attendance_report_wizard__month__3
+msgid "March"
+msgstr "مارس"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document_type__max_size
+msgid "Max Document Size (MB)"
+msgstr "الحجم الأقصى للوثيقة (ميجابايت)"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields.selection,name:fb_wajiz_hr.selection__employee_attendance_report_wizard__month__5
+msgid "May"
+msgstr "مايو"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: fb_wajiz_hr
+#. odoo-python
+#: code:addons/fb_wajiz_hr/reports/bio_attendance.py:0
+#, python-format
+msgid "Minutes"
+msgstr "دقيقة"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__personal_mobile
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_base__personal_mobile
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_public__personal_mobile
+msgid "Mobile"
+msgstr "التليفون المحمول"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report_wizard__month
+msgid "Month"
+msgstr "الشهر"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "الموعد النهائي للنشاط الخاص بك"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__name
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document_type__name
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_insurance_type__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.view_custody_confirmation_wizard_2
+msgid "No obligations found for this employee."
+msgstr "لا يوجد مسؤوليات لموظف هذا."
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_attendance_notes__name
+msgid "Note"
+msgstr "ملاحظة"
+
+#. module: fb_wajiz_hr
+#. odoo-python
+#: code:addons/fb_wajiz_hr/reports/bio_attendance.py:0
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report__notes_id
+#, python-format
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields.selection,name:fb_wajiz_hr.selection__employee_attendance_report_wizard__month__11
+msgid "November"
+msgstr "نوفمبر"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_document__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_document__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_custody_confirmation_wizard__obligations
+msgid "Obligations"
+msgstr "الالتزامات"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields.selection,name:fb_wajiz_hr.selection__employee_attendance_report_wizard__month__10
+msgid "October"
+msgstr "أكتوبر"
+
+#. module: fb_wajiz_hr
+#: model:ir.model,name:fb_wajiz_hr.model_hr_payslip
+msgid "Pay Slip"
+msgstr "إيصال الدفع "
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_insurance_type__percentage
+msgid "Percentage"
+msgstr "النسبة"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_employee__personal_mobile
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_employee_base__personal_mobile
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_employee_public__personal_mobile
+msgid "Personal mobile number of the employee"
+msgstr "رقم الجوال الشخصي للموظف"
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.view_attendance_report_wizard
+msgid "Please Select The Range for the Report:"
+msgstr "الرجاء اختيار النطاق للإيصال:"
+
+#. module: fb_wajiz_hr
+#: model:ir.actions.server,name:fb_wajiz_hr.action_print_biometric_report
+msgid "Print Monthly Biometric Report"
+msgstr "طباعة تقرير الحضور الشهري"
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.view_attendance_report_wizard
+msgid "Print Report"
+msgstr "طباعة التقرير"
+
+#. module: fb_wajiz_hr
+#: model:res.groups,name:fb_wajiz_hr.group_project_manager
+msgid "Projects Manager"
+msgstr "مدير المشاريع"
+
+#. module: fb_wajiz_hr
+#: model:ir.model,name:fb_wajiz_hr.model_custody_property
+msgid "Property Name"
+msgstr "اسم الخاصية"
+
+#. module: fb_wajiz_hr
+#: model:ir.model,name:fb_wajiz_hr.model_hr_employee_public
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__public_employee_id
+msgid "Public Employee"
+msgstr "موظف في القطاع العام"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_custody__purpose
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_custody__purpose
+msgid "Reason"
+msgstr "السبب"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__related_document1
+msgid "Related Document1"
+msgstr "مستندات متعلقة 1"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__related_document2
+msgid "Related Document2"
+msgstr "مستندات متعلقة 2"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__related_document3
+msgid "Related Document3"
+msgstr "مستندات متعلقة 3"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__related_document4
+msgid "Related Document4"
+msgstr "مستندات متعلقة 4"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__related_document5
+msgid "Related Document5"
+msgstr "مستندات متعلقة 5"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__related_document6
+msgid "Related Document6"
+msgstr "مستندات متعلقة 6"
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.fleet_vehicle_view_form_inherit_related_documents
+msgid "Related Documents"
+msgstr "مستندات متعلقة"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_fleet_vehicle__related_documents_count
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__related_documents_count
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_public__related_documents_count
+msgid "Related Documents Count"
+msgstr "عدد المستندات المتعلقة"
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.hr_employee_form_inherit_wajiz
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.hr_employee_public_form_inherit_wajiz_documents
+msgid "Related Documnets"
+msgstr "المستندات المتعلقة"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields.selection,name:fb_wajiz_hr.selection__custody_confirmation_wizard__custody_decision__remain
+msgid "Remain with Custody"
+msgstr "متبقي من العهدة"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields.selection,name:fb_wajiz_hr.selection__hr_document__state__renew
+msgid "Renew"
+msgstr "تجديد"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report_wizard__title
+msgid "Report Title"
+msgstr "عنوان التقرير"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_custody__date_request
+msgid "Requested Date"
+msgstr "التاريخ المطلوب"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_custody__date_request
+msgid "Requested date"
+msgstr "التاريخ المطلوب"
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.document_form
+msgid "Reset to draft"
+msgstr "إعادة إلى مسودة"
+
+#. module: fb_wajiz_hr
+#: model:ir.actions.act_window,name:fb_wajiz_hr.action_resource_calendar
+msgid "Resource Calendar"
+msgstr "الجدول الزمني"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤول"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields.selection,name:fb_wajiz_hr.selection__custody_confirmation_wizard__custody_decision__return
+msgid "Return Custody"
+msgstr "إرجاع العهدة"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "خطأ في توصيل الرسالة"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_approval_category_approver__department_id
+msgid "Select the department associated with this approver."
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_document_type__document_category
+msgid "Select whether the document is for an Employee or a Vehicle."
+msgstr "حدد ما إذا كان المستند للموظف أو للمركبة."
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields.selection,name:fb_wajiz_hr.selection__employee_attendance_report_wizard__month__9
+msgid "September"
+msgstr "أيلول"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_attendance_report_wizard__date_from
+msgid "Start Date"
+msgstr "تاريخ البدء"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__state
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.document_search
+msgid "State"
+msgstr "الحالة"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_document__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: fb_wajiz_hr
+#. odoo-python
+#: code:addons/fb_wajiz_hr/models/models.py:0
+#: model:ir.model.constraint,message:fb_wajiz_hr.constraint_hr_employee_identification_id_uniq
+#, python-format
+msgid "The Identification ID must be unique !"
+msgstr "رقم الهوية يجب أن يكون فريد !"
+
+#. module: fb_wajiz_hr
+#. odoo-python
+#: code:addons/fb_wajiz_hr/models/models.py:0
+#: model:ir.model.constraint,message:fb_wajiz_hr.constraint_hr_employee_job_uid_uniq
+#, python-format
+msgid "The Job Uid must be unique !"
+msgstr "رقم الوظيفة يجب أن يكون فريد !"
+
+#. module: fb_wajiz_hr
+#. odoo-python
+#: code:addons/fb_wajiz_hr/models/models.py:0
+#: model:ir.model.constraint,message:fb_wajiz_hr.constraint_hr_employee_visa_no_uniq
+#, python-format
+msgid "The Visa No. must be unique !"
+msgstr "رقم التأشيرة يجب أن يكون فريد !"
+
+#. module: fb_wajiz_hr
+#. odoo-python
+#: code:addons/fb_wajiz_hr/models/models.py:0
+#, python-format
+msgid "The document size should not exceed %s MB."
+msgstr "حجم المستند يجب أن لا يتجاوز %s ميجا بايت."
+
+#. module: fb_wajiz_hr
+#: model:res.groups,comment:fb_wajiz_hr.group_project_manager
+msgid "The user will be able to manage projects."
+msgstr "المستخدم سيكون قادر على إدارة المشاريع."
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_fb_bio_attendance_report_wizard__to_date
+msgid "To Date"
+msgstr "تاريخ الانتهاء"
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.document_search
+msgid "Today"
+msgstr "اليوم"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee__total_overtime
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_base__total_overtime
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_employee_public__total_overtime
+msgid "Total Overtime"
+msgstr "إجمالي ساعات العمل الإضافية "
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_payslip__bio_absence_days
+msgid "Total absence days for the payslip period."
+msgstr "إجمالي أيام الغياب لفترة الورقة."
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_payslip__absence_hours
+msgid "Total absence hours for the payslip period."
+msgstr "إجمالي ساعات الغياب لفترة الورقة."
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_payslip__bio_diff_minutes
+msgid "Total diff hours for the payslip period."
+msgstr "إجمالي ساعات التفاضل لفترة الورقة."
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_payslip__bio_early_minutes
+msgid "Total early hours for the payslip period."
+msgstr "إجمالي ساعات المبكر لفترة الورقة."
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_payslip__bio_late_minutes
+msgid "Total late hours for the payslip period."
+msgstr "إجمالي ساعات المتأخر لفترة الورقة."
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.attendance_report_template
+msgid "Totals"
+msgstr "إجمالي"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_document__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع النشاط غير المعتاد في السجل."
+
+#. module: fb_wajiz_hr
+#. odoo-python
+#: code:addons/fb_wajiz_hr/reports/bio_attendance.py:0
+#, python-format
+msgid "Unpaid"
+msgstr "غير مدفوع"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields.selection,name:fb_wajiz_hr.selection__hr_document__state__valid
+msgid "Valid"
+msgstr "ساري المفعول"
+
+#. module: fb_wajiz_hr
+#: model:ir.model,name:fb_wajiz_hr.model_fleet_vehicle
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__vehicle_id
+#: model:ir.model.fields.selection,name:fb_wajiz_hr.selection__hr_document_type__document_category__vehicle
+msgid "Vehicle"
+msgstr "المركبة"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_fleet_vehicle__have_chip_number
+msgid "WAIE Chip?"
+msgstr "رقم شريحة واعي"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_hr_document__website_message_ids
+msgid "Website Messages"
+msgstr "رسائل الموقع الإلكتروني"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_document__website_message_ids
+msgid "Website communication history"
+msgstr "سجلات التواصل على الموقع الإلكتروني"
+
+#. module: fb_wajiz_hr
+#: model:ir.model,name:fb_wajiz_hr.model_employee_attendance_report_wizard
+msgid "Wizard to Print Employee Attendance Report"
+msgstr "نافذة طباعة تقرير حضور الموظفين"
+
+#. module: fb_wajiz_hr
+#: model:ir.model,name:fb_wajiz_hr.model_fb_bio_attendance_report_wizard
+msgid "Wizard to Print Employee Bio Attendance Report"
+msgstr "نافذة طباعة تقرير حضور الموظفين باستخدام بريو"
+
+#. module: fb_wajiz_hr
+#. odoo-python
+#: code:addons/fb_wajiz_hr/reports/bio_attendance.py:0
+#, python-format
+msgid "Worked"
+msgstr "تم العمل"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report__worked_hours
+msgid "Worked Hours"
+msgstr "ساعات العمل"
+
+#. module: fb_wajiz_hr
+#: model:ir.ui.menu,name:fb_wajiz_hr.resource_calendar_menu
+msgid "Working Time"
+msgstr "وقت العمل"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,field_description:fb_wajiz_hr.field_employee_attendance_report_wizard__year
+msgid "Year"
+msgstr "السنة"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_employee__passport_attachment_id
+msgid "You can attach the copy of Passport"
+msgstr "يمكنك إرفاق نسخة من جواز السفر"
+
+#. module: fb_wajiz_hr
+#: model:ir.model.fields,help:fb_wajiz_hr.field_hr_employee__id_attachment_id
+msgid "You can attach the copy of your Id"
+msgstr "يمكنك إرفاق نسخة من هويتك"
+
+#. module: fb_wajiz_hr
+#. odoo-python
+#: code:addons/fb_wajiz_hr/reports/bio_attendance.py:0
+#, python-format
+msgid "days"
+msgstr "ايام"
+
+#. module: fb_wajiz_hr
+#: model:ir.model,name:fb_wajiz_hr.model_employee_attendance_report
+msgid "employee.attendance.report"
+msgstr "تقرير حضور الموظفين"
+
+#. module: fb_wajiz_hr
+#: model:ir.model,name:fb_wajiz_hr.model_hr_document
+msgid "hr.document"
+msgstr "مستندات"
+
+#. module: fb_wajiz_hr
+#: model:ir.model,name:fb_wajiz_hr.model_hr_document_type
+msgid "hr.document.type"
+msgstr "أنواع المستندات"
+
+#. module: fb_wajiz_hr
+#. odoo-python
+#: code:addons/fb_wajiz_hr/reports/bio_attendance.py:0
+#, python-format
+msgid "hrs"
+msgstr "ساعات"
+
+#. module: fb_wajiz_hr
+#. odoo-python
+#: code:addons/fb_wajiz_hr/reports/bio_attendance.py:0
+#, python-format
+msgid "min"
+msgstr "دقائق"
+
+#. module: fb_wajiz_hr
+#. odoo-python
+#: code:addons/fb_wajiz_hr/reports/bio_attendance.py:0
+#, python-format
+msgid "to"
+msgstr "الى"
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.attendance_report_template
+msgid "إجمالي ساعات العمل:"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.attendance_report_template
+msgid "إجمالي ساعات الغياب:"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.attendance_report_view
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.bio_attendance_report_view
+msgid "اسم الموظف"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.attendance_report_view
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.bio_attendance_report_view
+msgid "الاعتماد"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.attendance_report_template
+msgid "التاريخ"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.attendance_report_view
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.bio_attendance_report_view
+msgid "الحضور والانصراف"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.attendance_report_view
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.bio_attendance_report_view
+msgid "الرقم الوظیفي"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.attendance_report_view
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.bio_attendance_report_view
+msgid "المهنة حسب المشروع"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.attendance_report_template
+msgid "اليوم"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.attendance_report_view
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.bio_attendance_report_view
+msgid "تفاصيل الغياب"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.biometric_report_template
+msgid "تقرير البصمة الشهري"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model:hr.salary.rule,name:fb_wajiz_hr.hr_rule_absence_deduction_wajiz
+msgid "خصم غياب"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.attendance_report_view
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.bio_attendance_report_view
+msgid "رقم الموظف"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.attendance_report_template
+msgid "عدد ساعات العمل"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.attendance_report_template
+msgid "عدد ساعات الغياب"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.attendance_report_view
+msgid "معتمد"
+msgstr ""
+
+#. module: fb_wajiz_hr
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.attendance_report_view
+#: model_terms:ir.ui.view,arch_db:fb_wajiz_hr.bio_attendance_report_view
+msgid "ملاحظات"
+msgstr ""

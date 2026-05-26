@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Product Template Form View -->
+    <record id="product_template_form_view_volume_tracking" model="ir.ui.view">
+        <field name="name">product.template.form.volume.tracking</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view" />
+        <field name="arch" type="xml">
+            <field name="show_qty_update_button" position="before">
+                <field name="is_volume_tracked"
+                    invisible="tracking == 'none'"
+                    widget="boolean_toggle"
+                    groups="stock_volume_tracking.group_volume_only" />
+                <field name="is_cost_tracked"
+                    invisible="not is_volume_tracked or not lot_valuated"
+                    widget="boolean_toggle"
+                    groups="stock_volume_tracking.group_volume_and_cost" />
+                <label for="max_volume_length" string="Maximum Volume in cm (L×W×H)"
+                    invisible="not is_volume_tracked" groups="stock_volume_tracking.group_volume_only"/>
+                <div class="o_row" name="volume" invisible="not is_volume_tracked" groups="stock_volume_tracking.group_volume_only">
+                    <field name="max_volume_length" placeholder="Length" class="oe_inline" />
+                    <span>×</span>
+                    <field name="max_volume_width" placeholder="Width" class="oe_inline" />
+                    <span>×</span>
+                    <field name="max_volume_height" placeholder="Height" class="oe_inline" />
+                </div>
+                <label for="min_volume_length" string="Minimum Volume in cm (L×W×H)"
+                    invisible="not is_volume_tracked" groups="stock_volume_tracking.group_volume_only"/>
+                <div class="o_row" name="volume" invisible="not is_volume_tracked" groups="stock_volume_tracking.group_volume_only">
+                    <field name="min_volume_length" placeholder="Length" class="oe_inline" />
+                    <span>×</span>
+                    <field name="min_volume_width" placeholder="Width" class="oe_inline" />
+                    <span>×</span>
+                    <field name="min_volume_height" placeholder="Height" class="oe_inline" />
+                </div>
+            </field>
+        </field>
+    </record>
+
+    <!-- Product Template List View -->
+    <record id="product_template_list_view_volume_tracking" model="ir.ui.view">
+        <field name="name">product.template.list.volume.tracking</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view" />
+        <field name="arch" type="xml">
+            <field name="type" position="after">
+                <field name="is_volume_tracked" optional="hide"
+                    groups="stock_volume_tracking.group_volume_only" />
+            </field>
+        </field>
+    </record>
+
+</odoo>

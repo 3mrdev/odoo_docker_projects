@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!-- INFO BANNER ABOVE SHEET FOR COMBINED TYPE                       -->
+    <!-- ============================================================ -->
+    <record id="approval_category_view_form_info_banner" model="ir.ui.view">
+        <field name="name">approval.category.view.form.info.banner</field>
+        <field name="model">approval.category</field>
+        <field name="inherit_id" ref="approvals.approval_category_view_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Add info banner above sheet for combined type -->
+            <xpath expr="//sheet" position="before">
+                <div class="alert alert-info mb-3"
+                     invisible="approval_type != 'stock_material_purchase'"
+                     role="alert">
+                    <i class="fa fa-info-circle" title="Info"/>
+                    <b>Stock + Purchase Workflow:</b> This approval type creates Purchase Orders first, then internal transfers from the PO receipt location to a final destination.
+                </div>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- ADD TRANSFER CREATION MODE AND DESTINATION FIELDS                -->
+    <!-- Fields appear inline with existing fields (no separate group)    -->
+    <!-- ============================================================ -->
+    <record id="approval_category_view_form_combined" model="ir.ui.view">
+        <field name="name">approval.category.view.form.combined</field>
+        <field name="model">approval.category</field>
+        <field name="inherit_id" ref="approvals.approval_category_view_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Add transfer creation mode after approval_type -->
+            <xpath expr="//field[@name='approval_type']" position="after">
+                <field name="transfer_creation_mode"
+                    invisible="approval_type != 'stock_material_purchase'"
+                    widget="radio"
+                    options="{'horizontal': True}"
+                    groups="stock.group_stock_user"/>
+
+                <!-- Destination fields (inline, no separate group) -->
+                <field name="dest_warehouse_ids"
+                       widget="many2many_tags"
+                       invisible="approval_type != 'stock_material_purchase'"
+                       options="{'no_create': True}"
+                       groups="stock.group_stock_user"/>
+
+                <field name="dest_location_ids"
+                       widget="many2many_tags"
+                       invisible="approval_type != 'stock_material_purchase'"
+                       options="{'no_create': True}"
+                       groups="stock.group_stock_user"
+                       domain="[('usage', '=', 'internal'), '|', ('warehouse_id', '=', False), ('warehouse_id', 'in', dest_warehouse_ids)]"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

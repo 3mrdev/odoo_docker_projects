@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Add penalty fields and smart button to invoice form -->
+    <record id="view_move_form_inherit_penalty_inline" model="ir.ui.view">
+        <field name="name">account.move.form.inherit.penalty.inline</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form" />
+        <field name="arch" type="xml">
+            <!-- Add smart button to button box -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_penalty_lines"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-exclamation-triangle"
+                    invisible="penalty_count == 0">
+                    <field name="penalty_count" widget="statinfo" string="Penalties" />
+                </button>
+            </xpath>
+
+            <!-- Add penalty information after invoice date -->
+            <xpath expr="//field[@name='invoice_date']" position="after">
+                <field name="last_penalty_date" readonly="1"
+                    invisible="not last_penalty_date"
+                    string="Last Penalty Added" />
+                <field name="penalty_count" invisible="1" />
+            </xpath>
+
+            <!-- Highlight penalty lines in invoice lines list (yellow warning) -->
+            <xpath expr="//field[@name='invoice_line_ids']/list" position="attributes">
+                <attribute name="decoration-warning">is_penalty_line</attribute>
+            </xpath>
+
+            <!-- Add is_penalty_line field to invoice lines (hidden) -->
+            <xpath expr="//field[@name='invoice_line_ids']/list/field[@name='name']"
+                position="before">
+                <field name="is_penalty_line" column_invisible="1" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

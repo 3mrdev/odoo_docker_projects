@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form_inherit_property" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.property</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="25" />
+            <field name="inherit_id" ref="base.res_config_settings_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <app data-string="Property" string="Property" name="appness_hrb_property"
+                        groups="sale_subscription_property.group_hrb_property_admin">
+                        <block title="Property" name="property_setting_container">
+                            <setting company_dependent="1" help="Centralize your Property">
+                                <div class="content-group">
+                                    <div class="row">
+                                        <label class="o_form_label col-lg-3"
+                                            for="property_analytic_plan"
+                                            string="Default Property Analytic Plan" />
+                                        <field name="property_analytic_plan" />
+                                    </div>
+                                </div>
+                            </setting>
+                        </block>
+                    </app>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_property_config" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="context">{'module' : 'appness_hrb_property', 'bin_size': False}</field>
+        </record>
+
+        <menuitem id="property_config" name="Settings"
+            parent="sale_subscription_property.hrb_property_configuration_menu" sequence="0"
+            action="action_property_config" />
+    </data>
+</odoo>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!-- SHOW VENDOR COLUMNS FOR COMBINED TYPE                        -->
+    <!-- ============================================================ -->
+    <record id="approval_product_line_view_tree_vendor" model="ir.ui.view">
+        <field name="name">approval.product.line.view.tree.vendor</field>
+        <field name="model">approval.product.line</field>
+        <field name="inherit_id" ref="approvals_purchase.approval_purchase_product_line_view_tree_inherit"/>
+        <field name="arch" type="xml">
+
+            <!-- Show seller_id for purchase AND combined types -->
+            <xpath expr="//field[@name='seller_id']" position="attributes">
+                <attribute name="column_invisible">parent.approval_type not in ('purchase', 'stock_material_purchase')</attribute>
+            </xpath>
+
+            <!-- Update list decoration to include combined type -->
+            <xpath expr="//list" position="attributes">
+                <attribute name="decoration-danger">has_no_seller and (parent.approval_type == 'purchase' or parent.approval_type == 'stock_material_purchase')</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

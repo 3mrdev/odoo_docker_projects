@@ -1,0 +1,1326 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* appness_swms_portal
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-05 14:55+0000\n"
+"PO-Revision-Date: 2025-08-05 14:55+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/models/helpers.py:0
+msgid " Document"
+msgstr " (المستند) "
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_form_fields
+msgid "(Complete Member Info)"
+msgstr "(اضغط لاستكمال بيانات الفرد)"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_my_swms_account
+msgid "(Family)"
+msgstr "(الاب)"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_my_swms_account
+msgid "(Member)"
+msgstr "(الفرد)"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_my_home_menu_swms_request
+msgid "/ Service"
+msgstr "الخدمة"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_form_fields
+msgid ""
+"<br/>\n"
+"                                Expire Date:"
+msgstr ""
+"<br/>\n"
+"                            Expire Date:"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_snippet_document
+msgid ""
+"<br/>\n"
+"                            Expire Date:"
+msgstr ""
+"‫<br/>\n"
+"‬\n"
+"‫                            تاريخ الانتهاء:"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.side_content_redirect
+msgid "<i class=\"fa fa-pencil\"/> Edit information"
+msgstr "‫<i class=\"“fa\" fa-pencil=\"\"/> تعديل البيانات"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_snippet_m2o
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_snippet_select
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_snippet_x2m
+msgid "<option value=\"\">select...</option>"
+msgstr "‫<option value=\"“”\">اختيار…</option>"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_service
+msgid ""
+"<small class=\"text-muted\">Are you sure you have all the required documents"
+" ?</small>"
+msgstr ""
+"‫<small class=\"“text-muted”\">هل انت متاكد انه لديك كل المستندات؟</small>"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.requests_followup
+msgid "<small class=\"text-muted\">Family</small>"
+msgstr "‫<small class=\"“text-muted”\">الاسرة</small>"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_requests
+msgid "<small>#</small>"
+msgstr ""
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.requests_followup
+msgid "<small>Stage:</small>"
+msgstr "‫<small>المرحلة:</small>"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_service
+msgid "<small>Status:</small>"
+msgstr "‫<small>الحالة:</small>"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_service
+msgid "<span class=\"fw-bold\">1</span>"
+msgstr ""
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_snippet_x2m
+msgid ""
+"<span style=\"margin-left: 5px; margin-right: 5px;\">Complete Member "
+"Info</span>"
+msgstr ""
+"<span style=\"margin-left: 5px; margin-right: 5px;\">استكمال بيانات "
+"الفرد</span>"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_dashboard
+msgid "<span>Requests</span>"
+msgstr "‫<span>طلبات المساعدة</span>"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.requests_followup
+msgid ""
+"<span>Your request has successfully been closed. Thank you for your "
+"collaboration.</span>"
+msgstr "<span>تم اغلاق طلبك بنجاح. نشكرك على التعاوون.</span>"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.requests_followup
+msgid "<strong class=\"col-lg-3\">Created on</strong>"
+msgstr "‫<strong class=\"“col-lg-3”\">تم الانشاء في</strong>"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__message_needaction
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__message_needaction
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__message_needaction
+msgid "Action Needed"
+msgstr "مطلوب اتخاذ إجراء"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__active
+msgid "Active"
+msgstr "نشط"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__activity_ids
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__activity_ids
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__activity_ids
+msgid "Activities"
+msgstr "نشاطات"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__activity_exception_decoration
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__activity_exception_decoration
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__activity_state
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__activity_state
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__activity_state
+msgid "Activity State"
+msgstr "حاله النشاط"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__activity_type_icon
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__activity_type_icon
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "ايقونه نوع النشاط"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/controller/portal_general.py:0
+msgid "All"
+msgstr "الكل"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.res_config_settings_view_form_portal
+msgid "Allow users to sign in with OTP"
+msgstr "السماح للمستخدم للدخول باستخدام رمز التحقق"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/controller/portal_auth.py:0
+msgid "Another user is already registered using this phone number."
+msgstr "مستخدم اخر يحمل هذا الرقم بالفعل."
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_service
+msgid "Apply"
+msgstr "تقديم"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/models/stepper.py:0
+#: model:ir.model.fields.selection,name:appness_swms_portal.selection__swms_stepper_step_line__validation_type__area
+msgid "Area"
+msgstr "المنطقة"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__message_attachment_count
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__message_attachment_count
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_res_config_settings__attachment_size_limit
+msgid "Attachment Size Limit"
+msgstr "حجم المرفقات المسموح به"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_service
+msgid "Available"
+msgstr "متاح"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/models/stepper.py:0
+#: model:ir.model.fields.selection,name:appness_swms_portal.selection__swms_stepper_step_line__validation_type__birthday
+msgid "Birthday"
+msgstr "تاريخ الميلاد"
+
+#. module: appness_swms_portal
+#. odoo-javascript
+#: code:addons/appness_swms_portal/static/src/js/swms_validation.js:0
+msgid "Birthday cannot be in the future"
+msgstr "تاريخ الميلاد لا يمكن ان يكون في المستقبل"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_requests
+msgid "Blocked"
+msgstr "محظور"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.otp_login_fields
+msgid ""
+"By clicking this checkbox i confirm that this number will not be given to another person or \n"
+"                transferred <span style=\"color:red;\">without the family's knowledge.</span> If i wish to give away my number in the future, \n"
+"                i will visit the association's office <span style=\"color:red;\">to transfer the access to another family member.</span>"
+msgstr ""
+"بالنقر على هذا المربع، أؤكد عدم إعطاء هذا الرقم لشخص آخر أو نقله دون علم "
+"العائلة. إذا رغبتُ في التبرع برقمي مستقبلاً، فسأزور مكتب الجمعية لنقل حقوق "
+"الوصول إلى فرد آخر من العائلة."
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.swms_stepper_step_form
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.swms_stepper_step_line_form
+msgid "Choose Fields"
+msgstr "اختر الحقول"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/models/stepper.py:0
+#: model:ir.model.fields.selection,name:appness_swms_portal.selection__swms_stepper_step_line__validation_type__city
+msgid "City"
+msgstr "المدينة"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/models/stepper.py:0
+#: model:ir.model.fields.selection,name:appness_swms_portal.selection__swms_stepper_step_line__validation_type__civil_number
+msgid "Civil Number"
+msgstr "الرقم المدني"
+
+#. module: appness_swms_portal
+#. odoo-javascript
+#: code:addons/appness_swms_portal/static/src/js/swms_validation.js:0
+msgid "Civil number already exists"
+msgstr "الرقم المدني موجود بالفعل"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_my_swms_account
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_service_request
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.requests_followup
+msgid "Close"
+msgstr "اغلاق"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.requests_followup
+msgid "Close Request"
+msgstr "اغلاق الطلب"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.requests_followup
+msgid "Close request"
+msgstr "اغلاق الطلب"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/controller/portal_general.py:0
+msgid "Closed"
+msgstr "تم الاغلاق"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_document_type__code
+msgid "Code"
+msgstr "رمز البوابة"
+
+#. module: appness_swms_portal
+#: model:ir.model.constraint,message:appness_swms_portal.constraint_swms_document_type_code_unique
+msgid "Code must be unique!"
+msgstr "الرمز يجب ان يكون فريد"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.requests_followup
+msgid "Communication history"
+msgstr "تاريخ المحادثة"
+
+#. module: appness_swms_portal
+#: model:ir.model,name:appness_swms_portal.model_res_company
+msgid "Companies"
+msgstr "الشركات"
+
+#. module: appness_swms_portal
+#: model:ir.model,name:appness_swms_portal.model_res_config_settings
+msgid "Config Settings"
+msgstr "تهيئة الإعدادات "
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/controller/portal_auth.py:0
+msgid "Could not create a new account."
+msgstr "لا يمكن انشاء حساب جديد"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/models/stepper.py:0
+#: model:ir.model.fields.selection,name:appness_swms_portal.selection__swms_stepper_step_line__validation_type__country
+msgid "Country"
+msgstr "الجنسية"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__create_uid
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__create_uid
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__create_uid
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line_v2line__create_uid
+msgid "Created by"
+msgstr "تم الانشاء بواسطة"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__create_date
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__create_date
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__create_date
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line_v2line__create_date
+msgid "Created on"
+msgstr "تم الانشاء في"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.requests_followup
+msgid "Current stage of this request"
+msgstr "المرحلة الحالي للطلب"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_snippet_x2m
+msgid "Delete row"
+msgstr "حرف السطر"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__description
+msgid "Description"
+msgstr "الوصف"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_my_home_menu_swms_request
+msgid "Details"
+msgstr "التفاصيل"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.requests_followup
+msgid "Discard"
+msgstr "اهمال"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_my_swms_account
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_service_request
+msgid "Discard and Back"
+msgstr "اهمال والرجوع للخلف"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__display_name
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__display_name
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__display_name
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line_v2line__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__document_types_ids
+msgid "Document Types"
+msgstr "انواع المستندات"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_dashboard
+msgid "Documents to update in your assistance requests"
+msgstr "المستندات المطلوب تحديثها في طلب المساعدة"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_dashboard
+msgid "Documents to update in your family profile"
+msgstr "المستندات المطلوب تحديثها في ملف الاسرة"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.swms_stepper_step_form
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.swms_stepper_step_line_form
+msgid "Domain (M2O)"
+msgstr "النطاق (M2O)"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.requests_followup
+msgid "Edit Request"
+msgstr "تعديل الطلب"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_snippet_document
+msgid "Expire Date"
+msgstr "تاريخ الانتهاء"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/models/stepper.py:0
+#: model:ir.model.fields.selection,name:appness_swms_portal.selection__swms_stepper__type__family
+msgid "Family"
+msgstr "الاسرة"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/models/helpers.py:0
+msgid "Father"
+msgstr "الاب"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.swms_stepper_step_form
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.swms_stepper_step_line_form
+msgid "Field"
+msgstr "حقل"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.swms_stepper_step_form
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.swms_stepper_step_line_form
+msgid "Field name"
+msgstr "اسم الحقل"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.swms_stepper_step_form
+msgid "Fields (O2M)"
+msgstr "الحقول (M2O)"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.res_config_settings_view_form_portal
+msgid "Files Size Limit (MB)"
+msgstr "حد حجم الملف (بالميقا بايت)"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_dashboard
+msgid "Follow all your service requests"
+msgstr "متابعة كل طلبات المساعدة والخدمات"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__message_follower_ids
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__message_follower_ids
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__message_follower_ids
+msgid "Followers"
+msgstr "المتابعين"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__message_partner_ids
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__message_partner_ids
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعين الشركاء"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper_step__icon
+msgid "Font Awesome Icons ex. fa fa-upload"
+msgstr "فونت اوسم مثال لايقونه fa-upload"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper__activity_type_icon
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper_step__activity_type_icon
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper_step_line__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "فونت اوسم مثال لايقونه fa-tasks"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper_step_line__line_field_relation_model_name
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper_step_line_v2line__v2line_field_relation_model_name
+msgid "For relationship fields, the technical name of the target model"
+msgstr "لحقول العلاقات، اسم الحقل التقني للنموذج المستهدف"
+
+#. module: appness_swms_portal
+#: model:ir.actions.act_window,name:appness_swms_portal.swms_conf_stepper_action
+msgid "Form Steppers"
+msgstr "تدرجات النموذج"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_service
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_service_request
+msgid "Go Back"
+msgstr "الرجوع للخلف"
+
+#. module: appness_swms_portal
+#: model:ir.model,name:appness_swms_portal.model_ir_http
+msgid "HTTP Routing"
+msgstr "مسار HTTP"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__has_message
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__has_message
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__has_message
+msgid "Has Message"
+msgstr "له رساله"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_form_fields
+msgid "Hide/Show Documents"
+msgstr "إخفاء/إظهار المستندات"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.requests_followup
+msgid "History"
+msgstr "التاريخ"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_my_swms_account
+msgid "Home"
+msgstr "الصفحة الرئيسية"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__id
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__id
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__id
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line_v2line__id
+msgid "ID"
+msgstr "المرف"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__activity_exception_icon
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__activity_exception_icon
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__icon
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__activity_exception_icon
+msgid "Icon"
+msgstr "ايقونه"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper__activity_exception_icon
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper_step__activity_exception_icon
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper_step_line__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "أيقونة للإشارة إلى نشاط استثناء."
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper__message_needaction
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper_step__message_needaction
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper_step_line__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا تم تحديد هذا المربع، فإن الرسائل الجديدة تتطلب اهتمامك."
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper__message_has_error
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper__message_has_sms_error
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper_step__message_has_error
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper_step__message_has_sms_error
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper_step_line__message_has_error
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper_step_line__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا تم تحديد هذا المربع، فقد يكون هناك خطأ في التسليم في بعض الرسائل."
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_requests
+msgid "In Progress"
+msgstr "تحت المعالجه"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__message_is_follower
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__message_is_follower
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__is_mandatory
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line_v2line__is_mandatory
+msgid "Is Mandatory"
+msgstr "هل هو اجباري؟"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_snippet_document
+msgid "Issuance Date"
+msgstr "تاريخ الاصدار"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_snippet_document
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_form_fields
+msgid "Issuance Date:"
+msgstr "تاريخ الاصدار:"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/controller/portal_general.py:0
+msgid "Last Stage Update"
+msgstr "تحديث اخر مرحلة"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__write_uid
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__write_uid
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__write_uid
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line_v2line__write_uid
+msgid "Last Updated by"
+msgstr "آخر تعديل تم بواسطه"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__write_date
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__write_date
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__write_date
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line_v2line__write_date
+msgid "Last Updated on"
+msgstr "آخر تعديل تم بتاريخ"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__line_domain
+msgid "Line Domain"
+msgstr "سطر نطاق"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__line_field
+msgid "Line Field"
+msgstr "حقل الخط"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__line_field_model_id
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line_v2line__line_field_model_id
+msgid "Line Field Model"
+msgstr "نموذج حقل الخط"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__line_fields_ids
+msgid "Line Fields"
+msgstr "سطر حقول"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__line_fields_v2_ids
+msgid "Line Fields V2"
+msgstr "سطر حقول V2"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__lines
+msgid "Lines"
+msgstr "اسطر"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,help:appness_swms_portal.field_res_company__otp_message
+#: model:ir.model.fields,help:appness_swms_portal.field_res_config_settings__otp_message
+msgid "Make sure to put \"%s\" in the text so we can replace it with the OTP"
+msgstr "تأكد من وضع علامه\"%s\" في النص لنقوم باستبدالها برمز التحقق"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/models/stepper.py:0
+#: model:ir.model.fields.selection,name:appness_swms_portal.selection__swms_stepper__type__member
+msgid "Member"
+msgstr "الفرد"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__message_has_error
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__message_has_error
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرساله"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_res_company__message_key
+#: model:ir.model.fields,field_description:appness_swms_portal.field_res_config_settings__message_key
+msgid "Message Key Value"
+msgstr "قيمة مفتاح الرسالة"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__message_ids
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__message_ids
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_dashboard
+msgid "Missing Documents in your assistance requests"
+msgstr "الملفات المفقودة في طلب المساعدة"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_dashboard
+msgid "Missing Documents in your family profile"
+msgstr "المستندات المفقودة في ملف الاسرة"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.otp_login_fields
+msgid "Mobile Phone"
+msgstr "رقم الهاتف"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__my_activity_date_deadline
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__my_activity_date_deadline
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "الموعد النهائي لنشاطي"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__name
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__name
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__name
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line_v2line__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_requests
+msgid "New Request"
+msgstr "طلب مساعدة جديد"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/controller/portal_general.py:0
+msgid "Newest"
+msgstr "الاحدث"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__activity_calendar_event_id
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__activity_calendar_event_id
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "حدث تقويم النشاط التالي"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__activity_date_deadline
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__activity_date_deadline
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "الموعد النهائي للنشاط التالي"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__activity_summary
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__activity_summary
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__activity_summary
+msgid "Next Activity Summary"
+msgstr "ملخص النشاط التالي"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__activity_type_id
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__activity_type_id
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__activity_type_id
+msgid "Next Activity Type"
+msgstr "نوع النشاط التالي"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_requests
+msgid "No Customer"
+msgstr "لا يوجد عميل"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/controller/portal_general.py:0
+#: code:addons/appness_swms_portal/models/stepper.py:0
+#: model:ir.model.fields.selection,name:appness_swms_portal.selection__swms_stepper_step_line__validation_type__none
+msgid "None"
+msgstr "لا يوجد"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/models/stepper.py:0
+#: model:ir.model.fields.selection,name:appness_swms_portal.selection__swms_stepper_step_line__validation_type__number
+msgid "Number"
+msgstr "الرقم"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__message_needaction_counter
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__message_needaction_counter
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الاجراءات"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__message_has_error_counter
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__message_has_error_counter
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper__message_needaction_counter
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper_step__message_needaction_counter
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper_step_line__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إتخاذ إجراء"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper__message_has_error_counter
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper_step__message_has_error_counter
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper_step_line__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي بها خطأ في التسليم"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.view_company_form_inherit_otp
+msgid "OTP Information"
+msgstr "معلومات رمز التحقق"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_res_company__otp_message_url
+#: model:ir.model.fields,field_description:appness_swms_portal.field_res_config_settings__otp_message_url
+msgid "OTP Url"
+msgstr "رابط رمز التحقق"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.res_config_settings_view_form_portal
+msgid "OTP Verification"
+msgstr "التأكد من رساله رمز التحقق"
+
+#. module: appness_swms_portal
+#. odoo-javascript
+#: code:addons/appness_swms_portal/static/src/js/file_uploader.js:0
+msgid "Only files (JPEG, PNG, TIFF, PDF) are allowed."
+msgstr "فقط ملفات الصور والبي دي اف هي المدعومة."
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/controller/portal_general.py:0
+msgid "Open"
+msgstr "فتح"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_res_company__otp_message
+#: model:ir.model.fields,field_description:appness_swms_portal.field_res_config_settings__otp_message
+msgid "Otp Message"
+msgstr "رساله رمز التحقق"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/controller/portal_auth.py:0
+msgid "Passwords do not match; please retype them."
+msgstr "كلمة المرور لا تتطابق اعد ادخالها"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/models/stepper.py:0
+#: model:ir.model.fields.selection,name:appness_swms_portal.selection__swms_stepper_step_line__validation_type__phone
+msgid "Phone"
+msgstr "رقم الهاتف"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_res_company__phone_key
+#: model:ir.model.fields,field_description:appness_swms_portal.field_res_config_settings__phone_key
+msgid "Phone Key Value"
+msgstr "قيمة مفتاح الهاتف"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/models/helpers.py:0
+msgid "Please Upload "
+msgstr "رجاءا قم برفع "
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/models/helpers.py:0
+msgid "Please Upload an updated "
+msgstr "رجاءا قم برفع تحديث "
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_form_fields
+msgid "Please Upload these Required Documents:"
+msgstr "رجاءا قم برفع المستندات المطلوبة:"
+
+#. module: appness_swms_portal
+#. odoo-javascript
+#: code:addons/appness_swms_portal/static/src/js/swms_validation.js:0
+msgid "Please enter a valid civil number"
+msgstr "رجاء قم بادخال رقم مدني صحيح"
+
+#. module: appness_swms_portal
+#. odoo-javascript
+#: code:addons/appness_swms_portal/static/src/js/swms_validation.js:0
+msgid "Please enter a valid number"
+msgstr "رجاء قم بادخال رقم صحيح"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_form_fields
+msgid "Please update these expired Documents:"
+msgstr "رجاءا قم بتحديث المستندات منتهية الصلاحية:"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.swms_stepper_form
+msgid "Portal Form Name"
+msgstr "اسم نموذج البوابه"
+
+#. module: appness_swms_portal
+#: model:ir.ui.menu,name:appness_swms_portal.swms_conf_menu_stepper
+msgid "Portal Forms"
+msgstr "نماذج البوابه"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.otp_login_fields
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.user_sign_in_with_otp
+msgid "Portal Login"
+msgstr "تسجيل الدخول للبوابة"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__rating_ids
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__rating_ids
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__rating_ids
+msgid "Ratings"
+msgstr "التقييمات"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_requests
+msgid "Ready"
+msgstr "مستعد"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/controller/portal_general.py:0
+msgid "Reference"
+msgstr "رقم المرجعي"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__line_field_relation_model_name
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line_v2line__v2line_field_relation_model_name
+msgid "Related Model"
+msgstr "النموذج المرتبط"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_requests
+msgid "Reported on"
+msgstr "تم تقريرها في"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_requests
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.requests_followup
+msgid "Request"
+msgstr "الطلب"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_my_home_menu_swms_request
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_requests
+msgid "Requests"
+msgstr "طلبات المساعدة"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_service
+msgid "Required Documents"
+msgstr "المستندات المطلوبة"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__activity_user_id
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__activity_user_id
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__activity_user_id
+msgid "Responsible User"
+msgstr "المستخدم المسؤل"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__message_has_sms_error
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__message_has_sms_error
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "خطأ في تسليم الرساله"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/controller/portal_general.py:0
+msgid "SWMS Service"
+msgstr "خدمة نظام الرعاية الاجتماعية"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_my_swms_account
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_service_request
+msgid "Save and Finish"
+msgstr "حفظ والاكمال"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_my_swms_account
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_service_request
+msgid "Save and Next"
+msgstr "حفظ والتالي"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/controller/portal_general.py:0
+msgid "Search in SWMS Service"
+msgstr "الحق في خدمة الرعاية الاجتماعية"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/controller/portal_general.py:0
+msgid "Search in Stage"
+msgstr "البحث في المرحلة"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/controller/portal_general.py:0
+msgid "Search%(left)s Requests%(right)s"
+msgstr "البحث%(left)s الطلبات%(right)s"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.request_otp
+msgid "Send OTP"
+msgstr "ارسال رمز التحقق"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__sequence
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__sequence
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line_v2line__sequence
+msgid "Sequence"
+msgstr "الرقم التسلسلي"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/models/stepper.py:0
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__service_id
+#: model:ir.model.fields.selection,name:appness_swms_portal.selection__swms_stepper__type__service
+msgid "Service"
+msgstr "الخدمة"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_service
+msgid "Service Details"
+msgstr "تفاصيل الخدمة"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_service_request
+msgid "Service Request"
+msgstr "طلب الخدمة"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_service
+msgid "Service Status"
+msgstr "حالة الخدمة"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_my_home_menu_swms_request
+msgid "Services"
+msgstr "الخدمات"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.swms_document_type_form_inherit_portal
+msgid "Show in Portal Form in the Step Page"
+msgstr "اظهار في استمارة البوابة في صفحة الخطوة"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.res_config_settings_view_form_portal
+msgid "Social Welfare Portal (SWMS)"
+msgstr "نظام الرعاية الاجتماعية (SWMS)"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_services
+msgid "Sorry but there is no services available in your area."
+msgstr "عذراً لكن لا يوجد خدمات متاحة في منطقتك."
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/controller/portal_general.py:0
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_requests
+msgid "Stage"
+msgstr "المرحلة"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/models/stepper.py:0
+#: model:ir.model.fields.selection,name:appness_swms_portal.selection__swms_stepper_step_line__validation_type__state
+msgid "State"
+msgstr "المحافظة"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/controller/portal_general.py:0
+msgid "Status"
+msgstr "الحالة"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper__activity_state
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper_step__activity_state
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper_step_line__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"الحالة بناءً على الأنشطة\n"
+"متأخر: تاريخ الاستحقاق قد انقضى\n"
+"اليوم: تاريخ النشاط هو اليوم\n"
+"المخطط له: أنشطة مستقبلية."
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__step_id
+msgid "Step"
+msgstr "الخطوة"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line_v2line__step_line
+msgid "Step Line"
+msgstr "خط الخطوة"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__stepper_id
+msgid "Stepper"
+msgstr "خطوات الاستمارة"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__stepper_model_id
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__stepper_model_id
+msgid "Stepper Model"
+msgstr "نموذج الخطوات"
+
+#. module: appness_swms_portal
+#: model:ir.actions.act_window,name:appness_swms_portal.swms_conf_stepper_step_action
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_document_type__steps_ids
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__steps_ids
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.swms_stepper_form
+msgid "Steps"
+msgstr "الخطوات"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/controller/portal_general.py:0
+msgid "Subject"
+msgstr "العنوان"
+
+#. module: appness_swms_portal
+#: model:website.menu,name:appness_swms_portal.swms_request_website_menu
+msgid "Submit a request for assistance"
+msgstr "ارسال طلب مساعدة"
+
+#. module: appness_swms_portal
+#. odoo-javascript
+#: code:addons/appness_swms_portal/static/src/js/file_uploader.js:0
+msgid ""
+"The attachment exceed the maximum attachment size please make sure to insert"
+" attachment less than or equal %s"
+msgstr ""
+
+#. module: appness_swms_portal
+#. odoo-javascript
+#: code:addons/appness_swms_portal/static/src/js/file_uploader.js:0
+msgid ""
+"The attachment exceed the maximum attachment size please make sure to insert"
+" attachment less than or equal to %s"
+msgstr ""
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/controller/portal_auth.py:0
+msgid "The form was not properly filled in."
+msgstr ""
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_requests
+msgid "There are currently no request for your account."
+msgstr "حاليا لا توجد طلبات مساعدة في حسابك"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__tip
+msgid "Tip"
+msgstr "ملحوظة"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__type
+msgid "Type"
+msgstr "النوع"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper__activity_exception_decoration
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper_step__activity_exception_decoration
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper_step_line__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "نوع نشاط الاستثناء المسجل."
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_swms_requests
+msgid "Unassigned"
+msgstr "غير معين"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_res_config_settings__module_auth_otp
+msgid "Use OTP Verification"
+msgstr "استخدام رمز التحقق"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.res_config_settings_view_form_portal
+msgid "Use OTP?"
+msgstr "استخدام رمز التحقق"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_res_company__use_otp_login
+msgid "Use Otp Login"
+msgstr "استخدم رمز الدخول"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.swms_document_type_form_inherit_portal
+msgid ""
+"Used to get the file uploads in Portal Form (Tip: use small Letters without "
+"blank spaces)"
+msgstr ""
+"يستخدم للحصول على تحميلات الملفات في نموذج البوابة (نصيحة: استخدم أحرفًا "
+"صغيرة بدون مسافات فارغة)"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line_v2line__v2line_domain
+msgid "V2Line Domain"
+msgstr "فلتر البحث"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line_v2line__v2line_field
+msgid "V2Line Field"
+msgstr "الحقل الداخلي"
+
+#. module: appness_swms_portal
+#. odoo-javascript
+#: code:addons/appness_swms_portal/static/src/js/file_uploader.js:0
+msgid "Valiation Error"
+msgstr "خطاء تحقق"
+
+#. module: appness_swms_portal
+#. odoo-javascript
+#: code:addons/appness_swms_portal/static/src/js/file_uploader.js:0
+msgid "Validation Error"
+msgstr "خطاء تحقق"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__validation_type
+msgid "Validation Type"
+msgstr "نوع التحقق"
+
+#. module: appness_swms_portal
+#. odoo-python
+#: code:addons/appness_swms_portal/controller/portal_auth.py:0
+msgid "Verification Failed"
+msgstr "فشل التحقق"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.otp_fields
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.verify_otp
+msgid "Verify OTP"
+msgstr "التحقق من رمز الدخول"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.requests_followup
+msgid ""
+"We hope to have addressed your request satisfactorily. If you no longer need"
+" our assistance, please close this ticket. Thank you for your collaboration."
+msgstr ""
+"نأمل أن نكون قد عالجنا طلبك بشكل مُرضٍ. إذا لم تعد بحاجة لمساعدتنا، يُرجى "
+"إغلاق هذا الطلب. شكرًا لتعاونك."
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper__website_message_ids
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step__website_message_ids
+#: model:ir.model.fields,field_description:appness_swms_portal.field_swms_stepper_step_line__website_message_ids
+msgid "Website Messages"
+msgstr "رسائل الموقع"
+
+#. module: appness_swms_portal
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper__website_message_ids
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper_step__website_message_ids
+#: model:ir.model.fields,help:appness_swms_portal.field_swms_stepper_step_line__website_message_ids
+msgid "Website communication history"
+msgstr "تاريخ التواصل في الموقع"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_snippet_input
+msgid "Write a message..."
+msgstr "اكتب رسالة …"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_dashboard
+msgid ""
+"You have expired documents that need to be renewed .. please click here!"
+msgstr ""
+"لديك مستندات منتهية الصلاحية ويجب عليك تحديثها … رجاءا اضغط هنا للتحديث!"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.portal_dashboard
+msgid ""
+"You have missing documents that you need to upload .. please click here!"
+msgstr "لديك مستندات مفقودة ويجب عليك رفعها … رجاءا اضغط هنا لرفعها!"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.otp_login_fields
+msgid "e.g. 12345678"
+msgstr "مثال 91234567"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.swms_document_type_form_inherit_portal
+msgid "ex. birth_certificate"
+msgstr "مثال: شهاده الميلاد"
+
+#. module: appness_swms_portal
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.swms_step_list
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.swms_stepper_form
+#: model_terms:ir.ui.view,arch_db:appness_swms_portal.swms_stepper_step_form
+msgid "ex. fa fa-upload"
+msgstr "مثال fa fa-upload"
+
+#. module: appness_swms_portal
+#: model:ir.model,name:appness_swms_portal.model_swms_document_type
+msgid "swms.document.type"
+msgstr ""
+
+#. module: appness_swms_portal
+#: model:ir.model,name:appness_swms_portal.model_swms_stepper
+msgid "swms.stepper"
+msgstr ""
+
+#. module: appness_swms_portal
+#: model:ir.model,name:appness_swms_portal.model_swms_stepper_step
+msgid "swms.stepper.step"
+msgstr ""
+
+#. module: appness_swms_portal
+#: model:ir.model,name:appness_swms_portal.model_swms_stepper_step_line
+msgid "swms.stepper.step.line"
+msgstr ""
+
+#. module: appness_swms_portal
+#: model:ir.model,name:appness_swms_portal.model_swms_stepper_step_line_v2line
+msgid "swms.stepper.step.line.v2line"
+msgstr ""

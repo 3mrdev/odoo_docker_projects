@@ -1,0 +1,23 @@
+<odoo>
+
+    <record id="sale_mrp_bom_line_view_order_line_list" model="ir.ui.view">
+        <field name="name">sale.mrp.bom.line.order.line.list</field>
+        <field name="model">sale.mrp.bom.line</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="order_id_domain" string="Order Domain" column_invisible="1" />
+                <field name="order_id" string="Order" optional="hide" />
+                <field name="sale_order_line_id" string="Order Line"
+                    domain="[('order_id', '=', order_id_domain),('is_volume_tracked', '=', True)]" />
+                <field name="product_id" string="Product"
+                    domain="[('is_volume_tracked', '=', True)]" />
+                <field name="lot_id" string="LOT/Serial No"
+                    domain="[('product_id', '=', product_id),('is_volume_tracked', '=', True),('product_qty','>',0)]" 
+                    groups="stock_volume_tracking.group_volume_only,sales_team.group_sale_salesman,sales_team.group_sale_manager"/>
+                <field name="quantity" string="Quantity" />
+                <field name="product_yield" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+</odoo>

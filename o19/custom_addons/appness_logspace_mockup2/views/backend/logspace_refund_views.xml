@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Refund Actions -->
+    <record id="action_logspace_refund" model="ir.actions.act_window">
+        <field name="name">Refund Requests</field>
+        <field name="res_model">logspace.refund</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{'search_default_submitted': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Customer refund requests will appear here!
+            </p>
+        </field>
+    </record>
+
+    <!-- Refund Kanban View -->
+    <record id="view_logspace_refund_kanban" model="ir.ui.view">
+        <field name="name">logspace.refund.kanban</field>
+        <field name="model">logspace.refund</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="order_id"/>
+                <field name="amount"/>
+                <field name="currency_id"/>
+                <field name="reason"/>
+                <field name="state"/>
+                <field name="customer_id"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_content">
+                                <div class="o_kanban_header">
+                                    <span class="o_kanban_title">
+                                        <strong><t t-esc="record.name.value"/></strong>
+                                    </span>
+                                    <span class="float-end">
+                                        <span class="badge rounded-pill"
+                                              t-attf-class="{{ record.state.raw_value == 'draft' ? 'bg-secondary' : (record.state.raw_value == 'submitted' ? 'bg-info' : (record.state.raw_value == 'under_review' ? 'bg-warning' : (record.state.raw_value == 'approved' ? 'bg-success' : (record.state.raw_value == 'processed' ? 'bg-primary' : 'bg-danger')))) }}">
+                                            <t t-esc="record.state.value"/>
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="text-muted">
+                                    <t t-esc="record.order_id.value"/>
+                                </div>
+                                <div class="mt-2">
+                                    <strong>Amount: <t t-esc="record.amount.value"/> <t t-esc="record.currency_id.value"/></strong>
+                                </div>
+                                <div class="text-muted">
+                                    Reason: <t t-esc="record.reason.value"/>
+                                </div>
+                                <div class="mt-2" t-if="record.state.raw_value in ['submitted','under_review']">
+                                    <button class="btn btn-success btn-sm" name="action_approve" type="object">Approve</button>
+                                    <button class="btn btn-danger btn-sm" name="action_reject" type="object">Reject</button>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Refund Tree View -->
+    <record id="view_logspace_refund_list" model="ir.ui.view">
+        <field name="name">logspace.refund.list</field>
+        <field name="model">logspace.refund</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="order_id"/>
+                <field name="amount"/>
+                <field name="currency_id"/>
+                <field name="reason"/>
+                <field name="state" widget="badge" decoration-success="state in ['approved','processed']" decoration-warning="state in ['submitted','under_review']" decoration-danger="state=='rejected'" decoration-muted="state=='draft'"/>
+                <field name="submitted_date"/>
+                <field name="processed_date" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Refund Form View -->
+    <record id="view_logspace_refund_form" model="ir.ui.view">
+        <field name="name">logspace.refund.form</field>
+        <field name="model">logspace.refund</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button string="Submit" name="action_submit" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button string="Review" name="action_review" type="object" invisible="state not in ['draft','submitted']"/>
+                    <button string="Approve" name="action_approve" type="object" class="oe_highlight" invisible="state not in ['submitted','under_review']"/>
+                    <button string="Reject" name="action_reject" type="object" invisible="state not in ['submitted','under_review']"/>
+                    <button string="Process" name="action_process" type="object" class="oe_highlight" invisible="state != 'approved'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submitted,under_review,approved,processed,rejected"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="order_id"/>
+                            <field name="customer_id" readonly="1"/>
+                            <field name="provider_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="amount"/>
+                            <field name="currency_id"/>
+                            <field name="reason"/>
+                            <field name="refund_method"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="details"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="submitted_date" readonly="1"/>
+                            <field name="processed_date" readonly="1"/>
+                            <field name="processed_by_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="rejection_reason" invisible="state != 'rejected'"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="attachments" widget="many2many_binary"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,45 @@
+<odoo>
+    <data noupdate="1">
+        <record id="gs1_obc_category" model="ir.module.category">
+            <field name="name">GS1/OBC</field>
+            <field name="description">GS1/OBC</field>
+        </record>
+
+        <record model="res.groups.privilege" id="res_groups_privilege_gs1_certificates">
+            <field name="name">GS1 Certificates</field>
+            <field name="sequence">9</field>
+            <field name="category_id" ref="gs1_obc_category" />
+        </record>
+
+        <record id="group_certificates_user" model="res.groups">
+            <field name="name">Certificates User</field>
+            <field name="privilege_id" ref="res_groups_privilege_gs1_certificates" />
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
+        </record>
+
+        <record id="group_certificates_manager" model="res.groups">
+            <field name="name">Certificates Manager</field>
+            <field name="privilege_id" ref="res_groups_privilege_gs1_certificates" />
+            <field name="implied_ids" eval="[(4, ref('appness_gs1.group_certificates_user'))]" />
+        </record>
+
+        <record model="res.groups.privilege" id="res_groups_privilege_rop_letter">
+            <field name="name">ROP Letter</field>
+            <field name="sequence">9</field>
+            <field name="category_id" ref="gs1_obc_category" />
+        </record>
+
+        <record id="group_rop_letter_user" model="res.groups">
+            <field name="name">ROP Letter User</field>
+            <field name="privilege_id" ref="res_groups_privilege_rop_letter" />
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
+        </record>
+
+        <record id="group_rop_letter_manager" model="res.groups">
+            <field name="name">ROP Letter Manager</field>
+            <field name="privilege_id" ref="res_groups_privilege_rop_letter" />
+            <field name="implied_ids" eval="[(4, ref('appness_gs1.group_rop_letter_user'))]" />
+        </record>
+
+    </data>
+</odoo>

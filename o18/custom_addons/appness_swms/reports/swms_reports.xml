@@ -1,0 +1,40 @@
+<odoo>
+    <data>
+        <template id="swms_report_template">
+            <t t-if="not o" t-set="o" t-value="request.env['swms.reports.wizard'].search([],limit=1)" />
+            <t t-if="not company" t-set="company" t-value="request.env.company"/>
+            <t t-call="web.html_container">
+                <t t-if="sort_reports">
+                    <t t-foreach="sorted_reports" t-as="report">
+                        <t t-if="report['check'] and report['num'] == 1" t-call="appness_swms.stats_template"/>
+                        <t t-if="report['check'] and report['num'] == 2" t-call="appness_swms.member_template"/>
+                        <t t-if="report['check'] and report['num'] == 3" t-call="appness_swms.income_template"/>
+                        <t t-if="report['check'] and report['num'] == 4" t-call="appness_swms.obligations_template"/>
+                        <t t-if="report['check'] and report['num'] == 5" t-call="appness_swms.families_template"/>
+                        <t t-if="report['check'] and report['num'] == 6" t-call="appness_swms.orphans_template"/>
+                        <t t-if="report['check'] and report['num'] == 7" t-call="appness_swms.family_template"/>
+                    </t>
+                </t>
+                <t t-else="">
+                    <t t-if="report1" t-call="appness_swms.stats_template"/>
+                    <t t-if="report2" t-call="appness_swms.member_template"/>
+                    <t t-if="report3" t-call="appness_swms.income_template"/>
+                    <t t-if="report4" t-call="appness_swms.obligations_template"/>
+                    <t t-if="report5" t-call="appness_swms.families_template"/>
+                    <t t-if="report6" t-call="appness_swms.orphans_template"/>
+                    <t t-if="report7" t-call="appness_swms.family_template"/>
+                </t>
+            </t>
+        </template>
+
+        <record id="action_swms_report" model="ir.actions.report">
+            <field name="name">SWMS Report</field>
+            <field name="model">swms.reports.wizard</field>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">appness_swms.swms_report_template</field>
+            <field name="report_file">appness_swms.swms_report_template</field>
+            <field name="print_report_name">'SWMS Report'</field>
+        </record>
+
+    </data>
+</odoo>

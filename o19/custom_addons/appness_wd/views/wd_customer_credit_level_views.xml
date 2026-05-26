@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="wd_customer_credit_level_form_view" model="ir.ui.view">
+            <field name="name">wd.customer.credit.level.form</field>
+            <field name="model">wd.customer.credit.level</field>
+            <field name="arch" type="xml">
+                <form string="Credit Level">
+                    <sheet>
+                        <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_partners" 
+                                    type="object" 
+                                    class="oe_stat_button" 
+                                    icon="fa-users"
+                                    invisible="partner_count == 0">
+                                <field name="partner_count" string="Partners" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="name" placeholder="e.g., Bronze, Silver, Gold"/>
+                                <field name="limit_type" widget="radio"/>
+                                <field name="credit_limit" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <field name="allowed_delay_days" invisible="limit_type != 'overdue_only'"/>
+                                <field name="currency_id" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="sequence"/>
+                                <field name="active" invisible="1"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree/List View -->
+        <record id="wd_customer_credit_level_tree_view" model="ir.ui.view">
+            <field name="name">wd.customer.credit.level.tree</field>
+            <field name="model">wd.customer.credit.level</field>
+            <field name="arch" type="xml">
+                <list string="Credit Levels">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="credit_limit" widget="monetary"/>
+                    <field name="allowed_delay_days"/>
+                    <field name="partner_count" string="Partners"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="wd_customer_credit_level_search_view" model="ir.ui.view">
+            <field name="name">wd.customer.credit.level.search</field>
+            <field name="model">wd.customer.credit.level</field>
+            <field name="arch" type="xml">
+                <search string="Search Credit Levels">
+                    <field name="name"/>
+                    <field name="credit_limit"/>
+                    <filter name="active" string="Active" domain="[('active', '=', True)]"/>
+                    <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                    <separator/>
+                    <filter name="group_by_company" string="Company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="wd_customer_credit_level_action" model="ir.actions.act_window">
+            <field name="name">Credit Levels</field>
+            <field name="res_model">wd.customer.credit.level</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="wd_customer_credit_level_search_view"/>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first credit level
+                </p>
+                <p>
+                    Credit levels allow you to define different credit limits (e.g., Bronze, Silver, Gold) 
+                    and manually assign them to customers.
+                </p>
+            </field>
+        </record>
+
+        <!-- Menu Items -->
+        <menuitem id="menu_credit_levels_account"
+                  name="Credit Levels"
+                  parent="account.account_invoicing_menu"
+                  action="wd_customer_credit_level_action"
+                  sequence="12"/>
+
+        <menuitem id="menu_credit_levels_sale"
+                  name="Credit Levels"
+                  parent="sale.menu_sale_config"
+                  action="wd_customer_credit_level_action"
+                  sequence="20"/>
+    </data>
+</odoo>

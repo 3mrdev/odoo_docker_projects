@@ -1,0 +1,766 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Screen 11: Profile -->
+    <template id="mockup2_profile_page" name="Logspace Portal - Profile">
+        <t t-call="appness_logspace_mockup2.mockup2_portal_layout">
+            <t t-set="breadcrumb">Profile</t>
+            <!-- <t t-call="appness_logspace_mockup2.mockup2_back_to_my"/> -->
+            <h4 class="mt-2">My Profile</h4>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h6 class="card-title">Personal Information</h6>
+                    <form method="GET">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-control" t-att-value="user['name']"/>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" t-att-value="user['email']"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Phone</label>
+                                <input type="tel" class="form-control" t-att-value="user['phone']"/>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Preferred Language</label>
+                                <select class="form-select">
+                                    <option>English</option>
+                                    <option>Spanish</option>
+                                    <option>French</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Address</label>
+                            <textarea class="form-control" rows="2" t-out="user['address']"/>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Change Password</h6>
+                    <form method="GET">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Current Password</label>
+                                <input type="password" class="form-control"/>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">New Password</label>
+                                <input type="password" class="form-control"/>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Confirm New Password</label>
+                                <input type="password" class="form-control"/>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-outline-primary">Update Password</button>
+                    </form>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Screen 12: Orders List -->
+    <template id="mockup2_tracking_infos_page" name="Logspace Portal - Orders">
+        <t t-call="appness_logspace_mockup2.mockup2_portal_layout">
+            <t t-set="breadcrumb">Orders</t>
+            <!-- <t t-call="appness_logspace_mockup2.mockup2_back_to_my"/> -->
+            <h4 class="mt-2">My Orders</h4>
+
+            <!-- Order Tabs -->
+            <ul class="nav nav-tabs mb-4">
+                <li class="nav-item">
+                    <a t-attf-class="nav-link #{current_status == 'all' and 'active' or ''}" href="/logspace/my/orders/all">
+                        All <span class="badge bg-secondary" t-esc="counts['all']"/>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a t-attf-class="nav-link #{current_status == 'active' and 'active' or ''}" href="/logspace/my/orders/active">
+                        Active <span class="badge bg-primary" t-esc="counts['active']"/>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a t-attf-class="nav-link #{current_status == 'completed' and 'active' or ''}" href="/logspace/my/orders/completed">
+                        Completed <span class="badge bg-success" t-esc="counts['completed']"/>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a t-attf-class="nav-link #{current_status == 'cancelled' and 'active' or ''}" href="/logspace/my/orders/cancelled">
+                        Cancelled <span class="badge bg-danger" t-esc="counts['cancelled']"/>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Orders List -->
+            <div class="table-responsive">
+                <table class="table table-hover text-nowrap">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Truck</th>
+                            <th>Route</th>
+                            <th>Order Created</th>
+                            <th>Scheduled</th>
+                            <th>Approved</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="orders_list" t-as="order_item">
+                            <tr>
+                                <td><a t-attf-href="/logspace/my/orders/track/#{order_item['id']}" t-esc="order_item['id']"/></td>
+                                <td><span t-esc="order_item['truck']"/><br/><small class="text-muted" t-esc="order_item['vendor']"/></td>
+                                <td><small t-esc="order_item['pickup']"/><br/><i class="fa fa-arrow-down text-muted"></i><br/><small t-esc="order_item['dropoff']"/></td>
+                                <td><small t-esc="order_item.get('create_date', order_item['date'])"/></td>
+                                <td><small class="text-primary" t-esc="order_item.get('scheduled_datetime', order_item['date'])"/></td>
+                                <td><small t-if="order_item.get('approve_date')" t-esc="order_item['approve_date']"/><small t-if="not order_item.get('approve_date')" class="text-muted">-</small></td>
+                                <td t-esc="'$' + str(int(order_item['amount']))"/>
+                                <td>
+                                    <t t-if="order_item['status'] == 'in_transit'">
+                                        <span class="badge bg-info">In Transit</span>
+                                    </t>
+                                    <t t-if="order_item['status'] == 'pending'">
+                                        <span class="badge bg-warning">Pending</span>
+                                    </t>
+                                    <t t-if="order_item['status'] == 'completed'">
+                                        <span class="badge bg-success">Delivered</span>
+                                    </t>
+                                    <t t-if="order_item['status'] == 'cancelled'">
+                                        <span class="badge bg-danger">Cancelled</span>
+                                    </t>
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a t-attf-href="/logspace/my/orders/track/#{order_item['id']}" class="btn btn-outline-primary">Track</a>
+                                        <t t-if="order_item['status'] == 'completed'">
+                                            <a t-attf-href="/logspace/my/orders/#{order_item['id']}/rate" class="btn btn-outline-success">Rate</a>
+                                        </t>
+                                        <t t-if="order_item['status'] == 'cancelled'">
+                                            <a t-attf-href="/logspace/my/orders/#{order_item['id']}/refunds/new" class="btn btn-outline-warning">Refund</a>
+                                        </t>
+                                    </div>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <!-- Screen 13: Track Order (NO MAP - Timeline only) -->
+    <template id="mockup2_track_page" name="Logspace Portal - Track Order">
+        <t t-call="portal.portal_layout">
+            <t t-set="no_breadcrumbs" t-value="True"/>
+            <div class="container">
+                <!-- Breadcrumb -->
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb bg-transparent px-0 mb-0">
+                                <li class="breadcrumb-item"><a href="/logspace/my">My Account</a></li>
+                                <li class="breadcrumb-item"><a href="/logspace/my/orders">My Orders</a></li>
+                                <li class="breadcrumb-item active">Track Order</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            <h4 class="mt-2">Track Order <span class="text-muted" t-esc="tracking_info['id']"/></h4>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Order Info Card -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6 class="text-muted">Pickup</h6>
+                                    <p><i class="fa fa-circle text-muted me-2"></i><span t-esc="tracking_info['pickup']"/></p>
+                                    <p class="small"><i class="fa fa-clock-o text-primary me-2"></i><strong>Timeframe:</strong> <span t-esc="tracking_info.get('pickup_timeframe', 'Not set')"/></p>
+                                    <h6 class="text-muted mt-3">Dropoff</h6>
+                                    <p><i class="fa fa-map-marker text-danger me-2"></i><span t-esc="tracking_info['dropoff']"/></p>
+                                    <p class="small"><i class="fa fa-clock-o text-success me-2"></i><strong>Timeframe:</strong> <span t-esc="tracking_info.get('dropoff_timeframe', 'Not set')"/></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="text-muted">Vendor</h6>
+                                    <p><span t-esc="tracking_info['vendor']"/></p>
+                                    <h6 class="text-muted">Current Status</h6>
+                                    <span class="badge bg-info fs-6" t-esc="tracking_info['status']"/>
+                                    <div class="mt-3">
+                                        <p class="small text-muted mb-1"><i class="fa fa-calendar-plus-o me-1"></i> Order Created: <span t-esc="tracking_info.get('create_date', 'N/A')"/></p>
+                                        <p class="small text-primary mb-1"><i class="fa fa-calendar-check-o me-1"></i> Scheduled: <span t-esc="tracking_info.get('scheduled_datetime', 'N/A')"/></p>
+                                        <p t-if="tracking_info.get('approve_date')" class="small text-success mb-0"><i class="fa fa-check-circle me-1"></i> Approved: <span t-esc="tracking_info['approve_date']"/></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Verification Codes Card (Conditional Display) -->
+                    <div t-if="tracking_info.get('pickup_verification_code') or tracking_info.get('dropoff_verification_code')" class="card mb-4 border-primary">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0"><i class="fa fa-qrcode me-2"></i>Verification Codes</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6" t-if="tracking_info.get('pickup_verification_code')">
+                                    <div class="text-center p-3 bg-light rounded">
+                                        <h6 class="text-muted mb-2">Pickup Verification Code</h6>
+                                        <div class="fs-3 fw-bold text-primary font-monospace" t-esc="tracking_info['pickup_verification_code']"/>
+                                        <p class="small text-muted mb-0 mt-2">Show this code to the driver at pickup</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" t-if="tracking_info.get('dropoff_verification_code')">
+                                    <div class="text-center p-3 bg-light rounded">
+                                        <h6 class="text-muted mb-2">Drop-off Verification Code</h6>
+                                        <div class="fs-3 fw-bold text-success font-monospace" t-esc="tracking_info['dropoff_verification_code']"/>
+                                        <p class="small text-muted mb-0 mt-2">Driver confirms delivery with this code</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div t-if="tracking_info['status'] == 'In Transit' and not tracking_info.get('dropoff_verification_code')" class="alert alert-info mt-3 mb-0">
+                                <i class="fa fa-info-circle me-2"></i>
+                                Drop-off verification code will be generated after pickup is completed.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline (NO MAP) - Vertical layout for 10 statuses -->
+                    <div class="card">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0">Delivery Timeline</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="logspace-timeline">
+                                <t t-foreach="timeline" t-as="item">
+                                    <div t-attf-class="logspace-timeline-item d-flex align-items-start mb-3 #{item_last and '' or 'pb-3'}" style="position: relative;">
+                                        <!-- Vertical connector line -->
+                                        <div t-if="not item_last" class="position-absolute" t-attf-style="left: 19px; top: 40px; bottom: 0; width: 2px; background-color: #{item['done'] and '#28a745' or '#dee2e6'};"/>
+                                        <!-- Status icon -->
+                                        <div t-attf-class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 #{item['done'] and (item['current'] and 'bg-primary text-white' or 'bg-success text-white') or 'bg-light text-muted border'}" style="width: 40px; height: 40px; z-index: 1;">
+                                            <i t-att-class="'fa ' + item['icon']"/>
+                                        </div>
+                                        <!-- Label and time -->
+                                        <div class="ms-3 flex-grow-1">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <h6 t-attf-class="mb-0 #{item['current'] and 'text-primary fw-bold' or item['done'] and 'text-success' or 'text-muted'}" t-esc="item['label']"/>
+                                                <t t-if="item['current']">
+                                                    <span class="badge bg-primary">Current</span>
+                                                </t>
+                                            </div>
+                                            <small class="text-muted" t-esc="item['time']"/>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <!-- Driver Info -->
+                    <div class="card mb-4">
+                        <div class="card-body text-center">
+                            <i class="fa fa-user-circle fa-4x text-muted mb-2"></i>
+                            <h5 class="mb-0" t-esc="tracking_info['driver']"/>
+                            <p class="text-muted">Your Driver</p>
+                            <a t-attf-href="tel:#{tracking_info['driver_phone']}" class="btn btn-outline-primary btn-sm">
+                                <i class="fa fa-phone me-1"></i> Call Driver
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Support Links -->
+                    <div class="card">
+                        <div class="list-group list-group-flush">
+                            <a t-attf-href="/logspace/my/orders/#{order_id}/tickets" class="list-group-item list-group-item-action">
+                                <i class="fa fa-life-ring me-2"></i> Contact Support
+                            </a>
+                            <a t-attf-href="/logspace/my/orders/#{order_id}/refunds" class="list-group-item list-group-item-action">
+                                <i class="fa fa-undo me-2"></i> Request Refund
+                            </a>
+                            <a t-attf-href="/logspace/my/orders/#{order_id}/rate" class="list-group-item list-group-item-action">
+                                <i class="fa fa-star me-2 text-warning"></i> Rate Driver
+                            </a>
+                            <a t-attf-href="/logspace/my/orders/#{order_id}/notifications" class="list-group-item list-group-item-action">
+                                <i class="fa fa-bell me-2 text-info"></i> Order Notifications
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Screen 14: Notifications -->
+    <template id="mockup2_notifications_page" name="Logspace Portal - Notifications">
+        <t t-call="portal.portal_layout">
+            <t t-set="no_breadcrumbs" t-value="True"/>
+            <div class="container">
+                <!-- Breadcrumb -->
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb bg-transparent px-0 mb-0">
+                                <li class="breadcrumb-item"><a href="/logspace/my">My Account</a></li>
+                                <li class="breadcrumb-item"><a href="/logspace/my/orders">My Orders</a></li>
+                                <li class="breadcrumb-item"><a t-attf-href="/logspace/my/orders/track/#{order_id}">Track Order</a></li>
+                                <li class="breadcrumb-item active">Order Notifications</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            <h4 class="mt-2">Order Notifications</h4>
+
+            <div class="list-group">
+                <t t-foreach="notifications" t-as="notif">
+                    <div t-attf-class="list-group-item list-group-item-action #{notif['read'] and '' or 'bg-light btracking_info-primary'}">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">
+                                <t t-if="notif['type'] == 'success'">
+                                    <i class="fa fa-check-circle text-success me-2"></i>
+                                </t>
+                                <t t-if="notif['type'] == 'info'">
+                                    <i class="fa fa-info-circle text-info me-2"></i>
+                                </t>
+                                <t t-if="notif['type'] == 'warning'">
+                                    <i class="fa fa-bell text-warning me-2"></i>
+                                </t>
+                                <span t-esc="notif['title']"/>
+                            </h6>
+                            <small class="text-muted" t-esc="notif['time']"/>
+                        </div>
+                        <p class="mb-1" t-esc="notif['message']"/>
+                    </div>
+                </t>
+            </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Screen 15: Rate Driver -->
+    <template id="mockup2_rate_page" name="Logspace Portal - Rate Driver">
+        <t t-call="portal.portal_layout">
+            <t t-set="no_breadcrumbs" t-value="True"/>
+            <div class="container">
+                <!-- Breadcrumb -->
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb bg-transparent px-0 mb-0">
+                                <li class="breadcrumb-item"><a href="/logspace/my">My Account</a></li>
+                                <li class="breadcrumb-item"><a href="/logspace/my/orders">My Orders</a></li>
+                                <li class="breadcrumb-item"><a t-attf-href="/logspace/my/orders/track/#{order_id}">Track Order</a></li>
+                                <li class="breadcrumb-item active">Rate Driver</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            <h4 class="mt-2">Rate Your Experience</h4>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="text-center mb-4">
+                                <h5 t-esc="vendor"/>
+                                <p class="text-muted">Order <span t-esc="tracking_info_id"/></p>
+                            </div>
+
+                            <form t-attf-action="/logspace/my/orders/track/#{order_id}" method="GET">
+                                <div class="text-center mb-4">
+                                    <h6>Overall Rating</h6>
+                                    <div class="fs-1">
+                                        <a href="#" class="text-warning"><i class="fa fa-star-o"></i></a>
+                                        <a href="#" class="text-warning"><i class="fa fa-star-o"></i></a>
+                                        <a href="#" class="text-warning"><i class="fa fa-star-o"></i></a>
+                                        <a href="#" class="text-warning"><i class="fa fa-star-o"></i></a>
+                                        <a href="#" class="text-warning"><i class="fa fa-star-o"></i></a>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <h6>Rate specific aspects</h6>
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <label class="form-label small">Timeliness</label>
+                                            <select class="form-select form-select-sm">
+                                                <option>Excellent</option>
+                                                <option>Good</option>
+                                                <option>Average</option>
+                                                <option>Poor</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label class="form-label small">Driver Behavior</label>
+                                            <select class="form-select form-select-sm">
+                                                <option>Excellent</option>
+                                                <option>Good</option>
+                                                <option>Average</option>
+                                                <option>Poor</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label class="form-label small">Vehicle Condition</label>
+                                            <select class="form-select form-select-sm">
+                                                <option>Excellent</option>
+                                                <option>Good</option>
+                                                <option>Average</option>
+                                                <option>Poor</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label">Comments</label>
+                                    <textarea class="form-control" rows="3" placeholder="Tell us about your experience..."></textarea>
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+                                    <a t-attf-href="/logspace/my/orders/track/#{order_id}" class="btn btn-outline-secondary">Skip</a>
+                                    <button type="submit" class="btn btn-primary">Submit Review</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Screen 16: Refund Request -->
+    <template id="mockup2_refund_page" name="Logspace Portal - Refund">
+        <t t-call="portal.portal_layout">
+            <t t-set="no_breadcrumbs" t-value="True"/>
+            <div class="container">
+                <!-- Breadcrumb -->
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb bg-transparent px-0 mb-0">
+                                <li class="breadcrumb-item"><a href="/logspace/my">My Account</a></li>
+                                <li class="breadcrumb-item"><a href="/logspace/my/orders">My Orders</a></li>
+                                <li class="breadcrumb-item"><a t-attf-href="/logspace/my/orders/#{order_id}/refunds">My Refunds</a></li>
+                                <li class="breadcrumb-item active">New Refund</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            <h4 class="mt-2">Request Refund</h4>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="alert alert-info mb-4">
+                                <h6 class="alert-heading">Order <span t-esc="tracking_info_id"/></h6>
+                                <p class="mb-0">Refund Amount: <strong t-esc="'$' + str(amount)"/></p>
+                            </div>
+
+                            <form action="/logspace/my/tracking_infos" method="GET">
+                                <div class="mb-3">
+                                    <label class="form-label">Reason for Refund</label>
+                                    <select class="form-select" required="required">
+                                        <option value="">Select a reason...</option>
+                                        <t t-foreach="reasons" t-as="reason">
+                                            <option t-att-value="reason[0]" t-esc="reason[1]"/>
+                                        </t>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Please provide details</label>
+                                    <textarea class="form-control" rows="4" placeholder="Describe the issue in detail..."></textarea>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label">Upload supporting documents (optional)</label>
+                                    <input type="file" class="form-control" multiple="multiple"/>
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+                                    <a t-attf-href="/logspace/my/orders/#{order_id}/refunds" class="btn btn-outline-secondary">Cancel</a>
+                                    <button type="submit" class="btn btn-warning">Submit Refund Request</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Screen 17: Support Ticket -->
+    <template id="mockup2_ticket_page" name="Logspace Portal - Support Ticket">
+        <t t-call="portal.portal_layout">
+            <t t-set="no_breadcrumbs" t-value="True"/>
+            <div class="container">
+                <!-- Breadcrumb -->
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb bg-transparent px-0 mb-0">
+                                <li class="breadcrumb-item"><a href="/logspace/my">My Account</a></li>
+                                <li t-if="order_id" class="breadcrumb-item"><a href="/logspace/my/orders">My Orders</a></li>
+                                <li t-if="order_id" class="breadcrumb-item"><a t-attf-href="/logspace/my/orders/#{order_id}/tickets">My Tickets</a></li>
+                                <li class="breadcrumb-item active">New Ticket</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            <h4 class="mt-2">Help &amp; Support</h4>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0">Create a Support Ticket</h5>
+                        </div>
+                        <div class="card-body">
+                            <form action="/logspace/my/tracking_infos" method="GET">
+                                <div class="mb-3">
+                                    <label class="form-label">Category</label>
+                                    <select class="form-select" required="required">
+                                        <option value="">Select category...</option>
+                                        <t t-foreach="categories" t-as="cat">
+                                            <option t-att-value="cat[0]" t-esc="cat[1]"/>
+                                        </t>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Subject</label>
+                                    <input type="text" class="form-control" placeholder="Brief summary of your issue"/>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Description</label>
+                                    <textarea class="form-control" rows="5" placeholder="Describe your issue in detail..."></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Order ID (if applicable)</label>
+                                    <input type="text" class="form-control" placeholder="e.g., LOG-1234"/>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label">Attachments (optional)</label>
+                                    <input type="file" class="form-control" multiple="multiple"/>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Submit Ticket</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h6>Contact Us</h6>
+                            <p><i class="fa fa-envelope me-2 text-primary"></i> support@logspace.com</p>
+                            <p><i class="fa fa-phone me-2 text-primary"></i> +1 800-LOGSPACE</p>
+                            <p><i class="fa fa-clock-o me-2 text-primary"></i> Mon-Fri, 9AM-6PM</p>
+                        </div>
+                    </div>
+
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <h6>FAQs</h6>
+                            <div class="accordion" id="faqAccordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                            How do I track my tracking_info?
+                                        </button>
+                                    </h2>
+                                    <div id="faq1" class="accordion-collapse collapse">
+                                        <div class="accordion-body small">
+                                            Go to "My Orders" and click "Track" on any active tracking_info.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                            Can I modify my booking?
+                                        </button>
+                                    </h2>
+                                    <div id="faq2" class="accordion-collapse collapse">
+                                        <div class="accordion-body small">
+                                            Contact support within 2 hours of booking.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Ticket List Page -->
+    <template id="mockup2_ticket_list_page" name="Logspace Portal - Ticket List">
+        <t t-call="portal.portal_layout">
+            <t t-set="no_breadcrumbs" t-value="True"/>
+            <div class="container">
+                <!-- Breadcrumb -->
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb bg-transparent px-0 mb-0">
+                                <li class="breadcrumb-item"><a href="/logspace/my">My Account</a></li>
+                                <li class="breadcrumb-item"><a href="/logspace/my/orders">My Orders</a></li>
+                                <li class="breadcrumb-item active">My Tickets</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="mb-0">Support Tickets for Order <span class="text-muted" t-esc="order_id"/></h4>
+                    <a t-attf-href="/logspace/my/orders/#{order_id}/tickets/new" class="btn btn-primary">
+                        <i class="fa fa-plus me-1"></i> New Ticket
+                    </a>
+                </div>
+
+                <t t-if="tickets">
+                    <div class="table-responsive">
+                        <table class="table table-hover text-nowrap">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Ticket ID</th>
+                                    <th>Date</th>
+                                    <th>Subject</th>
+                                    <th>Category</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="tickets" t-as="ticket">
+                                    <tr>
+                                        <td><strong t-esc="ticket['id']"/></td>
+                                        <td t-esc="ticket['date']"/>
+                                        <td t-esc="ticket['subject']"/>
+                                        <td><span class="badge bg-secondary" t-esc="ticket['category']"/></td>
+                                        <td>
+                                            <t t-if="ticket['status'] == 'open'">
+                                                <span class="badge bg-warning">Open</span>
+                                            </t>
+                                            <t t-if="ticket['status'] == 'resolved'">
+                                                <span class="badge bg-success">Resolved</span>
+                                            </t>
+                                            <t t-if="ticket['status'] == 'pending'">
+                                                <span class="badge bg-info">Pending</span>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+                <t t-else="">
+                    <div class="text-center py-5">
+                        <i class="fa fa-life-ring fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">No support tickets yet</h5>
+                        <a t-attf-href="/logspace/my/orders/#{order_id}/tickets/new" class="btn btn-primary mt-2">
+                            <i class="fa fa-plus me-1"></i> Create Your First Ticket
+                        </a>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+
+    <!-- Refund List Page -->
+    <template id="mockup2_refund_list_page" name="Logspace Portal - Refund List">
+        <t t-call="portal.portal_layout">
+            <t t-set="no_breadcrumbs" t-value="True"/>
+            <div class="container">
+                <!-- Breadcrumb -->
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb bg-transparent px-0 mb-0">
+                                <li class="breadcrumb-item"><a href="/logspace/my">My Account</a></li>
+                                <li class="breadcrumb-item"><a href="/logspace/my/orders">My Orders</a></li>
+                                <li class="breadcrumb-item active">My Refunds</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="mb-0">Refund Requests for Order <span class="text-muted" t-esc="order_id"/></h4>
+                    <a t-attf-href="/logspace/my/orders/#{order_id}/refunds/new" class="btn btn-warning">
+                        <i class="fa fa-plus me-1"></i> New Refund Request
+                    </a>
+                </div>
+
+                <t t-if="refunds">
+                    <div class="table-responsive">
+                        <table class="table table-hover text-nowrap">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Refund ID</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Reason</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="refunds" t-as="refund">
+                                    <tr>
+                                        <td><strong t-esc="refund['id']"/></td>
+                                        <td t-esc="refund['date']"/>
+                                        <td t-esc="'$' + str(int(refund['amount']))"/>
+                                        <td t-esc="refund['reason']"/>
+                                        <td>
+                                            <t t-if="refund['status'] == 'approved'">
+                                                <span class="badge bg-success">Approved</span>
+                                            </t>
+                                            <t t-if="refund['status'] == 'pending'">
+                                                <span class="badge bg-warning">Pending Review</span>
+                                            </t>
+                                            <t t-if="refund['status'] == 'rejected'">
+                                                <span class="badge bg-danger">Rejected</span>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+                <t t-else="">
+                    <div class="text-center py-5">
+                        <i class="fa fa-undo fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">No refund requests yet</h5>
+                        <a t-attf-href="/logspace/my/orders/#{order_id}/refunds/new" class="btn btn-warning mt-2">
+                            <i class="fa fa-plus me-1"></i> Submit Your First Refund Request
+                        </a>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+</odoo>

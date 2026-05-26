@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="exception_approval_request_canceled">
+        <div class="alert alert-warning" role="alert">
+            <p>
+                <strong>The related approval request has been canceled:</strong>
+            </p>
+            <p>
+                <a t-attf-href="{{ object.get_base_url() }}/odoo/approvals/{{ approval_requests.id }}">
+                    <t t-out="approval_requests.name"/>
+                </a>
+            </p>
+        </div>
+    </template>
+</odoo>

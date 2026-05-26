@@ -1,0 +1,75 @@
+<odoo>
+	<data>
+		<record id="mp_combo_choices_filter" model="ir.ui.view">
+			<field name="name">Combo Choices Filters</field>
+			<field name="model">product.combo</field>
+			<field name="priority" eval="100"/>
+			<field name="arch" type="xml">
+				<search string="Combo Choices">
+					<group>
+						<filter string="Seller" context="{'group_by':'marketplace_seller_id'}" name="by_marketplace_seller_id" groups="odoo_marketplace.marketplace_officer_group"/>
+					</group>
+				</search>
+			</field>
+		</record>
+		<record id="wk_marketplace_product_combo_list_view" model="ir.ui.view">
+			<field name="name">Combo Choices List View</field>
+			<field name="model">product.combo</field>
+			<field name="priority" eval="20"/>
+			<field name="arch" type="xml">
+				<list string="Combo Choices">
+					<field name="name"/>
+					<field name="base_price"/>
+					<field name="combo_item_count"/>
+					<field name="marketplace_seller_id" groups="odoo_marketplace.marketplace_officer_group"/>
+				</list>
+			</field>
+		</record>
+
+		<record id="wk_marketplace_product_combo_form_view" model="ir.ui.view">
+			<field name="name">Combo Choices Form View</field>
+			<field name="model">product.combo</field>
+			<field name="priority" eval="20"/>
+			<field name="arch" type="xml">
+				<form string="Combo Choices">
+					<sheet>
+						<div class="oe_title">
+							<label for="name" string="Combo Choice"/>
+							<h1>
+								<field name="name" placeholder="e.g. Burger Choice" widget="text" options="{'line_breaks': False}" class="text-break"/>
+							</h1>
+						</div>
+						<group>
+							<field name="marketplace_seller_id" options="{'no_create': True, 'no_open':True}" domain="[('seller', '=', True), ('state', '=', 'approved')]" groups="odoo_marketplace.marketplace_officer_group" class="oe_inline"/>
+						</group>
+						<field name="combo_item_ids">
+							<list editable="bottom">
+								<field name="currency_id" column_invisible="True"/>
+								<field name="product_id" domain="[('status','=','approved'),('marketplace_seller_id','=',parent.marketplace_seller_id)]" options="{'no_create':True, 'no_open':True}"/>
+								<field name="lst_price" widget="monetary" options="{'field_digits': True}"/>
+								<field name="extra_price" widget="monetary" options="{'field_digits': True}"/>
+							</list>
+						</field>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="wk_marketplace_product_combo_action" model="ir.actions.act_window">
+			<field name="name">Combo Choices</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">product.combo</field>
+			<field name="path">mp-combo-choices</field>
+			<field name="view_mode">list,form</field>
+			<field name="view_ids" eval="[(5, 0, 0),
+                          (0,0,{'view_mode':'list', 'view_id': ref('wk_marketplace_product_combo_list_view')}),
+                          (0,0,{'view_mode':'form', 'view_id': ref('wk_marketplace_product_combo_form_view')})]"/>
+			<field name="search_view_id" ref="mp_combo_choices_filter"/>
+			<field name="domain">[('marketplace_seller_id','in',['get_marketplace_seller_id()'])]</field>
+
+		</record>
+
+		<menuitem id="wk_seller_dashboard_menu_product_combo" name="Combo Choices" parent="wk_seller_dashboard_menu2" action="wk_marketplace_product_combo_action" sequence="3"/>
+
+	</data>
+</odoo>

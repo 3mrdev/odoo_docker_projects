@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="approval_liquidity_transfer_request_view_form_inherit" model="ir.ui.view">
+        <field name="name">approval.liquidity.transfer.request.view.form.inherit</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals.approval_request_view_form" />
+        <field name="priority" eval="17"/>
+        <field name="arch" type="xml">
+            <!-- Warning banners for payment method configuration issues -->
+            <xpath expr="//sheet" position="before">
+                <div class="alert alert-warning" role="alert"
+                     invisible="approval_type != 'liquidity_transfer' or not source_payment_method_warning or journal_entries_count &gt; 0">
+                    <i class="fa fa-exclamation-triangle"/>
+                    <strong>Warning:</strong> No journal entries will be created for the source journal because its payment method has no outstanding account configured.
+                    Check "Force Journal Entries" below to use the journal default account.
+                </div>
+                <div class="alert alert-warning" role="alert"
+                     invisible="approval_type != 'liquidity_transfer' or not destination_payment_method_warning or journal_entries_count &gt; 0">
+                    <i class="fa fa-exclamation-triangle"/>
+                    <strong>Warning:</strong> No journal entries will be created for the destination journal because its payment method has no outstanding account configured.
+                    Check "Force Journal Entries" below to use the journal default account.
+                </div>
+            </xpath>
+
+            <!-- Add Create Payments button for liquidity_transfer type only -->
+            <xpath expr="//button[@name='action_confirm']" position="after">
+                <button name="action_create_custom_by_type" type="object"
+                    groups="account.group_account_user"
+                    string="Create Payments" class="btn-primary"
+                    data-hotkey="t"
+                    invisible="approval_type != 'liquidity_transfer' or request_status != 'approved' or payments_count &gt; 0" />
+            </xpath>
+
+            <!-- Add liquidity transfer specific fields -->
+            <field name="amount" position="before">
+                <!-- Source Journal and Payment Method -->
+                <label for="journal_source" invisible="approval_type != 'liquidity_transfer'"/>
+                <div class="o_row" invisible="approval_type != 'liquidity_transfer'">
+                    <field name="journal_source" 
+                        domain="[('type','in',['bank','cash'])]"
+                        readonly="request_status not in ['new','pending']"
+                        groups="account.group_account_user" />
+                    <field name="payment_method_line_source_id"
+                        invisible="not journal_source"
+                        domain="[('journal_id', '=', journal_source), ('payment_type', '=', 'outbound')]"
+                        readonly="request_status not in ['new','pending']"
+                        groups="account.group_account_user" />
+                </div>
+
+                <!-- Destination Journal and Payment Method -->
+                <label for="journal_destination" invisible="approval_type != 'liquidity_transfer'"/>
+                <div class="o_row" invisible="approval_type != 'liquidity_transfer'">
+                    <field name="journal_destination" 
+                        domain="[('type','in',['bank','cash'])]"
+                        readonly="request_status not in ['new','pending']"
+                        groups="account.group_account_user" />
+                    <field name="payment_method_line_destination_id"
+                        invisible="not journal_destination"
+                        domain="[('journal_id', '=', journal_destination), ('payment_type', '=', 'inbound')]"
+                        readonly="request_status not in ['new','pending']"
+                        groups="account.group_account_user" />
+                </div>
+
+                <!-- Force Journal Entries checkbox (only when needed) -->
+                <field name="force_journal_entries"
+                    invisible="approval_type != 'liquidity_transfer' or (not source_payment_method_warning and not destination_payment_method_warning)"
+                    readonly="request_status not in ['new','pending']"
+                    groups="account.group_account_user" />
+
+                <field name="payment_note" invisible="approval_type != 'liquidity_transfer'"
+                    readonly="request_status not in ['new','pending']"
+                    placeholder="Additional notes for payment reference..."
+                    groups="account.group_account_user" />
+            </field>
+        </field>
+    </record>
+</odoo>

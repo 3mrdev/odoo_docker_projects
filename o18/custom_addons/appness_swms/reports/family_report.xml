@@ -1,0 +1,236 @@
+<odoo>
+    <data>
+        <template id="family_template">
+            <t t-call="web.external_layout">
+                <div t-foreach="families" t-as="family" class="page">
+                    <div class="text-center">
+                        <h1>تقرير الاسرة</h1>
+                        <h1>Family Report</h1>
+                    </div>
+                    <br/><br/>
+                    <table class="table text-center">
+                        <tr>
+                            <td>Family No.</td>
+                            <td t-esc="family['family_no']"></td>
+                            <td>رقم الاسرة</td>
+                        </tr>
+                        <tr>
+                            <td>Family Name</td>
+                            <td t-esc="family['family_name']"></td>
+                            <td>اسم الاسرة</td>
+                        </tr>
+                    </table>
+                    <br/><br/>
+                    <div class="text-center">
+                        <h1>افراد الاسرة</h1>
+                        <h1>Family Members</h1>
+                    </div>
+                    <br/><br/>
+                    <table t-foreach="family['members']" t-as="member" class="table text-center">
+                        <tr>
+                            <td>Description</td>
+                            <td t-esc="member['name']"></td>
+                            <td>الوصف</td>
+                        </tr>
+                        <tr>
+                            <td>Member No.</td>
+                            <td t-esc="member['member_no']"></td>
+                            <td>رقم الفرد</td>
+                        </tr>
+                        <tr>
+                            <td>National ID</td>
+                            <td t-esc="member['civil_number']"></td>
+                            <td>الرقم المدني</td>
+                        </tr>
+                        <tr>
+                            <td>Gender</td>
+                            <td t-esc="member['gender']"></td>
+                            <td>الجنس</td>
+                        </tr>
+                        <tr>
+                            <td>Relationship</td>
+                            <td t-esc="member['relationship']"></td>
+                            <td>العلاقة</td>
+                        </tr>
+                        <tr>
+                            <td>Marital Status</td>
+                            <td t-esc="member['marital']" style="color:red;"></td>
+                            <td>الحالة الاجتماعية</td>
+                        </tr>
+                        <tr>
+                            <td>Age</td>
+                            <td t-esc="member['age']" style="color:red;"></td>
+                            <td>العمر</td>
+                        </tr>
+                        <tr>
+                            <td>Field of Work</td>
+                            <td t-esc="member['work_field']" style="color:red;"></td>
+                            <td>مجال العمل</td>
+                        </tr>
+                        <tr>
+                            <td>Employeer</td>
+                            <td t-esc="member['employer']" style="color:red;"></td>
+                            <td>المشغل</td>
+                        </tr>
+                        <tr>
+                            <td>Employment Date</td>
+                            <td t-esc="member['employment_date']"></td>
+                            <td>تاريخ التوظيف</td>
+                        </tr>
+                        <tr>
+                            <td>Certificate Level</td>
+                            <td t-esc="member['certificate']" style="color:red;"></td>
+                            <td>الدرجة العلمية</td>
+                        </tr>
+                        <tr>
+                            <td>Field of Study</td>
+                            <td t-esc="member['study_field']"></td>
+                            <td>مجال الدراسة</td>
+                        </tr>
+                        <tr>
+                            <td>School</td>
+                            <td t-esc="member['study_school']"></td>
+                            <td>المدرسة</td>
+                        </tr>
+                        <tr>
+                            <td>School Class</td>
+                            <td t-esc="member['study_class']"></td>
+                            <td>الفصل الدراسي</td>
+                        </tr>
+                        <tr>
+                            <td>Address Area</td>
+                            <td t-esc="member['address_area']"></td>
+                            <td>المنظقة</td>
+                        </tr>
+                        <tr>
+                            <td>Address City</td>
+                            <td t-esc="member['address_city']"></td>
+                            <td>المدينة</td>
+                        </tr>
+                        <tr>
+                            <td>Address Country</td>
+                            <td t-esc="member['address_country']"></td>
+                            <td>البلد</td>
+                        </tr>
+                    </table>
+
+                    <br/><br/>
+                    <div class="text-center">
+                        <h1>الدخل</h1>
+                        <h1>Income</h1>
+                    </div>
+                    <br/><br/>
+
+                    <table class="table text-center">
+                        <tr>
+                            <td>
+                                Type
+                                <br/>
+                                نوع الدخل
+                            </td>
+                            <td>
+                                Amount
+                                <br/>
+                                المبلغ
+                            </td>
+                            <td>
+                                Interval
+                                <br/>
+                                عدد التكرار
+                            </td>
+                            <td>
+                                Frequency
+                                <br/>
+                                معدل التكرار
+                            </td>
+                            <td>
+                                Member
+                                <br/>
+                                الفرد 
+                            </td>
+                        </tr>
+                        <tr t-foreach="income" t-as="incom">
+                            <td t-esc="incom['name']"></td>
+                            <td t-esc="incom['amount']"></td>
+                            <td t-esc="incom['interval']"></td>
+                            <td t-esc="incom['frequency']"></td>
+                            <td t-esc="incom['partner_id']"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">Sum</td>
+                            <td colspan="1">Total Amount</td>
+                        </tr>
+                    </table>
+
+                    <br/><br/>
+                    <div class="text-center">
+                        <h1>الالتزامات</h1>
+                        <h1>Obligations</h1>
+                    </div>
+                    <br/><br/>
+
+                    <table class="table text-center">
+                        <tr>
+                            <td>
+                                Type
+                                <br/>
+                                نوع الالتزام
+                            </td>
+                            <td>
+                                Creditor
+                                <br/>
+                                الدائن
+                            </td>
+                            <td>
+                                Total Amount
+                                <br/>
+                                المبلغ الكلي
+                            </td>
+                            <td>
+                                Remaining Amount
+                                <br/>
+                                المبلغ المتبقي
+                            </td>
+                            <td>
+                                Payment Method
+                                <br/>
+                                طريقة الدفع
+                            </td>
+                            <td>
+                                Interval
+                                <br/>
+                                عدد التكرار
+                            </td>
+                            <td>
+                                Frequency
+                                <br/>
+                                معدل التكرار
+                            </td>
+                            <td>
+                                Member
+                                <br/>
+                                الفرد 
+                            </td>
+                        </tr>
+                        <tr t-foreach="obligations" t-as="obligation">
+                            <td t-esc="obligation['name']"></td>
+                            <td t-esc="obligation['creditor']"></td>
+                            <td t-esc="obligation['total_amount']"></td>
+                            <td t-esc="obligation['remaining_amount']"></td>
+                            <td t-esc="obligation['payment_method']"></td>
+                            <td t-esc="obligation['interval']"></td>
+                            <td t-esc="obligation['frequency']"></td>
+                            <td t-esc="obligation['partner_id']"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"></td>
+                            <td colspan="1">Sum</td>
+                            <td colspan="1">Sum</td>
+                            <td colspan="3">Total Amount</td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

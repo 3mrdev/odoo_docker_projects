@@ -1,0 +1,43 @@
+<odoo>
+    <record id="view_order_line_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.line.form.inherit</field>
+        <field name="model">sale.order.line</field>
+        <field name="inherit_id" ref="sale.sale_order_line_view_form_readonly" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[1]" position="after">
+                <group string="Chassis Information"
+                    invisible="not product_id.is_rop_letter or not order_id.show_rop_letter"
+                    groups="appness_gs1.group_rop_letter_user">
+                    <group>
+                        <field name="chassis_model" string="Model" optional="show" />
+                        <field name="chassis_submission_date" help="Model Timestamp"/>
+                        <field name="chassis_height" string="Chassis Height" />
+                        <field name="chassis_width" string="Chassis Width" />
+                        <field name="chassis_length" string="Chassis Length" />
+                        <field name="chassis_empty_weight" string="Chassis Empty Weight" />
+                        <field name="chassis_load_capacity" string="Chassis Load Capacity" />
+                        <field name="chassis_max_weight" string="Chassis Max Weight" />
+                        <field name="chassis_axies_number" string="Chassis Axies Number" />
+                        <field name="chassis_axies_weight" string="Chassis Axies Weight" />
+                        <field name="chassis_manufactur_year" string="Chassis Manufactur Year" />
+                        <field name="chassis_manufactur_country" string="Chassis Manufactur Country" />
+                        <field name="chassis_reference_number"/>
+                    </group>
+                    <group>
+                        <field name="chassis_image" widget="image" />
+                        <field name="chassis_image_link" />
+                        <field name="chassis_model_og_rop_letter_link" string="OG ROP Letter Link" widget="url"/>
+                        <field name="chassis_vehicle_type" string="Vehicle Type" />
+                        <field name="chassis_numbers_count" />
+                        <field name="chassis_numbers_passed_count" />
+                        <field name="chassis_numbers_failed_count" />
+                        <field name="chassis_numbers_inspection" />
+                    </group>
+                </group>
+                <group string="Chassis Numbers"></group>
+                <field name="chassis_numbers" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

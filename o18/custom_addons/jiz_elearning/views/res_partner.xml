@@ -1,0 +1,24 @@
+<odoo>
+    <data>
+        <record id="res_partner_view_form_inherit_jiz" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit.jiz</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vat']" position="after">
+                    <field name="is_student" widget="boolean_toggle"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="jiz_students_action" model="ir.actions.act_window">
+            <field name="name">Students</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('is_student', '=', True)]</field>
+            <field name="context">{'default_is_student': True}</field>
+        </record>
+
+        <menuitem id="jiz_students_menu" name="Students" sequence="2" parent="website_slides.website_slides_menu_root" action="jiz_students_action"/>
+    </data>
+</odoo>

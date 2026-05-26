@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="approval_loan_request_view_form_inherit" model="ir.ui.view">
+        <field name="name">approval.loan.request.view.form.inherit</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals.approval_request_view_form" />
+        <field name="priority" eval="17"/>
+        <field name="arch" type="xml">
+            <!-- Add Salary Adjustments smart button -->
+            <xpath expr="//button[@name='action_get_attachment_view']" position="after">
+                <button name="action_open_salary_adjustments" type="object"
+                    class="oe_stat_button" icon="fa-credit-card"
+                    groups="account.group_account_user"
+                    invisible="approval_type != 'loan' or salary_adjustment_count == 0">
+                    <field name="salary_adjustment_count" string="Salary Adjustments"
+                        widget="statinfo" />
+                </button>
+            </xpath>
+
+            <!-- Add Create Journal Entries button for loan type only -->
+            <xpath expr="//button[@name='action_confirm']" position="after">
+                <button name="action_create_custom_by_type" type="object"
+                    groups="account.group_account_user"
+                    string="Create Journal Entries" class="btn-primary"
+                    data-hotkey="t"
+                    invisible="approval_type != 'loan' or request_status != 'approved' or journal_entries_count &gt; 0" />
+            </xpath>
+
+            <!-- Hide base journal entries button for loan type (we use the same one) -->
+            <xpath expr="//button[@name='action_open_journal_entries']" position="attributes">
+                <attribute name="invisible">journal_entries_count == 0</attribute>
+            </xpath>
+
+            <!-- Hide request_owner_id for loan type (use employee instead) -->
+            <xpath expr="//field[@name='request_owner_id']" position="attributes">
+                <attribute name="invisible">approval_type == 'loan'</attribute>
+            </xpath>
+            <xpath expr="//field[@name='request_owner_id']" position="after">
+                <field name="employee_id"
+                    groups="!hr.group_hr_user"
+                    options="{'no_open': True}"
+                    invisible="approval_type != 'loan'"
+                    readonly="1" />
+                <field name="employee_id"
+                    groups="hr.group_hr_user"
+                    invisible="approval_type != 'loan'"
+                    readonly="request_status not in ['new','pending']" />
+            </xpath>
+
+            <!-- Add loan-specific fields -->
+            <field name="amount" position="before">
+                <field name="loan_debit_account"
+                    readonly="request_status not in ['new','pending']"
+                    invisible="approval_type != 'loan'"
+                    groups="account.group_account_user" />
+                <field name="loan_journal" domain="[('type','in',['bank','cash'])]"
+                    readonly="request_status not in ['new','pending']"
+                    invisible="approval_type != 'loan'"
+                    groups="account.group_account_user" />
+                <field name="loan_salary_adjustment_type"
+                    readonly="request_status not in ['new','pending']"
+                    invisible="approval_type != 'loan'"
+                    groups="account.group_account_user" />
+            </field>
+            <field name="amount" position="after">
+                <field name="loan_no_months"
+                    readonly="request_status not in ['new','pending']"
+                    invisible="approval_type != 'loan'"
+                    groups="account.group_account_user" />
+                <field name="monthly_amount"
+                    invisible="approval_type != 'loan'"
+                    groups="account.group_account_user" />
+            </field>
+        </field>
+    </record>
+</odoo>

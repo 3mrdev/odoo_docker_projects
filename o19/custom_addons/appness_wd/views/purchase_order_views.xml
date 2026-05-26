@@ -1,0 +1,68 @@
+<odoo>
+    <record id="view_purchase_order_form_inherit_wd" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit.wd</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form" />
+        <field name="priority" eval="17" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_id']"
+                position="before">
+                <field name="barcode" string="Barcode" optional="show" />
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list/field[@name='discount']" position="after">
+                <field name="discount_amount" string="Disc. Amount" widget="monetary"
+                    optional="show" />
+                <field name="tags_ids" string="Tags" widget="many2many_tags"
+                    options="{'color_field': 'color'}" optional="hide" />
+            </xpath>
+            <field name="payment_term_id" position="after">
+                <field name="tags_ids" string="Tags" widget="many2many_tags"
+                    options="{'color_field': 'color'}" />
+            </field>
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_subtotal']"
+                position="before">
+                <field name="tax_amount" string="Tax Amount" widget="monetary" optional="show" />
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_subtotal']"
+                position="after">
+                <field name="price_total" string="Tax Inc." widget="monetary" optional="show" />
+            </xpath>
+            <xpath expr="//field[@name='order_line']" position="after">
+                <group name="discount_group">
+                    <group></group>
+                    <group class="oe_subtotal_footer">
+                        <field name="amount_before_discount" string="Amount Before Discount"
+                            widget="monetary" invisible="total_discount == 0" />
+                        <field name="total_discount" string="Total Discount" widget="monetary"
+                            invisible="total_discount == 0" />
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_purchase_tags_list" model="ir.ui.view">
+        <field name="name">purchase.tag.list</field>
+        <field name="model">purchase.tag</field>
+        <field name="arch" type="xml">
+            <list string="Tags" editable="bottom" sample="1">
+                <field name="name" />
+                <field name="color" widget="color_picker" />
+            </list>
+        </field>
+    </record>
+
+    <record id="action_purchase_tags" model="ir.actions.act_window">
+        <field name="name">Purchase Tags</field>
+        <field name="res_model">purchase.tag</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+    </record>
+
+    <menuitem
+        id="menu_purchase_tags"
+        name="Purchase Tags"
+        parent="purchase.menu_purchase_config"
+        sequence="2"
+        action="action_purchase_tags" />
+</odoo>

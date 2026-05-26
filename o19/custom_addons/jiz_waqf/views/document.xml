@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+
+        <record id="jiz_document_type_action" model="ir.actions.act_window">
+            <field name="name">Document Types</field>
+            <field name="res_model">jiz.document.type</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('type', '=', 'waqf')]</field>
+        </record>
+
+        <menuitem id="jiz_document_type_menu" name="Document Types" parent="jiz_waqf.jiz_waqf_configuration_menu" action="jiz_document_type_action" sequence="30"/>
+        
+    </data>
+</odoo>

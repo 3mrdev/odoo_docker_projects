@@ -1,0 +1,818 @@
+<odoo>
+    <data>
+
+        <!-- <menuitem
+            id="maintenance.menu_maintenance_configuration"
+            name="Configuration1"
+            parent="maintenance.menu_maintenance_title"
+            groups="maintenance.group_equipment_manager,base.group_user"
+            sequence="100"/>
+
+        <menuitem
+            id="maintenance.menu_maintenance_teams"
+            name="Maintenance Teams1"
+            parent="maintenance.menu_maintenance_configuration"
+            action="maintenance.maintenance_team_action_settings"
+            groups="maintenance.group_equipment_manager,base.group_user"
+            sequence="1"/> -->
+
+        <record id="base_maintenance.maintenance_team_view_form" model="ir.ui.view">
+            <field name="active" eval="False" />
+        </record>
+
+        <record id="base_maintenance.maintenance_team_view_tree" model="ir.ui.view">
+            <field name="active" eval="False" />
+        </record>
+
+        <record id="maintenance_custom.maintenance_equipment_form_view" model="ir.ui.view">
+            <field name="active" eval="False" />
+        </record>
+
+        <!-- <record id="maintenance_custom.maintenance_requiest_inherit_form_view" model="ir.ui.view">
+            <field name="active" eval="False" />
+        </record> -->
+
+        <record id="maintenance_team_equ_form" model="ir.ui.view">
+            <field name="name">maintenance.equipment.form.inherit</field>
+            <field name="model">maintenance.equipment</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_view_form" />
+            <field name="arch" type="xml">
+                <field name="maintenance_team_id" position="attributes">
+                    <attribute name="attrs">{'required': [(1, '=', 1)]}</attribute>
+                </field>
+                <field name="technician_user_id" position="replace">
+                    <field name="technician_user_id"
+                        domain="[('share', '=', False),('id','in',member_ids)]" />
+                    <field name="member_ids" invisible="1" />
+                </field>
+                <field name="maintenance_team_id" position="after">
+                    <field name="address_id" domain="[('type','=','other')]" />
+                    <field name="todo" />
+                </field>
+            </field>
+        </record>
+
+        <record id="maintenance_team_equ_form2" model="ir.ui.view">
+            <field name="name">maintenance.equipment.form.inherit2</field>
+            <field name="model">maintenance.equipment</field>
+            <field name="inherit_id" ref="hr_maintenance.maintenance_equipment_view_form_inherit_hr" />
+            <field name="arch" type="xml">
+                <field name="employee_id" position="attributes">
+                    <attribute name="domain">[('parent_id.user_id','=',uid)]</attribute>
+                    <!-- <attribute name="options">{'no_create': True,
+                    'no_create_edit':True}</attribute> -->
+                    <attribute name="widget">selection</attribute>
+                </field>
+
+                <field name="department_id" position="attributes">
+                    <attribute name="domain">[('manager_id.user_id','=',uid)]</attribute>
+                    <!-- <attribute name="options">{'no_create': True,
+                    'no_create_edit':True}</attribute> -->
+                    <attribute name="widget">selection</attribute>
+                </field>
+            </field>
+        </record>
+
+
+        <record id="maintenance_team_equ_category_form" model="ir.ui.view">
+            <field name="name">maintenance.equipment.category.form.inherit</field>
+            <field name="model">maintenance.equipment.category</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_category_view_form" />
+            <field name="arch" type="xml">
+                <field name="technician_user_id" position="replace">
+                    <field name="maintenance_team_id" />
+                    <field name="todo" />
+                    <field name="technician_user_id"
+                        domain="[('share', '=', False),('id','in',member_ids)]" />
+                    <field name="member_ids" invisible="1" />
+                </field>
+            </field>
+        </record>
+
+        <record id="equipment_request_view_form2" model="ir.ui.view">
+            <field name="name">equipment.request.view.form2</field>
+            <field name="model">maintenance.request</field>
+            <field name="inherit_id" ref="base_maintenance.equipment_request_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="maintenance_request_form" model="ir.ui.view">
+            <field name="name">maintenance.request.form.inherit</field>
+            <field name="model">maintenance.request</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button string="Transfer Spareparts" name="sparepart" type="object" />
+                    <button string="Purchase" name="purchase" type="object" />
+                    <!-- <button string="Gen Seq" name="gen_sec" type="object"/> -->
+                </xpath>
+                <xpath expr="//div[1]" position="before">
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_pickings" type="object" class="oe_stat_button"
+                            attrs="{'invisible':[('stock_pickings_count', '=', 0)]}"
+                            icon="fa-wrench">
+                            <field string="SpareParts" name="stock_pickings_count" widget="statinfo" />
+                        </button>
+                    </div>
+                </xpath>
+                <field name="user_id" position="replace">
+                    <field name="user_id" string="Responsible" domain="[('id','in',member_ids)]" />
+                    <field name="member_ids" invisible="1" />
+                    <field name="active" invisible="1" />
+                    <field name="address_id" domain="[('type','=','other')]" />
+                    <!-- <field name="closed"/> -->
+                    <field name="close_date" />
+                    <field name="mtype" />
+                    <field name="catalog" />
+                    <field name="cost" />
+                </field>
+                <xpath expr="//sheet" position="inside">
+                    <notebook>
+                        <page string="Instructions">
+                            <div class="alert alert-info mb-0" role="alert">
+                                Upload images in the attachments and it should not be larger than
+                                2MB and it should be in png or jpg format
+                                (قم برفع الصور في المرفقات و يجب ان لا يتجاوز حجم الصور 2 ميجابايت
+                                و يجب ان تكون الصور بصيغة png أو jpg)
+                            </div>
+                            <field name="note" placeholder="Describe the maintenance to do..." />
+                        </page>
+                        <page name="description_page" string="Notes">
+                            <div class="alert alert-info mb-0" role="alert">
+                                Upload images in the attachments and it should not be larger than
+                                2MB and it should be in png or jpg format
+                                (قم برفع الصور في المرفقات و يجب ان لا يتجاوز حجم الصور 2 ميجابايت
+                                و يجب ان تكون الصور بصيغة png أو jpg)
+                            </div>
+                            <field name="description" readonly="1" />
+                        </page>
+                        <page name="todo_page" string="Todo">
+                            <group>
+                                <!-- <button name="cal_todo" string="Generate Todo" type="object"/> -->
+                                <group>
+                                    <field name="todo" />
+                                </group>
+                                <group>
+                                    <!-- <field name="todo_do"/> -->
+                                </group>
+                            </group>
+                            <field name="todolines">
+                                <tree editable="bottom" decoration-muted="check == False">
+                                    <field name="name" />
+                                    <field name="maintenance_strategy" />
+                                    <field name="maintenance_kind_id" />
+                                    <field name="equipment_number" />
+                                    <field name="check" />
+                                    <field name="note" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="spareparts_page" string="Spare Parts"
+                            groups="stock.group_stock_manager,stock.group_stock_user">
+                            <field name="stock_pickings2" readonly="1" />
+                            <field name="sparepartslines2" readonly="1" />
+                            <!-- <field name="sparepartslines" readonly="1">
+                                <tree decoration-muted="state == 'cancel'">
+                                    <field name="spareparts_id"/>
+                                    <field name="product_id"/>
+                                    <field name="product_uom_qty"/>
+                                    <field name="product_uom"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field> -->
+                        </page>
+                        <page name="purchase_page" string="Purchase Orders"
+                            groups="purchase.group_purchase_manager,purchase.group_purchase_user">
+                            <field name="purchase_orders" readonly="1" />
+                        </page>
+                    </notebook>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="maintenance_request_form2" model="ir.ui.view">
+            <field name="name">maintenance.request.form.inherit2</field>
+            <field name="model">maintenance.request</field>
+            <field name="inherit_id" ref="hr_maintenance.maintenance_request_view_form_inherit_hr" />
+            <field name="arch" type="xml">
+                <field name="employee_id" position="attributes">
+                    <!--<attribute
+                    name="domain">[('parent_id.user_id', '=', uid)]</attribute>-->
+                    <!-- Disable the creation of new records -->
+                    <attribute name="options">{'no_create': True, 'no_create_edit': True}</attribute>
+                    <attribute name="widget">selection</attribute>
+                </field>
+                <field name="employee_id" position="before">
+                    <field name="seq" readonly="1" />
+                </field>
+            </field>
+        </record>
+
+        <record id="stock_picking_form_inherit" model="ir.ui.view">
+            <field name="name">stock.picking.form.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form" />
+            <field name="arch" type="xml">
+                <field name="origin" position="after">
+                    <field name="maintenance_request_id" readonly="1" />
+                </field>
+            </field>
+        </record>
+
+        <record id="purchase_order_form_inherit" model="ir.ui.view">
+            <field name="name">purchase.order.form.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='button_confirm'][1]" position="attributes">
+                    <attribute name="groups">purchase.group_purchase_manager</attribute>
+                </xpath>
+                <xpath expr="//button[@name='button_confirm'][2]" position="attributes">
+                    <attribute name="groups">purchase.group_purchase_manager</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="purchase_order_form_inherit_2" model="ir.ui.view">
+            <field name="name">purchase.order.form.inherit.2</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Invoices">
+                        <field name="invoice_ids" widget="one2many_list"
+                            options="{'no_create': True}">
+                            <tree>
+                                <field name="name" />
+                                <field name="amount_total" />
+                                <field name="invoice_payments_widget" colspan="2" nolabel="1"
+                                    widget="payment" />
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="purchase_order_form_inherit_action_view_invoices" model="ir.ui.view">
+            <field name="name">purchase.order.form.inherit.action.view.invoices</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_view_invoice']" position="attributes">
+                    <attribute name="groups">
+                        account.group_account_invoice,account.group_account_readonly</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="equipment_form_inherit_sparepart_ids" model="ir.ui.view">
+            <field name="name">equipment.form.inherit.sparepart.ids</field>
+            <field name="model">maintenance.equipment</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Spareparts Records">
+                        <field name="sparepart_ids">
+                            <tree editable="bottom">
+                                <field name="date" widget="date" />
+                                <field name="picking_id" />
+                                <field name="picking_code" />
+                                <field name="product_id" />
+                                <field name="product_uom_qty" />
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="equipment_form_inherit_2" model="ir.ui.view">
+            <field name="name">equipment.form.inherit.2</field>
+            <field name="model">maintenance.equipment</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='category_id']" position="after">
+                    <field name="equipment_number" />
+                    <field name="product_id" />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="stock_location_form_inherit" model="ir.ui.view">
+            <field name="name">stock.location.form.inherit</field>
+            <field name="model">stock.location</field>
+            <field name="inherit_id" ref="stock.view_location_form" />
+            <field name="arch" type="xml">
+                <field name="usage" position="after">
+                    <field name="user_id" />
+                </field>
+            </field>
+        </record>
+
+        <record id="stock_picking_type_form_inherit" model="ir.ui.view">
+            <field name="name">stock.picking.type.form.inherit</field>
+            <field name="model">stock.picking.type</field>
+            <field name="inherit_id" ref="stock.view_picking_type_form" />
+            <field name="arch" type="xml">
+                <field name="code" position="after">
+                    <field name="user_id" />
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="spareparts_form">
+            <field name="name">maintenance.spareparts.form</field>
+            <field name="model">maintenance.spareparts</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="SpareParts">
+                    <header>
+                        <button string="Reset to draft" name="draft" type="object" states="cancel" />
+                        <button string="Confirm" name="confirm" type="object" states="draft,submit" />
+                        <button string="Reject" name="reject" type="object"
+                            states="draft,submit,confirm" />
+                        <button string="Cancel" name="cancel" type="object"
+                            states="draft,submit,reject" />
+                        <field name="state" widget="statusbar" />
+                    </header>
+                    <sheet attrs="{'readonly':[('state','in',['cancel','confirm'])]}">
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_open_pickings" type="object" class="oe_stat_button"
+                                attrs="{'invisible':[('stock_pickings_count', '=', 0)]}"
+                                icon="fa-wrench">
+                                <field string="Pickings" name="stock_pickings_count"
+                                    widget="statinfo" />
+                            </button>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="seq" readonly="1" />
+                                <field name="maintenance_request_id" readonly="1" />
+                                <field name="picking_type_id" />
+                            </group>
+                            <group>
+                                <field name="from_loc" />
+                                <field name="to_loc_dest" />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Spareparts">
+                                <field name="sparepart_lines">
+                                    <tree editable="bottom">
+                                        <field name="spareparts_id" invisible="1" />
+                                        <field name="product_id" />
+                                        <field name="product_uom_qty" />
+                                        <field name="product_uom" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" />
+                        <field name="activity_ids" />
+                        <field name="message_ids" />
+                    </div>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="maintenance_team_form_inherit" model="ir.ui.view">
+            <field name="name">maintenance.team.form.inherit</field>
+            <field name="model">maintenance.team</field>
+            <field name="inherit_id" ref="maintenance.maintenance_team_view_tree" />
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="picking_type_id" groups="maintenance.group_equipment_manager" />
+                    <field name="source_location" groups="maintenance.group_equipment_manager" /> <!--
+                    domain="[('usage','=','internal')]" -->
+                    <field name="location" groups="maintenance.group_equipment_manager" />
+                </field>
+            </field>
+        </record>
+
+        <record id="res_partner_type_inherit" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="arch" type="xml">
+                <field name="vat" position="after">
+                    <field name="type" widget="radio" />
+                </field>
+            </field>
+        </record>
+
+        <record id="spareparts_tree" model="ir.ui.view">
+            <field name="name">maintenance.spareparts.tree</field>
+            <field name="model">maintenance.spareparts</field>
+            <field name="arch" type="xml">
+                <tree decoration-muted="state == 'cancel'">
+                    <field name="seq" />
+                    <field name="maintenance_request_id" />
+                    <field name="picking_type_id" />
+                    <field name="from_loc" />
+                    <field name="to_loc_dest" />
+                    <field name="state" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="mtodoline_tree" model="ir.ui.view">
+            <field name="name">maintenance.todo.line.tree</field>
+            <field name="model">maintenance.todo.line</field>
+            <field name="arch" type="xml">
+                <tree decoration-muted="check == False">
+                    <field name="name" />
+                    <field name="maintenance_strategy" />
+                    <field name="maintenance_kind_id" />
+                    <field name="equipment_number" />
+                    <field name="check" />
+                    <field name="note" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="mtodo_form" model="ir.ui.view">
+            <field name="name">maintenance.todo.form</field>
+            <field name="model">maintenance.todo</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name" />
+                        </group>
+                        <field name="lines">
+                            <tree editable="bottom" decoration-muted="check == False">
+                                <field name="name" />
+                                <field name="maintenance_strategy" />
+                                <field name="maintenance_kind_id" />
+                                <field name="equipment_number" />
+                                <field name="check" />
+                                <field name="note" />
+                            </tree>
+                        </field>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- spareparts : actions -->
+        <record id="spareparts_action" model="ir.actions.act_window">
+            <field name="name">SpareParts</field>
+            <field name="res_model">maintenance.spareparts</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Add a new sparepart request
+                </p>
+            </field>
+        </record>
+
+        <record id="maintenance_branch_kanban" model="ir.ui.view">
+            <field name="name">maintenance.branch.kanban</field>
+            <field name="model">maintenance.branch</field>
+            <field name="arch" type="xml">
+                <!-- <kanban class="oe_background_grey o_kanban_dashboard o_maintenance_team_kanban"
+                create="1">
+                    <field name="name"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="o_kanban_card_header">
+                                <div class="o_kanban_card_header_title">
+                                    <div class="o_primary">
+                                        <field name="name"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container o_kanban_card_content">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button class="btn btn-primary" name="action_open_requests" type="object">
+                                            <field name="requests_count"/>
+                                            Requests
+                                        </button><br/>
+                                        <button class="btn btn-primary" name="action_open_plans" type="object">
+                                            <field name="plans_count"/>
+                                            Plans
+                                        </button><br/>
+                                        <button class="btn btn-primary" name="action_open_equipments" type="object">
+                                            <field name="equipments_count"/>
+                                            Equipments
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban> -->
+                <kanban class="oe_background_grey o_kanban_dashboard" create="1">
+                    <field name="name" />
+                    <field name="requests_count" />
+                    <field name="plans_count" />
+                    <field name="equipments_count" />
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div>
+                                <div t-attf-class="o_kanban_card_header">
+                                    <div class="o_kanban_card_header_title">
+                                        <div class="o_primary">
+                                            <field name="name" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container o_kanban_card_content">
+                                    <div class="row">
+                                        <div class="col-6 o_kanban_primary_left">
+                                            <button class="btn btn-primary" name="count_all"
+                                                type="object">
+                                                <span>Refresh</span>
+                                            </button>
+                                        </div>
+                                        <div class="col-6 o_kanban_primary_right">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <a name="action_open_requests" type="object">
+                                                        <field name="requests_count" /> Requests </a>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <a name="action_open_plans" type="object">
+                                                        <field name="plans_count" /> Plans </a>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <a name="action_open_equipments" type="object">
+                                                        <field name="equipments_count" /> Equipments </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="maintenance_branch_form">
+            <field name="name">maintenance.branch.form</field>
+            <field name="model">maintenance.branch</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="branches">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_open_requests" type="object" class="oe_stat_button"
+                                attrs="{'invisible':[('requests_count', '=', 0)]}" icon="fa-wrench">
+                                <field string="Requests" name="requests_count" widget="statinfo" />
+                            </button>
+                            <button name="action_open_plans" type="object" class="oe_stat_button"
+                                attrs="{'invisible':[('plans_count', '=', 0)]}" icon="fa-wrench">
+                                <field string="Plans" name="plans_count" widget="statinfo" />
+                            </button>
+                            <button name="action_open_equipments" type="object"
+                                class="oe_stat_button"
+                                attrs="{'invisible':[('equipments_count', '=', 0)]}"
+                                icon="fa-wrench">
+                                <field string="Equipments" name="equipments_count" widget="statinfo" />
+                            </button>
+                        </div>
+                        <group>
+                            <field name="name" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="res_config_settings_view_form_firebits_maintenance" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.firebits.maintenance</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="25" />
+            <field name="inherit_id" ref="base.res_config_settings_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('settings')]" position="inside">
+                    <div class="app_settings_block" data-string="maintenance" string="maintenance"
+                        data-key="maintenance" groups="base.group_erp_manager">
+                        <h2>Maintenance</h2>
+                        <div class="row mt16 o_settings_container" name="title_setting_container">
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="source_location" />
+                                    <div class="text-muted">
+                                        Default source location
+                                    </div>
+                                    <field name="source_location" />
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="picking_type_id" />
+                                    <div class="text-muted">
+                                        Default Operation
+                                    </div>
+                                    <field name="picking_type_id" />
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="planning_horizon" />
+                                    <div class="text-muted">
+                                        Planning Horizon Limit
+                                    </div>
+                                    <field name="planning_horizon" />
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="max_attachment_size" />
+                                    <div class="text-muted">
+                                        Max Attachment Size
+                                    </div>
+                                    <field name="max_attachment_size" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="maintenance_request_form3" model="ir.ui.view">
+            <field name="name">maintenance.request.form.inherit.2</field>
+            <field name="model">maintenance.request</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='equipment_id']" position="after">
+                    <field name="equipment_number" />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_maintenance_configuration" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module' : 'maintenance'}</field>
+        </record>
+
+        <record id="maintenance_kind_view_tree_inherit" model="ir.ui.view">
+            <field name="name">maintenance.kind.tree.inherit</field>
+            <field name="model">maintenance.kind</field>
+            <field name="inherit_id" ref="maintenance_plan.maintenance_kind_view_tree" />
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="maintenance_team_id" />
+                </field>
+            </field>
+        </record>
+
+        <!-- equipment.team : actions -->
+        <record id="maintenance_team_action_settings" model="ir.actions.act_window">
+            <field name="name">Teams</field>
+            <field name="res_model">maintenance.team</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="maintenance.maintenance_team_view_search" />
+            <field name="view_ids"
+                eval="[(5, 0, 0),
+                    (0, 0, {'view_mode': 'tree', 'view_id': ref('maintenance.maintenance_team_view_tree')}),
+                    (0, 0, {'view_mode': 'kanban', 'view_id': ref('maintenance.maintenance_team_view_kanban')})]" />
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Add a team in the maintenance request
+                </p>
+            </field>
+        </record>
+
+        <!-- equipment.category : actions -->
+        <record id="hr_equipment_category_action" model="ir.actions.act_window">
+            <field name="name">Equipment Categories</field>
+            <field name="res_model">maintenance.equipment.category</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="view_id" ref="maintenance.hr_equipment_category_view_tree" />
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Add a new equipment category
+                </p>
+            </field>
+        </record>
+
+
+        <record id="maintenance_kind_action" model="ir.actions.act_window">
+            <field name="name">Maintenance kinds</field>
+            <field name="res_model">maintenance.kind</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="maintenance_plan.maintenance_kind_view_tree" />
+        </record>
+
+        <record id="maintenance_branch_action" model="ir.actions.act_window">
+            <field name="name">Branches</field>
+            <field name="res_model">maintenance.branch</field>
+            <field name="view_mode">kanban,form</field>
+            <!-- <field name="view_id" ref="maintenance_branch_kanban"/> -->
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Add a new branch
+                </p>
+            </field>
+        </record>
+
+        <record id="maintenance_todo_action" model="ir.actions.act_window">
+            <field name="name">Todo</field>
+            <field name="res_model">maintenance.todo</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Add a new todo
+                </p>
+            </field>
+        </record>
+
+        <!-- <menuitem
+            id="maintenance.menu_maintenance_title"
+            name="Maintenance"
+            web_icon="maintenance,static/description/icon.svg"
+            groups="fb_wajiz_maintenance.group_maintenance_user,maintenance.group_equipment_manager"
+            sequence="160"/> -->
+
+        <menuitem
+            id="menu_branch"
+            name="Branches"
+            parent="maintenance.menu_maintenance_title"
+            groups="maintenance.group_equipment_manager"
+            action="maintenance_branch_action"
+            sequence="-1" />
+
+
+        <menuitem
+            id="menu_todo"
+            name="Todos"
+            parent="maintenance.menu_maintenance_title"
+            groups="maintenance.group_equipment_manager,base.group_user"
+            action="maintenance_todo_action"
+            sequence="3" />
+
+        <menuitem
+            id="menu_maintenance_configuration"
+            name="Configuration"
+            parent="maintenance.menu_maintenance_title"
+            sequence="100" />
+
+        <menuitem
+            id="menu_maintenance_teams"
+            name="Maintenance Teams"
+            parent="menu_maintenance_configuration"
+            action="maintenance_team_action_settings"
+            sequence="1" />
+
+        <menuitem
+            id="menu_maintenance_cat"
+            name="Equipment Categories"
+            parent="menu_maintenance_configuration"
+            action="hr_equipment_category_action"
+            sequence="2" />
+
+        <menuitem
+            id="menu_maintenance_spareparts"
+            name="Sparepart requests"
+            parent="menu_maintenance_configuration"
+            action="spareparts_action"
+            sequence="3" />
+
+        <menuitem
+            id="menu_maintenance_kind_configuration"
+            name="Maintenance kinds"
+            parent="menu_maintenance_configuration"
+            action="maintenance_kind_action"
+            sequence="4" />
+
+        <menuitem
+            id="maintenance_general_settings"
+            name="Settings"
+            parent="menu_maintenance_configuration"
+            sequence="0"
+            action="action_maintenance_configuration" />
+
+    </data>
+</odoo>
