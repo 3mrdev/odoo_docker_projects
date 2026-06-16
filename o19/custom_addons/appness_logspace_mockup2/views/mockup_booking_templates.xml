@@ -12,7 +12,8 @@
                         <div class="card mb-4">
                             <div class="card-body">
                                 <h5 class="card-title mb-4">Select Add-ons</h5>
-                                <form action="/logspace/booking/checkout" method="GET">
+                                <form method="POST">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                     <div class="row">
                                         <t t-foreach="addons" t-as="addon">
                                             <div class="col-md-6 mb-3">
@@ -20,7 +21,8 @@
                                                     <div class="card-body">
                                                         <div class="d-flex align-items-start">
                                                             <div class="form-check mt-1">
-                                                                <input class="form-check-input" type="checkbox" name="addon" t-attf-value="#{addon['id']}"/>
+                                                                <input class="form-check-input" type="checkbox" t-attf-name="addon_#{addon['id']}" value="1"
+                                                                    t-att-checked="booking_data.get('addon_ids') and addon['id'] in booking_data.get('addon_ids', [])"/>
                                                             </div>
                                                             <div class="ms-3 flex-grow-1">
                                                                 <h6 class="mb-1" t-esc="addon['name']"/>
@@ -87,6 +89,22 @@
                                     <input type="hidden" name="zone_to_id" t-att-value="booking_data.get('zone_to_id')"/>
                                     <input type="hidden" name="price_matrix_id" t-att-value="booking_data.get('price_matrix_id')"/>
                                     <input type="hidden" name="price" t-att-value="booking_data.get('price')"/>
+                                    <input type="hidden" name="vehicle_id" t-att-value="booking_data.get('vehicle_id')"/>
+
+                                    <!-- Selected Route Info (Auto-populated from search) -->
+                                    <t t-if="zone_from_name or zone_to_name">
+                                        <div class="alert alert-info mb-3">
+                                            <h6 class="mb-2"><i class="fa fa-route me-2"/>Selected Route</h6>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <strong>From:</strong> <t t-esc="zone_from_name or 'Not selected'"/>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <strong>To:</strong> <t t-esc="zone_to_name or 'Not selected'"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
 
                                     <div class="row mb-3">
                                         <div class="col-md-6">
@@ -98,11 +116,12 @@
                                             <label class="form-label">Pickup Timeframe</label>
                                             <select class="form-select" name="pickup_timeframe" required="required">
                                                 <option value="">Select Time...</option>
-                                                <t t-foreach="timeframes" t-as="tf">
-                                                    <option t-att-value="tf.name" t-att-selected="tf.name == booking_data.get('pickup_timeframe')">
-                                                        <t t-esc="tf.name"/> (<t t-esc="'Pickup' if tf.is_pickup else ''"/> <t t-esc="'Dropoff' if tf.is_dropoff else ''"/>)
-                                                    </option>
-                                                </t>
+                                                <option value="8:00-10:00" t-att-selected="booking_data.get('pickup_timeframe') == '8:00-10:00'">8:00 - 10:00 AM</option>
+                                                <option value="10:00-12:00" t-att-selected="booking_data.get('pickup_timeframe') == '10:00-12:00'">10:00 - 12:00 PM</option>
+                                                <option value="12:00-14:00" t-att-selected="booking_data.get('pickup_timeframe') == '12:00-14:00'">12:00 - 2:00 PM</option>
+                                                <option value="14:00-16:00" t-att-selected="booking_data.get('pickup_timeframe') == '14:00-16:00'">2:00 - 4:00 PM</option>
+                                                <option value="16:00-18:00" t-att-selected="booking_data.get('pickup_timeframe') == '16:00-18:00'">4:00 - 6:00 PM</option>
+                                                <option value="18:00-20:00" t-att-selected="booking_data.get('pickup_timeframe') == '18:00-20:00'">6:00 - 8:00 PM</option>
                                                 <option value="custom">Other - Contact Provider</option>
                                             </select>
                                         </div>
@@ -112,61 +131,33 @@
                                         <label class="form-label">Dropoff Timeframe</label>
                                         <select class="form-select" name="dropoff_timeframe">
                                             <option value="">Select Time...</option>
-                                            <option value="8:00-10:00">8:00 - 10:00</option>
-                                            <option value="10:00-12:00">10:00 - 12:00</option>
-                                            <option value="12:00-14:00">12:00 - 14:00</option>
-                                            <option value="14:00-16:00">14:00 - 16:00</option>
-                                            <option value="16:00-18:00">16:00 - 18:00</option>
-                                            <option value="18:00-20:00">18:00 - 20:00</option>
-                                            <option value="custom">Other - Contact Provider</option>
+                                            <option value="8:00-10:00" t-att-selected="booking_data.get('dropoff_timeframe') == '8:00-10:00'">8:00 - 10:00</option>
+                                            <option value="10:00-12:00" t-att-selected="booking_data.get('dropoff_timeframe') == '10:00-12:00'">10:00 - 12:00</option>
+                                            <option value="12:00-14:00" t-att-selected="booking_data.get('dropoff_timeframe') == '12:00-14:00'">12:00 - 14:00</option>
+                                            <option value="14:00-16:00" t-att-selected="booking_data.get('dropoff_timeframe') == '14:00-16:00'">14:00 - 16:00</option>
+                                            <option value="16:00-18:00" t-att-selected="booking_data.get('dropoff_timeframe') == '16:00-18:00'">16:00 - 18:00</option>
+                                            <option value="18:00-20:00" t-att-selected="booking_data.get('dropoff_timeframe') == '18:00-20:00'">18:00 - 20:00</option>
+                                            <option value="custom" t-att-selected="booking_data.get('dropoff_timeframe') == 'custom'">Other - Contact Provider</option>
                                         </select>
                                     </div>
 
-                                    <hr class="my-4"/>
-                                    <h5 class="card-title mb-4">
-                                        <i class="fa fa-map-marker text-primary me-2"/>
-                                        Pickup Address
-                                    </h5>
-                                    <div class="mb-3">
-                                        <textarea class="form-control" name="pickup_address" rows="2" placeholder="Full pickup address with landmarks" required="required"
-                                                  t-esc="booking_data.get('pickup_address')"/>
-                                    </div>
+                                    <!-- Provider Special Instructions (Read Only) -->
+                                    <t t-if="booking_data.get('provider_special_instructions')">
+                                        <div class="mb-3">
+                                            <label class="form-label">
+                                                <i class="fa fa-info-circle text-primary me-1"/>
+                                                Provider Special Instructions
+                                            </label>
+                                            <div class="alert alert-info">
+                                                <t t-raw="booking_data.get('provider_special_instructions')"/>
+                                            </div>
+                                        </div>
+                                    </t>
 
-                                    <hr class="my-4"/>
-                                    <h5 class="card-title mb-4">
-                                        <i class="fa fa-map-marker text-success me-2"/>
-                                        Dropoff Address
-                                    </h5>
-                                    <div class="mb-3">
-                                        <textarea class="form-control" name="dropoff_address" rows="2" placeholder="Full dropoff address with landmarks" required="required"
-                                                  t-esc="booking_data.get('dropoff_address')"/>
-                                    </div>
-
-                                    <hr class="my-4"/>
                                     <h5 class="card-title mb-4">Item Information</h5>
                                     <div class="mb-3">
                                         <label class="form-label">Item Description</label>
-                                        <textarea class="form-control" rows="3" name="item_description" placeholder="What are you moving? (e.g., furniture, boxes, equipment)"
-                                                  t-esc="booking_data.get('item_description')"/>
-                                    </div>
-
-                                    <div class="row mb-3">
-                                        <div class="col-md-6">
-                                            <label class="form-label">Quantity</label>
-                                            <input type="number" class="form-control" name="item_quantity" min="1"
-                                                   t-att-value="booking_data.get('item_quantity', 1)"/>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label">Estimated Weight (kg)</label>
-                                            <input type="number" class="form-control" name="estimated_weight_kg" min="0"
-                                                   t-att-value="booking_data.get('estimated_weight_kg', 0)"/>
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label class="form-label">Special Instructions</label>
-                                        <textarea class="form-control" rows="2" name="special_instructions" placeholder="Any special handling requirements"
-                                                  t-esc="booking_data.get('special_instructions')"/>
+                                        <textarea class="form-control" rows="3" name="item_description" placeholder="What are you moving? (e.g., furniture, boxes, equipment)"><t t-esc="booking_data.get('item_description')"/></textarea>
                                     </div>
 
                                     <!-- Pickup Contact Info -->
@@ -190,13 +181,21 @@
                                         </div>
                                     </div>
 
+                                    <h5 class="card-title mb-4">
+                                        <i class="fa fa-map-marker text-primary me-2"/>
+                                        Pickup Address
+                                    </h5>
+                                    <div class="mb-3">
+                                        <textarea class="form-control" name="pickup_address" rows="2" placeholder="Full pickup address" required="required"><t t-esc="booking_data.get('pickup_address')"/></textarea>
+                                    </div>
+
                                     <!-- Dropoff Contact Info -->
                                     <hr class="my-4"/>
                                     <h5 class="card-title mb-4">
                                         <i class="fa fa-user-circle text-success me-2"/>
                                         Dropoff Contact Information
                                     </h5>
-                                    <div class="mb-3">
+                                    <!-- <div class="mb-3">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" id="same_as_pickup"
                                                    onclick="if(this.checked){document.querySelector('[name=dropoff_contact_name]').value=document.querySelector('[name=pickup_contact_name]').value;document.querySelector('[name=dropoff_contact_phone]').value=document.querySelector('[name=pickup_contact_phone]').value;}"/>
@@ -204,7 +203,7 @@
                                                 Same as pickup contact
                                             </label>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
                                             <label class="form-label">Contact Name *</label>
@@ -218,6 +217,14 @@
                                                    placeholder="Phone number for dropoff" required="required"
                                                    t-att-value="booking_data.get('dropoff_contact_phone')"/>
                                         </div>
+                                    </div>
+
+                                    <h5 class="card-title mb-4">
+                                        <i class="fa fa-map-marker text-success me-2"/>
+                                        Dropoff Address
+                                    </h5>
+                                    <div class="mb-3">
+                                        <textarea class="form-control" name="dropoff_address" rows="2" placeholder="Full dropoff address" required="required"><t t-esc="booking_data.get('dropoff_address')"/></textarea>
                                     </div>
 
                                     <div class="d-flex justify-content-between mt-4">
@@ -433,11 +440,12 @@
                         </div>
                     </div>
                 </div>
+                </form>
             </div>
         </t>
     </template>
 
-    <!-- Screen 7: Payment Step -->
+    <!-- Screen 7: Payment Step — Integrated with Odoo Payment Gateway -->
     <template id="mockup2_payment_page" name="Logspace Booking - Payment">
         <t t-call="appness_logspace_mockup2.mockup2_layout">
             <div class="container py-4">
@@ -446,43 +454,313 @@
 
                 <div class="row justify-content-center">
                     <div class="col-lg-6">
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <div class="text-center mb-4">
-                                    <h4 class="mb-1">Total Amount</h4>
-                                    <h2 class="text-success" t-esc="'$' + str(total)"/>
-                                </div>
 
-                                <h6 class="mb-3"><i class="fa fa-credit-card me-2"></i>Paymob</h6>
-                                <form action="/logspace/booking/done" method="GET">
-                                    <div class="mb-3">
-                                        <label class="form-label">Card Number</label>
-                                        <input type="text" class="form-control" placeholder="0000 0000 0000 0000"/>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6 mb-3">
-                                            <label class="form-label">Expiry Date</label>
-                                            <input type="text" class="form-control" placeholder="MM/YY"/>
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label class="form-label">CVV</label>
-                                            <input type="text" class="form-control" placeholder="123"/>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Cardholder Name</label>
-                                        <input type="text" class="form-control" placeholder="Name on card"/>
-                                    </div>
-                                    <div class="d-flex justify-content-between mt-4">
-                                        <a href="/logspace/booking/checkout" class="btn btn-outline-secondary">Back</a>
-                                        <button type="submit" class="btn btn-success btn-lg">Pay <span t-esc="'$' + str(total)"/></button>
-                                    </div>
-                                </form>
+                        <!-- Payment Error -->
+                        <t t-if="payment_error">
+                            <div class="alert alert-danger">
+                                <i class="fa fa-exclamation-circle me-2"/>
+                                <strong>Payment Error:</strong> <t t-esc="payment_message"/>
+                            </div>
+                        </t>
+
+                        <!-- Order Total -->
+                        <div class="card mb-4">
+                            <div class="card-body text-center">
+                                <h4 class="mb-1">Total Amount</h4>
+                                <h2 class="text-success"><t t-esc="currency.symbol"/><t t-esc="'%.2f' % float(total or 0)"/></h2>
                             </div>
                         </div>
+
+                        <!-- ============================================================ -->
+                        <!-- PREVIEW MODE: Mockup Paymob Design (only with ?preview=1)    -->
+                        <!-- ============================================================ -->
+                        <t t-if="show_preview">
+                            <div class="card mb-4">
+                                <div class="card-header bg-warning text-dark">
+                                    <i class="fa fa-eye me-2"/> Preview Mode — Mockup Design
+                                    <a href="/logspace/booking/payment" class="btn btn-sm btn-outline-dark float-end">View Live Providers</a>
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="mb-3"><i class="fa fa-credit-card me-2"/>Paymob</h6>
+                                    <form action="/logspace/booking/done" method="POST">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <div class="mb-3">
+                                            <label class="form-label">Card Number</label>
+                                            <input type="text" class="form-control" placeholder="0000 0000 0000 0000"/>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Expiry Date</label>
+                                                <input type="text" class="form-control" placeholder="MM/YY"/>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">CVV</label>
+                                                <input type="text" class="form-control" placeholder="123"/>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Cardholder Name</label>
+                                            <input type="text" class="form-control" placeholder="Name on card"/>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-4">
+                                            <a href="/logspace/booking/checkout" class="btn btn-outline-secondary">Back</a>
+                                            <button type="submit" class="btn btn-success btn-lg">Pay <t t-esc="currency.symbol"/><t t-esc="'%.2f' % float(total or 0)"/></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </t>
+
+                        <!-- ============================================================ -->
+                        <!-- PRODUCTION MODE: Real Odoo Payment Providers (Standard UI)    -->
+                        <!-- ============================================================ -->
+                        <t t-if="not show_preview">
+                            <t t-if="providers_sudo">
+                                <div class="card mb-4">
+                                    <div class="card-header bg-white">
+                                        <h5 class="mb-0"><i class="fa fa-lock me-2"/>Select Payment Method</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <!-- Provider Selection Radio Buttons -->
+                                        <div id="logspace-payment-providers" class="mb-3">
+                                            <t t-foreach="providers_sudo" t-as="provider">
+                                                <div class="form-check border rounded p-3 mb-2 logspace-provider-option"
+                                                     t-att-data-provider-id="provider.id">
+                                                    <input class="form-check-input" type="radio"
+                                                           name="payment_provider"
+                                                           t-att-value="provider.id"
+                                                           t-att-id="'provider_%d' % provider.id"
+                                                           t-att-data-code="provider.code"/>
+                                                    <label class="form-check-label d-flex align-items-center w-100"
+                                                           t-att-for="'provider_%d' % provider.id">
+                                                        <t t-if="provider.image_128">
+                                                            <img t-att-src="image_data_uri(provider.image_128)"
+                                                                 class="me-3" style="height: 32px; width: 32px; object-fit: contain;"/>
+                                                        </t>
+                                                        <t t-if="not provider.image_128">
+                                                            <i class="fa fa-credit-card fa-2x text-muted me-3"/>
+                                                        </t>
+                                                        <div>
+                                                            <strong t-esc="provider.name"/>
+                                                        </div>
+                                                    </label>
+                                                </div>
+
+                                                <!-- Standard Odoo Inline Form for this provider (hidden by default) -->
+                                                <div class="logspace-provider-inline-form d-none p-3 border rounded mb-3"
+                                                     t-att-id="'inline_form_' + str(provider.id)"
+                                                     t-att-data-provider-code="provider.code">
+                                                    <t t-if="provider.inline_form_view_id">
+                                                        <t t-call="{{ provider.inline_form_view_id.key }}">
+                                                            <t t-set="mode" t-value="'payment'"/>
+                                                            <t t-set="reference" t-value="'LOGSPACE-BOOKING'"/>
+                                                            <t t-set="amount" t-value="total"/>
+                                                            <t t-set="currency_id" t-value="currency.id"/>
+                                                            <t t-set="partner_id" t-value="partner_id"/>
+                                                            <t t-set="provider_id" t-value="provider.id"/>
+                                                            <t t-set="payment_method_id" t-value="provider.payment_method_ids[0].id if provider.payment_method_ids else 0"/>
+                                                        </t>
+                                                    </t>
+                                                    <t t-elif="provider.code == 'custom'">
+                                                        <!-- Wire transfer: uses redirect form, no inline form needed -->
+                                                        <div class="alert alert-light mb-0">
+                                                            <i class="fa fa-info-circle me-2"/>
+                                                            You will be redirected to complete your wire transfer after clicking Pay.
+                                                        </div>
+                                                    </t>
+                                                </div>
+                                            </t>
+                                        </div>
+
+                                        <!-- Payment Actions -->
+                                        <div class="d-flex justify-content-between mt-4">
+                                            <a href="/logspace/booking/checkout" class="btn btn-outline-secondary">Back</a>
+                                            <button id="logspace-pay-btn" type="button" class="btn btn-success btn-lg" disabled="disabled">
+                                                <i class="fa fa-spinner fa-spin d-none me-2" id="pay-spinner"/>
+                                                <span id="pay-btn-text">Pay <t t-esc="currency.symbol"/><t t-esc="'%.2f' % float(total or 0)"/></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+
+                            <!-- No Providers Configured: Fallback -->
+                            <t t-if="not providers_sudo">
+                                <div class="card mb-4">
+                                    <div class="card-header bg-white">
+                                        <h5 class="mb-0"><i class="fa fa-university me-2"/>Bank Transfer</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="alert alert-warning">
+                                            <i class="fa fa-info-circle me-2"/> Online payment is not yet configured. Please contact support to complete your payment.
+                                        </div>
+                                        <p class="mb-3"><strong>Amount:</strong> <span class="fw-bold text-success"><t t-esc="currency.symbol"/><t t-esc="'%.2f' % float(total or 0)"/></span></p>
+                                        <t t-set="order_id" t-value="request.session.get('logspace_order_id', '')"/>
+                                        <a t-attf-href="/logspace/booking/done?order_id=#{order_id}" class="btn btn-success btn-lg w-100">
+                                            I've Completed the Transfer
+                                        </a>
+                                        <div class="d-flex justify-content-between mt-3">
+                                            <a href="/logspace/booking/checkout" class="btn btn-outline-secondary btn-sm">Back</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+
+                            <!-- Preview Link -->
+                            <div class="text-center mt-3">
+                                <a href="/logspace/booking/payment?preview=1" class="text-muted small">
+                                    <i class="fa fa-eye me-1"/> Preview mockup design
+                                </a>
+                            </div>
+                        </t>
+
                     </div>
                 </div>
             </div>
+
+            <!-- Payment Processing JavaScript -->
+            <t t-if="not show_preview and providers_sudo">
+                <script type="text/javascript">
+                (function() {
+                    var selectedProviderId = null;
+                    var selectedProviderCode = '';
+                    var providerRadios = document.querySelectorAll('input[name="payment_provider"]');
+                    var payBtn = document.getElementById('logspace-pay-btn');
+                    var paySpinner = document.getElementById('pay-spinner');
+                    var payBtnText = document.getElementById('pay-btn-text');
+
+                    // Build provider code map
+                    var providerCodeMap = {};
+                    <t t-foreach="providers_sudo" t-as="provider">
+                    providerCodeMap[<t t-esc="provider.id"/>] = '<t t-esc="provider.code"/>';
+                    </t>
+
+                    // First available payment method ID
+                    var paymentMethodId = 0;
+                    <t t-if="payment_methods_sudo">
+                        <t t-foreach="payment_methods_sudo" t-as="pm">
+                        if (!paymentMethodId) paymentMethodId = <t t-esc="pm.id"/>;
+                        </t>
+                    </t>
+
+                    // JSON-RPC helper using fetch
+                    function jsonRpc(route, params) {
+                        return fetch(route, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-Token': odoo.csrf_token || '',
+                            },
+                            body: JSON.stringify({
+                                jsonrpc: '2.0',
+                                method: 'call',
+                                params: params,
+                                id: Math.floor(Math.random() * 1000000),
+                            }),
+                        }).then(function(response) {
+                            return response.json();
+                        }).then(function(data) {
+                            if (data.error) throw new Error(data.error.message || 'RPC Error');
+                            return data.result;
+                        });
+                    }
+
+                    // Provider selection: show corresponding inline form
+                    providerRadios.forEach(function(radio) {
+                        radio.addEventListener('change', function() {
+                            selectedProviderId = parseInt(this.value);
+                            selectedProviderCode = providerCodeMap[selectedProviderId] || '';
+                            payBtn.disabled = false;
+
+                            // Highlight selected provider radio
+                            document.querySelectorAll('.logspace-provider-option').forEach(function(opt) {
+                                opt.classList.remove('border-primary', 'bg-light');
+                            });
+                            this.closest('.logspace-provider-option').classList.add('border-primary', 'bg-light');
+
+                            // Hide all inline forms, then show the selected one
+                            document.querySelectorAll('.logspace-provider-inline-form').forEach(function(form) {
+                                form.classList.add('d-none');
+                            });
+                            var selectedForm = document.getElementById('inline_form_' + selectedProviderId);
+                            if (selectedForm) {
+                                selectedForm.classList.remove('d-none');
+                            }
+                        });
+                    });
+
+                    // Pay button click
+                    if (payBtn) {
+                        payBtn.addEventListener('click', function() {
+                            if (!selectedProviderId) return;
+
+                            // Show spinner
+                            payBtn.disabled = true;
+                            paySpinner.classList.remove('d-none');
+                            payBtnText.textContent = 'Processing...';
+
+                            jsonRpc('/logspace/booking/payment/transaction', {
+                                provider_id: selectedProviderId,
+                                payment_method_id: paymentMethodId,
+                            }).then(function(processingValues) {
+                                if (processingValues.error) {
+                                    alert('Error: ' + processingValues.error);
+                                    resetButton();
+                                    return;
+                                }
+
+                                if (processingValues.state === 'error') {
+                                    alert('Payment error: ' + (processingValues.state_message || 'Unknown error'));
+                                    resetButton();
+                                    return;
+                                }
+
+                                // Redirect flow: inject and auto-submit the redirect form (e.g., wire transfer)
+                                if (processingValues.redirect_form_html) {
+                                    var div = document.createElement('div');
+                                    div.innerHTML = processingValues.redirect_form_html;
+                                    var redirectForm = div.querySelector('form');
+                                    if (redirectForm) {
+                                        redirectForm.setAttribute('id', 'o_payment_redirect_form');
+                                        redirectForm.setAttribute('target', '_top');
+                                        document.body.appendChild(redirectForm);
+                                        redirectForm.submit();
+                                        return;
+                                    }
+                                }
+
+                                // Direct flow (e.g., demo provider): simulate payment then redirect
+                                if (processingValues.provider_code === 'demo') {
+                                    jsonRpc('/payment/demo/simulate_payment', {
+                                        reference: processingValues.reference,
+                                        payment_details: 'demo',
+                                        simulated_state: 'done',
+                                    }).then(function() {
+                                        window.location = '/payment/status';
+                                    }).catch(function() {
+                                        window.location = '/payment/status';
+                                    });
+                                    return;
+                                }
+
+                                // Fallback: redirect to status page
+                                window.location = '/payment/status';
+                            }).catch(function(error) {
+                                console.error('Payment error:', error);
+                                alert('Payment processing failed. Please try again.');
+                                resetButton();
+                            });
+                        });
+                    }
+
+                    function resetButton() {
+                        payBtn.disabled = false;
+                        paySpinner.classList.add('d-none');
+                        payBtnText.innerHTML = 'Pay <t t-esc="currency.symbol"/><t t-esc="'%.2f' % float(total or 0)"/>';
+                    }
+                })();
+                </script>
+            </t>
         </t>
     </template>
 

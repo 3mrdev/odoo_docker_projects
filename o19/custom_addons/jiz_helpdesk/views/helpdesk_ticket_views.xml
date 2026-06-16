@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="helpdesk_ticket_view_form_inherit_ataa" model="ir.ui.view">
+            <field name="name">helpdesk.ticket.form.inherit.ataa</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button name="action_open_attachments" type="object" class="oe_stat_button" icon="fa-file-text-o">
+                        <field name="document_count" widget="statinfo" string="Documents"/>
+                    </button>
+                </xpath>
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button name="action_view_project" type="object" class="oe_stat_button" icon="fa-puzzle-piece" invisible="project_count == 0">
+                        <field name="project_count" widget="statinfo" string="Project"/>
+                    </button>
+                    <button name="action_view_event" type="object" class="oe_stat_button" icon="fa-calendar" invisible="event_count == 0">
+                        <field name="event_count" widget="statinfo" string="Event"/>
+                    </button>
+                    <button name="action_view_bill" type="object" class="oe_stat_button" icon="fa-pencil-square-o" invisible="bill_count == 0">
+                        <field name="bill_count" widget="statinfo" string="Vendor Bill"/>
+                    </button>
+                </xpath>
+                <xpath expr="//form" position="inside">
+                    <field name="team_action_on_acceptance" invisible="1"/>
+                    <field name="show_submit_button" invisible="1"/>
+                    <field name="show_accept_button" invisible="1"/>
+                    <field name="show_reject_button" invisible="1"/>
+                    <field name="show_hold_button" invisible="1"/>
+                    <field name="show_reset_to_draft_button" invisible="1"/>
+                </xpath>
+
+                <xpath expr="//sheet" position="before">
+                    <div class="alert alert-danger w-100 d-flex align-items-center" role="alert" invisible="not noti_documents">
+                        <field name="noti_documents" readonly="1"/>
+                        <button name="check_documents" type="object" class="alert-link" title="Refresh" icon="fa-refresh"/>
+                    </div>
+                </xpath>
+
+                <xpath expr="//header" position="inside">
+                    <button name="action_submit_for_evaluation" string="Submit for Evaluation" type="object" class="oe_highlight" invisible="not show_submit_button"/>
+                    <button name="action_accept" string="Accept" type="object" class="oe_highlight" invisible="not show_accept_button"/>
+                    <button name="action_reject" string="Reject" type="object" invisible="not show_reject_button"/>
+                    <button name="action_hold" string="Hold" type="object" invisible="not show_hold_button"/>
+                    <button name="action_reset_to_draft" string="Reset to Draft" type="object" invisible="not show_reset_to_draft_button"/>
+                </xpath>
+
+                <xpath expr="//field[@name='stage_id']" position="replace">
+                    <field name="stage_id" widget="statusbar_duration" options="{'clickable': False, 'fold_field': 'fold'}" invisible="not team_action_on_acceptance"/>
+                    <field name="stage_id" widget="statusbar_duration" options="{'clickable': True, 'fold_field': 'fold'}" invisible="team_action_on_acceptance"/>
+                </xpath>
+
+                <xpath expr="//field[@name='team_id']" position="replace">
+                    <field name="team_id" string="Team" invisible="team_action_on_acceptance"/>
+                    <field name="team_id" string="Ataa Type" invisible="not team_action_on_acceptance" required="1" context="{'kanban_view_ref': 'helpdesk.helpdesk_team_view_kanban_mobile', 'default_use_sla': True}" readonly="not is_draft_stage"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="replace">
+                    <field name="date" invisible="not team_action_on_acceptance" readonly="not is_draft_stage"/>
+                    <field name="partner_id" string="Customer" invisible="team_action_on_acceptance"/>
+                    <field name="partner_id" string="Beneficiary" required="1" invisible="not team_action_on_acceptance" class="field_partner_id" domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]" widget="res_partner_many2one" context="{'default_phone': partner_phone}" readonly="not is_draft_stage"/>
+                    <field name="amount" invisible="not team_action_on_acceptance" readonly="not is_draft_stage"/>
+                </xpath>
+
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                    <field name="event_id" invisible="not event_id" readonly="not is_draft_stage"/>
+                </xpath>
+
+                <xpath expr="//field[@name='email_cc']" position="after">
+                    <field name="project_id" invisible="not project_id" readonly="not is_draft_stage"/>
+                </xpath>
+
+                <xpath expr="//field[@name='description']" position="attributes">
+                    <attribute name="readonly">not is_draft_stage</attribute>
+                </xpath>
+
+                <xpath expr="//notebook" position="inside">
+                    <page string="Evaluation" name="evaluation" invisible="not team_action_on_acceptance">
+                        <field name="is_evaluation_stage" invisible="1"/>
+                        <field name="evaluation_ids" widget="section_and_note_one2many" readonly="not is_evaluation_stage">
+                            <list editable="bottom" create="false" delete="false" decoration-danger="not scale_weight_matched">
+                                <field name="sequence" widget="handle"/>
+                                <field name="display_type" column_invisible="True"/>
+                                <field name="name" widget="section_and_note_text" readonly="1"/>
+                                <field name="scale_id" readonly="1" />
+                                <field name="scale_weight" readonly="not parent.is_evaluation_stage"/>
+                                <field name="scale_weight_matched" column_invisible="1"/>
+                                <button name="reset_scale_weight" type="object" class="oe_highlight" title="Refresh" icon="fa-refresh" invisible="scale_weight_matched or not parent.is_evaluation_stage"/>
+                                <field name="score" widget="radio" options="{'horizontal': true}"/>
+                                <field name="weighted_score" readonly="1"/>
+                                <field name="category_score" readonly="1"/>
+                                <field name="subtotal_category_score" optional="hide"/>
+                            </list>
+                        </field>
+                        <group class="oe_subtotal_footer oe_right" colspan="2" name="evaluation_total">
+                            <div class="d-flex">
+                                <label for="total_evaluation_score" class="me-auto"/>
+                                <span class="h2">
+                                    <field name="total_evaluation_score" widget="float" class="oe_inline"/>
+                                    <span class="oe_grey p-2"> /</span>
+                                    <field name="evaluation_score_percentage_total" widget="float" class="oe_inline"/>
+                                </span>
+                            </div>
+                            <div class="d-flex">
+                                <label for="evaluation_score_percentage" class="me-auto"/>
+                                <span class="h2">
+                                    <field name="evaluation_score_percentage" widget="float" class="oe_inline"/>
+                                    <span class="oe_grey p-2"> %</span>
+                                </span>
+                            </div>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="jiz_helpdesk_ticket_kanban_inherit" model="ir.ui.view">
+            <field name="name">jiz.helpdesk.ticket.kanban.inherit</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//kanban" position="attributes">
+                    <attribute name="records_draggable">0</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -26,9 +26,8 @@ class AccountMove(models.Model):
     def action_post(self):
         res = super(AccountMove, self).action_post()
         for move in self:
-            if move.sell_waqf_id:
+            if move.sell_waqf_id and move.sell_waqf_id.analytic_distribution:
                 for line in move.invoice_line_ids:
-                    if move.sell_waqf_id.analytic_account_id:
-                        line.analytic_distribution = {str(move.sell_waqf_id.analytic_account_id.id): 100}
+                    line.analytic_distribution = move.sell_waqf_id.analytic_distribution
 
         return res

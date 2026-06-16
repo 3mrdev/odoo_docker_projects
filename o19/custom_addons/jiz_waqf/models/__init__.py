@@ -16,3 +16,4 @@ from . import hr_expense
 from . import purchase_order
 from . import project_project
 from . import document
+from . import res_partner

@@ -24,6 +24,7 @@
                 <field name="price"/>
                 <field name="currency_id" invisible="1"/>
                 <field name="price_type"/>
+                <field name="product_tmpl_id"/>
                 <field name="icon" optional="hide"/>
                 <field name="active" widget="boolean_toggle"/>
             </list>
@@ -49,6 +50,7 @@
                             <field name="price"/>
                             <field name="currency_id"/>
                             <field name="price_type"/>
+                            <field name="product_tmpl_id"/>
                         </group>
                     </group>
                     <group>

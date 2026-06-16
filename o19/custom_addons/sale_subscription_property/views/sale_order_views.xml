@@ -10,7 +10,22 @@
                     <group string="Property" name="property_info" invisible="not show_properties_features">
                         <field name="property_id" domain="[('status', '=', 'free')]" />
                         <field name="property_unit_id" />
+                        <field name="electricity_meter" />
+                        <field name="water_meter" />
                     </group>
+                </xpath>
+            </field>
+        </record>
+        <record id="sale_order_view_list_inherit_hrb_property" model="ir.ui.view">
+            <field name="name">sale.order.list.inherit.hrb_property</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_subscription.sale_subscription_view_tree" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='end_date']" position="after">
+                    <field name="property_id" optional="hide"/>
+                    <field name="property_unit_id" optional="hide"/>
+                    <field name="electricity_meter" optional="hide"/>
+                    <field name="water_meter" optional="hide"/>
                 </xpath>
             </field>
         </record>

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
+from odoo import models, fields, api, _, Command
 from odoo.exceptions import UserError
 
 
@@ -76,6 +76,15 @@ class ResPartner(models.Model):
     suspension_reason = fields.Text(
         string='Suspension Reason',
         help='Reason for provider suspension'
+    )
+
+    # =========================================================================
+    # Working Schedule (uses Odoo resource.calendar)
+    # =========================================================================
+    calendar_id = fields.Many2one(
+        'resource.calendar',
+        string='Working Hours',
+        help='Provider working days and hours. Vehicles are only searchable on working days.'
     )
 
     # =========================================================================
@@ -198,14 +207,23 @@ class ResPartner(models.Model):
                 if existing_user.partner_id != partner:
                     existing_user.write({'partner_id': partner.id})
             else:
-                # Create new portal user
+                # Create new internal user for provider
+                # Get the internal user group
+                group_user = self.env.ref('base.group_user')
+                group_partner_manager = self.env.ref('base.group_partner_manager')
+                group_logspace_provider = self.env.ref('appness_logspace_mockup2.group_logspace_provider')
+                group_sale_salesman = self.env.ref('sales_team.group_sale_salesman')
+
                 user = self.env['res.users'].with_context(no_reset_password=True).sudo().create({
                     'name': partner.name,
                     'login': partner.email or f"provider_{partner.id}",
                     'email': partner.email,
                     'partner_id': partner.id,
-                    'groups_id': [(6, 0, [self.env.ref('base.group_portal').id])],
+                    'group_ids': [Command.set([group_user.id, group_partner_manager.id, group_logspace_provider.id, group_sale_salesman.id])],
                 })
+                # user.write({
+                #     'group_ids': [Command.set([group_user.id, group_partner_manager.id])],
+                # })
                 # Send welcome/set password email
                 user.action_reset_password()
 
@@ -214,6 +232,14 @@ class ResPartner(models.Model):
                 'is_approved_provider': True,
                 'approval_date': fields.Date.today(),
             })
+
+            # Send approval email
+            try:
+                template = self.env.ref('appness_logspace_mockup2.email_template_provider_approved')
+                if template:
+                    template.send_mail(partner.id, force_send=True)
+            except Exception:
+                pass  # Don't fail if email sending fails
 
     def action_reject_provider(self, reason=None):
         """Reject provider application"""
@@ -248,3 +274,11 @@ class ResPartner(models.Model):
             if partner.state != 'suspended':
                 raise UserError(_('Only suspended providers can be reactivated.'))
             partner.state = 'approved'
+
+    def action_download_vehicles_excel(self):
+        """Download vehicles as Excel file"""
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f'/logspace/provider/{self.id}/vehicles/export',
+        }

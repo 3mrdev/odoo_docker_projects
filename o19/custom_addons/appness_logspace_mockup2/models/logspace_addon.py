@@ -26,6 +26,9 @@ class LogspaceAddon(models.Model):
     active = fields.Boolean(default=True, string='Active')
     currency_id = fields.Many2one('res.currency', string='Currency',
                                    default=lambda self: self.env.company.currency_id)
+    product_tmpl_id = fields.Many2one('product.template', string='Linked Product',
+                                         help='Product template to use for tax calculation and invoicing',
+                                         domain=[('type', '=', 'service')])
 
     _code_unique = models.Constraint('unique(code)', 'Add-on code must be unique!')
 

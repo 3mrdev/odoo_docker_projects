@@ -28,7 +28,9 @@ class JizWaqfUnit(models.Model):
     subscription_count = fields.Integer(string='Subscription Count', compute='_compute_subscription_count')
     product_id = fields.Many2one('product.product', string='Product')
     price = fields.Float(string='Price')
-    analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account')
+    analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account (Legacy)')
+    analytic_distribution = fields.Json(string='Analytic Distribution')
+    analytic_precision = fields.Integer(default=2)
 
     street = fields.Char(related='waqf_id.street')
     street2 = fields.Char(related='waqf_id.street2')
@@ -47,16 +49,7 @@ class JizWaqfUnit(models.Model):
 
     def action_view_subscriptions(self):
         self.ensure_one()
-
-        analytic_distribution = {}
-        if self.analytic_account_id:
-            analytic_distribution = {str(self.analytic_account_id.id): 100}
-        else:
-            if self.waqf_id.analytic_account_id:
-                analytic_distribution = {str(self.waqf_id.analytic_account_id.id): 100}
-            else:
-                analytic_distribution = {}
-
+        analytic_distribution = self.analytic_distribution or {}
         return {
             'type': 'ir.actions.act_window',
             'name': 'Subscriptions',
@@ -83,15 +76,8 @@ class JizWaqfUnit(models.Model):
         # if not self.tenant_id:
         #     raise UserError(_("Tenant is required to create a rent."))
 
-        analytic_distribution = {}
-        if self.analytic_account_id:
-            analytic_distribution = {str(self.analytic_account_id.id): 100}
-        else:
-            if self.waqf_id.analytic_account_id:
-                analytic_distribution = {str(self.waqf_id.analytic_account_id.id): 100}
-            else:
-                analytic_distribution = {}
-        
+        analytic_distribution = self.analytic_distribution or {}
+
         return {
             'type': 'ir.actions.act_window',
             'name': 'Create Subscription',
@@ -157,6 +143,10 @@ class JizWaqfUnit(models.Model):
 
         if not rec.sequence_number:
             rec.sequence_number = self.env['ir.sequence'].next_by_code('jiz.waqf.unit')
+
+        if not rec.analytic_distribution and rec.waqf_id.analytic_distribution:
+            rec.analytic_distribution = rec.waqf_id.analytic_distribution
+
         return rec
 
     def unlink(self):

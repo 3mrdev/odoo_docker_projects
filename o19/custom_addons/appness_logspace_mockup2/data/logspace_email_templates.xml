@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Email Templates for Logspace -->
+
+    <!-- Template: Booking Confirmation to Customer -->
+    <record id="email_template_booking_confirmation" model="mail.template">
+        <field name="name">Logspace: Booking Confirmation</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">Your Logspace Booking Confirmation - {{ object.name }}</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.partner_id.id }}</field>
+        <field name="body_html" type="html">
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <div style="background: #1a237e; color: white; padding: 20px; text-align: center;">
+                    <h2>Booking Confirmed!</h2>
+                </div>
+                <div style="padding: 20px; background: #f9f9f9;">
+                    <p>Dear <t t-out="object.partner_id.name or ''"/>,</p>
+                    <p>Your Logspace booking has been confirmed. Here are your booking details:</p>
+
+                    <div style="background: white; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                        <h3 style="color: #1a237e; margin-top: 0;">Booking Details</h3>
+                        <table style="width: 100%;">
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Order Number:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.name or ''"/>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Provider:</strong></td>
+                                <td style="padding: 5px 0;">
+                                    <t t-if="object.logspace_provider_id" t-out="object.logspace_provider_id.name"/>
+                                    <t t-else="">TBD</t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Scheduled Date:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.scheduled_date or ''">To be confirmed</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Pickup:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.pickup_address or ''">Not set</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Dropoff:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.dropoff_address or ''">Not set</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div style="background: #e8f5e9; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                        <h4 style="color: #2e7d32; margin-top: 0;">Pickup Verification Code</h4>
+                        <p style="font-size: 24px; font-weight: bold; color: #1a237e; margin: 10px 0;">
+                            <t t-if="object.verification_code_pickup" t-out="object.verification_code_pickup"/>
+                            <t t-else="">Will be sent when driver is assigned</t>
+                        </p>
+                        <p style="color: #666; font-size: 12px;">Show this code to the driver at pickup</p>
+                    </div>
+
+                    <p style="text-align: center; margin: 30px 0;">
+                        <a t-attf-href="/logspace/my/orders/track/{{ object.name }}" style="background: #1a237e; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px;">Track Your Order</a>
+                    </p>
+
+                    <p style="color: #666; font-size: 12px; margin-top: 30px;">
+                        Need help? Contact us at support@logspace.com
+                    </p>
+                </div>
+            </div>
+        </field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+    <!-- Template: Driver Assignment -->
+    <record id="email_template_driver_assigned" model="mail.template">
+        <field name="name">Logspace: Driver Assigned</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">Driver Assigned - Logspace Booking {{ object.name }}</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.partner_id.id }}</field>
+        <field name="body_html" type="html">
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <div style="background: #1a237e; color: white; padding: 20px; text-align: center;">
+                    <h2>Driver Assigned</h2>
+                </div>
+                <div style="padding: 20px; background: #f9f9f9;">
+                    <p>Dear <t t-out="object.partner_id.name or ''"/>,</p>
+                    <p>A driver has been assigned to your booking <strong t-out="object.name or ''"/>.</p>
+
+                    <div style="background: white; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                        <h3 style="color: #1a237e; margin-top: 0;">Driver Information</h3>
+                        <table style="width: 100%;">
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Driver Name:</strong></td>
+                                <td style="padding: 5px 0;">
+                                    <t t-if="object.logspace_driver_id" t-out="object.logspace_driver_id.name"/>
+                                    <t t-else="">TBD</t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Driver Phone:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.driver_phone or ''">Will be provided shortly</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Vehicle:</strong></td>
+                                <td style="padding: 5px 0;">
+                                    <t t-if="object.logspace_vehicle_id and object.logspace_vehicle_id.vehicle_type_id" t-out="object.logspace_vehicle_id.vehicle_type_id.name"/>
+                                    <t t-else="">TBD</t>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div style="background: #e8f5e9; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                        <h4 style="color: #2e7d32; margin-top: 0;">Pickup Verification Code</h4>
+                        <p style="font-size: 32px; font-weight: bold; color: #1a237e; margin: 10px 0; text-align: center; letter-spacing: 5px;" t-out="object.verification_code_pickup or ''">
+                        </p>
+                        <p style="color: #666; font-size: 12px; text-align: center;">Show this code to the driver at pickup</p>
+                    </div>
+
+                    <p style="text-align: center; margin: 30px 0;">
+                        <a t-attf-href="/logspace/my/orders/track/{{ object.name }}" style="background: #1a237e; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px;">Track Your Order</a>
+                    </p>
+                </div>
+            </div>
+        </field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+    <!-- Template: Provider Approval -->
+    <record id="email_template_provider_approved" model="mail.template">
+        <field name="name">Logspace: Provider Approved</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="subject">Welcome to Logspace - Provider Account Approved!</field>
+        <field name="email_from">{{ (user.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.id }}</field>
+        <field name="body_html" type="html">
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <div style="background: #1a237e; color: white; padding: 20px; text-align: center;">
+                    <h2>Welcome to Logspace!</h2>
+                </div>
+                <div style="padding: 20px; background: #f9f9f9;">
+                    <p>Dear <t t-out="object.name or ''"/>,</p>
+                    <p>Congratulations! Your provider application has been <strong style="color: #2e7d32;">approved</strong>.</p>
+
+                    <div style="background: white; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                        <h3 style="color: #1a237e; margin-top: 0;">Your Account Details</h3>
+                        <table style="width: 100%;">
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Business Name:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.name or ''"/>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Approval Date:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.approval_date or ''"/>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Login Email:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.email or ''"/>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div style="background: #fff3cd; padding: 15px; border-radius: 5px; margin: 20px 0; border: 1px solid #ffc107;">
+                        <h4 style="color: #856404; margin-top: 0;">Set Your Password</h4>
+                        <p style="color: #856404;">A separate email has been sent with instructions to set your portal password. Please check your inbox.</p>
+                    </div>
+
+                    <p style="text-align: center; margin: 30px 0;">
+                        <a href="/my" style="background: #1a237e; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px;">Access Your Portal</a>
+                    </p>
+
+                    <p style="color: #666; margin-top: 30px;">
+                        Next steps:
+                        <ul>
+                            <li>Set up your password</li>
+                            <li>Complete your profile</li>
+                            <li>Add vehicles to your fleet</li>
+                            <li>Configure your pricing</li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+        </field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+    <!-- Template: Provider Application Received -->
+    <record id="email_template_provider_application_received" model="mail.template">
+        <field name="name">Logspace: Provider Application Received</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="subject">Logspace Provider Application Received</field>
+        <field name="email_from">{{ (user.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.id }}</field>
+        <field name="body_html" type="html">
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <div style="background: #1a237e; color: white; padding: 20px; text-align: center;">
+                    <h2>Application Received</h2>
+                </div>
+                <div style="padding: 20px; background: #f9f9f9;">
+                    <p>Dear <t t-out="object.name or ''"/>,</p>
+                    <p>Thank you for submitting your provider application to Logspace.</p>
+
+                    <div style="background: #fff3cd; padding: 15px; border-radius: 5px; margin: 20px 0; border: 1px solid #ffc107;">
+                        <h4 style="color: #856404; margin-top: 0;">Status: Pending Review</h4>
+                        <p style="color: #856404;">Our team is reviewing your application. This typically takes 1-2 business days.</p>
+                    </div>
+
+                    <p>We will notify you via email once your application has been reviewed.</p>
+
+                    <p style="color: #666; margin-top: 30px; font-size: 12px;">
+                        If you have any questions, please contact us at support@logspace.com
+                    </p>
+                </div>
+            </div>
+        </field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+    <!-- Template: Order Delivered -->
+    <record id="email_template_order_delivered" model="mail.template">
+        <field name="name">Logspace: Order Delivered</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">Delivery Complete - Logspace Booking {{ object.name }}</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.partner_id.id }}</field>
+        <field name="body_html" type="html">
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <div style="background: #2e7d32; color: white; padding: 20px; text-align: center;">
+                    <h2>Delivery Complete!</h2>
+                </div>
+                <div style="padding: 20px; background: #f9f9f9;">
+                    <p>Dear <t t-out="object.partner_id.name or ''"/>,</p>
+                    <p>Your delivery has been completed successfully!</p>
+
+                    <div style="background: white; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                        <h3 style="color: #1a237e; margin-top: 0;">Delivery Summary</h3>
+                        <table style="width: 100%;">
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Order Number:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.name or ''"/>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Provider:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.logspace_provider_id.name or ''"/>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Delivered On:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.delivery_date or ''"/>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div style="background: #e8f5e9; padding: 15px; border-radius: 5px; margin: 20px 0; text-align: center;">
+                        <h4 style="color: #2e7d32; margin-top: 0;">How was your experience?</h4>
+                        <p>We'd love to hear your feedback!</p>
+                        <p style="text-align: center; margin: 20px 0;">
+                            <a t-attf-href="/logspace/my/orders/{{ object.name }}/rate" style="background: #2e7d32; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px;">Rate Your Driver</a>
+                        </p>
+                    </div>
+
+                    <p style="color: #666; margin-top: 30px; font-size: 12px;">
+                        Thank you for choosing Logspace!
+                    </p>
+                </div>
+            </div>
+        </field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+</odoo>

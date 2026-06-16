@@ -17,9 +17,10 @@
         <field name="name">logspace.vehicle.type.tree</field>
         <field name="model">logspace.vehicle.type</field>
         <field name="arch" type="xml">
-            <list editable="bottom">
+            <list>
                 <field name="sequence" widget="handle"/>
-                <field name="icon" widget="char"/>
+                <!-- <field name="icon" widget="char"/> -->
+                <field name="image" widget="image"/>
                 <field name="name"/>
                 <field name="code"/>
                 <field name="category"/>
@@ -37,11 +38,16 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
                     <group>
                         <group>
-                            <field name="name"/>
                             <field name="code"/>
-                            <field name="icon" placeholder="fa-truck"/>
+                            <!-- <field name="icon" placeholder="fa-truck"/> -->
                             <field name="category"/>
                             <field name="sequence"/>
                             <field name="active"/>

@@ -1,7 +1,7 @@
 services:
   web:
     image: odoo:19.0
-    command: -d o19_db_3
+    command: -d o19_db_4 -u appness_logspace_mockup2
     env_file: .env
     depends_on:
       - db

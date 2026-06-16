@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="helpdesk_team_view_form_inherit_ataa" model="ir.ui.view">
+            <field name="name">helpdesk.team.form.inherit.ataa</field>
+            <field name="model">helpdesk.team</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_team_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id'][2]" position="after">
+                    <h2 class="mt32">Ataa Post-Acceptance</h2>
+                    <div class="row mt16 o_settings_container">
+                        <setting help="Define what action should be triggered when an Ataa request is accepted.">
+                            <field name="action_on_acceptance"/>
+                            <div class="content-group" invisible="not action_on_acceptance">
+                                <div class="mt16" invisible="action_on_acceptance != 'create_project'">
+                                    <label for="project_template_id"/>
+                                    <field name="project_template_id" class="ms-2 oe_inline" options="{'no_create': True, 'no_open': True}"/>
+                                </div>
+                                <div class="mt16" invisible="action_on_acceptance != 'create_event'">
+                                    <label for="event_template_id"/>
+                                    <field name="event_template_id" class="ms-2 oe_inline" options="{'no_create': True, 'no_open': True}"/>
+                                </div>
+                                <div class="mt16" invisible="action_on_acceptance != 'generate_bill'">
+                                    <label for="product_id"/>
+                                    <field name="product_id" class="ms-2 oe_inline" options="{'no_create': True, 'no_open': True}"/>
+                                </div>
+                            </div>
+                        </setting>
+                    </div>
+                    <h2 class="mt32" invisible="not action_on_acceptance">Action Stages</h2>
+                    <div class="row mt16 o_settings_container" invisible="not action_on_acceptance">
+                        <setting help="Choose a unique stage for each action don't repeat the stage" >
+                            <field name="draft_stage_id" domain="[('team_ids','in',id)]" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                        </setting>
+                        <setting help="Choose a unique stage for each action don't repeat the stage" >
+                            <field name="evaluation_stage_id" domain="[('team_ids','in',id)]" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                        </setting>
+                        <setting help="Choose a unique stage for each action don't repeat the stage" >
+                            <field name="accepted_stage_id" domain="[('team_ids','in',id)]" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                        </setting>
+                        <setting help="Choose a unique stage for each action don't repeat the stage">
+                            <field name="rejected_stage_id" domain="[('team_ids','in',id)]" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                        </setting>
+                        <setting help="Choose a unique stage for each action don't repeat the stage">
+                            <field name="on_hold_stage_id" domain="[('team_ids','in',id)]" options="{'no_create_edit': True, 'no_open': True, 'no_quick_create': True,'no_create': True}"/>
+                        </setting>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -8,22 +8,36 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
+            <!-- Add Smart Buttons to button_box -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_logspace_tickets" type="object"
+                    class="oe_stat_button" icon="fa-ticket"
+                    invisible="not is_logspace_order">
+                    <field name="logspace_ticket_count" widget="statinfo" string="Tickets"/>
+                </button>
+                <button name="action_view_logspace_refunds" type="object"
+                    class="oe_stat_button" icon="fa-ticket"
+                    invisible="not is_logspace_order">
+                    <field name="logspace_refund_count" widget="statinfo" string="Refunds"/>
+                </button>
+                <button name="action_view_logspace_ratings" type="object"
+                    class="oe_stat_button" icon="fa-star"
+                    invisible="not is_logspace_order">
+                    <field name="logspace_rating_count" widget="statinfo" string="Ratings"/>
+                </button>
+            </xpath>
+
             <!-- Add is_logspace_order checkbox in header -->
-            <xpath expr="//header" position="inside">
+            <xpath expr="//sheet/div[1]" position="before">
                 <field name="is_logspace_order" invisible="1"/>
                 <field name="logspace_state" widget="statusbar"
                     invisible="not is_logspace_order"
-                    statusbar_visible="pending,confirmed,driver_assigned,in_transit,delivered"/>
+                    statusbar_visible="order_received,pickup_started,vendor_arrived_pickup,pickup_completed,arrived_destination,dropoff_completed,grace_period,order_completed"/>
             </xpath>
 
-            <!-- Add Logspace checkbox to the form -->
-            <xpath expr="//group[@name='order_details']" position="inside">
-                <field name="is_logspace_order" widget="boolean_toggle"/>
-                <field name="is_guest_order" invisible="not is_logspace_order"/>
-            </xpath>
 
             <!-- Logspace Provider Tabs -->
-            <xpath expr="//notebook" position="inside">
+            <xpath expr="//notebook/page[1]" position="after">
                 <!-- Provider & Vehicle Page -->
                 <page string="Provider &amp; Vehicle" invisible="not is_logspace_order">
                     <group>
@@ -41,11 +55,27 @@
                             <field name="delivery_date" readonly="1" invisible="not delivery_date"/>
                         </group>
                     </group>
+                    <group>
+                        <group string="Payment">
+                            <field name="payment_status"/>
+                            <field name="payment_method"/>
+                            <field name="transaction_ref"/>
+                        </group>
+                        <group string="Order Type">
+                            <field name="is_logspace_order" widget="boolean_toggle"/>
+                            <field name="is_guest_order" invisible="not is_logspace_order"/>
+                        </group>
+                    </group>
                 </page>
 
-                <!-- Contacts Page -->
-                <page string="Contacts" invisible="not is_logspace_order">
+                <page string="Items &amp; Add-ons" invisible="not is_logspace_order">
                     <group>
+                        <field name="item_description"/>
+                    </group>
+                    <group string="Add-ons">
+                        <field name="logspace_addon_ids" widget="many2many_tags"/>
+                    </group>
+                    <group string="Contacts">
                         <group string="Pickup">
                             <field name="pickup_contact_name"/>
                             <field name="pickup_contact_phone"/>
@@ -57,60 +87,65 @@
                             <field name="dropoff_address"/>
                         </group>
                     </group>
-                </page>
-
-                <!-- Scheduling Page -->
-                <page string="Scheduling" invisible="not is_logspace_order">
-                    <group>
+                    <group string="Scheduling">
                         <field name="pickup_timeframe"/>
                         <field name="dropoff_timeframe"/>
                     </group>
-                </page>
-
-                <!-- Items Page -->
-                <page string="Items" invisible="not is_logspace_order">
-                    <group>
-                        <field name="item_description"/>
-                        <field name="special_instructions"/>
-                        <field name="estimated_weight_kg"/>
-                        <field name="item_quantity"/>
-                    </group>
-                    <group string="Add-ons">
-                        <field name="logspace_addon_ids" widget="many2many_tags"/>
-                    </group>
-                </page>
-
-                <!-- Verification Page -->
-                <page string="Verification" invisible="not is_logspace_order">
-                    <group>
+                    <group string="Verification" >
                         <field name="verification_code_pickup" readonly="1"/>
                         <field name="verification_code_dropoff" readonly="1"/>
                     </group>
                 </page>
-
-                <!-- Payment Page -->
-                <page string="Payment" invisible="not is_logspace_order">
-                    <group>
-                        <field name="payment_status"/>
-                        <field name="payment_method"/>
-                        <field name="transaction_ref"/>
-                    </group>
-                </page>
             </xpath>
 
-            <!-- Add Logspace buttons to header -->
+            <!-- Add Logspace buttons to header - Sequential by logspace status -->
             <xpath expr="//button[@name='action_confirm']" position="after">
-                <button name="action_logspace_confirm" string="Confirm Logspace Order"
-                    type="object" invisible="not is_logspace_order or logspace_state != 'pending'"/>
-                <button name="action_assign_driver" string="Assign Driver"
-                    type="object" invisible="not is_logspace_order or logspace_state != 'confirmed'"/>
-                <button name="action_start_transit" string="Start Transit"
-                    type="object" invisible="not is_logspace_order or logspace_state not in ('confirmed', 'driver_assigned')"/>
-                <button name="action_mark_delivered" string="Mark Delivered"
-                    type="object" invisible="not is_logspace_order or logspace_state != 'in_transit'"
+                <!-- Order Received: Start Pickup -->
+                <button name="action_start_pickup" string="Start Pickup"
+                    type="object" invisible="not is_logspace_order or logspace_state != 'order_received'"/>
+
+                <!-- Pickup Started: Arrived at Pickup -->
+                <button name="action_vendor_arrived_pickup" string="Arrived at Pickup"
+                    type="object" invisible="not is_logspace_order or logspace_state != 'pickup_started'"/>
+
+                <!-- Vendor Arrived at Pickup: Pickup Add-ons Done -->
+                <button name="action_pickup_addons" string="Pickup Add-ons Done"
+                    type="object" invisible="not is_logspace_order or logspace_state != 'vendor_arrived_pickup'"/>
+
+                <!-- Pickup Add-ons: Pickup Completed -->
+                <button name="action_pickup_completed" string="Pickup Completed"
+                    type="object" invisible="not is_logspace_order or logspace_state != 'pickup_addons'"
                     class="oe_highlight"/>
+
+                <!-- Pickup Completed: Pre-Dropoff Add-ons -->
+                <button name="action_pre_dropoff_addons" string="Pre-Dropoff Add-ons"
+                    type="object" invisible="not is_logspace_order or logspace_state != 'pickup_completed'"/>
+
+                <!-- Pre-Dropoff Add-ons: Arrived at Destination -->
+                <button name="action_arrived_destination" string="Arrived at Destination"
+                    type="object" invisible="not is_logspace_order or logspace_state != 'pre_dropoff_addons'"/>
+
+                <!-- Arrived at Destination: Dropoff Completed -->
+                <button name="action_dropoff_completed" string="Dropoff Completed"
+                    type="object" invisible="not is_logspace_order or logspace_state != 'arrived_destination'"
+                    class="oe_highlight"/>
+
+                <!-- Dropoff Completed: Start Grace Period -->
+                <button name="action_start_grace_period" string="Start Grace Period"
+                    type="object" invisible="not is_logspace_order or logspace_state != 'dropoff_completed'"/>
+
+                <!-- Grace Period: Complete Order -->
+                <button name="action_complete_order" string="Complete Order"
+                    type="object" invisible="not is_logspace_order or logspace_state != 'grace_period'"
+                    class="oe_highlight"/>
+
+                <!-- Cancel Order (available until dropoff_completed) -->
                 <button name="action_cancel_logspace" string="Cancel Order"
-                    type="object" invisible="not is_logspace_order or logspace_state in ('delivered', 'cancelled')"/>
+                    type="object" invisible="not is_logspace_order or logspace_state in ('dropoff_completed', 'grace_period', 'order_completed', 'cancelled')"/>
+
+                <!-- Reset to Draft (only when cancelled) -->
+                <button name="action_reset_logspace_to_draft" string="Reset to Draft"
+                    type="object" invisible="not is_logspace_order or logspace_state != 'cancelled'"/>
             </xpath>
         </field>
     </record>
@@ -165,6 +200,7 @@
         <field name="context">{
             'default_is_logspace_order': True,
             'search_default_filter_logspace': 1,
+            'create':False,
         }</field>
         <field name="domain">[('is_logspace_order', '=', True)]</field>
         <field name="help" type="html">

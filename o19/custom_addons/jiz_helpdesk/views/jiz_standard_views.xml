@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Evaluation Category (jiz.standard) -->
+        <record id="jiz_standard_view_form" model="ir.ui.view">
+            <field name="name">jiz.standard.view.form</field>
+            <field name="model">jiz.standard</field>
+            <field name="arch" type="xml">
+                <form string="Evaluation Category">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="weight"/>
+                        </group>
+                        <notebook>
+                            <page string="Metrics">
+                                <field name="scale_ids">
+                                    <list editable="bottom" >
+                                        <field name="name"/>
+                                        <field name="evaluation_weight"/>
+                                        <field name="active" widget="boolean_toggle"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="jiz_standard_view_list" model="ir.ui.view">
+            <field name="name">jiz.standard.view.list</field>
+            <field name="model">jiz.standard</field>
+            <field name="arch" type="xml">
+                <list string="Evaluation Categories">
+                    <field name="name"/>
+                    <field name="weight"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="jiz_standard_action" model="ir.actions.act_window">
+            <field name="name">Evaluation Categories</field>
+            <field name="res_model">jiz.standard</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <!-- Evaluation Metric (jiz.standard.scale) -->
+        <record id="jiz_standard_scale_view_form" model="ir.ui.view">
+            <field name="name">jiz.standard.scale.view.form</field>
+            <field name="model">jiz.standard.scale</field>
+            <field name="arch" type="xml">
+                <form string="Evaluation Metric">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="standard_id"/>
+                            <field name="evaluation_weight"/>
+                            <field name="active" widget="boolean_toggle" invisible="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="jiz_standard_scale_view_list" model="ir.ui.view">
+            <field name="name">jiz.standard.scale.view.list</field>
+            <field name="model">jiz.standard.scale</field>
+            <field name="arch" type="xml">
+                <list string="Evaluation Metrics">
+                    <field name="name"/>
+                    <field name="standard_id"/>
+                    <field name="evaluation_weight"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="jiz_standard_scale_view_list_filter" model="ir.ui.view">
+            <field name="name">jiz.standard.scale.view.list.filter</field>
+            <field name="model">jiz.standard.scale</field>
+            <field name="arch" type="xml">
+                <search string="Evaluation Metrics">
+                    <field name="name"/>
+                    <field name="standard_id"/>
+                    <filter string="Unarchived" name="unarchived" domain="[('active', '=', True)]"/>
+                    <filter string="Archived" name="archived" domain="[('active', '=', False)]"/>
+                    <group>
+                        <filter string="Category" name="standard_id" domain="" context="{'group_by':'standard_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="jiz_standard_scale_action" model="ir.actions.act_window">
+            <field name="name">Evaluation Metrics</field>
+            <field name="res_model">jiz.standard.scale</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{'group_by':'standard_id'}</field>
+        </record>
+
+        <record id="jiz_document_type_action" model="ir.actions.act_window">
+            <field name="name">Document Types</field>
+            <field name="res_model">jiz.document.type</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('type', '=', 'ataa')]</field>
+        </record>
+
+        <record id="helpdesk_team_ataa_action_main" model="ir.actions.act_window">
+            <field name="name">Ataa Overview</field>
+            <field name="path">ataa</field>
+            <field name="res_model">helpdesk.team</field>
+            <field name="view_mode">kanban,form</field>
+            <field name="domain" eval="[('action_on_acceptance', '!=', False)]"/>
+            <field name="context">{}</field>
+            <field name="view_id" ref="helpdesk.helpdesk_team_view_kanban"/>
+            <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                    No Ataa Types found
+                </p>
+                <p>
+                    Create Ataa Types to organize your tickets by expertise or geographical region, and define a different workflow for each team.
+                </p>
+            </field>
+        </record>
+
+        <menuitem
+            id="menu_ataa_root"
+            name="Ataa"
+            sequence="90"
+            web_icon="jiz_helpdesk,static/description/support.png"
+            groups="helpdesk.group_helpdesk_user">
+
+            <menuitem
+                id="helpdesk_menu_ataa"
+                name="Overview"
+                action="helpdesk_team_ataa_action_main"
+                sequence="5"
+                groups="helpdesk.group_helpdesk_user"/>
+
+            <menuitem
+                id="helpdesk_ticket_menu_main"
+                name="Requests"
+                sequence="10">
+
+                <menuitem
+                    id="helpdesk_ticket_menu_my"
+                    name="My Requests"
+                    action="helpdesk.helpdesk_ticket_action_main_my"
+                    sequence="10"/>
+
+                <menuitem
+                    id="helpdesk_ticket_menu_all"
+                    name="All Requests"
+                    action="helpdesk.helpdesk_ticket_action_main_tree"
+                    sequence="20"/>
+
+            </menuitem>
+
+            <menuitem
+                id="helpdesk_ticket_report_menu_main"
+                name="Reporting"
+                sequence="20">
+
+                <menuitem
+                    id="helpdesk_ticket_report_menu"
+                    name="Requests Analysis"
+                    action="helpdesk.helpdesk_ticket_analysis_action"
+                    sequence="10"/>
+
+                <menuitem
+                    id="helpdesk_ticket_report_menu_sla_analysis"
+                    name="SLA Status Analysis"
+                    action="helpdesk.helpdesk_sla_report_analysis_action"
+                    sequence="20"
+                    groups="helpdesk.group_use_sla"/>
+
+            </menuitem>
+
+            <menuitem
+                id="ataa_menu_config"
+                name="Configuration"
+                sequence="100"
+                groups="helpdesk.group_helpdesk_manager">
+
+                <menuitem
+                    id="helpdesk_team_menu"
+                    name="Ataa Types"
+                    action="helpdesk.helpdesk_team_action"
+                    sequence="0"
+                    groups="helpdesk.group_helpdesk_manager"/>
+
+                <menuitem
+                    id="helpdesk_stage_menu"
+                    action="helpdesk.helpdesk_stage_action"
+                    sequence="3"
+                    groups="base.group_no_one"/>
+
+                <menuitem
+                    id="helpdesk_sla_menu_main"
+                    action="helpdesk.helpdesk_sla_action_main"
+                    sequence="7"
+                    groups="helpdesk.group_use_sla"/>
+
+                <menuitem
+                    id="helpdesk_tag_menu"
+                    action="helpdesk.helpdesk_tag_action"
+                    sequence="15"
+                    groups="base.group_no_one"/>
+
+                <menuitem
+                    id="helpdesk_team_canned_response_menu"
+                    action="mail.mail_canned_response_action"
+                    sequence="17"/>
+
+                <menuitem
+                    id="helpdesk_menu_config_activity_type"
+                    action="helpdesk.mail_activity_type_action_config_helpdesk"
+                    sequence="20"
+                    groups="base.group_no_one"/>
+
+                <menuitem
+                    id="ataa_configuration_menu"
+                    name="Ataa"
+                    sequence="50"
+                    groups="helpdesk.group_helpdesk_manager">
+
+                    <menuitem 
+                        id="jiz_standard_menu" 
+                        name="Evaluation Categories" 
+                        action="jiz_standard_action" 
+                        groups="helpdesk.group_helpdesk_manager"
+                        sequence="10"/>
+
+                    <menuitem 
+                        id="jiz_standard_scale_menu" 
+                        name="Evaluation Metrics" 
+                        action="jiz_standard_scale_action" 
+                        groups="helpdesk.group_helpdesk_manager"
+                        sequence="20"/>
+
+                    <menuitem 
+                        id="jiz_document_type_menu" 
+                        name="Document Types" 
+                        action="jiz_document_type_action" 
+                        groups="helpdesk.group_helpdesk_manager"
+                        sequence="30"/>
+
+                </menuitem>
+            </menuitem>
+        </menuitem>
+
+    </data>
+</odoo>

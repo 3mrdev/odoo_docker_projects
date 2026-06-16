@@ -35,7 +35,9 @@ class JizWaqf(models.Model):
         ('on_hold', 'On Hold'),
         ('sold', 'Sold'),
     ], string='Status', default='draft')
-    analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account')
+    analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account (Auto-generated)')
+    analytic_distribution = fields.Json(string='Analytic Distribution')
+    analytic_precision = fields.Integer(default=2)
     asset_id = fields.Many2one('account.asset', string='Asset', readonly=True, copy=False)
     asset_bill_id = fields.Many2one('account.move', string='Asset Bill', readonly=True, copy=False)
     asset_model_id = fields.Many2one('account.asset', string='Asset Type', domain="[('state', '=', 'model')]",related='waqf_type_id.asset_model_id',store=True)
@@ -291,10 +293,7 @@ class JizWaqf(models.Model):
                     balance = waqf.waqf_valuation
                     partner = waqf.waqf_endower_contact_id
 
-                    if waqf.analytic_account_id:
-                        analytic_distribution = {str(waqf.analytic_account_id.id): 100}
-                    else:
-                        analytic_distribution = {}
+                    analytic_distribution = waqf.analytic_distribution or {}
                     
                     data = {
                         'waqf_id': waqf.id,
@@ -353,6 +352,42 @@ class JizWaqf(models.Model):
     def action_reset_to_draft(self):
         self.write({'status': 'draft'})
 
+    def action_migrate_analytic_distribution(self):
+        """Migrate existing analytic_account_id to analytic_distribution for backward compatibility."""
+        waqfs = self.search([
+            ('analytic_account_id', '!=', False),
+            ('analytic_distribution', '=', False),
+        ])
+        for waqf in waqfs:
+            distribution = {}
+            if waqf.analytic_account_id:
+                distribution[str(waqf.analytic_account_id.id)] = 100
+            partner_analytic = waqf.waqf_endower_contact_id.analytic_account_id
+            if partner_analytic:
+                distribution[str(partner_analytic.id)] = 100
+            waqf.analytic_distribution = distribution or None
+
+        units = self.env['jiz.waqf.unit'].search([
+            ('waqf_id', '!=', False),
+            ('analytic_distribution', '=', False),
+        ])
+        for unit in units:
+            if unit.waqf_id.analytic_distribution:
+                unit.analytic_distribution = unit.waqf_id.analytic_distribution
+            elif unit.analytic_account_id:
+                unit.analytic_distribution = {str(unit.analytic_account_id.id): 100}
+
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': 'Migration Complete',
+                'message': f'Migrated {len(waqfs)} waqfs and {len(units)} units to analytic distribution.',
+                'type': 'success',
+                'sticky': False,
+            },
+        }
+
     def action_view_asset(self):
         self.ensure_one()
         return {
@@ -387,12 +422,11 @@ class JizWaqf(models.Model):
     @api.model_create_multi
     def create(self, vals):
         rec = super(JizWaqf, self).create(vals)
-        
+
         if not rec.waqf_sequence_number:
             rec.waqf_sequence_number = self.env['ir.sequence'].next_by_code('jiz.waqf')
-        
+
         if not rec.analytic_account_id:
-            # TODO
             analytic_plan = self.env['account.analytic.plan'].search([('name', '=', 'WAQFS')])
             if not analytic_plan:
                 analytic_plan = self.env['account.analytic.plan'].create({
@@ -406,7 +440,19 @@ class JizWaqf(models.Model):
             })
             rec.analytic_account_id = analytic_account_id.id
 
+        rec._build_analytic_distribution()
+
         return rec
+
+    def _build_analytic_distribution(self):
+        for waqf in self:
+            distribution = {}
+            if waqf.analytic_account_id:
+                distribution[str(waqf.analytic_account_id.id)] = 100
+            partner_analytic = waqf.waqf_endower_contact_id.analytic_account_id
+            if partner_analytic:
+                distribution[str(partner_analytic.id)] = 100
+            waqf.analytic_distribution = distribution or None
 
     def unlink(self):
         for waqf in self:

@@ -35,7 +35,7 @@
                                 <field name="responsible_id"/>
                                 <!-- <field name="invoice_address_id" groups="jiz_waqf.group_jiz_waqf_admin"/> -->
                                 <!-- <field name="invoice_address_id" readonly="1" groups="!jiz_waqf.group_jiz_waqf_admin"/> -->
-                                <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
+                                <field name="analytic_distribution" widget="analytic_distribution" groups="analytic.group_analytic_accounting"/>
                             </group>
                         </group>
                         <notebook>

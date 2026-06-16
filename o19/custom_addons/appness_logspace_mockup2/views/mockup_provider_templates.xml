@@ -35,7 +35,8 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title mb-4">Business Details</h5>
-                    <form action="/logspace/provider/register/2" method="GET">
+                    <form method="POST">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                         <!-- Login Credentials -->
                         <div class="alert alert-info mb-4">
                             <i class="fa fa-info-circle me-2"></i>
@@ -43,45 +44,41 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Username *</label>
-                                <input type="text" class="form-control" placeholder="Choose a username" required="required"/>
-                            </div>
-                            <div class="col-md-6 mb-3">
                                 <label class="form-label">Email Address *</label>
-                                <input type="email" class="form-control" placeholder="Your login email" required="required"/>
+                                <input type="email" name="email" class="form-control" placeholder="Your login email" required="required" t-att-value="provider_data.get('business', {}).get('email', '')"/>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Phone *</label>
-                                <input type="phone" class="form-control" placeholder="Your phone" required="required"/>
+                                <input type="tel" name="phone" class="form-control" placeholder="Your phone" required="required" t-att-value="provider_data.get('business', {}).get('phone', '')"/>
                             </div>
                         </div>
                         <hr class="my-4"/>
 
                         <div class="mb-3">
                             <label class="form-label">Business Name *</label>
-                            <input type="text" class="form-control" placeholder="Your business name" required="required"/>
+                            <input type="text" name="business_name" class="form-control" placeholder="Your business name" required="required" t-att-value="provider_data.get('business', {}).get('name', '')"/>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Tax ID / EIN</label>
-                            <input type="text" class="form-control"/>
+                            <input type="text" name="tax_id" class="form-control" t-att-value="provider_data.get('business', {}).get('tax_id', '')"/>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">CR Number (Commercial Registration) *</label>
-                            <input type="text" class="form-control" placeholder="Enter your Commercial Registration Number" required="required"/>
+                            <input type="text" name="cr_number" class="form-control" placeholder="Enter your Commercial Registration Number" required="required" t-att-value="provider_data.get('business', {}).get('cr_number', '')"/>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Years of Experience</label>
-                            <select class="form-select">
-                                <option>Less than 1 year</option>
-                                <option>1-2 years</option>
-                                <option>3-5 years</option>
-                                <option>5-10 years</option>
-                                <option>More than 10 years</option>
+                            <select name="years_experience" class="form-select">
+                                <option value="Less than 1 year" t-att-selected="provider_data.get('business', {}).get('years_experience') == 'Less than 1 year'">Less than 1 year</option>
+                                <option value="1-2 years" t-att-selected="provider_data.get('business', {}).get('years_experience') == '1-2 years'">1-2 years</option>
+                                <option value="3-5 years" t-att-selected="provider_data.get('business', {}).get('years_experience') == '3-5 years' or not provider_data.get('business', {}).get('years_experience')">3-5 years</option>
+                                <option value="5-10 years" t-att-selected="provider_data.get('business', {}).get('years_experience') == '5-10 years'">5-10 years</option>
+                                <option value="More than 10 years" t-att-selected="provider_data.get('business', {}).get('years_experience') == 'More than 10 years'">More than 10 years</option>
                             </select>
                         </div>
                         <div class="mb-4">
                             <label class="form-label">Business Address</label>
-                            <textarea class="form-control" rows="2" placeholder="Primary business address"></textarea>
+                            <textarea name="address" class="form-control" rows="2" placeholder="Primary business address" t-esc="provider_data.get('business', {}).get('address', '')"/>
                         </div>
                         <div class="d-flex justify-content-end">
                             <button type="submit" class="btn btn-primary">Next: Contacts</button>
@@ -109,7 +106,8 @@
                         </button>
                     </div>
 
-                    <form action="/logspace/provider/register/3" method="GET">
+                    <form method="POST">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                         <div class="table-responsive mb-4" style="overflow-x: auto;">
                             <table class="table table-bordered" id="contactsTable" style="min-width: 700px;">
                                 <thead class="table-light">
@@ -122,12 +120,43 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="contact-row">
+                                    <t t-foreach="existing_contacts or []" t-as="contact">
+                                        <tr class="contact-row">
+                                            <input type="hidden" name="contact_id[]" t-att-value="contact.get('id', 0)"/>
+                                            <td>
+                                                <input type="text" class="form-control form-control-sm" name="contact_name[]" placeholder="Full name" required="required" t-att-value="contact.get('name', '')"/>
+                                            </td>
+                                            <td>
+                                                <select class="form-select form-select-sm" name="contact_role[]" required="required">
+                                                    <option value="">Select...</option>
+                                                    <option value="owner" t-att-selected="contact.get('role') == 'owner'">Owner</option>
+                                                    <option value="manager" t-att-selected="contact.get('role') == 'manager'">Manager</option>
+                                                    <option value="driver" t-att-selected="contact.get('role') == 'driver'">Driver</option>
+                                                    <option value="dispatcher" t-att-selected="contact.get('role') == 'dispatcher'">Dispatcher</option>
+                                                    <option value="accountant" t-att-selected="contact.get('role') == 'accountant'">Accountant</option>
+                                                    <option value="other" t-att-selected="contact.get('role') == 'other'">Other</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="tel" class="form-control form-control-sm" name="contact_phone[]" placeholder="+1 555-0000" required="required" t-att-value="contact.get('phone', '')"/>
+                                            </td>
+                                            <td>
+                                                <input type="email" class="form-control form-control-sm" name="contact_email[]" placeholder="email@example.com" t-att-value="contact.get('email', '')"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-link text-danger btn-sm p-0" onclick="removeContactRow(this)">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <tr class="contact-row d-none" id="contactTemplate">
+                                        <input type="hidden" name="contact_id[]" value="0"/>
                                         <td>
-                                            <input type="text" class="form-control form-control-sm" name="contact_name[]" placeholder="Full name" required="required"/>
+                                            <input type="text" class="form-control form-control-sm" name="contact_name[]" placeholder="Full name" disabled="disabled" required="required"/>
                                         </td>
                                         <td>
-                                            <select class="form-select form-select-sm" name="contact_role[]" required="required">
+                                            <select class="form-select form-select-sm" name="contact_role[]" disabled="disabled" required="required">
                                                 <option value="">Select...</option>
                                                 <option value="owner">Owner</option>
                                                 <option value="manager">Manager</option>
@@ -138,13 +167,13 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="tel" class="form-control form-control-sm" name="contact_phone[]" placeholder="+1 555-0000" required="required"/>
+                                            <input type="tel" class="form-control form-control-sm" name="contact_phone[]" placeholder="+1 555-0000" disabled="disabled" required="required"/>
                                         </td>
                                         <td>
-                                            <input type="email" class="form-control form-control-sm" name="contact_email[]" placeholder="email@example.com"/>
+                                            <input type="email" class="form-control form-control-sm" name="contact_email[]" placeholder="email@example.com" disabled="disabled"/>
                                         </td>
                                         <td class="text-center">
-                                            <button type="button" class="btn btn-link text-danger btn-sm p-0" onclick="removeContactRow(this)" style="display:none;">
+                                            <button type="button" class="btn btn-link text-danger btn-sm p-0" onclick="removeContactRow(this)">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         </td>
@@ -165,15 +194,17 @@
                 function addContactRow() {
                     const table = document.getElementById('contactsTable');
                     const tbody = table.querySelector('tbody');
-                    const newRow = tbody.querySelector('.contact-row').cloneNode(true);
+                    const template = document.getElementById('contactTemplate');
+                    const newRow = template.cloneNode(true);
 
-                    // Clear input values
+                    // Enable and clear inputs
                     newRow.querySelectorAll('input, select').forEach(input => {
+                        input.removeAttribute('disabled');
                         input.value = '';
                     });
 
-                    // Show delete button for all rows except first
-                    newRow.querySelector('.btn-link').style.display = 'inline-block';
+                    // Remove d-none class to make it visible
+                    newRow.classList.remove('d-none');
 
                     tbody.appendChild(newRow);
                 }
@@ -208,7 +239,8 @@
                         The below info is about your fleet capacity for each vehicle type e.g. you have 10 vehicles of type <b>Flatbed Truck 3T</b> , 5 vehicles of type <b>Flatbed Truck 5T</b>, etc. Detailed vehicle information will be asked later.
                     </div>
 
-                    <form action="/logspace/provider/register/4" method="GET">
+                    <form method="POST">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                         <div class="table-responsive mb-4" style="overflow-x: auto;">
                             <table class="table table-bordered" id="vehiclesTable" style="min-width: 700px;">
                                 <thead class="table-light">
@@ -221,9 +253,43 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="vehicle-row">
+                                    <t t-foreach="existing_fleet or []" t-as="fleet_item">
+                                        <tr class="vehicle-row">
+                                            <input type="hidden" name="fleet_id[]" t-att-value="fleet_item.get('id', 0)"/>
+                                            <td>
+                                                <select class="form-select form-select-sm" name="vehicle_type[]" required="required">
+                                                    <option value="">Select...</option>
+                                                    <t t-foreach="vehicle_types" t-as="vt">
+                                                        <option t-att-value="vt[0]" t-esc="vt[1]" t-att-selected="fleet_item.get('vehicle_type_code') == vt[0]"/>
+                                                    </t>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control form-control-sm" name="fleet_count[]" placeholder="e.g., 5" min="1" required="required" t-att-value="fleet_item.get('fleet_count', 1)"/>
+                                            </td>
+                                            <td>
+                                                <select class="form-select form-control-sm" name="capacity[]">
+                                                    <option t-att-selected="fleet_item.get('capacity') == '1 Ton'">1 Ton</option>
+                                                    <option t-att-selected="fleet_item.get('capacity') == '3 Tons'">3 Tons</option>
+                                                    <option t-att-selected="fleet_item.get('capacity') == '5 Tons' or not fleet_item.get('capacity')">5 Tons</option>
+                                                    <option t-att-selected="fleet_item.get('capacity') == '7.5 Tons'">7.5 Tons</option>
+                                                    <option t-att-selected="fleet_item.get('capacity') == '10+ Tons'">10+ Tons</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control form-control-sm" name="dimensions[]" placeholder="e.g., 300x200x150 cm" t-att-value="fleet_item.get('dimensions', '')"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-link text-danger btn-sm p-0" onclick="removeRow(this)">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <tr class="vehicle-row d-none" id="vehicleTemplate">
+                                        <input type="hidden" name="fleet_id[]" value="0"/>
                                         <td>
-                                            <select class="form-select form-select-sm" name="vehicle_type[]" required="required">
+                                            <select class="form-select form-select-sm" name="vehicle_type[]" disabled="disabled" required="required">
                                                 <option value="">Select...</option>
                                                 <t t-foreach="vehicle_types" t-as="vt">
                                                     <option t-att-value="vt[0]" t-esc="vt[1]"/>
@@ -231,22 +297,22 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control form-control-sm" name="fleet_count[]" placeholder="e.g., 5" min="1" required="required"/>
+                                            <input type="number" class="form-control form-control-sm" name="fleet_count[]" placeholder="e.g., 5" min="1" disabled="disabled" required="required"/>
                                         </td>
                                         <td>
-                                            <select class="form-select form-select-sm" name="capacity[]">
+                                            <select class="form-select form-control-sm" name="capacity[]" disabled="disabled">
                                                 <option>1 Ton</option>
                                                 <option>3 Tons</option>
-                                                <option>5 Tons</option>
+                                                <option selected="selected">5 Tons</option>
                                                 <option>7.5 Tons</option>
                                                 <option>10+ Tons</option>
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control form-control-sm" name="dimensions[]" placeholder="e.g., 300x200x150 cm"/>
+                                            <input type="text" class="form-control form-control-sm" name="dimensions[]" placeholder="e.g., 300x200x150 cm" disabled="disabled"/>
                                         </td>
                                         <td class="text-center">
-                                            <button type="button" class="btn btn-link text-danger btn-sm p-0" onclick="removeRow(this)" style="display:none;">
+                                            <button type="button" class="btn btn-link text-danger btn-sm p-0" onclick="removeRow(this)">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         </td>
@@ -267,15 +333,17 @@
                 function addVehicleRow() {
                     const table = document.getElementById('vehiclesTable');
                     const tbody = table.querySelector('tbody');
-                    const newRow = tbody.querySelector('.vehicle-row').cloneNode(true);
+                    const template = document.getElementById('vehicleTemplate');
+                    const newRow = template.cloneNode(true);
 
-                    // Clear input values
+                    // Enable and clear inputs
                     newRow.querySelectorAll('input, select').forEach(input => {
+                        input.removeAttribute('disabled');
                         input.value = '';
                     });
 
-                    // Show delete button for all rows except first
-                    newRow.querySelector('.btn-link').style.display = 'inline-block';
+                    // Remove d-none class to make it visible
+                    newRow.classList.remove('d-none');
 
                     tbody.appendChild(newRow);
                 }
@@ -299,14 +367,22 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title mb-4">Upload Documents</h5>
-                    <form action="/logspace/provider/register/5" method="GET">
+                    <form method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                         <div class="mb-4">
                             <label class="form-label">Vehicles Documents *</label>
                             <div class="border rounded p-3 bg-light">
                                 <div class="text-center">
                                     <i class="fa fa-id-card-o fa-3x text-muted mb-2"></i>
-                                    <p class="text-muted mb-2">Upload a pdf that contains images of all Vehicles and thier documents (20MB Max)</p>
-                                    <input type="file" class="form-control" accept="application/pdf"/>
+                                    <p class="text-muted mb-2">Upload a pdf that contains images of all Vehicles and their documents (20MB Max)</p>
+                                    <t t-set="vehicles_doc" t-value="provider_data.get('documents', {}).get('vehicles_doc', {})"/>
+                                    <t t-if="vehicles_doc and vehicles_doc.get('filename')">
+                                        <div class="alert alert-success mb-2">
+                                            <i class="fa fa-check me-1"></i> <span t-esc="vehicles_doc.get('filename')"/> already uploaded
+                                        </div>
+                                        <p class="text-muted small">Upload a new file to replace it, or leave empty to keep the existing file.</p>
+                                    </t>
+                                    <input type="file" name="vehicles_doc" class="form-control" accept="application/pdf"/>
                                 </div>
                             </div>
                         </div>
@@ -317,7 +393,14 @@
                                 <div class="text-center">
                                     <i class="fa fa-file-text-o fa-3x text-muted mb-2"></i>
                                     <p class="text-muted mb-2">Upload the files as PDF Format (20MB Max)</p>
-                                    <input type="file" class="form-control" accept="application/pdf"/>
+                                    <t t-set="company_doc" t-value="provider_data.get('documents', {}).get('company_doc', {})"/>
+                                    <t t-if="company_doc and company_doc.get('filename')">
+                                        <div class="alert alert-success mb-2">
+                                            <i class="fa fa-check me-1"></i> <span t-esc="company_doc.get('filename')"/> already uploaded
+                                        </div>
+                                        <p class="text-muted small">Upload a new file to replace it, or leave empty to keep the existing file.</p>
+                                    </t>
+                                    <input type="file" name="company_doc" class="form-control" accept="application/pdf"/>
                                 </div>
                             </div>
                         </div>
@@ -328,7 +411,14 @@
                                 <div class="text-center">
                                     <i class="fa fa-university fa-3x text-muted mb-2"></i>
                                     <p class="text-muted mb-2">Bank statement valid for 3 months (20MB Max)</p>
-                                    <input type="file" class="form-control" accept="application/pdf"/>
+                                    <t t-set="bank_statement" t-value="provider_data.get('documents', {}).get('bank_statement', {})"/>
+                                    <t t-if="bank_statement and bank_statement.get('filename')">
+                                        <div class="alert alert-success mb-2">
+                                            <i class="fa fa-check me-1"></i> <span t-esc="bank_statement.get('filename')"/> already uploaded
+                                        </div>
+                                        <p class="text-muted small">Upload a new file to replace it, or leave empty to keep the existing file.</p>
+                                    </t>
+                                    <input type="file" name="bank_statement" class="form-control" accept="application/pdf"/>
                                 </div>
                             </div>
                             <div class="form-text small text-muted mt-1">
@@ -338,7 +428,7 @@
 
                         <div class="mb-4">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" required="required"/>
+                                <input class="form-check-input" name="confirm_documents" type="checkbox" required="required"/>
                                 <label class="form-check-label">
                                     I confirm all documents are genuine and valid
                                 </label>
@@ -355,8 +445,7 @@
         </t>
     </template>
 
-    <!-- Step 5 is now removed (Service Areas) — mockup2_provider_step5 kept but unused -->
-    <!-- We keep it as a placeholder so the template ID doesn't break anything -->
+    <!-- Step 5: Review - Now with dynamic data -->
     <template id="mockup2_provider_step5" name="Logspace Provider - Step 5 (Review)">
         <t t-call="appness_logspace_mockup2.mockup2_provider_layout">
             <t t-set="current_step" t-value="5"/>
@@ -378,13 +467,19 @@
                         <div class="border rounded p-3 bg-light">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <p class="mb-1"><strong>Username:</strong> johndoe_provider</p>
-                                    <p class="mb-1"><strong>Email:</strong> john@example.com</p>
+                                    <p class="mb-1"><strong>Email:</strong> <span t-esc="business.get('email', 'N/A')"/></p>
+                                    <p class="mb-1"><strong>Phone:</strong> <span t-esc="business.get('phone', 'N/A')"/></p>
                                 </div>
                                 <div class="col-md-6">
-                                    <p class="mb-1"><strong>Business Name:</strong> ABC Logistics</p>
-                                    <p class="mb-1"><strong>CR Number:</strong> CR-12345</p>
-                                    <p class="mb-1"><strong>Experience:</strong> 3-5 years</p>
+                                    <p class="mb-1"><strong>Business Name:</strong> <span t-esc="business.get('name', 'N/A')"/></p>
+                                    <p class="mb-1"><strong>CR Number:</strong> <span t-esc="business.get('cr_number', 'N/A')"/></p>
+                                    <p class="mb-1"><strong>Tax ID:</strong> <span t-esc="business.get('tax_id', 'N/A')"/></p>
+                                    <p class="mb-1"><strong>Experience:</strong> <span t-esc="business.get('years_experience', 'N/A')"/></p>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <p class="mb-1"><strong>Address:</strong> <span t-esc="business.get('address', 'N/A')"/></p>
                                 </div>
                             </div>
                         </div>
@@ -407,18 +502,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>John Doe</td>
-                                        <td>Owner</td>
-                                        <td>+1 555-0123</td>
-                                        <td>john@example.com</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jane Smith</td>
-                                        <td>Dispatcher</td>
-                                        <td>+1 555-0456</td>
-                                        <td>jane@example.com</td>
-                                    </tr>
+                                    <t t-if="contacts and len(contacts) > 0">
+                                        <t t-foreach="contacts" t-as="contact">
+                                            <tr>
+                                                <td t-esc="contact.get('name', '')"/>
+                                                <td t-esc="contact.get('role', '').title()"/>
+                                                <td t-esc="contact.get('phone', '')"/>
+                                                <td t-esc="contact.get('email', '')"/>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                    <t t-if="not contacts or len(contacts) == 0">
+                                        <tr>
+                                            <td colspan="4" class="text-center text-muted">No contacts added</td>
+                                        </tr>
+                                    </t>
                                 </tbody>
                             </table>
                         </div>
@@ -441,13 +539,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Flatbed Truck</td>
-                                        <td>3</td>
-                                        <td>3 Tons</td>
-                                        <td>300x200x150 cm</td>
-                                    </tr>
-                                    <!-- Additional rows would show for each added vehicle type -->
+                                    <t t-if="fleet and len(fleet) > 0">
+                                        <t t-foreach="fleet" t-as="fleet_item">
+                                            <tr>
+                                                <td t-esc="fleet_item.get('vehicle_type_code', '').title()"/>
+                                                <td t-esc="fleet_item.get('fleet_count', 1)"/>
+                                                <td t-esc="fleet_item.get('capacity', '')"/>
+                                                <td t-esc="fleet_item.get('dimensions', '')"/>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                    <t t-if="not fleet or len(fleet) == 0">
+                                        <tr>
+                                            <td colspan="4" class="text-center text-muted">No fleet information added</td>
+                                        </tr>
+                                    </t>
                                 </tbody>
                             </table>
                         </div>
@@ -460,9 +566,27 @@
                             <a href="/logspace/provider/register/4" class="btn btn-sm btn-outline-primary">Edit</a>
                         </div>
                         <div class="border rounded p-3 bg-light">
-                            <p class="mb-1"><i class="fa fa-check-circle text-success me-1"></i> Vehicles Documents</p>
-                            <p class="mb-1"><i class="fa fa-check-circle text-success me-1"></i> Company Registration Documents</p>
-                            <p class="mb-1"><i class="fa fa-check-circle text-success me-1"></i> Bank Statement</p>
+                            <p class="mb-1">
+                                <i t-att-class="'fa fa-check-circle me-1 ' + (documents and documents.get('vehicles_doc') and documents.get('vehicles_doc').get('filename') and 'text-success' or 'text-muted')"/>
+                                Vehicles Documents
+                                <t t-if="documents and documents.get('vehicles_doc') and documents.get('vehicles_doc').get('filename')">
+                                    <span class="text-muted small">(<t t-esc="documents.get('vehicles_doc').get('filename', '')"/>)</span>
+                                </t>
+                            </p>
+                            <p class="mb-1">
+                                <i t-att-class="'fa fa-check-circle me-1 ' + (documents and documents.get('company_doc') and documents.get('company_doc').get('filename') and 'text-success' or 'text-muted')"/>
+                                Company Registration Documents
+                                <t t-if="documents and documents.get('company_doc') and documents.get('company_doc').get('filename')">
+                                    <span class="text-muted small">(<t t-esc="documents.get('company_doc').get('filename', '')"/>)</span>
+                                </t>
+                            </p>
+                            <p class="mb-1">
+                                <i t-att-class="'fa fa-check-circle me-1 ' + (documents and documents.get('bank_statement') and documents.get('bank_statement').get('filename') and 'text-success' or 'text-muted')"/>
+                                Bank Statement
+                                <t t-if="documents and documents.get('bank_statement') and documents.get('bank_statement').get('filename')">
+                                    <span class="text-muted small">(<t t-esc="documents.get('bank_statement').get('filename', '')"/>)</span>
+                                </t>
+                            </p>
                         </div>
                     </div>
 
@@ -471,10 +595,14 @@
                         By submitting, you agree to our <a href="#">Terms of Service</a> and confirm all information is accurate.
                     </div>
 
-                    <div class="d-flex justify-content-between">
-                        <a href="/logspace/provider/register/4" class="btn btn-outline-secondary">Back</a>
-                        <a href="/logspace/provider/done" class="btn btn-success btn-lg">Submit Application</a>
-                    </div>
+                    <form method="POST" action="/logspace/provider/done">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="submit" value="true"/>
+                        <div class="d-flex justify-content-between">
+                            <a href="/logspace/provider/register/4" class="btn btn-outline-secondary">Back</a>
+                            <button type="submit" class="btn btn-success btn-lg">Submit Application</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </t>
@@ -506,7 +634,6 @@
 
                 <div class="d-grid gap-2 d-md-block">
                     <a href="/logspace" class="btn btn-primary me-md-2">Back to Home</a>
-                    <a href="/logspace/provider/register" class="btn btn-outline-secondary">View Application</a>
                 </div>
             </div>
         </t>

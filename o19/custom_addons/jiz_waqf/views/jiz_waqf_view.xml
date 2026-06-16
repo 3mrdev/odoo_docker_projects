@@ -134,7 +134,7 @@
                                 <field name="approximate_sale_amount" readonly="0" groups="jiz_waqf.group_jiz_waqf_admin" invisible="status != 'sold'"/>
                                 <field name="approximate_sale_amount" readonly="status != 'draft'" groups="!jiz_waqf.group_jiz_waqf_admin" invisible="status != 'sold'"/>
                                 <field name="sell_amount" string="Actual Sale Amount" invisible="status != 'sold'"/>
-                                <field name="analytic_account_id" groups="analytic.group_analytic_accounting" readonly="status != 'draft'"/>
+                                <field name="analytic_distribution" widget="analytic_distribution" groups="analytic.group_analytic_accounting" readonly="0"/>
                                 <field name="asset_bill_id" readonly="1" invisible="not asset_id or not asset_bill_id"/>
                             </group>
                         </group>
@@ -244,5 +244,14 @@
         <menuitem id="jiz_waqf_managment_menu" name="Managment" parent="jiz_waqf_menu_root" sequence="20"/>
         <menuitem id="jiz_waqf_waqf_menu" name="Waqf" parent="jiz_waqf_managment_menu" action="jiz_waqf_action" sequence="10"/>
         <menuitem id="jiz_waqf_configuration_menu" name="Configuration" parent="jiz_waqf_menu_root" sequence="100" groups="jiz_waqf.group_jiz_waqf_admin"/>
+
+        <record id="action_migrate_analytic_distribution" model="ir.actions.server">
+            <field name="name">Migrate Analytic Distribution</field>
+            <field name="model_id" ref="model_jiz_waqf"/>
+            <field name="binding_model_id" ref="model_jiz_waqf"/>
+            <field name="binding_type">action</field>
+            <field name="state">code</field>
+            <field name="code">action = records.action_migrate_analytic_distribution()</field>
+        </record>
     </data>
 </odoo>

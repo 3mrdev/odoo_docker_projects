@@ -30,6 +30,11 @@ class LogspacePriceMatrix(models.Model):
     # Pricing
     distance_km = fields.Float(string='Distance (km)',
                                 help='Distance between zones for reference')
+    zone_distance_id = fields.Many2one(
+        'logspace.zone.distance', string='Zone Distance Record',
+        compute='_compute_zone_distance_id', store=False,
+        help='Linked record from the zone distance matrix (if available)',
+    )
     provider_price = fields.Float(string='Provider Price', required=True,
                                   default=0.0,
                                   help='What provider charges')
@@ -84,8 +89,24 @@ class LogspacePriceMatrix(models.Model):
         'Price already exists for this provider, vehicle type, and route!'
     )
 
+    @api.depends('zone_from_id', 'zone_to_id')
+    def _compute_zone_distance_id(self):
+        """Link to the matching zone distance record if one exists."""
+        ZoneDist = self.env['logspace.zone.distance']
+        for matrix in self:
+            if matrix.zone_from_id and matrix.zone_to_id:
+                rec = ZoneDist.search([
+                    ('zone_from_id', '=', matrix.zone_from_id.id),
+                    ('zone_to_id', '=', matrix.zone_to_id.id),
+                ], limit=1)
+                matrix.zone_distance_id = rec.id if rec else False
+            else:
+                matrix.zone_distance_id = False
+
     @api.onchange('zone_from_id', 'zone_to_id')
     def _onchange_zones(self):
-        """Auto-calculate distance if zones change (placeholder)"""
-        # In real implementation, could use maps API
-        pass
+        """Auto-fill distance_km from the zone distance matrix."""
+        if self.zone_from_id and self.zone_to_id:
+            ZoneDist = self.env['logspace.zone.distance']
+            distance = ZoneDist.get_distance(self.zone_from_id, self.zone_to_id)
+            self.distance_km = distance

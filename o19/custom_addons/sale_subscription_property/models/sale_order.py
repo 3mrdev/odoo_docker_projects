@@ -7,6 +7,8 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     property_unit_id = fields.Many2one('hrb.property.unit', string='Property Unit', tracking=True)
+    electricity_meter = fields.Char(string='ELECTRICITY Meter',related='property_unit_id.electricity_meter',store=True)
+    water_meter = fields.Char(string='WATER Meter',related='property_unit_id.water_meter',store=True)
     property_id = fields.Many2one('hrb.property', string='Property', related='property_unit_id.property_id', store=True)
     show_properties_features = fields.Boolean(related='company_id.show_properties_features',store=True)
 
@@ -99,5 +101,3 @@ class SaleOrder(models.Model):
         for record in self:
             if record.subscription_state == '6_churn':
                 self.set_free_unit(record)
-
-                

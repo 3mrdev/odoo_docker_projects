@@ -36,8 +36,8 @@ class SaleOrder(models.Model):
                     order.waqf_unit_id.tenant_id = order.partner_id.id
 
                 for line in order.order_line:
-                    if order.waqf_unit_id.analytic_account_id:
-                        line.analytic_distribution = {str(order.waqf_unit_id.analytic_account_id.id): 100}
+                    if order.waqf_unit_id.analytic_distribution:
+                        line.analytic_distribution = order.waqf_unit_id.analytic_distribution
         return res
 
     def resume_subscription(self):

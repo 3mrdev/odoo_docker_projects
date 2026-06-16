@@ -7,7 +7,7 @@
               sequence="50"/>
 
     <!-- Dashboard -->
-    <menuitem id="menu_logspace_dashboard"
+    <!-- <menuitem id="menu_logspace_dashboard"
               name="Dashboard"
               parent="menu_logspace_root"
               sequence="10"/>
@@ -16,7 +16,7 @@
               name="Overview"
               parent="menu_logspace_dashboard"
               action="action_res_partner_provider"
-              sequence="10"/>
+              sequence="10"/> -->
 
     <!-- Providers -->
     <menuitem id="menu_logspace_providers"
@@ -35,12 +35,6 @@
               parent="menu_logspace_providers"
               action="action_logspace_vehicle_list"
               sequence="20"/>
-
-    <menuitem id="menu_logspace_contact_roles"
-              name="Contact Roles"
-              parent="menu_logspace_providers"
-              action="action_logspace_contact_roles"
-              sequence="30"/>
 
     <menuitem id="menu_logspace_provider_vtype_addons"
               name="Vehicle Type Add-ons"
@@ -90,34 +84,54 @@
               action="action_logspace_refund"
               sequence="30"/>
 
-    <!-- Services -->
-    <menuitem id="menu_logspace_services"
-              name="Services"
+    <menuitem id="menu_logspace_notifications"
+              name="Notifications"
+              parent="menu_logspace_support"
+              action="action_logspace_notification"
+              sequence="40"/>
+
+    <!-- Configuration -->
+    <menuitem id="menu_logspace_configuration"
+              name="Configuration"
               parent="menu_logspace_root"
-              sequence="50"/>
+              sequence="40"/>
 
     <menuitem id="menu_logspace_addons"
               name="Add-ons"
-              parent="menu_logspace_services"
+              parent="menu_logspace_configuration"
               action="action_logspace_addon"
               sequence="10"/>
 
     <menuitem id="menu_logspace_zones"
               name="Zones"
-              parent="menu_logspace_services"
+              parent="menu_logspace_configuration"
               action="action_logspace_zone"
               sequence="20"/>
 
+    <menuitem id="menu_logspace_zone_distances"
+              name="Zone Distances"
+              parent="menu_logspace_configuration"
+              action="action_logspace_zone_distance"
+              sequence="25"/>
+
     <menuitem id="menu_logspace_vehicle_types"
               name="Vehicle Types"
-              parent="menu_logspace_services"
+              parent="menu_logspace_configuration"
               action="action_logspace_vehicle_type"
               sequence="30"/>
 
-    <!-- Notifications (User menu) -->
-    <menuitem id="menu_logspace_notifications"
-              name="Notifications"
-              parent="menu_logspace_root"
-              action="action_logspace_notification"
-              sequence="60"/>
+    <menuitem id="menu_logspace_contact_roles"
+              name="Contact Roles"
+              parent="menu_logspace_configuration"
+              action="action_logspace_contact_roles"
+              sequence="40"/>
+
+    <record id="logspace_action_website" model="ir.actions.act_url">
+        <field name="name">Website</field>
+        <field name="url">/logspace</field>
+        <field name="target">self</field>
+    </record>
+
+    <menuitem id="logspace_website_menu" name="Website" groups="appness_logspace_mockup2.group_logspace_provider" web_icon="website,static/description/icon.png" action="logspace_action_website"/>
+
 </odoo>

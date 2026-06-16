@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- ============================================ -->
+        <!-- DEMO VEHICLES -->
+        <!-- ============================================ -->
+
+        <!-- ABC Logistics Vehicles -->
+        <record id="vehicle_abc_1" model="logspace.vehicle">
+            <field name="name">Truck Alpha</field>
+            <field name="provider_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">ABC-1234</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_abc_2" model="logspace.vehicle">
+            <field name="name">Truck Beta</field>
+            <field name="provider_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_covered_3t"/>
+            <field name="plate_number">ABC-5678</field>
+            <field name="zone_id" ref="om_zone_bousher"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_abc_3" model="logspace.vehicle">
+            <field name="name">Van Charlie</field>
+            <field name="provider_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_van"/>
+            <field name="plate_number">ABC-9999</field>
+            <field name="zone_id" ref="om_zone_muttrah"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- Fast Truck Co Vehicles -->
+        <record id="vehicle_ftc_1" model="logspace.vehicle">
+            <field name="name">Fast One</field>
+            <field name="provider_id" ref="partner_fast_truck"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_5t"/>
+            <field name="plate_number">FTC-9876</field>
+            <field name="zone_id" ref="om_zone_al_amrat"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_ftc_2" model="logspace.vehicle">
+            <field name="name">Quick Mover</field>
+            <field name="provider_id" ref="partner_fast_truck"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">FTC-5432</field>
+            <field name="zone_id" ref="om_zone_quriyat"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- Saudi Express Vehicles -->
+        <record id="vehicle_se_1" model="logspace.vehicle">
+            <field name="name">Express Heavy 1</field>
+            <field name="provider_id" ref="partner_saudi_express"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_5t"/>
+            <field name="plate_number">SE-1111</field>
+            <field name="zone_id" ref="om_zone_sohar_city"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_se_2" model="logspace.vehicle">
+            <field name="name">Cool Runner</field>
+            <field name="provider_id" ref="partner_saudi_express"/>
+            <field name="vehicle_type_id" ref="vehicle_type_refrigerated"/>
+            <field name="plate_number">SE-2222</field>
+            <field name="zone_id" ref="om_zone_saham"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_se_3" model="logspace.vehicle">
+            <field name="name">Covered Transport</field>
+            <field name="provider_id" ref="partner_saudi_express"/>
+            <field name="vehicle_type_id" ref="vehicle_type_covered_3t"/>
+            <field name="plate_number">SE-3333</field>
+            <field name="zone_id" ref="om_zone_shinas"/>
+            <field name="is_active">True</field>
+        </record>
+    </data>
+</odoo>

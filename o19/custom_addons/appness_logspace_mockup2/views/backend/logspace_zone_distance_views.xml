@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- ============================================ -->
+        <!-- Zone Distance Matrix -->
+        <!-- ============================================ -->
+        <record id="action_logspace_zone_distance" model="ir.actions.act_window">
+            <field name="name">Zone Distances</field>
+            <field name="res_model">logspace.zone.distance</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Define estimated distances between zones!
+                </p>
+                <p>
+                    These offline distances are used for pricing.
+                    When a zone pair has no direct distance, the system
+                    falls back to the parent zone's distance automatically.
+                </p>
+            </field>
+        </record>
+
+        <!-- Zone Distance List View -->
+        <record id="view_logspace_zone_distance_tree" model="ir.ui.view">
+            <field name="name">logspace.zone.distance.tree</field>
+            <field name="model">logspace.zone.distance</field>
+            <field name="arch" type="xml">
+                <list editable="bottom">
+                    <field name="zone_from_id"/>
+                    <field name="zone_to_id"/>
+                    <field name="estimated_km"/>
+                    <field name="estimated_minutes" optional="show"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Zone Distance Form View -->
+        <record id="view_logspace_zone_distance_form" model="ir.ui.view">
+            <field name="name">logspace.zone.distance.form</field>
+            <field name="model">logspace.zone.distance</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="Route">
+                                <field name="zone_from_id"/>
+                                <field name="zone_to_id"/>
+                            </group>
+                            <group string="Estimates">
+                                <field name="estimated_km"/>
+                                <field name="estimated_minutes"/>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        <p class="text-muted mt-3">
+                            When you save a distance A→B, the reverse B→A is created or
+                            updated automatically with the same values.
+                        </p>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

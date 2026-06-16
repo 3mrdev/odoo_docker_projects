@@ -21,13 +21,26 @@
         'mail',
         'hr',           # For job positions (contact roles)
         'helpdesk',     # For support tickets
+        'payment',      # Odoo payment gateway integration
+        'resource',     # For provider working calendar
     ],
     'data': [
+        'data/logspace_sequences.xml',
+        'data/logspace_email_templates.xml',
+        'data/website_menu.xml',
+        # Master Data (updatable)
+        'data/data_products.xml',
+        'data/data_vehicle_types.xml',
+        'data/data_addons.xml',
+        # Oman geo-zoning data
+        'data/data_oman_zones.xml',
+        # Demo Data (noupdate)
+        'demo_data/demo_providers.xml',
+        'demo_data/demo_vehicles.xml',
+        # 'demo_data/demo_price_matrix.xml',
+        'security/logspace_groups.xml',
         'security/ir.model.access.csv',
         'security/logspace_security.xml',
-        'data/website_menu.xml',
-        'data/logspace_sequences.xml',
-        'data/logspace_demo_data.xml',
         'views/mockup_layout_templates.xml',
         'views/mockup_search_templates.xml',
         'views/mockup_vendor_templates.xml',
@@ -38,9 +51,13 @@
         # Backend views - Master data first
         # Backend views - Master data
         'views/backend/logspace_zone_views.xml',
+        'views/backend/logspace_zone_distance_views.xml',
         'views/backend/logspace_vehicle_type_views.xml',
         'views/backend/logspace_addon_views.xml',
         'views/backend/logspace_vehicle_views.xml',
+
+        # Wizard (must load before res_partner_views which references its action)
+        'wizard/logspace_zone_setup_wizard_views.xml',
 
         # Provider management (using res.partner)
         'views/backend/logspace_price_matrix_views.xml',
@@ -54,8 +71,8 @@
         # Customer support (using helpdesk.ticket)
         'views/backend/helpdesk_ticket_views.xml',
 
-        # Legacy views (keeping for compatibility)
-        'views/backend/logspace_provider_views.xml',
+        # Note: logspace_provider model removed - using res.partner instead
+        # 'views/backend/logspace_provider_views.xml',  # DEPRECATED
         'views/backend/logspace_rating_views.xml',
         'views/backend/logspace_refund_views.xml',
         'views/backend/logspace_ticket_views.xml',

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Wizard Form View -->
+    <record id="view_logspace_zone_setup_wizard_form" model="ir.ui.view">
+        <field name="name">logspace.zone.setup.wizard.form</field>
+        <field name="model">logspace.zone.setup.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Setup Provider Zones">
+                <group>
+                    <group>
+                        <field name="provider_id"/>
+                    </group>
+                </group>
+                <separator string="Operating Zones"/>
+                <p class="text-muted">
+                    Select the zones where this provider operates.
+                    Child zones of selected governorates are included automatically.
+                </p>
+                <div class="d-flex gap-2 mb-2">
+                    <button name="select_all_zones" type="object"
+                            string="Select All" class="btn-secondary"
+                            icon="fa-check-square-o"/>
+                    <button name="deselect_all_zones" type="object"
+                            string="Deselect All" class="btn-secondary"
+                            icon="fa-square-o"/>
+                </div>
+                <field name="zone_ids" widget="many2many_tags"
+                       options="{'no_create': True}"
+                       placeholder="Choose zones..."/>
+
+                <separator string="Vehicle Types"/>
+                <field name="vehicle_type_ids" widget="many2many_tags"
+                       options="{'no_create': True}"
+                       placeholder="Choose vehicle types..."/>
+
+                <separator string="Pricing Configuration"/>
+                <group>
+                    <group>
+                        <field name="base_rate"/>
+                        <field name="per_km_rate"/>
+                    </group>
+                    <group>
+                        <p class="text-muted">
+                            Formula: provider_price = base_rate + (estimated_km × per_km_rate)
+                            <br/>
+                            Example: base=2.0, per_km=0.5, distance=200km → price = 2.0 + 100.0 = 102.0
+                        </p>
+                    </group>
+                </group>
+
+                <footer>
+                    <button name="action_confirm" type="object"
+                            string="Generate Price Matrix"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action to open the wizard -->
+    <record id="action_logspace_zone_setup_wizard" model="ir.actions.act_window">
+        <field name="name">Setup Zones</field>
+        <field name="res_model">logspace.zone.setup.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_provider_id': active_id}</field>
+    </record>
+
+</odoo>

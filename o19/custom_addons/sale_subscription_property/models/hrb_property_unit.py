@@ -31,6 +31,9 @@ class PropertyUnit(models.Model):
     analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account')
     tag_ids = fields.Many2many('crm.tag', string='Tags')
 
+    electricity_meter = fields.Char(string='ELECTRICITY Meter')
+    water_meter = fields.Char(string='WATER Meter')
+
     street = fields.Char(related='property_id.street')
     street2 = fields.Char(related='property_id.street2')
     zip = fields.Char(related='property_id.zip')

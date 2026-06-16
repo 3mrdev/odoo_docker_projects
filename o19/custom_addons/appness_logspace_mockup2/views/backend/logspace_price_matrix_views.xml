@@ -50,6 +50,7 @@
                             <field name="zone_to_id"/>
                             <field name="vechile_in_zone_count"/>
                             <field name="distance_km"/>
+                            <field name="zone_distance_id" readonly="1"/>
                         </group>
                     </group>
                     <group>

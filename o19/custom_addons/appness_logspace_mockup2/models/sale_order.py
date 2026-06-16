@@ -122,15 +122,6 @@ class SaleOrder(models.Model):
         string='Customer Special Instructions',
         help='Any special handling requirements from customer'
     )
-    estimated_weight_kg = fields.Integer(
-        string='Estimated Weight (kg)',
-        help='Approximate total weight of items'
-    )
-    item_quantity = fields.Integer(
-        string='Number of Items',
-        default=1,
-        help='How many items/pieces being transported'
-    )
 
     # =========================================================================
     # Add-ons
@@ -161,14 +152,19 @@ class SaleOrder(models.Model):
     # Logistics State Workflow
     # =========================================================================
     logspace_state = fields.Selection([
-        ('pending', 'Pending'),
-        ('confirmed', 'Confirmed'),
-        ('driver_assigned', 'Driver Assigned'),
-        ('in_transit', 'In Transit'),
-        ('delivered', 'Delivered'),
+        ('order_received', 'Order Received'),
+        ('pickup_started', 'Pickup Started'),
+        ('vendor_arrived_pickup', 'Vendor Arrived at Pickup'),
+        ('pickup_addons', 'Pickup Add-ons Performed'),
+        ('pickup_completed', 'Pickup Completed'),
+        ('pre_dropoff_addons', 'Pre-Drop-off Add-ons'),
+        ('arrived_destination', 'Arrived at Destination'),
+        ('dropoff_completed', 'Drop-off Completed'),
+        ('grace_period', 'Grace Period'),
+        ('order_completed', 'Order Completed'),
         ('cancelled', 'Cancelled'),
     ], string='Logspace Status',
-       default='pending',
+       default='order_received',
        tracking=True,
        index=True,
        help='Current status of the logistics order'
@@ -232,92 +228,230 @@ class SaleOrder(models.Model):
     )
 
     # =========================================================================
-    # Actions - Workflow
+    # Smart Button Counts
     # =========================================================================
-    def action_logspace_confirm(self):
-        """Confirm booking and generate pickup verification code"""
-        for order in self.filtered(lambda o: o.is_logspace_order):
-            if order.logspace_state != 'pending':
-                continue
+    logspace_ticket_ids = fields.One2many(
+        'helpdesk.ticket',
+        'logspace_order_id',
+        string='Tickets'
+    )
+    logspace_ticket_count = fields.Integer(
+        string='Tickets',
+        compute='_compute_logspace_counts'
+    )
 
+    logspace_refund_ids = fields.One2many(
+        'logspace.refund',
+        'order_id',
+        string='Refund Requests'
+    )
+    logspace_refund_count = fields.Integer(
+        string='Refunds',
+        compute='_compute_logspace_counts'
+    )
+
+    logspace_rating_ids = fields.One2many(
+        'logspace.rating',
+        'order_id',
+        string='Ratings'
+    )
+    logspace_rating_count = fields.Integer(
+        string='Ratings',
+        compute='_compute_logspace_counts'
+    )
+
+    @api.depends('logspace_ticket_ids', 'logspace_refund_ids', 'logspace_rating_ids')
+    def _compute_logspace_counts(self):
+        """Compute counts for smart buttons"""
+        for order in self:
+            order.logspace_ticket_count = len(order.logspace_ticket_ids)
+            order.logspace_refund_count = len(order.logspace_refund_ids)
+            order.logspace_rating_count = len(order.logspace_rating_ids)
+
+    def action_view_logspace_tickets(self):
+        """Open tickets for this order"""
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "helpdesk.ticket",
+            "view_mode": "list,form",
+            "domain": [('logspace_order_id', '=', self.id)],
+            "context": {'default_logspace_order_id': self.id}
+        }
+
+    def action_view_logspace_refunds(self):
+        """Open refunds for this order"""
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "logspace.refund",
+            "view_mode": "list,form",
+            "domain": [('order_id', '=', self.id)],
+            "context": {'default_order_id': self.id}
+        }
+
+    def action_view_logspace_ratings(self):
+        """Open ratings for this order"""
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "logspace.rating",
+            "view_mode": "list,form",
+            "domain": [('order_id', '=', self.id)],
+            "context": {'default_order_id': self.id}
+        }
+
+    # =========================================================================
+    # Actions - Workflow (Updated to match logspace_state field states)
+    # =========================================================================
+
+    def _create_timeline_event(self, event_type, description):
+        """Helper to create timeline event"""
+        self.env['logspace.order.timeline'].sudo().create({
+            'order_id': self.id,
+            'event_type': event_type,
+            'description': description,
+            'event_time': fields.Datetime.now(),
+        })
+
+    def action_logspace_confirm(self):
+        """Confirm booking - sets state to order_received and generates pickup code"""
+        for order in self.filtered(lambda o: o.is_logspace_order):
             # Generate verification codes if not set
             if not order.verification_code_pickup:
                 order.verification_code_pickup = f"{random.randint(1000, 9999)}"
 
-            order.logspace_state = 'confirmed'
+            # Only set state if not already set
+            if not order.logspace_state or order.logspace_state == 'order_received':
+                order.logspace_state = 'order_received'
 
             # Create timeline event
-            self.env['logspace.order.timeline'].sudo().create({
-                'order_id': order.id,
-                'event_type': 'confirmed',
-                'description': 'Booking confirmed',
-            })
+            order._create_timeline_event('order_received', 'Order received and confirmed')
 
-    def action_assign_driver(self):
-        """Assign driver to order"""
+    def action_start_pickup(self):
+        """Driver starts pickup - triggered when driver begins journey to pickup"""
         for order in self.filtered(lambda o: o.is_logspace_order):
-            if order.logspace_state != 'confirmed':
+            if order.logspace_state != 'order_received':
                 continue
-            order.logspace_state = 'driver_assigned'
-            self.env['logspace.order.timeline'].sudo().create({
-                'order_id': order.id,
-                'event_type': 'driver_assigned',
-                'description': f'Driver assigned: {order.logspace_driver_id.name or "N/A"}',
-            })
+            order.logspace_state = 'pickup_started'
+            order._create_timeline_event('pickup_started', 'Pickup journey started')
 
-    def action_start_transit(self):
-        """Mark as in transit"""
+    def action_vendor_arrived_pickup(self):
+        """Vendor/driver arrived at pickup location"""
         for order in self.filtered(lambda o: o.is_logspace_order):
-            if order.logspace_state not in ['confirmed', 'driver_assigned']:
+            if order.logspace_state != 'pickup_started':
                 continue
-            order.logspace_state = 'in_transit'
-            self.env['logspace.order.timeline'].sudo().create({
-                'order_id': order.id,
-                'event_type': 'in_transit',
-                'description': 'Driver in transit to destination',
-            })
+            order.logspace_state = 'vendor_arrived_pickup'
+            order._create_timeline_event('vendor_arrived_pickup', 'Vendor arrived at pickup location')
 
-    def action_mark_delivered(self):
-        """Mark as delivered - generate dropoff code if needed"""
+    def action_pickup_addons(self):
+        """Pickup add-ons performed (loading assistance, etc.)"""
         for order in self.filtered(lambda o: o.is_logspace_order):
-            if order.logspace_state != 'in_transit':
+            if order.logspace_state != 'vendor_arrived_pickup':
                 continue
+            order.logspace_state = 'pickup_addons'
+            order._create_timeline_event('pickup_addons', 'Pickup add-ons performed')
 
+    def action_pickup_completed(self):
+        """Pickup completed - items loaded, driver departs"""
+        for order in self.filtered(lambda o: o.is_logspace_order):
+            if order.logspace_state not in ['pickup_started', 'vendor_arrived_pickup', 'pickup_addons']:
+                continue
+            order.logspace_state = 'pickup_completed'
+            order._create_timeline_event('pickup_completed', 'Pickup completed, items loaded')
+
+    def action_pre_dropoff_addons(self):
+        """Pre-drop-off add-ons performed"""
+        for order in self.filtered(lambda o: o.is_logspace_order):
+            if order.logspace_state != 'pickup_completed':
+                continue
+            order.logspace_state = 'pre_dropoff_addons'
+            order._create_timeline_event('pre_dropoff_addons', 'Pre-drop-off add-ons performed')
+
+    def action_arrived_destination(self):
+        """Driver arrived at destination/dropoff"""
+        for order in self.filtered(lambda o: o.is_logspace_order):
+            if order.logspace_state not in ['pickup_completed', 'pre_dropoff_addons']:
+                continue
             # Generate dropoff code if not set
             if not order.verification_code_dropoff:
                 order.verification_code_dropoff = f"{random.randint(1000, 9999)}"
+            order.logspace_state = 'arrived_destination'
+            order._create_timeline_event('arrived_destination', 'Arrived at destination')
 
-            order.logspace_state = 'delivered'
+    def action_dropoff_completed(self):
+        """Drop-off completed - items delivered"""
+        for order in self.filtered(lambda o: o.is_logspace_order):
+            if order.logspace_state != 'arrived_destination':
+                continue
+            order.logspace_state = 'dropoff_completed'
             order.delivery_date = fields.Datetime.now()
+            order._create_timeline_event('dropoff_completed', 'Drop-off completed')
 
-            self.env['logspace.order.timeline'].sudo().create({
-                'order_id': order.id,
-                'event_type': 'delivered',
-                'description': 'Delivered successfully',
-            })
+    def action_start_grace_period(self):
+        """Start grace period after dropoff"""
+        for order in self.filtered(lambda o: o.is_logspace_order):
+            if order.logspace_state != 'dropoff_completed':
+                continue
+            order.logspace_state = 'grace_period'
+            order._create_timeline_event('grace_period', 'Grace period started')
+
+    def action_complete_order(self):
+        """Final order completion"""
+        for order in self.filtered(lambda o: o.is_logspace_order):
+            if order.logspace_state not in ['dropoff_completed', 'grace_period']:
+                continue
+            order.logspace_state = 'order_completed'
+            order._create_timeline_event('order_completed', 'Order fully completed')
+
+            # Send order completion email
+            try:
+                template = self.env.ref('appness_logspace_mockup2.email_template_order_delivered')
+                if template:
+                    template.send_mail(order.id, force_send=True)
+            except Exception:
+                pass
 
     def action_cancel_logspace(self):
         """Cancel logistics order"""
         for order in self.filtered(lambda o: o.is_logspace_order):
-            if order.logspace_state in ['delivered']:
+            if order.logspace_state in ['order_completed', 'dropoff_completed']:
                 continue
             order.logspace_state = 'cancelled'
-            self.env['logspace.order.timeline'].sudo().create({
-                'order_id': order.id,
-                'event_type': 'cancelled',
-                'description': 'Order cancelled',
-            })
+            order._create_timeline_event('cancelled', 'Order cancelled')
+
+    def action_reset_logspace_to_draft(self):
+        """Reset cancelled logistics order back to order_received"""
+        for order in self.filtered(lambda o: o.is_logspace_order):
+            if order.logspace_state != 'cancelled':
+                continue
+            order.logspace_state = 'order_received'
+            order._create_timeline_event('order_received', 'Order reset to received from cancelled')
 
     # =========================================================================
     # Override Create
     # =========================================================================
+    @api.onchange('logspace_provider_id')
+    def _onchange_logspace_provider_id(self):
+        """Auto-set salesperson (user_id) when provider is assigned"""
+        if self.logspace_provider_id and self.is_logspace_order:
+            if self.logspace_provider_id.user_ids:
+                self.user_id = self.logspace_provider_id.user_ids[0]
+            else:
+                self.user_id = False
+
     @api.model_create_multi
     def create(self, vals_list):
-        """Auto-generate verification codes for logspace orders"""
+        """Auto-generate verification codes and set salesperson for logspace orders"""
         for vals in vals_list:
             if vals.get('is_logspace_order'):
                 if not vals.get('verification_code_pickup'):
                     vals['verification_code_pickup'] = f"{random.randint(1000, 9999)}"
                 if not vals.get('verification_code_dropoff'):
                     vals['verification_code_dropoff'] = f"{random.randint(1000, 9999)}"
+                # Auto-set user_id (salesperson) from provider if not provided
+                if not vals.get('user_id') and vals.get('logspace_provider_id'):
+                    provider = self.env['res.partner'].browse(vals['logspace_provider_id'])
+                    if provider.user_ids:
+                        vals['user_id'] = provider.user_ids[0].id
         return super(SaleOrder, self).create(vals_list)

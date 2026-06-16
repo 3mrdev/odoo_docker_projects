@@ -71,9 +71,18 @@
                         equipment = env['maintenance.equipment'].search([('employee_id', '=', record.id)])
 
                         # Prepare messages for each category
-                        custody_message = ', '.join(custody.mapped('custody_name.name')) if custody.custody_name.name  else ''
-                        vehicle_message = ', '.join(vehicles.mapped('name')) if vehicles else ''
-                        equipment_message = ', '.join(equipment.mapped('name')) if equipment else ''
+                        custody_message = ""
+                        for cu in custody:
+                            custody_message +=cu.custody_name.name+","
+                        vehicle_message = ""
+                        for ve in vehicles:
+                            vehicle_message +=ve.name+","
+                        equipment_message = ""
+                        for eq in equipment:
+                            equipment_message +=eq.name+","
+                        # custody_message = ', '.join(custody.mapped('custody_name.name')) if custody.custody_name.name  else ''
+                        # vehicle_message = ', '.join(vehicles.mapped('name')) if vehicles else ''
+                        # equipment_message = ', '.join(equipment.mapped('name')) if equipment else ''
 
                         # Construct the error message
                         error_message = "This employee has the following obligations:\n"

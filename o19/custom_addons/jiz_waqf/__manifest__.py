@@ -41,6 +41,7 @@
         'views/purchase_order_views.xml',
         'views/project_project_views.xml',
         'views/hr_expense_views.xml',
+        'views/res_partner_views.xml',
     ],
     'installable': True,
     'application': True,
