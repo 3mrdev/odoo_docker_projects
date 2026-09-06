@@ -61,7 +61,7 @@
                     optional="hide" />
             </field>
             <field name="name" position="after">
-                <field name="volume_display" optional="show" string="Dimensions"
+                <field name="volume_display" optional="show"
                     invisible="not is_volume_tracked"
                     groups="stock_volume_tracking.group_volume_only" />
                 <field name="is_volume_tracked" widget="boolean_toggle" readonly="1" optional="show"

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Step 1: Create the OM Regular Pay structure -->
+        <record id="om_regular_pay_structure" model="hr.payroll.structure">
+            <field name="name">OM Regular Pay</field>
+            <field name="country_id" ref="base.om"/>
+            <field name="type_id" ref="l10n_om_hr_payroll.om_employee_payroll_structure_type"/>
+            <field name="unpaid_work_entry_type_ids" eval="[(4, ref('hr_work_entry.work_entry_type_unpaid_leave'))]"/>
+            <field name="rule_ids" eval="[]"/>
+        </record>
+
+        <!-- Step 2: Set default_struct_id on the structure type (circular reference) -->
+        <record id="l10n_om_hr_payroll.om_employee_payroll_structure_type" model="hr.payroll.structure.type">
+            <field name="default_struct_id" ref="om_regular_pay_structure"/>
+        </record>
+
+    </data>
+</odoo>

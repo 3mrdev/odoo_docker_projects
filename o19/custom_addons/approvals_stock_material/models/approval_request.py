@@ -123,7 +123,7 @@ class ApprovalRequest(models.Model):
         super()._onchange_approval_type()
         if self.approval_type == 'stock_material':
             self.source_warehouse_id = False
-            self.dest_warehouse_id = False
+            # Keep dest_warehouse_id if already set (e.g., from project context default)
             self.source_location_id = False
             self.dest_location_id = False
 

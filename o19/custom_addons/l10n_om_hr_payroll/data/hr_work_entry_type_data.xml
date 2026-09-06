@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Sick Time Off (Paid at 75%) -->
+        <record id="work_entry_type_sto75" model="hr.work.entry.type">
+            <field name="name">Sick Time Off (Paid at 75%)</field>
+            <field name="code">STO75</field>
+            <field name="display_code">S75</field>
+            <field name="external_code">STO75</field>
+            <field name="color">2</field>
+            <field name="amount_rate">0.75</field>
+            <field name="round_days">NO</field>
+            <field name="round_days_type">DOWN</field>
+        </record>
+
+        <!-- Sick Time Off (Paid at 50%) -->
+        <record id="work_entry_type_sto50" model="hr.work.entry.type">
+            <field name="name">Sick Time Off (Paid at 50%)</field>
+            <field name="code">STO50</field>
+            <field name="display_code">S50</field>
+            <field name="external_code">STO50</field>
+            <field name="color">2</field>
+            <field name="amount_rate">0.5</field>
+            <field name="round_days">NO</field>
+            <field name="round_days_type">DOWN</field>
+        </record>
+
+        <!-- Sick Time Off (Paid at 25%) -->
+        <record id="work_entry_type_sto25" model="hr.work.entry.type">
+            <field name="name">Sick Time Off (Paid at 25%)</field>
+            <field name="code">STO25</field>
+            <field name="display_code">S25</field>
+            <field name="external_code">STO25</field>
+            <field name="color">2</field>
+            <field name="amount_rate">0.25</field>
+            <field name="round_days">NO</field>
+            <field name="round_days_type">DOWN</field>
+        </record>
+
+        <!-- Overtime: already exists as hr_work_entry.work_entry_type_overtime (code: OVERTIME) -->
+        <!-- No need to create a duplicate - salary rules reference worked_days.get('OVERTIME') directly -->
+
+        <!-- Absence (Unpaid) -->
+        <record id="work_entry_type_absense100" model="hr.work.entry.type">
+            <field name="name">Absence</field>
+            <field name="code">ABSENSE100</field>
+            <field name="display_code">ABS</field>
+            <field name="external_code">ABSENSE100</field>
+            <field name="color">1</field>
+            <field name="amount_rate">0.0</field>
+            <field name="round_days">NO</field>
+            <field name="round_days_type">DOWN</field>
+        </record>
+
+    </data>
+</odoo>

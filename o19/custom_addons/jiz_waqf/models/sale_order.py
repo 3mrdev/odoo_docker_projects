@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
+from datetime import timedelta
 from odoo.exceptions import UserError
 
 class SaleOrder(models.Model):
@@ -13,6 +14,7 @@ class SaleOrder(models.Model):
         res = super(SaleOrder, self).action_confirm()
         for order in self:
             if order.waqf_unit_id:
+                self._create_activity()
                 if order.waqf_unit_id.subscription_ids:
                     other_subscriptions = self.search([
                         ('waqf_unit_id', '=', order.waqf_unit_id.id),
@@ -97,3 +99,33 @@ class SaleOrder(models.Model):
         for record in self:
             if record.subscription_state == '6_churn':
                 self.set_free_unit(record)
+
+    def _create_activity(self):
+        for rec in self:
+            activity_type_id = self.env.ref('jiz_waqf.mail_activity_rent_expire').id
+            # self.env['mail.activity'].search([
+            #     ('res_id', '=', rec.id), 
+            #     ('user_id', '=', self.env.user.id),
+            #     ('activity_type_id', '=',activity_type_id)
+            # ]).action_feedback(feedback='Approved')
+            self.env['mail.activity'].search([
+                ('res_id', '=', rec.id), 
+                ('activity_type_id', '=', activity_type_id)
+            ]).unlink()
+            if rec.end_date:
+                if rec.user_id:
+                    rec.activity_schedule(
+                        activity_type_id=activity_type_id,
+                        date_deadline=rec.end_date-timedelta(days=1),
+                        summary="Rent Expire",
+                        note="Rent Expire",
+                        user_id=rec.user_id.id
+                    )
+                else:
+                    rec.activity_schedule(
+                        activity_type_id=activity_type_id,
+                        date_deadline=rec.end_date-timedelta(days=1),
+                        summary="Rent Expire",
+                        note="Rent Expire",
+                        user_id=self.env.user.id
+                    )

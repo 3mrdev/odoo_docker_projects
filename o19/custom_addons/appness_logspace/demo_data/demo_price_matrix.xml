@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- ============================================ -->
+        <!-- PRICE MATRIX (Zone-to-Zone Pricing) -->
+        <!--                                            -->
+        <!-- Demonstrates two pricing granularity levels: -->
+        <!--   1. City-level: specific zone pairs (e.g. Seeb → Bousher) -->
+        <!--   2. Governorate-level: one entry covers all intra-governorate routes -->
+        <!--                                            -->
+        <!-- Thanks to the bidirectional zone hierarchy, a governorate-level -->
+        <!-- entry (Muscat → Muscat) matches searches from/to ANY child zone -->
+        <!-- (Seeb, Bousher, Muttrah, Al Amrat, districts, etc.) -->
+        <!--                                            -->
+        <!-- Providers at CITY level: ABC Logistics, Fast Truck Co, -->
+        <!--   Muscat Cargo, Bousher Transport, Nizwa Delivery -->
+        <!-- Providers at GOVERNORATE level: Muscat Express, Seeb Logistics, -->
+        <!--   Sohar Freight -->
+        <!-- ============================================ -->
+
+        <!-- ========================================== -->
+        <!-- ROUTE: Seeb → Bousher (City-Level Prices) -->
+        <!-- 5 providers at city level -->
+        <!-- ========================================== -->
+
+        <record id="price_abc_seeb_bousher" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="zone_from_id" ref="om_zone_seeb"/>
+            <field name="zone_to_id" ref="om_zone_bousher"/>
+            <field name="distance_km">18.0</field>
+            <field name="provider_price">15.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="price_ftc_seeb_bousher" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_fast_truck"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="zone_from_id" ref="om_zone_seeb"/>
+            <field name="zone_to_id" ref="om_zone_bousher"/>
+            <field name="distance_km">18.0</field>
+            <field name="provider_price">16.5</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="price_muscat_cargo_seeb_bousher" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_muscat_cargo"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="zone_from_id" ref="om_zone_seeb"/>
+            <field name="zone_to_id" ref="om_zone_bousher"/>
+            <field name="distance_km">18.0</field>
+            <field name="provider_price">14.5</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="price_bousher_transport_seeb_bousher" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_bousher_transport"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="zone_from_id" ref="om_zone_seeb"/>
+            <field name="zone_to_id" ref="om_zone_bousher"/>
+            <field name="distance_km">18.0</field>
+            <field name="provider_price">16.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="price_nizwa_delivery_seeb_bousher" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_nizwa_delivery"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="zone_from_id" ref="om_zone_seeb"/>
+            <field name="zone_to_id" ref="om_zone_bousher"/>
+            <field name="distance_km">18.0</field>
+            <field name="provider_price">15.8</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- ROUTE: Seeb → Muttrah (City-Level Prices) -->
+        <!-- 3 providers at city level -->
+        <!-- ========================================== -->
+
+        <record id="price_abc_seeb_muttrah" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="zone_from_id" ref="om_zone_seeb"/>
+            <field name="zone_to_id" ref="om_zone_muttrah"/>
+            <field name="distance_km">25.0</field>
+            <field name="provider_price">18.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="price_ftc_seeb_muttrah" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_fast_truck"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="zone_from_id" ref="om_zone_seeb"/>
+            <field name="zone_to_id" ref="om_zone_muttrah"/>
+            <field name="distance_km">25.0</field>
+            <field name="provider_price">19.5</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="price_bousher_transport_seeb_muttrah" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_bousher_transport"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="zone_from_id" ref="om_zone_seeb"/>
+            <field name="zone_to_id" ref="om_zone_muttrah"/>
+            <field name="distance_km">25.0</field>
+            <field name="provider_price">19.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- ROUTE: Bousher → Muttrah (City-Level Prices) -->
+        <!-- 4 providers at city level -->
+        <!-- ========================================== -->
+
+        <record id="price_abc_bousher_muttrah" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="zone_from_id" ref="om_zone_bousher"/>
+            <field name="zone_to_id" ref="om_zone_muttrah"/>
+            <field name="distance_km">15.0</field>
+            <field name="provider_price">12.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="price_ftc_bousher_muttrah" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_fast_truck"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="zone_from_id" ref="om_zone_bousher"/>
+            <field name="zone_to_id" ref="om_zone_muttrah"/>
+            <field name="distance_km">15.0</field>
+            <field name="provider_price">13.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="price_muscat_cargo_bousher_muttrah" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_muscat_cargo"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="zone_from_id" ref="om_zone_bousher"/>
+            <field name="zone_to_id" ref="om_zone_muttrah"/>
+            <field name="distance_km">15.0</field>
+            <field name="provider_price">11.5</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="price_bousher_transport_bousher_muttrah" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_bousher_transport"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="zone_from_id" ref="om_zone_bousher"/>
+            <field name="zone_to_id" ref="om_zone_muttrah"/>
+            <field name="distance_km">15.0</field>
+            <field name="provider_price">12.5</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- ROUTE: Muscat Central → Seeb (City-Level Prices) -->
+        <!-- 2 providers at city level -->
+        <!-- ========================================== -->
+
+        <record id="price_abc_muscat_seeb" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="zone_from_id" ref="om_zone_muscat_central"/>
+            <field name="zone_to_id" ref="om_zone_seeb"/>
+            <field name="distance_km">30.0</field>
+            <field name="provider_price">20.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="price_ftc_muscat_seeb" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_fast_truck"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="zone_from_id" ref="om_zone_muscat_central"/>
+            <field name="zone_to_id" ref="om_zone_seeb"/>
+            <field name="distance_km">30.0</field>
+            <field name="provider_price">21.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- ROUTE: Bousher → Seeb (City-Level Prices) -->
+        <!-- 4 providers at city level -->
+        <!-- ========================================== -->
+
+        <record id="price_abc_bousher_seeb" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="zone_from_id" ref="om_zone_bousher"/>
+            <field name="zone_to_id" ref="om_zone_seeb"/>
+            <field name="distance_km">18.0</field>
+            <field name="provider_price">15.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="price_muscat_cargo_bousher_seeb" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_muscat_cargo"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="zone_from_id" ref="om_zone_bousher"/>
+            <field name="zone_to_id" ref="om_zone_seeb"/>
+            <field name="distance_km">18.0</field>
+            <field name="provider_price">14.5</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="price_nizwa_delivery_bousher_seeb" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_nizwa_delivery"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="zone_from_id" ref="om_zone_bousher"/>
+            <field name="zone_to_id" ref="om_zone_seeb"/>
+            <field name="distance_km">18.0</field>
+            <field name="provider_price">15.8</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="price_bousher_transport_bousher_seeb" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_bousher_transport"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="zone_from_id" ref="om_zone_bousher"/>
+            <field name="zone_to_id" ref="om_zone_seeb"/>
+            <field name="distance_km">18.0</field>
+            <field name="provider_price">15.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- ROUTE: Muttrah → Seeb (City-Level Prices) -->
+        <!-- 2 providers at city level -->
+        <!-- ========================================== -->
+
+        <record id="price_abc_muttrah_seeb" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="zone_from_id" ref="om_zone_muttrah"/>
+            <field name="zone_to_id" ref="om_zone_seeb"/>
+            <field name="distance_km">25.0</field>
+            <field name="provider_price">18.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="price_ftc_muttrah_seeb" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_fast_truck"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="zone_from_id" ref="om_zone_muttrah"/>
+            <field name="zone_to_id" ref="om_zone_seeb"/>
+            <field name="distance_km">25.0</field>
+            <field name="provider_price">19.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- ROUTE: Covered Truck (City-Level Prices) -->
+        <!-- ========================================== -->
+
+        <record id="price_abc_seeb_bousher_covered" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_covered_3t"/>
+            <field name="zone_from_id" ref="om_zone_seeb"/>
+            <field name="zone_to_id" ref="om_zone_bousher"/>
+            <field name="distance_km">18.0</field>
+            <field name="provider_price">17.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="price_bousher_transport_seeb_bousher_covered" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_bousher_transport"/>
+            <field name="vehicle_type_id" ref="vehicle_type_covered_3t"/>
+            <field name="zone_from_id" ref="om_zone_seeb"/>
+            <field name="zone_to_id" ref="om_zone_bousher"/>
+            <field name="distance_km">18.0</field>
+            <field name="provider_price">17.5</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- ROUTE: Van Routes (City-Level Prices) -->
+        <!-- ========================================== -->
+
+        <record id="price_abc_seeb_muttrah_van" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_van"/>
+            <field name="zone_from_id" ref="om_zone_seeb"/>
+            <field name="zone_to_id" ref="om_zone_muttrah"/>
+            <field name="distance_km">25.0</field>
+            <field name="provider_price">12.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="price_nizwa_delivery_seeb_muttrah_van" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_nizwa_delivery"/>
+            <field name="vehicle_type_id" ref="vehicle_type_van"/>
+            <field name="zone_from_id" ref="om_zone_seeb"/>
+            <field name="zone_to_id" ref="om_zone_muttrah"/>
+            <field name="distance_km">25.0</field>
+            <field name="provider_price">12.5</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- ROUTE: Heavy Truck 5T (City-Level Prices) -->
+        <!-- ========================================== -->
+
+        <record id="price_ftc_seeb_muttrah_5t" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_fast_truck"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_5t"/>
+            <field name="zone_from_id" ref="om_zone_seeb"/>
+            <field name="zone_to_id" ref="om_zone_muttrah"/>
+            <field name="distance_km">25.0</field>
+            <field name="provider_price">25.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- ROUTE: Refrigerated Truck (City-Level Price) -->
+        <!-- ========================================== -->
+
+        <record id="price_muscat_cargo_seeb_muttrah_reefer" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_muscat_cargo"/>
+            <field name="vehicle_type_id" ref="vehicle_type_refrigerated"/>
+            <field name="zone_from_id" ref="om_zone_seeb"/>
+            <field name="zone_to_id" ref="om_zone_muttrah"/>
+            <field name="distance_km">25.0</field>
+            <field name="provider_price">32.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- ROUTE: Minibus Cargo (City-Level Prices) -->
+        <!-- ========================================== -->
+
+        <record id="price_muscat_cargo_seeb_bousher_minibus" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_muscat_cargo"/>
+            <field name="vehicle_type_id" ref="vehicle_type_minibus"/>
+            <field name="zone_from_id" ref="om_zone_seeb"/>
+            <field name="zone_to_id" ref="om_zone_bousher"/>
+            <field name="distance_km">18.0</field>
+            <field name="provider_price">10.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="price_bousher_transport_seeb_bousher_minibus" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_bousher_transport"/>
+            <field name="vehicle_type_id" ref="vehicle_type_minibus"/>
+            <field name="zone_from_id" ref="om_zone_seeb"/>
+            <field name="zone_to_id" ref="om_zone_bousher"/>
+            <field name="distance_km">18.0</field>
+            <field name="provider_price">10.5</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- GOVERNORATE-LEVEL PRICES (Muscat → Muscat)                   -->
+        <!--                                                              -->
+        <!-- These 3 providers use a SINGLE governorate-level entry that  -->
+        <!-- covers ALL intra-Muscat routes (Seeb ↔ Bousher ↔ Muttrah ↔  -->
+        <!-- Muscat Central ↔ Al Amrat ↔ any district, etc.)              -->
+        <!--                                                              -->
+        <!-- Thanks to the bidirectional zone hierarchy, searching from   -->
+        <!-- any child zone of Muscat governorate will match these prices -->
+        <!-- without needing separate entries for each city pair.          -->
+        <!-- ============================================================ -->
+
+        <!-- MUSCAT EXPRESS TRANSPORT — Governorate-Level Pricing -->
+        <!-- One entry covers all intra-Muscat routes for each vehicle type -->
+
+        <record id="price_me_muscat_flatbed3t" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_saudi_express"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="zone_from_id" ref="om_zone_muscat"/>
+            <field name="zone_to_id" ref="om_zone_muscat"/>
+            <field name="distance_km">25.0</field>
+            <field name="provider_price">18.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="price_me_muscat_flatbed5t" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_saudi_express"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_5t"/>
+            <field name="zone_from_id" ref="om_zone_muscat"/>
+            <field name="zone_to_id" ref="om_zone_muscat"/>
+            <field name="distance_km">25.0</field>
+            <field name="provider_price">28.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="price_me_muscat_covered" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_saudi_express"/>
+            <field name="vehicle_type_id" ref="vehicle_type_covered_3t"/>
+            <field name="zone_from_id" ref="om_zone_muscat"/>
+            <field name="zone_to_id" ref="om_zone_muscat"/>
+            <field name="distance_km">25.0</field>
+            <field name="provider_price">18.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="price_me_muscat_reefer" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_saudi_express"/>
+            <field name="vehicle_type_id" ref="vehicle_type_refrigerated"/>
+            <field name="zone_from_id" ref="om_zone_muscat"/>
+            <field name="zone_to_id" ref="om_zone_muscat"/>
+            <field name="distance_km">25.0</field>
+            <field name="provider_price">32.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- SEEB LOGISTICS CO — Governorate-Level Pricing -->
+
+        <record id="price_sl_muscat_flatbed3t" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_seeb_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="zone_from_id" ref="om_zone_muscat"/>
+            <field name="zone_to_id" ref="om_zone_muscat"/>
+            <field name="distance_km">25.0</field>
+            <field name="provider_price">16.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="price_sl_muscat_covered" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_seeb_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_covered_3t"/>
+            <field name="zone_from_id" ref="om_zone_muscat"/>
+            <field name="zone_to_id" ref="om_zone_muscat"/>
+            <field name="distance_km">25.0</field>
+            <field name="provider_price">17.5</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="price_sl_muscat_van" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_seeb_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_van"/>
+            <field name="zone_from_id" ref="om_zone_muscat"/>
+            <field name="zone_to_id" ref="om_zone_muscat"/>
+            <field name="distance_km">25.0</field>
+            <field name="provider_price">11.5</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- SOHAR FREIGHT SERVICES — Governorate-Level Pricing -->
+
+        <record id="price_sf_muscat_flatbed3t" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_sohar_freight"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="zone_from_id" ref="om_zone_muscat"/>
+            <field name="zone_to_id" ref="om_zone_muscat"/>
+            <field name="distance_km">25.0</field>
+            <field name="provider_price">17.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="price_sf_muscat_flatbed5t" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_sohar_freight"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_5t"/>
+            <field name="zone_from_id" ref="om_zone_muscat"/>
+            <field name="zone_to_id" ref="om_zone_muscat"/>
+            <field name="distance_km">25.0</field>
+            <field name="provider_price">26.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="price_sf_muscat_covered" model="logspace.price.matrix">
+            <field name="provider_id" ref="partner_sohar_freight"/>
+            <field name="vehicle_type_id" ref="vehicle_type_covered_3t"/>
+            <field name="zone_from_id" ref="om_zone_muscat"/>
+            <field name="zone_to_id" ref="om_zone_muscat"/>
+            <field name="distance_km">25.0</field>
+            <field name="provider_price">19.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+    </data>
+</odoo>

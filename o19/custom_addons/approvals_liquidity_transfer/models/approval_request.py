@@ -192,7 +192,7 @@ class ApprovalRequest(models.Model):
             'journal_id': self.journal_source.id,
             'payment_method_line_id': payment_method_source.id if payment_method_source else False,
             'amount': self.amount,
-            'date': self.date,
+            'date': fields.Date.today(),
             'memo': memo,
             'destination_account_id': liquidity_transfer_account.id,
         })

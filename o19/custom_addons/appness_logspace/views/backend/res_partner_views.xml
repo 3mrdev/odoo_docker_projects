@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ========================================================================= -->
+    <!-- Provider Form View - Inherits res.partner form -->
+    <!-- ========================================================================= -->
+    <record id="view_res_partner_provider_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.provider.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Add status bar after name -->
+            <xpath expr="//sheet" position="before">
+                <header invisible="not is_provider">
+                    <button name="%(action_logspace_zone_setup_wizard)d"
+                            type="action"
+                            string="Setup Zones"
+                            class="oe_highlight"
+                            context="{'default_provider_id': id}"/>
+                    <button string="Submit" name="action_submit_provider" type="object" class="oe_highlight" invisible="state != 'draft'" groups="appness_logspace.group_logspace_admin"/>
+                    <button string="Approve" name="action_approve_provider" type="object" class="oe_highlight" invisible="state != 'pending'" groups="appness_logspace.group_logspace_admin"/>
+                    <button string="Reject" name="action_reject_provider" type="object" invisible="state != 'pending'" groups="appness_logspace.group_logspace_admin"/>
+                    <button string="Resubmit" name="action_resubmit_provider" type="object" invisible="state != 'rejected'" groups="appness_logspace.group_logspace_provider"/>
+                    <button string="Suspend" name="action_suspend_provider" type="object" invisible="state != 'approved'" groups="appness_logspace.group_logspace_admin"/>
+                    <button string="Reactivate" name="action_reactivate_provider" type="object" invisible="state != 'suspended'" groups="appness_logspace.group_logspace_admin"/>
+                    <!-- <button name="action_download_vehicles_excel" string="Download Vehicles Import Excel Template" type="object" class="btn btn-primary"/> -->
+                    <field name="state" widget="statusbar" statusbar_visible="draft,pending,approved,rejected,suspended"/>
+                </header>
+            </xpath>
+
+            <!-- Provider-specific notebook pages -->
+            <xpath expr="//notebook/page[1]" position="after">
+                <page string="General Info" invisible="not is_provider">
+                    <group>
+                        <group>
+                            <field name="parent_id" readonly="state not in ['draft','pending']" widget="res_partner_many2one" placeholder="Company Name..." string="Company" domain="[('is_company', '=', True)]" context="{'default_is_company': True, 'default_user_id': user_id, 'show_address': False}" invisible="((is_company and not parent_id) or company_name) and company_name != ''"/>
+                            <div colspan="2" class="d-flex gap-2" invisible="not company_name or company_name == '' or is_company">
+                                <label for="company_name" class="fw-bold text-nowrap"/>
+                                <field name="company_name"/>
+                                <button name="create_company" icon="fa-plus-square" string="Create" type="object" class="oe_edit_only btn-link text-nowrap"/>
+                            </div>
+                            <span class="o_form_label o_td_label o_address_type" name="address_name">
+                                <field name="type_address_label" invisible="is_company" readonly="1" class="fw-bold"/>
+                                <span invisible="not is_company">Address</span>
+                            </span>
+                            <div class="o_address_format">
+                                <field name="street" placeholder="Street..." class="o_address_street"/>
+                                <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                <field name="city" placeholder="City" class="o_address_city"/>
+                                <field name="state_id" placeholder="State" class="o_address_state" options="{'no_open': True, 'no_quick_create': True}" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                                <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                <div name="partner_address_country" class="d-flex justify-content-between">
+                                    <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                </div>
+                            </div>
+                        </group>
+                        <group>
+                            <field name="function" placeholder="e.g. Sales Director" invisible="is_company"/>
+                            <field name="vat" placeholder="e.g. BE0477472701"/>
+                            <field name="website" string="Website" widget="url" placeholder="e.g. https://www.odoo.com"/>
+                            <field name="lang" invisible="active_lang_count &lt;= 1"/>
+                            <field name="category_id" widget="many2many_tags" options="{'color_field': 'color'}" placeholder="e.g. &quot;B2B&quot;, &quot;VIP&quot;, &quot;Consulting&quot;, ..."/>
+                        </group>
+                    </group>
+                    <group string="Fleet Summary"></group>
+                    <field name="fleet_summary_ids">
+                        <list editable="bottom">
+                            <field name="vehicle_type_id"/>
+                            <field name="fleet_count"/>
+                            <field name="capacity_tons"/>
+                            <field name="dimensions"/>
+                        </list>
+                    </field>
+                    <group string="Special Instructions"></group>
+                    <field name="special_instruction_ids">
+                        <list editable="bottom">
+                            <field name="vehicle_type_id"/>
+                            <field name="instructions" widget="html"/>
+                            <field name="is_active"/>
+                        </list>
+                    </field>
+                    <group string="Time Frames"></group>
+                    <field name="time_frame_ids">
+                        <list editable="bottom">
+                            <field name="vehicle_type_id"/>
+                            <field name="time_slot_ids" widget="many2many_tags" options="{'no_create_edit': True, 'no_create': True}"/>
+                            <field name="display_name" readonly="1" optional="hide"/>
+                        </list>
+                    </field>
+                    <group string="Working Hours"></group>
+                    <field name="calendar_id"/>
+                    <group string="Rating">
+                        <group>
+                            <field name="logspace_rating" readonly="1"/>
+                            <field name="logspace_review_count" readonly="1"/>
+                        </group>
+                    </group>
+                </page>
+
+                <!-- Vehicles Page -->
+                <page string="Vehicles" invisible="not is_provider">
+                    <field name="logspace_vehicle_ids">
+                        <list editable="bottom">
+                            <field name="name" readonly="1"/>
+                            <field name="plate_number"/>
+                            <field name="vehicle_type_id"/>
+                            <field name="zone_id"/>
+                            <field name="driver_id"/>
+                            <field name="is_active"/>
+                        </list>
+                    </field>
+                </page>
+
+                <!-- Price Matrix Page -->
+                <page string="Price Matrix" invisible="not is_provider">
+                    <field name="logspace_price_matrix_ids">
+                        <list editable="bottom">
+                            <field name="zone_from_id"/>
+                            <field name="zone_to_id"/>
+                            <field name="vehicle_type_id"/>
+                            <field name="distance_km"/>
+                            <field name="provider_price"/>
+                            <field name="is_active"/>
+                        </list>
+                    </field>
+                </page>
+
+                <!-- Vehicle Type Add-ons Page -->
+                <page string="Vehicle Type Add-ons" invisible="not is_provider">
+                    <field name="vehicle_type_addon_ids">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="vehicle_type_id"/>
+                            <field name="addon_id"/>
+                            <field name="provider_price"/>
+                            <field name="is_active"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_res_partner_provider_form" model="ir.ui.view">
+        <field name="name">res.partner.provider.form</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <form string="Providers">
+                <header invisible="not is_provider">
+                    <button name="%(action_logspace_zone_setup_wizard)d"
+                            type="action"
+                            string="Setup Zones"
+                            class="oe_highlight"
+                            context="{'default_provider_id': id}"/>
+                    <button string="Submit" name="action_submit_provider" type="object" class="oe_highlight" invisible="state != 'draft'" groups="appness_logspace.group_logspace_admin"/>
+                    <button string="Approve" name="action_approve_provider" type="object" class="oe_highlight" invisible="state != 'pending'" groups="appness_logspace.group_logspace_admin"/>
+                    <button string="Reject" name="action_reject_provider" type="object" invisible="state != 'pending'" groups="appness_logspace.group_logspace_admin"/>
+                    <button string="Resubmit" name="action_resubmit_provider" type="object" invisible="state != 'rejected'" groups="appness_logspace.group_logspace_provider"/>
+                    <button string="Suspend" name="action_suspend_provider" type="object" invisible="state != 'approved'" groups="appness_logspace.group_logspace_admin"/>
+                    <button string="Reactivate" name="action_reactivate_provider" type="object" invisible="state != 'suspended'" groups="appness_logspace.group_logspace_admin"/>
+                    <!-- <button name="action_download_vehicles_excel" string="Download Vehicles Import Excel Template" type="object" class="btn btn-primary"/> -->
+                    <field name="state" widget="statusbar" statusbar_visible="draft,pending,approved,rejected,suspended"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_vehicles" type="object"
+                                class="oe_stat_button" icon="fa-truck">
+                            <field name="logspace_vehicle_count" widget="statinfo" string="Vehicles"/>
+                        </button>
+                        <button name="action_open_fleet_summary" type="object"
+                                class="oe_stat_button" icon="fa-database">
+                            <field name="logspace_fleet_summary_count" widget="statinfo" string="Fleet"/>
+                        </button>
+                        <button name="action_open_price_matrix" type="object"
+                                class="oe_stat_button" icon="fa-table">
+                            <field name="logspace_price_matrix_count" widget="statinfo" string="Pricing"/>
+                        </button>
+                        <button name="action_open_time_frames" type="object"
+                                class="oe_stat_button" icon="fa-clock-o">
+                            <field name="logspace_time_frame_count" widget="statinfo" string="Time Frames"/>
+                        </button>
+                        <button name="action_open_special_instructions" type="object"
+                                class="oe_stat_button" icon="fa-file-text-o">
+                            <field name="logspace_special_instruction_count" widget="statinfo" string="Instructions"/>
+                        </button>
+                        <button name="action_open_vtype_addons" type="object"
+                                class="oe_stat_button" icon="fa-puzzle-piece">
+                            <field name="logspace_vtype_addon_count" widget="statinfo" string="Add-ons"/>
+                        </button>
+                        <button name="action_see_documents" type="object"
+                                class="oe_stat_button" icon="fa-file-text">
+                            <field name="document_count" widget="statinfo" string="Documents"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="mb8">
+                        <div class="d-flex gap-3">
+                            <field name="image_1920" widget="contact_image" options="{'preview_image': 'avatar_128', 'size': [130,130], 'img_class': 'rounded border'}"/>
+                            <field name="avatar_128" invisible="1"/> <!-- Needed in contact_image widget -->
+                            <div class="d-flex flex-column flex-grow-1">
+                                <field name="company_type" widget="radio" options="{'horizontal': true}" readonly="1"/>
+                                <h1 class="mb-0 w-md-75">
+                                    <field options="{'line_breaks': False}" widget="text" class="text-break d-block" name="name" default_focus="1" placeholder="e.g. Lumber Inc" invisible="not is_company" required="type == 'contact'"/>
+                                    <field options="{'line_breaks': False}" widget="text" class="text-break d-block" name="name" default_focus="1" placeholder="e.g. Brandon Freeman" invisible="is_company" required="type == 'contact'"/>
+                                </h1>
+                                <div class="d-flex align-items-baseline w-md-50">
+                                    <i class="fa fa-fw me-1 fa-envelope text-primary" title="Email"/>
+                                    <field name="email" class="w-100" widget="email" required="user_ids" placeholder="Email" readonly="state not in ['draft','pending']"/>
+                                </div>
+                                <div class="d-flex align-items-baseline w-md-50">
+                                    <i class="fa fa-fw me-1 fa-phone text-primary" title="Phone"/>
+                                    <field name="phone" class="w-100" widget="phone" placeholder="Phone" readonly="state not in ['draft','pending']"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <group>
+                        <group string="Business Information">
+                            <field name="tax_id" readonly="state not in ['draft','pending']"/>
+                            <field name="cr_number" readonly="state not in ['draft','pending']"/>
+                            <field name="years_experience" readonly="state not in ['draft','pending']"/>
+                            <field name="platform_fee_percentage" groups="appness_logspace.group_logspace_admin"/>
+                        </group>
+                        <group string="Status">
+                            <field name="is_approved_provider" readonly="1"/>
+                            <field name="approval_date" readonly="1"/>
+                            <field name="rejection_reason" invisible="state != 'rejected'"/>
+                            <field name="suspension_reason" invisible="state != 'suspended'"/>
+                            <field name="platform_fee_percentage" readonly="1"/>
+                        </group>
+                    </group>
+                    
+                    <div class="d-flex">
+                        <field name="properties" nolabel="1" columns="2"/>
+                    </div>
+
+                    <notebook colspan="4">
+                        <page string="Contacts" name="contact_addresses" autofocus="autofocus">
+                            <field name="child_ids" mode="kanban" context="{'default_parent_id': id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_lang': lang, 'default_user_id': user_id, 'default_type': is_company and 'contact' or 'other'}">
+                                <kanban color="color">
+                                    <field name="color"/>
+                                    <field name="type"/>
+                                    <field name="is_company"/>
+                                    <templates>
+                                        <t t-name="card" class="flex-row">
+                                            <aside class="o_kanban_aside_full">
+                                                <field name="avatar_128" class="o_kanban_image_fill w-100" widget="image" options="{'img_class': 'object-fit-cover'}" alt="Contact image" invisible="type != 'contact'"/>
+                                                <field name="avatar_128" class="o_kanban_image_fill w-100" widget="image" options="{'img_class': 'object-fit-contain p-2'}" alt="Contact image" invisible="type == 'contact'"/>
+                                            </aside>
+                                            <main class="ps-2 ps-md-0">
+                                                <field name="name" invisible="not name" class="fw-bold"/>
+                                                <field name="type" invisible="name" class="fw-bold"/>
+                                                <div t-if="record.email.raw_value" class="text-truncate">
+                                                    <i class="fa fa-fw me-1 fa-envelope text-primary" title="Email"/>
+                                                    <field name="email"/>
+                                                </div>
+                                                <div t-if="record.phone.raw_value">
+                                                    <i class="fa fa-fw me-1 fa-phone text-primary" title="Phone"/>
+                                                    <field name="phone"/>
+                                                </div>
+                                                <div invisible="not function or is_company">
+                                                    <i class="fa fa-fw me-1 fa-suitcase text-primary" title="Position"/>
+                                                    <field name="function"/>
+                                                </div>
+                                                <div t-if="record.type.raw_value != 'contact' and (record.city.raw_value or record.country_id.raw_value)">
+                                                    <i class="fa fa-fw me-1 fa-map-marker text-primary" title="Location"/>
+                                                    <field name="city"/>
+                                                    <span t-if="record.city.raw_value and record.country_id.raw_value">, </span>
+                                                    <field name="country_id"/>
+                                                </div>
+                                            </main>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                                <form string="Contact / Address">
+                                    <sheet>
+                                        <field name="type" required="1" widget="radio" options="{'horizontal': true}"/>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <field name="image_1920" widget="contact_image" nolabel="1" options="{'preview_image': 'avatar_128', 'size': [100,100], 'img_class': 'rounded border'}"/>
+                                            <div class="flex-grow-1">
+                                                <h3>
+                                                    <field name="name" class="d-block" string="Name" default_focus="1" required="type == 'contact'" placeholder="e.g. Brandon Freeman"/>
+                                                </h3>
+                                                <div class="row flex-row">
+                                                    <div class="d-flex align-items-baseline">
+                                                        <i class="fa fa-fw me-1 fa-envelope text-primary" title="Email"/>
+                                                        <field name="email" widget="email" class="w-100" context="{'gravatar_image': True}" required="user_ids" placeholder="Email"/>
+                                                    </div>
+                                                    <div class="d-flex align-items-baseline">
+                                                        <i class="fa fa-fw me-1 fa-phone text-primary" title="Phone"/>
+                                                        <field name="phone" widget="phone" class="w-100" placeholder="Phone"/>
+                                                    </div>
+                                                    <div invisible="is_company or type != 'contact'" class="d-flex align-items-baseline">
+                                                        <i class="fa fa-fw me-1 fa-suitcase text-primary" title="Position"/>
+                                                        <field name="function" placeholder="Job title"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <group invisible="type == 'contact'" name="other_info">
+                                            <group>
+                                                <span class="o_form_label o_td_label o_address_type">
+                                                    <field name="type_address_label" readonly="1" class="fw-bold"/>
+                                                </span>
+                                                <div class="o_address_format" name="div_address">
+                                                    <field name="street" placeholder="Street..." class="o_address_street"/>
+                                                    <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                                    <field name="city" placeholder="City" class="o_address_city"/>
+                                                    <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True}" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                                                    <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                                    <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                                </div>
+                                            </group>
+                                        </group>
+                                        <group>
+                                            <field name="company_id" invisible="1"/>    <!-- Need to save value from parented record, cf onchange -->
+                                            <label for="comment"/>
+                                            <field name="comment" options="{'height': 100}" placeholder="Internal notes..." nolabel="1"/>
+                                        </group>
+                                        <field name="lang" invisible="True"/>  <!-- Need to add lang to save default value from parented record -->
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="General Info" invisible="not is_provider">
+                            <group string="Rating">
+                                <group>
+                                    <field name="logspace_rating" readonly="1"/>
+                                    <field name="logspace_review_count" readonly="1"/>
+                                </group>
+                            </group>
+                            <group string="Fleet Summary"></group>
+                            <field name="fleet_summary_ids">
+                                <list editable="bottom">
+                                    <field name="vehicle_type_id"/>
+                                    <field name="fleet_count"/>
+                                    <field name="capacity_tons"/>
+                                    <field name="dimensions"/>
+                                </list>
+                            </field>
+                            <group string="Special Instructions"></group>
+                            <field name="special_instruction_ids">
+                                <list editable="bottom">
+                                    <field name="vehicle_type_id"/>
+                                    <field name="instructions" widget="html"/>
+                                    <field name="is_active"/>
+                                </list>
+                            </field>
+                            <group string="Time Frames"></group>
+                            <field name="time_frame_ids">
+                                <list editable="bottom">
+                                    <field name="vehicle_type_id"/>
+                                    <field name="time_slot_ids" widget="many2many_tags" options="{'no_create_edit': True, 'no_create': True}"/>
+                                    <field name="display_name" readonly="1" optional="hide"/>
+                                </list>
+                            </field>
+                            <group string="Working Hours"></group>
+                            <field name="calendar_id"/>
+                        </page>
+
+                        <!-- Vehicles Page -->
+                        <page string="Vehicles" invisible="not is_provider">
+                            <field name="logspace_vehicle_ids">
+                                <list editable="bottom">
+                                    <field name="name" readonly="1"/>
+                                    <field name="plate_number"/>
+                                    <field name="vehicle_type_id"/>
+                                    <field name="zone_id"/>
+                                    <field name="driver_id"/>
+                                    <field name="is_active"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <!-- Price Matrix Page -->
+                        <page string="Price Matrix" invisible="not is_provider">
+                            <field name="logspace_price_matrix_ids">
+                                <list editable="bottom">
+                                    <field name="zone_from_id"/>
+                                    <field name="zone_to_id"/>
+                                    <field name="vehicle_type_id"/>
+                                    <field name="distance_km"/>
+                                    <field name="provider_price"/>
+                                    <field name="is_active"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <!-- Vehicle Type Add-ons Page -->
+                        <page string="Vehicle Type Add-ons" invisible="not is_provider">
+                            <field name="vehicle_type_addon_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="vehicle_type_id"/>
+                                    <field name="addon_id"/>
+                                    <field name="provider_price"/>
+                                    <field name="is_active"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="internal_notes" string="Notes">
+                            <field name="comment" placeholder="Internal notes..."/>
+                            <group name="warnings"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ========================================================================= -->
+    <!-- Provider List View -->
+    <!-- ========================================================================= -->
+    <record id="view_res_partner_provider_tree" model="ir.ui.view">
+        <field name="name">res.partner.provider.list</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="is_provider" invisible="1"/>
+                <field name="state" widget="badge" decoration-success="state=='approved'" decoration-warning="state=='pending'" decoration-danger="state in ['rejected','suspended']"/>
+                <field name="is_approved_provider"/>
+                <field name="city"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="logspace_vehicle_count"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ========================================================================= -->
+    <!-- Provider Search View -->
+    <!-- ========================================================================= -->
+    <record id="view_res_partner_provider_search" model="ir.ui.view">
+        <field name="name">res.partner.provider.search</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="tax_id"/>
+                <field name="cr_number"/>
+                <separator/>
+                <filter name="filter_providers" string="Is Provider" domain="[('is_provider', '=', True)]"/>
+                <filter name="filter_approved" string="Approved" domain="[('is_provider', '=', True), ('state', '=', 'approved')]"/>
+                <filter name="filter_pending" string="Pending" domain="[('is_provider', '=', True), ('state', '=', 'pending')]"/>
+                <filter name="filter_rejected" string="Rejected" domain="[('is_provider', '=', True), ('state', '=', 'rejected')]"/>
+                <separator/>
+                <filter name="group_by_state" string="Status" context="{'group_by': 'state'}"/>
+                <filter name="group_by_years_experience" string="Experience" context="{'group_by': 'years_experience'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- ========================================================================= -->
+    <!-- Provider Action -->
+    <!-- ========================================================================= -->
+    <record id="action_res_partner_provider" model="ir.actions.act_window">
+        <field name="name">Logspace Providers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('view_res_partner_provider_tree')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('view_res_partner_provider_form')})
+        ]"/>
+        <field name="search_view_id" ref="view_res_partner_provider_search"/>
+        <field name="context">{'default_is_provider': True, 'default_is_company': True}</field>
+        <field name="domain">[('is_provider', '=', True)]</field>
+    </record>
+
+    <!-- ========================================================================= -->
+    <!-- Server Action: Create Provider User (appears in Action menu) -->
+    <!-- ========================================================================= -->
+    <record id="action_create_provider_user" model="ir.actions.server">
+        <field name="name">Create Provider User</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="binding_model_id" ref="base.model_res_partner"/>
+        <field name="binding_view_types">form</field>
+        <field name="state">code</field>
+        <field name="code">
+if records.filtered(lambda r: r.is_provider):
+    records.filtered(lambda r: r.is_provider).action_create_provider_user()
+</field>
+    </record>
+
+    <!-- ========================================================================= -->
+    <!-- All Partners Action (for comparison - shows all) -->
+    <!-- ========================================================================= -->
+    <record id="action_res_partner_all" model="ir.actions.act_window">
+        <field name="name">All Partners</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{}</field>
+    </record>
+
+</odoo>

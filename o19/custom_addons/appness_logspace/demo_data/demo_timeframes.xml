@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+
+    <!-- ============================================ -->
+    <!-- PROVIDER TIME FRAMES                         -->
+    <!-- Separate file to ensure time_slot refs work  -->
+    <!-- ============================================ -->
+
+    <!-- ABC Logistics Time Frames -->
+    <record id="tf_abc_flatbed" model="logspace.provider.time.frame">
+        <field name="partner_id" ref="partner_abc_logistics"/>
+        <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+        <field name="time_slot_ids" eval="[(6, 0, [ref('time_slot_morning'), ref('time_slot_afternoon')])]"/>
+    </record>
+    <record id="tf_abc_covered" model="logspace.provider.time.frame">
+        <field name="partner_id" ref="partner_abc_logistics"/>
+        <field name="vehicle_type_id" ref="vehicle_type_covered_3t"/>
+        <field name="time_slot_ids" eval="[(6, 0, [ref('time_slot_morning'), ref('time_slot_afternoon'), ref('time_slot_evening')])]"/>
+    </record>
+    <record id="tf_abc_van" model="logspace.provider.time.frame">
+        <field name="partner_id" ref="partner_abc_logistics"/>
+        <field name="vehicle_type_id" ref="vehicle_type_van"/>
+        <field name="time_slot_ids" eval="[(6, 0, [ref('time_slot_morning')])]"/>
+    </record>
+
+    <!-- Fast Truck Co Time Frames -->
+    <record id="tf_ftc_flatbed5" model="logspace.provider.time.frame">
+        <field name="partner_id" ref="partner_fast_truck"/>
+        <field name="vehicle_type_id" ref="vehicle_type_flatbed_5t"/>
+        <field name="time_slot_ids" eval="[(6, 0, [ref('time_slot_morning'), ref('time_slot_evening')])]"/>
+    </record>
+    <record id="tf_ftc_flatbed3" model="logspace.provider.time.frame">
+        <field name="partner_id" ref="partner_fast_truck"/>
+        <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+        <field name="time_slot_ids" eval="[(6, 0, [ref('time_slot_afternoon'), ref('time_slot_evening')])]"/>
+    </record>
+
+    <!-- Saudi Express Transport Time Frames -->
+    <record id="tf_se_flatbed5" model="logspace.provider.time.frame">
+        <field name="partner_id" ref="partner_saudi_express"/>
+        <field name="vehicle_type_id" ref="vehicle_type_flatbed_5t"/>
+        <field name="time_slot_ids" eval="[(6, 0, [ref('time_slot_morning'), ref('time_slot_afternoon')])]"/>
+    </record>
+    <record id="tf_se_refrigerated" model="logspace.provider.time.frame">
+        <field name="partner_id" ref="partner_saudi_express"/>
+        <field name="vehicle_type_id" ref="vehicle_type_refrigerated"/>
+        <field name="time_slot_ids" eval="[(6, 0, [ref('time_slot_morning')])]"/>
+    </record>
+    <record id="tf_se_covered" model="logspace.provider.time.frame">
+        <field name="partner_id" ref="partner_saudi_express"/>
+        <field name="vehicle_type_id" ref="vehicle_type_covered_3t"/>
+        <field name="time_slot_ids" eval="[(6, 0, [ref('time_slot_afternoon'), ref('time_slot_evening')])]"/>
+    </record>
+
+    <!-- Muscat Cargo LLC Time Frames -->
+    <record id="tf_muscat_cargo_flatbed3" model="logspace.provider.time.frame">
+        <field name="partner_id" ref="partner_muscat_cargo"/>
+        <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+        <field name="time_slot_ids" eval="[(6, 0, [ref('time_slot_morning'), ref('time_slot_afternoon')])]"/>
+    </record>
+
+    <!-- Seeb Logistics Co Time Frames -->
+    <record id="tf_seeb_logistics_flatbed3" model="logspace.provider.time.frame">
+        <field name="partner_id" ref="partner_seeb_logistics"/>
+        <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+        <field name="time_slot_ids" eval="[(6, 0, [ref('time_slot_morning'), ref('time_slot_afternoon'), ref('time_slot_evening')])]"/>
+    </record>
+
+    <!-- Bousher Transport Time Frames -->
+    <record id="tf_bousher_transport_flatbed3" model="logspace.provider.time.frame">
+        <field name="partner_id" ref="partner_bousher_transport"/>
+        <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+        <field name="time_slot_ids" eval="[(6, 0, [ref('time_slot_morning')])]"/>
+    </record>
+
+    <!-- Al Amrat Movers Time Frames -->
+    <record id="tf_al_amrat_van" model="logspace.provider.time.frame">
+        <field name="partner_id" ref="partner_al_amrat_movers"/>
+        <field name="vehicle_type_id" ref="vehicle_type_van"/>
+        <field name="time_slot_ids" eval="[(6, 0, [ref('time_slot_afternoon'), ref('time_slot_evening')])]"/>
+    </record>
+
+    <!-- Sohar Freight Services Time Frames -->
+    <record id="tf_sohar_freight_flatbed5" model="logspace.provider.time.frame">
+        <field name="partner_id" ref="partner_sohar_freight"/>
+        <field name="vehicle_type_id" ref="vehicle_type_flatbed_5t"/>
+        <field name="time_slot_ids" eval="[(6, 0, [ref('time_slot_morning'), ref('time_slot_afternoon')])]"/>
+    </record>
+
+    <!-- Nizwa Delivery Co Time Frames -->
+    <record id="tf_nizwa_delivery_flatbed3" model="logspace.provider.time.frame">
+        <field name="partner_id" ref="partner_nizwa_delivery"/>
+        <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+        <field name="time_slot_ids" eval="[(6, 0, [ref('time_slot_afternoon'), ref('time_slot_evening')])]"/>
+    </record>
+
+</odoo>

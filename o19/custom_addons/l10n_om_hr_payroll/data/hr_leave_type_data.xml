@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Annual Leave (Oman Labor Law: 30 days/year, accrued monthly at 2.5 days/month, no carryover) -->
+        <record id="leave_type_annual" model="hr.leave.type">
+            <field name="name">Annual Leave</field>
+            <field name="request_unit">day</field>
+            <field name="time_type">leave</field>
+            <field name="leave_validation_type">hr</field>
+            <field name="requires_allocation" eval="True"/>
+            <field name="employee_requests" eval="True"/>
+            <field name="allocation_validation_type">hr</field>
+            <field name="work_entry_type_id" ref="hr_work_entry.work_entry_type_legal_leave"/>
+            <field name="sequence">10</field>
+            <field name="color">4</field>
+            <field name="country_id" ref="base.om"/>
+        </record>
+
+        <!-- Maternity Leave (Oman Labor Law Article 37: 50 days at full pay) -->
+        <record id="leave_type_maternity" model="hr.leave.type">
+            <field name="name">Maternity Leave (50 days)</field>
+            <field name="request_unit">day</field>
+            <field name="time_type">leave</field>
+            <field name="leave_validation_type">hr</field>
+            <field name="requires_allocation" eval="True"/>
+            <field name="employee_requests" eval="True"/>
+            <field name="allocation_validation_type">hr</field>
+            <field name="work_entry_type_id" ref="hr_work_entry.work_entry_type_legal_leave"/>
+            <field name="sequence">20</field>
+            <field name="color">5</field>
+            <field name="country_id" ref="base.om"/>
+        </record>
+
+        <!-- Sick leave for the first 21 days, fully paid -->
+        <record id="leave_type_sick_100" model="hr.leave.type">
+            <field name="name">Sick leave for the first 21 days, fully paid</field>
+            <field name="request_unit">day</field>
+            <field name="time_type">other</field>
+            <field name="leave_validation_type">hr</field>
+            <field name="requires_allocation" eval="True"/>
+            <field name="employee_requests" eval="True"/>
+            <field name="allocation_validation_type">hr</field>
+            <field name="work_entry_type_id" ref="hr_work_entry.work_entry_type_legal_leave"/>
+            <field name="sequence">100</field>
+            <field name="color">0</field>
+            <field name="country_id" ref="base.om"/>
+        </record>
+
+        <!-- Sick leave 14 days after the 21 days paid 75% -->
+        <record id="leave_type_sick_75" model="hr.leave.type">
+            <field name="name">Sick leave 14 days after the 21 days paid 75%</field>
+            <field name="request_unit">day</field>
+            <field name="time_type">leave</field>
+            <field name="leave_validation_type">hr</field>
+            <field name="requires_allocation" eval="True"/>
+            <field name="employee_requests" eval="True"/>
+            <field name="allocation_validation_type">hr</field>
+            <field name="work_entry_type_id" ref="work_entry_type_sto75"/>
+            <field name="sequence">100</field>
+            <field name="color">0</field>
+            <field name="country_id" ref="base.om"/>
+        </record>
+
+        <!-- Patients after the fifth week, 14 days, 50% paid -->
+        <record id="leave_type_sick_50" model="hr.leave.type">
+            <field name="name">Patients after the fifth week, 14 days, 50% paid</field>
+            <field name="request_unit">day</field>
+            <field name="time_type">leave</field>
+            <field name="leave_validation_type">hr</field>
+            <field name="requires_allocation" eval="True"/>
+            <field name="employee_requests" eval="True"/>
+            <field name="allocation_validation_type">hr</field>
+            <field name="work_entry_type_id" ref="work_entry_type_sto50"/>
+            <field name="sequence">100</field>
+            <field name="color">0</field>
+            <field name="country_id" ref="base.om"/>
+        </record>
+
+        <!-- Patients after the seventh week, 14 days, 25% paid -->
+        <record id="leave_type_sick_25" model="hr.leave.type">
+            <field name="name">Patients after the seventh week, 14 days, 25% paid</field>
+            <field name="request_unit">day</field>
+            <field name="time_type">leave</field>
+            <field name="leave_validation_type">hr</field>
+            <field name="requires_allocation" eval="True"/>
+            <field name="employee_requests" eval="True"/>
+            <field name="allocation_validation_type">hr</field>
+            <field name="work_entry_type_id" ref="work_entry_type_sto25"/>
+            <field name="sequence">100</field>
+            <field name="color">0</field>
+            <field name="country_id" ref="base.om"/>
+        </record>
+
+        <!-- Patients who are sick after the ninth week are referred to retirement -->
+        <record id="leave_type_sick_retirement" model="hr.leave.type">
+            <field name="name">Patients who are sick after the ninth week are referred to retirement.</field>
+            <field name="request_unit">day</field>
+            <field name="time_type">leave</field>
+            <field name="leave_validation_type">hr</field>
+            <field name="requires_allocation" eval="True"/>
+            <field name="employee_requests" eval="True"/>
+            <field name="allocation_validation_type">hr</field>
+            <field name="work_entry_type_id" ref="hr_work_entry.work_entry_type_sick_leave"/>
+            <field name="sequence">100</field>
+            <field name="color">0</field>
+            <field name="country_id" ref="base.om"/>
+        </record>
+
+    </data>
+</odoo>

@@ -9,7 +9,7 @@
                     <sheet>
                         <group>
                             <field name="name"/>
-                            <field name="asset_model_id" required="1" context="{'default_state': 'model'}"/>
+                            <field name="asset_model_id" required="1" context="{'default_state': 'model'}" options="{'no_create_edit': True}"/>
                         </group>
                     </sheet>
                 </form>

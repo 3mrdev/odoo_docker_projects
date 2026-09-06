@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Sequences for Logspace -->
+
+        <!-- Refund Sequence -->
+        <record id="seq_logspace_refund" model="ir.sequence">
+            <field name="name">Logspace Refund</field>
+            <field name="code">logspace.refund</field>
+            <field name="prefix">REF-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_logspace_vehicle" model="ir.sequence">
+            <field name="name">Logspace Vehicle</field>
+            <field name="code">logspace.vehicle</field>
+            <field name="prefix">VEH-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

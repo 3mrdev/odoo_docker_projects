@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ============================================================ -->
+        <!-- SALARY RULE CATEGORIES                                       -->
+        <!-- ============================================================ -->
+
+        <!-- Additional Allowance (for conditional payments after GROSS) -->
+        <record id="salary_rule_category_ad_alw" model="hr.salary.rule.category">
+            <field name="name">Additional Allowance</field>
+            <field name="code">AD_ALW</field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- DEFAULT SALARY RULES                                         -->
+        <!-- Standard rules from hr_payroll.default_structure pattern     -->
+        <!-- ============================================================ -->
+
+        <!-- Basic Salary -->
+        <record id="salary_rule_om_basic" model="hr.salary.rule">
+            <field name="name">Basic Salary</field>
+            <field name="code">BASIC</field>
+            <field name="sequence">1</field>
+            <field name="category_id" ref="hr_payroll.BASIC"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = payslip.paid_amount
+            </field>
+        </record>
+
+        <!-- Gross Salary -->
+        <record id="salary_rule_om_gross" model="hr.salary.rule">
+            <field name="name">Gross Salary</field>
+            <field name="code">GROSS</field>
+            <field name="sequence">100</field>
+            <field name="category_id" ref="hr_payroll.GROSS"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = categories['BASIC'] + categories['ALW']
+            </field>
+        </record>
+
+        <!-- Attachment of Salary -->
+        <record id="salary_rule_om_attach_salary" model="hr.salary.rule">
+            <field name="name">Attachment of Salary</field>
+            <field name="code">ATTACH_SALARY</field>
+            <field name="sequence">110</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'ATTACH_SALARY' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = -inputs['ATTACH_SALARY'].amount
+result_name = inputs['ATTACH_SALARY'].name
+            </field>
+        </record>
+
+        <!-- Assignment of Salary -->
+        <record id="salary_rule_om_assig_salary" model="hr.salary.rule">
+            <field name="name">Assignment of Salary</field>
+            <field name="code">ASSIG_SALARY</field>
+            <field name="sequence">110</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'ASSIG_SALARY' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = -inputs['ASSIG_SALARY'].amount
+result_name = inputs['ASSIG_SALARY'].name
+            </field>
+        </record>
+
+        <!-- Child Support -->
+        <record id="salary_rule_om_child_support" model="hr.salary.rule">
+            <field name="name">Child Support</field>
+            <field name="code">CHILD_SUPPORT</field>
+            <field name="sequence">110</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'CHILD_SUPPORT' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = -inputs['CHILD_SUPPORT'].amount
+result_name = inputs['CHILD_SUPPORT'].name
+            </field>
+        </record>
+
+        <!-- Deduction -->
+        <record id="salary_rule_om_deduction" model="hr.salary.rule">
+            <field name="name">Deduction</field>
+            <field name="code">DEDUCTION</field>
+            <field name="sequence">110</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'DEDUCTION' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = -inputs['DEDUCTION'].amount
+result_name = inputs['DEDUCTION'].name
+            </field>
+        </record>
+
+        <!-- Reimbursement -->
+        <record id="salary_rule_om_reimbursement" model="hr.salary.rule">
+            <field name="name">Reimbursement</field>
+            <field name="code">REIMBURSEMENT</field>
+            <field name="sequence">110</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'REIMBURSEMENT' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = inputs['REIMBURSEMENT'].amount
+result_name = inputs['REIMBURSEMENT'].name
+            </field>
+        </record>
+
+        <!-- Loan Deduction -->
+        <record id="salary_rule_om_loan_deduction" model="hr.salary.rule">
+            <field name="name">Loan Deduction</field>
+            <field name="code">LOAN_DED</field>
+            <field name="sequence">115</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'LOAN_DED' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = -inputs['LOAN_DED'].amount
+result_name = inputs['LOAN_DED'].name
+            </field>
+        </record>
+
+        <!-- Net Salary -->
+        <record id="salary_rule_om_net" model="hr.salary.rule">
+            <field name="name">Net Salary</field>
+            <field name="code">NET</field>
+            <field name="sequence">400</field>
+            <field name="category_id" ref="hr_payroll.NET"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="appears_on_employee_cost_dashboard" eval="True"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = categories['BASIC'] + categories['ALW'] + categories['AD_ALW'] + categories['DED']
+            </field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- END OF SERVICE BENEFIT RULES                                 -->
+        <!-- ============================================================ -->
+
+        <!-- End of Service Provision (monthly accrual) -->
+        <record id="salary_rule_om_eosp" model="hr.salary.rule">
+            <field name="name">End of Service Provision</field>
+            <field name="category_id" ref="hr_payroll.COMP"/>
+            <field name="code">EOSP</field>
+            <field name="appears_on_payslip" eval="False"/>
+            <field name="sequence">90</field>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">
+result = not employee.departure_date and not employee.departure_reason_id
+            </field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = payslip._l10n_om_get_eos_provision()
+            </field>
+        </record>
+
+        <!-- End of Service Benefit (payout on departure) -->
+        <record id="salary_rule_om_eosb" model="hr.salary.rule">
+            <field name="name">End of Service Benefit</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="code">EOSB</field>
+            <field name="sequence">91</field>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = employee.departure_date and employee.departure_reason_id</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = payslip._l10n_om_get_eos_benefit()
+            </field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- ALLOWANCE SALARY RULES (A001 - A018)                         -->
+        <!-- Category: Allowance (ALW)                                    -->
+        <!-- These run BEFORE GROSS (seq 100) so they contribute to it    -->
+        <!-- ============================================================ -->
+
+        <!-- A001: Housing Allowance -->
+        <record id="salary_rule_a001_housing" model="hr.salary.rule">
+            <field name="name">Housing Allowance</field>
+            <field name="code">A001</field>
+            <field name="sequence">50</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = version.housing_allowance > 0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = version.housing_allowance</field>
+        </record>
+
+        <!-- A002: Transportation Allowance -->
+        <record id="salary_rule_a002_transportation" model="hr.salary.rule">
+            <field name="name">Transportation Allowance</field>
+            <field name="code">A002</field>
+            <field name="sequence">51</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = version.transportation_allowance > 0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = version.transportation_allowance</field>
+        </record>
+
+        <!-- A003: Telephone Allowance -->
+        <record id="salary_rule_a003_telephone" model="hr.salary.rule">
+            <field name="name">Telephone Allowance</field>
+            <field name="code">A003</field>
+            <field name="sequence">52</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = version.telephone_allowance > 0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = version.telephone_allowance</field>
+        </record>
+
+        <!-- A004: Communication Allowance -->
+        <record id="salary_rule_a004_communication" model="hr.salary.rule">
+            <field name="name">Communication Allowance</field>
+            <field name="code">A004</field>
+            <field name="sequence">53</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = version.communication_allowance > 0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = version.communication_allowance</field>
+        </record>
+
+        <!-- A005: Utility Allowance -->
+        <record id="salary_rule_a005_utility" model="hr.salary.rule">
+            <field name="name">Utility Allowance</field>
+            <field name="code">A005</field>
+            <field name="sequence">54</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = version.utility_allowance > 0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = version.utility_allowance</field>
+        </record>
+
+        <!-- A006: Electricity Allowance -->
+        <record id="salary_rule_a006_electricity" model="hr.salary.rule">
+            <field name="name">Electricity Allowance</field>
+            <field name="code">A006</field>
+            <field name="sequence">55</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = version.electricity_allowance > 0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = version.electricity_allowance</field>
+        </record>
+
+        <!-- A007: Meals Allowance -->
+        <record id="salary_rule_a007_meals" model="hr.salary.rule">
+            <field name="name">Meals Allowance</field>
+            <field name="code">A007</field>
+            <field name="sequence">56</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = version.meals_allowance > 0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = version.meals_allowance</field>
+        </record>
+
+        <!-- A010: Medical Allowance -->
+        <record id="salary_rule_a010_medical" model="hr.salary.rule">
+            <field name="name">Medical Allowance</field>
+            <field name="code">A010</field>
+            <field name="sequence">59</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = version.medical_allowance > 0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = version.medical_allowance</field>
+        </record>
+
+        <!-- A011: Nature of Work Allowance -->
+        <record id="salary_rule_a011_nature_of_work" model="hr.salary.rule">
+            <field name="name">Nature of Work Allowance</field>
+            <field name="code">A011</field>
+            <field name="sequence">60</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = version.nature_of_work_allowance > 0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = version.nature_of_work_allowance</field>
+        </record>
+
+        <!-- A012: Technician Allowance -->
+        <record id="salary_rule_a012_technician" model="hr.salary.rule">
+            <field name="name">Technician Allowance</field>
+            <field name="code">A012</field>
+            <field name="sequence">61</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = version.technician_allowance > 0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = version.technician_allowance</field>
+        </record>
+
+        <!-- A013: High Cost of Living Allowance -->
+        <record id="salary_rule_a013_high_cost" model="hr.salary.rule">
+            <field name="name">High Cost of Living Allowance</field>
+            <field name="code">A013</field>
+            <field name="sequence">62</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = version.high_cost_of_living_allowance > 0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = version.high_cost_of_living_allowance</field>
+        </record>
+
+        <!-- A014: Shift Allowance -->
+        <record id="salary_rule_a014_shift" model="hr.salary.rule">
+            <field name="name">Shift Allowance</field>
+            <field name="code">A014</field>
+            <field name="sequence">63</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = version.shift_allowance > 0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = version.shift_allowance</field>
+        </record>
+
+        <!-- A015: Motivational Allowance -->
+        <record id="salary_rule_a015_motivational" model="hr.salary.rule">
+            <field name="name">Motivational Allowance</field>
+            <field name="code">A015</field>
+            <field name="sequence">64</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = version.motivational_allowance > 0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = version.motivational_allowance</field>
+        </record>
+
+        <!-- A016: Water Allowance -->
+        <record id="salary_rule_a016_water" model="hr.salary.rule">
+            <field name="name">Water Allowance</field>
+            <field name="code">A016</field>
+            <field name="sequence">65</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = version.water_allowance > 0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = version.water_allowance</field>
+        </record>
+
+        <!-- A018: Air Fare Allowance -->
+        <record id="salary_rule_a017_air_fare" model="hr.salary.rule">
+            <field name="name">Air Fare Allowance</field>
+            <field name="code">A018</field>
+            <field name="sequence">102</field>
+            <field name="category_id" ref="l10n_om_hr_payroll.salary_rule_category_ad_alw"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = inputs and inputs.get('AIR_FARE')</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = version.air_fare_allowance</field>
+        </record>
+
+        <!-- A019: Other Allowance -->
+        <record id="salary_rule_a018_other" model="hr.salary.rule">
+            <field name="name">Other Allowance</field>
+            <field name="code">A019</field>
+            <field name="sequence">67</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = version.other_allowance > 0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = version.other_allowance</field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- PASI / SOCIAL SECURITY RULES                                 -->
+        <!-- ============================================================ -->
+
+        <!-- PASI: Employee Social Security Deduction (Omani with PASI) -->
+        <record id="salary_rule_pasi" model="hr.salary.rule">
+            <field name="name">PASI</field>
+            <field name="code">PASI</field>
+            <field name="sequence">105</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = employee.is_omani and employee.has_pasi</field>
+            <field name="amount_select">percentage</field>
+            <field name="amount_percentage">-8.5</field>
+            <field name="amount_percentage_base">GROSS</field>
+        </record>
+
+        <!-- Company Contribution for PASI (Omani with PASI) -->
+        <record id="salary_rule_pasi_contr" model="hr.salary.rule">
+            <field name="name">Company Contribution for PASI</field>
+            <field name="code">PASI_CONTR</field>
+            <field name="sequence">106</field>
+            <field name="category_id" ref="hr_payroll.COMP"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = employee.is_omani and employee.has_pasi</field>
+            <field name="amount_select">percentage</field>
+            <field name="amount_percentage">14.5</field>
+            <field name="amount_percentage_base">GROSS</field>
+        </record>
+
+        <!-- Social Protection Fund (Non-Omani) -->
+        <record id="salary_rule_spf" model="hr.salary.rule">
+            <field name="name">Social Protection Fund</field>
+            <field name="code">SPF</field>
+            <field name="sequence">107</field>
+            <field name="category_id" ref="hr_payroll.COMP"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = employee.is_omani is not True</field>
+            <field name="amount_select">percentage</field>
+            <field name="amount_percentage">1</field>
+            <field name="amount_percentage_base">GROSS</field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- ABSENCE & OVERTIME RULES                                     -->
+        <!-- ============================================================ -->
+
+        <!-- Absence Deduction -->
+        <record id="salary_rule_absence" model="hr.salary.rule">
+            <field name="name">Absence</field>
+            <field name="code">ABS</field>
+            <field name="sequence">120</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">
+abs = worked_days.get('ABSENSE100')
+result = True if abs else False</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+abs = worked_days.get('ABSENSE100')
+if abs:
+    abs_days_count = abs.number_of_days
+else:
+    abs_days_count = 0
+month_days = (payslip.date_to - payslip.date_from).days + 1
+result = -(GROSS / month_days)
+result_rate = 100.0
+result_qty = abs_days_count</field>
+        </record>
+
+        <!-- A017: Overtime Allowance (computed from OVERTIME work entry) -->
+        <record id="salary_rule_overtime_hours" model="hr.salary.rule">
+            <field name="name">Overtime Allowance</field>
+            <field name="code">A017</field>
+            <field name="sequence">101</field>
+            <field name="category_id" ref="l10n_om_hr_payroll.salary_rule_category_ad_alw"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">
+ot = worked_days.get('OVERTIME')
+result = True if ot else False</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+ot = worked_days.get('OVERTIME')
+if ot:
+    ot_hours_count = ot.number_of_hours
+    ot_rate = ot.work_entry_type_id.amount_rate * 100
+else:
+    ot_hours_count = 0
+    ot_rate = 0
+result = version.overtime_by_hour
+result_rate = ot_rate
+result_qty = ot_hours_count</field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- SICK TIME OFF DEDUCTION RULES (D001 - D003)                 -->
+        <!-- ============================================================ -->
+
+        <!-- D001: Sick Time Off (Paid at 75%) -->
+        <record id="salary_rule_d001_sto75" model="hr.salary.rule">
+            <field name="name">Sick Time Off (Paid at 75%)</field>
+            <field name="code">D001</field>
+            <field name="sequence">150</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">
+sto = worked_days.get('STO75')
+result = True if sto else False</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+sto = worked_days.get('STO75')
+
+if sto:
+    sto_days_count = sto.number_of_days
+    sto_rate = sto.work_entry_type_id.amount_rate * 100 - 100
+else:
+    sto_days_count = 0
+    sto_rate = 0
+
+month_days = (payslip.date_to - payslip.date_from).days + 1
+day_cost = (GROSS / month_days)
+
+result = -day_cost
+result_rate = sto_rate
+result_qty = sto_days_count</field>
+        </record>
+
+        <!-- D002: Sick Time Off (Paid at 50%) -->
+        <record id="salary_rule_d002_sto50" model="hr.salary.rule">
+            <field name="name">Sick Time Off (Paid at 50%)</field>
+            <field name="code">D002</field>
+            <field name="sequence">151</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">
+sto = worked_days.get('STO50')
+result = True if sto else False</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+sto = worked_days.get('STO50')
+
+if sto:
+    sto_days_count = sto.number_of_days
+    sto_rate = sto.work_entry_type_id.amount_rate * 100 - 100
+else:
+    sto_days_count = 0
+    sto_rate = 0
+
+month_days = (payslip.date_to - payslip.date_from).days + 1
+day_cost = (GROSS / month_days)
+
+result = -day_cost
+result_rate = sto_rate
+result_qty = sto_days_count</field>
+        </record>
+
+        <!-- D003: Sick Time Off (Paid at 25%) -->
+        <record id="salary_rule_d003_sto25" model="hr.salary.rule">
+            <field name="name">Sick Time Off (Paid at 25%)</field>
+            <field name="code">D003</field>
+            <field name="sequence">152</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="struct_id" ref="om_regular_pay_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">
+sto = worked_days.get('STO25')
+result = True if sto else False</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+sto = worked_days.get('STO25')
+
+if sto:
+    sto_days_count = sto.number_of_days
+    sto_rate = sto.work_entry_type_id.amount_rate * 100 - 100
+else:
+    sto_days_count = 0
+    sto_rate = 0
+
+month_days = (payslip.date_to - payslip.date_from).days + 1
+day_cost = (GROSS / month_days)
+
+result = -day_cost
+result_rate = sto_rate
+result_qty = sto_days_count</field>
+        </record>
+
+    </data>
+</odoo>

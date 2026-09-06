@@ -11,7 +11,7 @@
                                 <h1 class="d-flex flex-row align-items-center">
                                     <field name="name" placeholder="Type's Name" required="True" style="font-size: min(4vw, 2.6rem);"/>
                                 </h1>
-                                <field name="type" widget="radio" options="{'horizontal': true}"/>
+                                <!-- <field name="type" widget="radio" options="{'horizontal': true}"/> -->
                             </div>
                         </div>
                         <notebook>

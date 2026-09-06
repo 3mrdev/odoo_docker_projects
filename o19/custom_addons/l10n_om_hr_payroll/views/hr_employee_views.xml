@@ -11,6 +11,7 @@
                     <field name="job_number" required="0"/>
                     <button string="Generate" class="btn btn-link" type="object" name="get_next_job_number" invisible="job_number"/>
                 </div>
+                
             </field>
             <field name="employee_type" position="before">
                 <label name="housing_allowance" for="housing_allowance" />
@@ -73,11 +74,6 @@
                     <field name="motivational_allowance" class="o_hr_narrow_field text-muted" />
                     <span class="text-muted">/ month</span>
                 </div>
-                <label name="air_fare_allowance" for="air_fare_allowance" />
-                <div name="air_fare_allowance" class="o_row">
-                    <field name="air_fare_allowance" class="o_hr_narrow_field text-muted" />
-                    <span class="text-muted">/ month</span>
-                </div>
                 <label name="meals_allowance" for="meals_allowance" />
                 <div name="meals_allowance" class="o_row">
                     <field name="meals_allowance" class="o_hr_narrow_field text-muted" />
@@ -87,11 +83,6 @@
                 <div name="overtime_allowance" class="o_row">
                     <field name="overtime_allowance" class="o_hr_narrow_field text-muted" />
                     <span class="text-muted">/ month</span>
-                </div>
-                <label name="overtime_by_hour" for="overtime_by_hour" />
-                <div name="overtime_by_hour" class="o_row">
-                    <field name="overtime_by_hour" class="o_hr_narrow_field text-muted" />
-                    <span class="text-muted">/ hour</span>
                 </div>
                 <label name="medical_allowance" for="medical_allowance" />
                 <div name="medical_allowance" class="o_row">
@@ -108,6 +99,16 @@
                     <field name="total_payroll_amount" class="o_hr_narrow_field text-muted" />
                     <span class="text-muted">/ month</span>
                 </div>
+                <label name="overtime_by_hour" for="overtime_by_hour" />
+                <div name="overtime_by_hour" class="o_row">
+                    <field name="overtime_by_hour" class="o_hr_narrow_field text-muted" />
+                    <span class="text-muted">/ hour</span>
+                </div>
+                <label name="air_fare_allowance" for="air_fare_allowance" />
+                <div name="air_fare_allowance" class="o_row">
+                    <field name="air_fare_allowance" class="o_hr_narrow_field text-muted" />
+                    <span class="text-muted">/ month</span>
+                </div>
                 <label name="is_omani" for="is_omani" />
                 <div name="is_omani" class="o_row">
                     <field name="is_omani" string="Is Omani ?" widget="boolean_toggle" />
@@ -116,6 +117,8 @@
                 <div name="has_pasi" class="o_row" invisible="not is_omani">
                     <field name="has_pasi" string="Has Pasi ?" widget="boolean_toggle" />
                 </div>
+                <field name="l10n_om_pasi_number" invisible="not is_omani"/>
+                <field name="l10n_om_civil_id"/>
             </field>
         </field>
     </record>

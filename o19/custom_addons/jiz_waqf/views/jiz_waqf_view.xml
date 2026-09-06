@@ -117,9 +117,9 @@
                             <group>
                                 <field name="waqf_endower_contact_id" readonly="status != 'draft'"/>
                                 <field name="land_number" readonly="status != 'draft'" required="1"/>
-                                <field name="waqf_type_id" readonly="status != 'draft'" required="1"/>
-                                <field name="use_type_id" readonly="status != 'draft'" required="1"/>
-                                <field name="asset_model_id" readonly="status != 'draft'" required="1"/>
+                                <field name="waqf_type_id" readonly="status != 'draft'" required="1" options='{"no_open": True, "no_create": True}'/>
+                                <field name="use_type_id" readonly="status != 'draft'" required="1" options='{"no_open": True, "no_create": True}'/>
+                                <field name="asset_model_id" readonly="status != 'draft'" required="1" options='{"no_open": True, "no_create": True}'/>
                                 <field name="company_id" groups="base.group_multi_company" readonly="status != 'draft'"/>
                                 <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
                             </group>
@@ -240,7 +240,7 @@
 
         <menuitem id="jiz_waqf_menu_root" name="Waqf" sequence="26" web_icon="jiz_waqf,static/description/waqf.png"/>
         <!-- <menuitem id="jiz_waqf_team_menu" name="Overview" parent="jiz_waqf_menu_root" action="jiz_waqf_team_action" sequence="10"/> -->
-        <menuitem id="jiz_waqf_lead_menu" name="Pipeline" parent="jiz_waqf_menu_root" action="jiz_waqf_lead_action" sequence="10"/>
+        <!-- <menuitem id="jiz_waqf_lead_menu" name="Pipeline" parent="jiz_waqf_menu_root" action="jiz_waqf_lead_action" sequence="10"/> -->
         <menuitem id="jiz_waqf_managment_menu" name="Managment" parent="jiz_waqf_menu_root" sequence="20"/>
         <menuitem id="jiz_waqf_waqf_menu" name="Waqf" parent="jiz_waqf_managment_menu" action="jiz_waqf_action" sequence="10"/>
         <menuitem id="jiz_waqf_configuration_menu" name="Configuration" parent="jiz_waqf_menu_root" sequence="100" groups="jiz_waqf.group_jiz_waqf_admin"/>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="approval_category_view_form_inherit_executor" model="ir.ui.view">
+        <field name="name">approval.category.view.form.inherit.executor</field>
+        <field name="model">approval.category</field>
+        <field name="inherit_id" ref="approvals.approval_category_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Executors" name="executors">
+                    <group>
+                        <field name="executor_group_ids" widget="many2many_tags"
+                            help="Users in these groups can see and perform post-approval actions
+                                  (Create Journal Entries, Payments, etc.) on approved requests
+                                  of this category."/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

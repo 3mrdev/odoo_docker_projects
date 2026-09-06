@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- ============================================ -->
+        <!-- MASTER DATA: Zones -->
+        <!-- ============================================ -->
+        <record id="action_logspace_zone" model="ir.actions.act_window">
+            <field name="name">Zones</field>
+            <field name="res_model">logspace.zone</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first zone!
+                </p>
+            </field>
+        </record>
+
+        <!-- Zone Tree View -->
+        <record id="view_logspace_zone_tree" model="ir.ui.view">
+            <field name="name">logspace.zone.tree</field>
+            <field name="model">logspace.zone</field>
+            <field name="arch" type="xml">
+                <list editable="bottom" open_form_view="1">
+                    <field name="sequence" widget="handle"/>
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="zone_type"/>
+                    <field name="parent_id"/>
+                    <field name="lat" optional="hide"/>
+                    <field name="lng" optional="hide"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Zone Form View -->
+        <record id="view_logspace_zone_form" model="ir.ui.view">
+            <field name="name">logspace.zone.form</field>
+            <field name="model">logspace.zone</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="Basic Information">
+                                <field name="name"/>
+                                <field name="code"/>
+                                <field name="zone_type"/>
+                                <field name="sequence"/>
+                                <field name="active"/>
+                            </group>
+                            <group string="Hierarchy">
+                                <field name="parent_id"/>
+                            </group>
+                            <group string="Coordinates">
+                                <field name="lat"/>
+                                <field name="lng"/>
+                            </group>
+                        </group>
+                        <group string="Description">
+                            <field name="description" nolabel="1" placeholder="Optional notes about this zone..."/>
+                        </group>
+                        <notebook>
+                            <page string="Child Zones" invisible="not child_ids">
+                                <field name="child_ids">
+                                    <list>
+                                        <field name="code"/>
+                                        <field name="name"/>
+                                        <field name="zone_type"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Zone Search View -->
+        <record id="view_logspace_zone_search" model="ir.ui.view">
+            <field name="name">logspace.zone.search</field>
+            <field name="model">logspace.zone</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="parent_id"/>
+                    <separator/>
+                    <filter name="filter_country" string="Countries"
+                            domain="[('zone_type', '=', 'country')]"/>
+                    <filter name="filter_governorate" string="Governorates"
+                            domain="[('zone_type', '=', 'governorate')]"/>
+                    <filter name="filter_city" string="Cities"
+                            domain="[('zone_type', '=', 'city')]"/>
+                    <filter name="filter_district" string="Districts"
+                            domain="[('zone_type', '=', 'district')]"/>
+                    <filter name="filter_active" string="Active"
+                            domain="[('active', '=', True)]"/>
+                    <filter name="filter_inactive" string="Inactive"
+                            domain="[('active', '=', False)]"/>
+                    <separator/>
+                    <group>
+                        <filter name="group_zone_type" string="Zone Type" context="{'group_by': 'zone_type'}"/>
+                        <filter name="group_parent" string="Parent Zone" context="{'group_by': 'parent_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+    </data>
+</odoo>

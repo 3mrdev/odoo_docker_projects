@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Special Instruction Action -->
+    <record id="action_logspace_special_instruction" model="ir.actions.act_window">
+        <field name="name">Special Instructions</field>
+        <field name="res_model">logspace.provider.special.instruction</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure special instructions per vehicle type!
+            </p>
+        </field>
+    </record>
+
+    <!-- Special Instruction List View -->
+    <record id="view_logspace_special_instruction_tree" model="ir.ui.view">
+        <field name="name">logspace.provider.special.instruction.tree</field>
+        <field name="model">logspace.provider.special.instruction</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="partner_id" domain="[('is_provider', '=', True)]"/>
+                <field name="vehicle_type_id"/>
+                <field name="instructions" widget="html"/>
+                <field name="is_active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Special Instruction Form View -->
+    <record id="view_logspace_special_instruction_form" model="ir.ui.view">
+        <field name="name">logspace.provider.special.instruction.form</field>
+        <field name="model">logspace.provider.special.instruction</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="partner_id" domain="[('is_provider', '=', True)]"/>
+                            <field name="vehicle_type_id"/>
+                            <field name="is_active"/>
+                        </group>
+                    </group>
+                    <group string="Instructions">
+                        <field name="instructions" widget="html" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -2,7 +2,7 @@
 
     <template id="report_saleorder_document_inherit" inherit_id="sale.report_saleorder_document">
         <xpath expr="//td[@name='td_product_name']" position="inside">
-            (<span t-field="line.volume_length" class="text-nowrap"/>x<span t-field="line.volume_width" class="text-nowrap"/>x<span t-field="line.volume_height" class="text-nowrap"/>)
+            <t t-if="line.product_id.is_volume_tracked">(<span t-field="line.volume_length" class="text-nowrap"/>x<span t-field="line.volume_width" class="text-nowrap"/>x<span t-field="line.volume_height" class="text-nowrap"/>)</t>
         </xpath>
     </template>
 

@@ -33,4 +33,44 @@
             </xpath>
         </field>
     </record>
+
+    <!-- Add operation_status_id field to request form -->
+    <record id="approval_request_view_form_inherit_operation_status" model="ir.ui.view">
+        <field name="name">approval.request.view.form.inherit.operation.status</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals.approval_request_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='request_main']/field[@name='category_id']" position="after">
+                <field name="operation_status_id"
+                    readonly="request_status != 'approved'"
+                    force_save="1" options="{'no_open': True, 'no_create': True, 'no_create_edit': True, 'no_edit': True}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Add operation_status_id to request list view (optional, shown by default) -->
+    <record id="approval_request_view_list_inherit_operation_status" model="ir.ui.view">
+        <field name="name">approval.request.view.list.inherit.operation.status</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals.approval_request_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list/field[@name='request_status']" position="before">
+                <field name="operation_status_id" optional="show" widget="badge"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Add analytic_distribution widget to approval product lines list -->
+    <record id="approval_product_line_analytic_view_tree_inherit" model="ir.ui.view">
+        <field name="name">approval.product.line.analytic.view.list.inherit</field>
+        <field name="model">approval.product.line</field>
+        <field name="inherit_id" ref="approvals.approval_product_line_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_uom_id']" position="before">
+                <field name="analytic_distribution" widget="analytic_distribution"
+                    groups="analytic.group_analytic_accounting"
+                    options="{'product_field': 'product_id', 'business_domain': 'purchase_order'}"/>
+            </xpath>
+        </field>
+    </record>
 </odoo>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- Configuration: Show all vehicles in search results (True) or 1 per provider (False) -->
+    <record id="logspace_search_show_all_vehicles" model="ir.config_parameter">
+        <field name="key">logspace.search_show_all_vehicles</field>
+        <field name="value">True</field>
+    </record>
+
+    <!--
+        Default State Duration Configuration
+        =====================================
+        Travel states (pickup_started, arrived_destination) derive their duration
+        from zone distance data automatically - the duration_minutes here is a
+        fallback when no zone distance is found.
+        All other states use the fixed duration_minutes value.
+    -->
+    <record id="state_duration_order_received" model="logspace.state.duration.config">
+        <field name="state_key">order_received</field>
+        <field name="duration_minutes">0</field>
+        <field name="sequence">1</field>
+        <field name="notes">Immediate - order confirmed</field>
+    </record>
+
+    <record id="state_duration_pickup_started" model="logspace.state.duration.config">
+        <field name="state_key">pickup_started</field>
+        <field name="duration_minutes">0</field>
+        <field name="sequence">2</field>
+        <field name="notes">Immediate - driver dispatched</field>
+    </record>
+
+    <record id="state_duration_vendor_arrived_pickup" model="logspace.state.duration.config">
+        <field name="state_key">vendor_arrived_pickup</field>
+        <field name="duration_minutes">20</field>
+        <field name="sequence">3</field>
+        <field name="notes">Driver arrives (travel time from zone distance, fallback 20min)</field>
+    </record>
+
+    <record id="state_duration_pickup_addons" model="logspace.state.duration.config">
+        <field name="state_key">pickup_addons</field>
+        <field name="duration_minutes">15</field>
+        <field name="sequence">4</field>
+        <field name="notes">Loading assistance and add-on services</field>
+    </record>
+
+    <record id="state_duration_pickup_completed" model="logspace.state.duration.config">
+        <field name="state_key">pickup_completed</field>
+        <field name="duration_minutes">5</field>
+        <field name="sequence">5</field>
+        <field name="notes">Finalize pickup paperwork</field>
+    </record>
+
+    <record id="state_duration_pre_dropoff_addons" model="logspace.state.duration.config">
+        <field name="state_key">pre_dropoff_addons</field>
+        <field name="duration_minutes">0</field>
+        <field name="sequence">6</field>
+        <field name="notes">Immediate - driver starts dropoff leg</field>
+    </record>
+
+    <record id="state_duration_arrived_destination" model="logspace.state.duration.config">
+        <field name="state_key">arrived_destination</field>
+        <field name="duration_minutes">20</field>
+        <field name="sequence">7</field>
+        <field name="notes">Driver arrives at dropoff (travel time from zone distance, fallback 20min)</field>
+    </record>
+
+    <record id="state_duration_dropoff_completed" model="logspace.state.duration.config">
+        <field name="state_key">dropoff_completed</field>
+        <field name="duration_minutes">15</field>
+        <field name="sequence">8</field>
+        <field name="notes">Unloading and handover</field>
+    </record>
+
+    <record id="state_duration_grace_period" model="logspace.state.duration.config">
+        <field name="state_key">grace_period</field>
+        <field name="duration_minutes">30</field>
+        <field name="sequence">9</field>
+        <field name="notes">Post-delivery grace window for issues</field>
+    </record>
+
+    <record id="state_duration_order_completed" model="logspace.state.duration.config">
+        <field name="state_key">order_completed</field>
+        <field name="duration_minutes">0</field>
+        <field name="sequence">10</field>
+        <field name="notes">Immediate - order finalized</field>
+    </record>
+
+</odoo>

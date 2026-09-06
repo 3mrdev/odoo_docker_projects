@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Standard Oman Working Time Calendar (Sunday - Thursday, 40h/week) -->
+        <record id="resource_calendar_om_standard" model="resource.calendar">
+            <field name="name">Oman Standard (40h/week, Sun-Thu)</field>
+            <field name="company_id" eval="False"/>
+            <field name="tz">Asia/Muscat</field>
+            <field name="attendance_ids"
+                eval="[(5, 0, 0),
+                    (0, 0, {'name': 'Sunday Morning', 'dayofweek': '6', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'sequence': 0}),
+                    (0, 0, {'name': 'Sunday Afternoon', 'dayofweek': '6', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'sequence': 1}),
+                    (0, 0, {'name': 'Monday Morning', 'dayofweek': '0', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'sequence': 2}),
+                    (0, 0, {'name': 'Monday Afternoon', 'dayofweek': '0', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'sequence': 3}),
+                    (0, 0, {'name': 'Tuesday Morning', 'dayofweek': '1', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'sequence': 4}),
+                    (0, 0, {'name': 'Tuesday Afternoon', 'dayofweek': '1', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'sequence': 5}),
+                    (0, 0, {'name': 'Wednesday Morning', 'dayofweek': '2', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'sequence': 6}),
+                    (0, 0, {'name': 'Wednesday Afternoon', 'dayofweek': '2', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'sequence': 7}),
+                    (0, 0, {'name': 'Thursday Morning', 'dayofweek': '3', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'sequence': 8}),
+                    (0, 0, {'name': 'Thursday Afternoon', 'dayofweek': '3', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'sequence': 9}),
+                ]"
+            />
+        </record>
+
+        <!-- Oman Public Holidays (2025-2026 reference dates)
+             NOTE: Islamic calendar holidays shift ~11 days earlier each year.
+             HR must update these dates annually. -->
+
+        <!-- New Year's Day -->
+        <record id="om_public_holiday_new_year" model="resource.calendar.leaves">
+            <field name="name">New Year's Day</field>
+            <field name="calendar_id" ref="resource_calendar_om_standard"/>
+            <field name="date_from" eval="datetime(2025, 1, 1, 0, 0, 0)"/>
+            <field name="date_to" eval="datetime(2025, 1, 1, 23, 59, 59)"/>
+            <field name="time_type">leave</field>
+        </record>
+
+        <!-- Accession Day -->
+        <record id="om_public_holiday_accession" model="resource.calendar.leaves">
+            <field name="name">Accession Day</field>
+            <field name="calendar_id" ref="resource_calendar_om_standard"/>
+            <field name="date_from" eval="datetime(2025, 11, 18, 0, 0, 0)"/>
+            <field name="date_to" eval="datetime(2025, 11, 18, 23, 59, 59)"/>
+            <field name="time_type">leave</field>
+        </record>
+
+        <!-- National Day (2 days) -->
+        <record id="om_public_holiday_national_1" model="resource.calendar.leaves">
+            <field name="name">National Day</field>
+            <field name="calendar_id" ref="resource_calendar_om_standard"/>
+            <field name="date_from" eval="datetime(2025, 11, 19, 0, 0, 0)"/>
+            <field name="date_to" eval="datetime(2025, 11, 19, 23, 59, 59)"/>
+            <field name="time_type">leave</field>
+        </record>
+
+        <record id="om_public_holiday_national_2" model="resource.calendar.leaves">
+            <field name="name">National Day (Day 2)</field>
+            <field name="calendar_id" ref="resource_calendar_om_standard"/>
+            <field name="date_from" eval="datetime(2025, 11, 20, 0, 0, 0)"/>
+            <field name="date_to" eval="datetime(2025, 11, 20, 23, 59, 59)"/>
+            <field name="time_type">leave</field>
+        </record>
+
+        <!-- Eid al-Fitr (3 days, approximate 2025 dates: March 30 - April 1) -->
+        <record id="om_public_holiday_eid_fitr_1" model="resource.calendar.leaves">
+            <field name="name">Eid al-Fitr (Day 1)</field>
+            <field name="calendar_id" ref="resource_calendar_om_standard"/>
+            <field name="date_from" eval="datetime(2025, 3, 30, 0, 0, 0)"/>
+            <field name="date_to" eval="datetime(2025, 3, 30, 23, 59, 59)"/>
+            <field name="time_type">leave</field>
+        </record>
+
+        <record id="om_public_holiday_eid_fitr_2" model="resource.calendar.leaves">
+            <field name="name">Eid al-Fitr (Day 2)</field>
+            <field name="calendar_id" ref="resource_calendar_om_standard"/>
+            <field name="date_from" eval="datetime(2025, 3, 31, 0, 0, 0)"/>
+            <field name="date_to" eval="datetime(2025, 3, 31, 23, 59, 59)"/>
+            <field name="time_type">leave</field>
+        </record>
+
+        <record id="om_public_holiday_eid_fitr_3" model="resource.calendar.leaves">
+            <field name="name">Eid al-Fitr (Day 3)</field>
+            <field name="calendar_id" ref="resource_calendar_om_standard"/>
+            <field name="date_from" eval="datetime(2025, 4, 1, 0, 0, 0)"/>
+            <field name="date_to" eval="datetime(2025, 4, 1, 23, 59, 59)"/>
+            <field name="time_type">leave</field>
+        </record>
+
+        <!-- Eid al-Adha (4 days, approximate 2025 dates: June 6-9) -->
+        <record id="om_public_holiday_eid_adha_1" model="resource.calendar.leaves">
+            <field name="name">Eid al-Adha (Day 1)</field>
+            <field name="calendar_id" ref="resource_calendar_om_standard"/>
+            <field name="date_from" eval="datetime(2025, 6, 6, 0, 0, 0)"/>
+            <field name="date_to" eval="datetime(2025, 6, 6, 23, 59, 59)"/>
+            <field name="time_type">leave</field>
+        </record>
+
+        <record id="om_public_holiday_eid_adha_2" model="resource.calendar.leaves">
+            <field name="name">Eid al-Adha (Day 2)</field>
+            <field name="calendar_id" ref="resource_calendar_om_standard"/>
+            <field name="date_from" eval="datetime(2025, 6, 7, 0, 0, 0)"/>
+            <field name="date_to" eval="datetime(2025, 6, 7, 23, 59, 59)"/>
+            <field name="time_type">leave</field>
+        </record>
+
+        <record id="om_public_holiday_eid_adha_3" model="resource.calendar.leaves">
+            <field name="name">Eid al-Adha (Day 3)</field>
+            <field name="calendar_id" ref="resource_calendar_om_standard"/>
+            <field name="date_from" eval="datetime(2025, 6, 8, 0, 0, 0)"/>
+            <field name="date_to" eval="datetime(2025, 6, 8, 23, 59, 59)"/>
+            <field name="time_type">leave</field>
+        </record>
+
+        <record id="om_public_holiday_eid_adha_4" model="resource.calendar.leaves">
+            <field name="name">Eid al-Adha (Day 4)</field>
+            <field name="calendar_id" ref="resource_calendar_om_standard"/>
+            <field name="date_from" eval="datetime(2025, 6, 9, 0, 0, 0)"/>
+            <field name="date_to" eval="datetime(2025, 6, 9, 23, 59, 59)"/>
+            <field name="time_type">leave</field>
+        </record>
+
+        <!-- Islamic New Year (approximate 2025: June 26) -->
+        <record id="om_public_holiday_islamic_new_year" model="resource.calendar.leaves">
+            <field name="name">Islamic New Year</field>
+            <field name="calendar_id" ref="resource_calendar_om_standard"/>
+            <field name="date_from" eval="datetime(2025, 6, 26, 0, 0, 0)"/>
+            <field name="date_to" eval="datetime(2025, 6, 26, 23, 59, 59)"/>
+            <field name="time_type">leave</field>
+        </record>
+
+        <!-- Prophet's Birthday (Mawid al-Nabi, approximate 2025: September 4) -->
+        <record id="om_public_holiday_prophet_birthday" model="resource.calendar.leaves">
+            <field name="name">Prophet's Birthday</field>
+            <field name="calendar_id" ref="resource_calendar_om_standard"/>
+            <field name="date_from" eval="datetime(2025, 9, 4, 0, 0, 0)"/>
+            <field name="date_to" eval="datetime(2025, 9, 4, 23, 59, 59)"/>
+            <field name="time_type">leave</field>
+        </record>
+
+    </data>
+</odoo>

@@ -76,19 +76,9 @@
                     <field name="overtime_allowance" class="o_hr_narrow_field text-muted" />
                     <span class="text-muted">/ month</span>
                 </div>
-                <label name="overtime_by_hour" for="overtime_by_hour" />
-                <div name="overtime_by_hour" class="o_row">
-                    <field name="overtime_by_hour" class="o_hr_narrow_field text-muted" />
-                    <span class="text-muted">/ hour</span>
-                </div>
                 <label name="medical_allowance" for="medical_allowance" />
                 <div name="medical_allowance" class="o_row">
                     <field name="medical_allowance" class="o_hr_narrow_field text-muted" />
-                    <span class="text-muted">/ month</span>
-                </div>
-                <label name="air_fare_allowance" for="air_fare_allowance" />
-                <div name="air_fare_allowance" class="o_row">
-                    <field name="air_fare_allowance" class="o_hr_narrow_field text-muted" />
                     <span class="text-muted">/ month</span>
                 </div>
                 <label name="other_allowance" for="other_allowance" />
@@ -99,6 +89,16 @@
                 <label name="total_payroll_amount" for="total_payroll_amount" />
                 <div name="total_payroll_amount" class="o_row">
                     <field name="total_payroll_amount" class="o_hr_narrow_field text-muted" />
+                    <span class="text-muted">/ month</span>
+                </div>
+                <label name="overtime_by_hour" for="overtime_by_hour" />
+                <div name="overtime_by_hour" class="o_row">
+                    <field name="overtime_by_hour" class="o_hr_narrow_field text-muted" />
+                    <span class="text-muted">/ hour</span>
+                </div>
+                <label name="air_fare_allowance" for="air_fare_allowance" />
+                <div name="air_fare_allowance" class="o_row">
+                    <field name="air_fare_allowance" class="o_hr_narrow_field text-muted" />
                     <span class="text-muted">/ month</span>
                 </div>
             </separator>

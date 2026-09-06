@@ -9,6 +9,12 @@ class ApprovalRequest(models.Model):
     journal_entries_count = fields.Integer(compute='_compute_journal_entries_count')
     journal_ids = fields.One2many('account.move', 'approval_request_id', string='Journal Entries')
 
+    # Override amount to use Product Price decimal accuracy (configurable from Settings)
+    amount = fields.Float(string='Amount', digits='Product Price')
+
+    # Operation status (manually updated by executor after performing the action)
+    operation_status_id = fields.Many2one('approval.operation', string='Operation Status', tracking=True)
+
     # Payment fields (used by child modules for payment generation)
     payment_note = fields.Text(string='Payment Notes', help="Notes to include in payment memo/reference")
     payment_ids = fields.One2many('account.payment', 'approval_request_id', string='Payments')
@@ -45,6 +51,17 @@ class ApprovalRequest(models.Model):
             )
         return res
 
+    def _check_is_executor(self):
+        """Verify the current user belongs to one of the executor groups
+        configured on the approval category. Call at the start of
+        action_create_custom_by_type() overrides in child modules."""
+        self.ensure_one()
+        executor_groups = self.category_id.executor_group_ids
+        if not executor_groups:
+            raise UserError(_("No executor groups are configured for this approval category."))
+        if not (executor_groups & self.env.user.groups_id):
+            raise UserError(_("You are not authorized to perform this action."))
+
     def action_create_custom_by_type(self):
         """Create custom records based on approval type (journal entries, stock transfers, etc).
         Override this method in child modules to implement type-specific logic."""
@@ -72,3 +89,13 @@ class ApprovalRequest(models.Model):
             'type': 'ir.actions.act_window',
             'domain': [('id', 'in', self.payment_ids.ids)],
         }
+
+    def _create_purchase_orders(self):
+        """Override to pass analytic distribution from approval lines to PO lines."""
+        res = super()._create_purchase_orders()
+        # After PO lines are created, inject analytic distribution from approval lines
+        for line in self.product_line_ids:
+            if line.analytic_distribution and line.purchase_order_line_id:
+                if not line.purchase_order_line_id.analytic_distribution:
+                    line.purchase_order_line_id.analytic_distribution = line.analytic_distribution
+        return res

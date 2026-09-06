@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Base Layout Template -->
+    <template id="logspace_layout" name="Logspace Base">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <t t-out="0"/>
+            </div>
+        </t>
+    </template>
+
+    <!-- Stepper Component (Reusable) -->
+    <template id="logspace_stepper" name="Logspace Stepper">
+        <t t-set="step_list" t-value="steps or ['Step 1', 'Step 2', 'Step 3', 'Step 4']"/>
+        <t t-set="step_current" t-value="current_step or 1"/>
+        <t t-set="step_total" t-value="total_steps or 4"/>
+        <div class="container mb-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="progress" style="height: 4px;">
+                        <div class="progress-bar bg-primary" t-attf-style="width: #{(step_current - 1) / (step_total - 1) * 100}%"></div>
+                    </div>
+                    <!-- Desktop: Full step labels -->
+                    <div class="d-none d-md-flex justify-content-between mt-2 text-center">
+                        <t t-foreach="step_list" t-as="step">
+                            <div t-attf-class="step #{step_index + 1 == step_current and 'text-primary fw-bold' or ''} #{step_index + 1 &lt; step_current and 'text-success' or 'text-muted'}">
+                                <small t-esc="step"/>
+                            </div>
+                        </t>
+                    </div>
+                    <!-- Mobile: Compact step indicators -->
+                    <div class="d-flex d-md-none justify-content-between mt-2 text-center">
+                        <t t-foreach="step_list" t-as="step">
+                            <div t-attf-class="step #{step_index + 1 == step_current and 'text-primary fw-bold' or ''} #{step_index + 1 &lt; step_current and 'text-success' or 'text-muted'}">
+                                <div t-attf-class="rounded-circle d-flex align-items-center justify-content-center #{step_index + 1 == step_current and 'bg-primary text-white' or step_index + 1 &lt; step_current and 'bg-success text-white' or 'bg-light text-muted border'}" style="width: 28px; height: 28px; font-size: 12px;">
+                                    <t t-esc="step_index + 1"/>
+                                </div>
+                                <!-- <small class="d-block mt-1" style="font-size: 10px; max-width: 50px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" t-esc="step[:4]"/> -->
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Portal Sidebar Menu for Logspace -->
+    <template id="logspace_portal_menu" name="Logspace Portal Menu">
+        <div class="list-group mb-4">
+            <a href="/logspace/my/orders" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <span><i class="fa fa-truck me-2"></i> My Orders</span>
+            </a>
+            <a href="/logspace/my/profile" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <span><i class="fa fa-user me-2"></i> Profile</span>
+            </a>
+            <a href="/logspace/my/notifications" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <span><i class="fa fa-bell me-2"></i> Notifications</span>
+                <span class="badge bg-primary rounded-pill">4</span>
+            </a>
+            <a href="/logspace/ticket" class="list-group-item list-group-item-action">
+                <span><i class="fa fa-life-ring me-2"></i> Support</span>
+            </a>
+        </div>
+    </template>
+
+    <!-- Portal Layout - Full width without sidebar (Odoo Standard Style) -->
+    <template id="logspace_portal_layout" name="Logspace Portal Layout">
+        <t t-call="portal.portal_layout">
+            <t t-set="no_breadcrumbs" t-value="True"/>
+            <div class="container">
+                <!-- Breadcrumb -->
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb bg-transparent px-0 mb-0">
+                                <li class="breadcrumb-item"><a href="/logspace/my">My Account</a></li>
+                                <li t-if="breadcrumb" class="breadcrumb-item active" t-esc="breadcrumb"/>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+                <!-- Page Content -->
+                <t t-out="0"/>
+            </div>
+        </t>
+    </template>
+
+    <!-- Logspace My Account Landing Page (Standard Odoo /my Style) -->
+    <template id="logspace_my_account" name="Logspace My Account">
+        <t t-call="portal.portal_layout">
+            <t t-set="no_breadcrumbs" t-value="True"/>
+            <div class="container py-4">
+                <h3 class="mb-4">My Account</h3>
+                <div class="row g-3">
+                    <!-- My Orders Card -->
+                    <div class="col-md-6 col-lg-4">
+                        <a href="/logspace/my/orders" class="text-decoration-none">
+                            <div class="card h-100 border-primary shadow-sm">
+                                <div class="card-body d-flex align-items-center">
+                                    <div class="flex-shrink-0">
+                                        <div class="bg-primary bg-opacity-10 rounded-circle p-3 d-inline-flex">
+                                            <i class="fa fa-truck fa-2x text-primary"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h5 class="card-title mb-1 text-dark">My Orders</h5>
+                                        <p class="card-text small text-muted mb-0">View and track your shipments</p>
+                                    </div>
+                                    <div class="flex-shrink-0">
+                                        <i class="fa fa-chevron-right text-muted"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Profile Card -->
+                    <div class="col-md-6 col-lg-4">
+                        <a href="/logspace/my/profile" class="text-decoration-none">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body d-flex align-items-center">
+                                    <div class="flex-shrink-0">
+                                        <div class="bg-success bg-opacity-10 rounded-circle p-3 d-inline-flex">
+                                            <i class="fa fa-user fa-2x text-success"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h5 class="card-title mb-1 text-dark">My Profile</h5>
+                                        <p class="card-text small text-muted mb-0">Manage your account details</p>
+                                    </div>
+                                    <div class="flex-shrink-0">
+                                        <i class="fa fa-chevron-right text-muted"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Back to Home -->
+                <div class="mt-4 text-center">
+                    <a href="/logspace" class="btn btn-outline-primary">
+                        <i class="fa fa-arrow-left me-2"></i>Back to Logspace Home
+                    </a>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Back to My Account Button (Reusable) -->
+    <template id="logspace_back_to_my" name="Logspace Back to My Account">
+        <div class="mb-2">
+            <a href="/logspace/my" class="btn btn-outline-secondary btn-sm py-1">
+                <i class="fa fa-arrow-left me-1"></i> Back to My Account
+            </a>
+        </div>
+    </template>
+</odoo>

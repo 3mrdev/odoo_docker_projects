@@ -1,0 +1,804 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- ============================================ -->
+        <!-- DEMO PROVIDERS (as res.partner with is_provider=True) -->
+        <!-- All addresses updated to OMAN -->
+        <!-- ============================================ -->
+
+        <!-- ========================================== -->
+        <!-- APPROVED PROVIDERS (12 total) -->
+        <!-- ========================================== -->
+
+        <!-- Provider 1: ABC Logistics - APPROVED -->
+        <record id="partner_abc_logistics" model="res.partner">
+            <field name="name">ABC Logistics</field>
+            <field name="is_company">True</field>
+            <field name="is_provider">True</field>
+            <field name="state">approved</field>
+            <field name="is_approved_provider">True</field>
+            <field name="phone">+968 2445 1234</field>
+            <field name="email">contact@abclogistics.om</field>
+            <field name="city">Seeb</field>
+            <field name="street">Al Khoud, Street 33, Building 47</field>
+            <field name="website">https://abclogistics.om</field>
+            <field name="tax_id">OM101234567</field>
+            <field name="cr_number">1234567890</field>
+            <field name="years_experience">5_10</field>
+            <field name="platform_fee_percentage">0.10</field>
+            <field name="approval_date" eval="(datetime.now() - timedelta(days=30)).strftime('%Y-%m-%d')"/>
+        </record>
+
+        <!-- Provider 2: Fast Truck Co - APPROVED -->
+        <record id="partner_fast_truck" model="res.partner">
+            <field name="name">Fast Truck Co</field>
+            <field name="is_company">True</field>
+            <field name="is_provider">True</field>
+            <field name="state">approved</field>
+            <field name="is_approved_provider">True</field>
+            <field name="phone">+968 2447 6543</field>
+            <field name="email">info@fasttruck.om</field>
+            <field name="city">Bousher</field>
+            <field name="street">Al Ghubra North, Street 15, Wave Complex</field>
+            <field name="website">https://fasttruck.om</field>
+            <field name="tax_id">OM109876543</field>
+            <field name="cr_number">0987654321</field>
+            <field name="years_experience">3_5</field>
+            <field name="platform_fee_percentage">0.12</field>
+            <field name="approval_date" eval="(datetime.now() - timedelta(days=15)).strftime('%Y-%m-%d')"/>
+        </record>
+
+        <!-- Provider 3: Muscat Express Transport - APPROVED -->
+        <record id="partner_saudi_express" model="res.partner">
+            <field name="name">Muscat Express Transport</field>
+            <field name="is_company">True</field>
+            <field name="is_provider">True</field>
+            <field name="state">approved</field>
+            <field name="is_approved_provider">True</field>
+            <field name="phone">+968 2434 7890</field>
+            <field name="email">operations@muscatexpress.om</field>
+            <field name="city">Muttrah</field>
+            <field name="street">Muttrah Corniche, Al Dharis Street, Building 22</field>
+            <field name="website">https://muscatexpress.om</field>
+            <field name="tax_id">OM104567890</field>
+            <field name="cr_number">4567890123</field>
+            <field name="years_experience">more_10</field>
+            <field name="platform_fee_percentage">0.08</field>
+            <field name="approval_date" eval="(datetime.now() - timedelta(days=60)).strftime('%Y-%m-%d')"/>
+        </record>
+
+        <!-- Provider 7: Muscat Cargo LLC - APPROVED -->
+        <record id="partner_muscat_cargo" model="res.partner">
+            <field name="name">Muscat Cargo LLC</field>
+            <field name="is_company">True</field>
+            <field name="is_provider">True</field>
+            <field name="state">approved</field>
+            <field name="is_approved_provider">True</field>
+            <field name="phone">+968 2448 2001</field>
+            <field name="email">ops@muscatcargo.om</field>
+            <field name="city">Muscat</field>
+            <field name="street">Ruwi, Street 28, Al Riyadh Building</field>
+            <field name="website">https://muscatcargo.om</field>
+            <field name="tax_id">OM103344556</field>
+            <field name="cr_number">5566778899</field>
+            <field name="years_experience">5_10</field>
+            <field name="platform_fee_percentage">0.10</field>
+            <field name="approval_date" eval="(datetime.now() - timedelta(days=45)).strftime('%Y-%m-%d')"/>
+        </record>
+
+        <!-- Provider 8: Seeb Logistics Co - APPROVED -->
+        <record id="partner_seeb_logistics" model="res.partner">
+            <field name="name">Seeb Logistics Co</field>
+            <field name="is_company">True</field>
+            <field name="is_provider">True</field>
+            <field name="state">approved</field>
+            <field name="is_approved_provider">True</field>
+            <field name="phone">+968 2444 3002</field>
+            <field name="email">info@seeblogistics.om</field>
+            <field name="city">Seeb</field>
+            <field name="street">Al Mouj Boulevard, Tower B, Office 301</field>
+            <field name="website">https://seeblogistics.om</field>
+            <field name="tax_id">OM105566778</field>
+            <field name="cr_number">6677889900</field>
+            <field name="years_experience">3_5</field>
+            <field name="platform_fee_percentage">0.09</field>
+            <field name="approval_date" eval="(datetime.now() - timedelta(days=25)).strftime('%Y-%m-%d')"/>
+        </record>
+
+        <!-- Provider 9: Bousher Transport - APPROVED -->
+        <record id="partner_bousher_transport" model="res.partner">
+            <field name="name">Bousher Transport</field>
+            <field name="is_company">True</field>
+            <field name="is_provider">True</field>
+            <field name="state">approved</field>
+            <field name="is_approved_provider">True</field>
+            <field name="phone">+968 2449 4003</field>
+            <field name="email">dispatch@boushertransport.om</field>
+            <field name="city">Bousher</field>
+            <field name="street">Al Qurum, Street 12, Palm Plaza</field>
+            <field name="website">https://boushertransport.om</field>
+            <field name="tax_id">OM107788990</field>
+            <field name="cr_number">7788990011</field>
+            <field name="years_experience">5_10</field>
+            <field name="platform_fee_percentage">0.11</field>
+            <field name="approval_date" eval="(datetime.now() - timedelta(days=20)).strftime('%Y-%m-%d')"/>
+        </record>
+
+        <!-- Provider 10: Al Amrat Movers - APPROVED -->
+        <record id="partner_al_amrat_movers" model="res.partner">
+            <field name="name">Al Amrat Movers</field>
+            <field name="is_company">True</field>
+            <field name="is_provider">True</field>
+            <field name="state">approved</field>
+            <field name="is_approved_provider">True</field>
+            <field name="phone">+968 2446 5004</field>
+            <field name="email">hello@alamratmovers.om</field>
+            <field name="city">Al Amrat</field>
+            <field name="street">Al Amrat Main Road, Warehouse District, Plot 15</field>
+            <field name="website">https://alamratmovers.om</field>
+            <field name="tax_id">OM109900112</field>
+            <field name="cr_number">8899001122</field>
+            <field name="years_experience">1_2</field>
+            <field name="platform_fee_percentage">0.13</field>
+            <field name="approval_date" eval="(datetime.now() - timedelta(days=10)).strftime('%Y-%m-%d')"/>
+        </record>
+
+        <!-- Provider 11: Sohar Freight Services - APPROVED -->
+        <record id="partner_sohar_freight" model="res.partner">
+            <field name="name">Sohar Freight Services</field>
+            <field name="is_company">True</field>
+            <field name="is_provider">True</field>
+            <field name="state">approved</field>
+            <field name="is_approved_provider">True</field>
+            <field name="phone">+968 2624 6005</field>
+            <field name="email">admin@soharfreight.om</field>
+            <field name="city">Sohar</field>
+            <field name="street">Sohar Freezone, Gate 7, Industrial Plot 44</field>
+            <field name="website">https://soharfreight.om</field>
+            <field name="tax_id">OM101122334</field>
+            <field name="cr_number">9900112233</field>
+            <field name="years_experience">more_10</field>
+            <field name="platform_fee_percentage">0.08</field>
+            <field name="approval_date" eval="(datetime.now() - timedelta(days=90)).strftime('%Y-%m-%d')"/>
+        </record>
+
+        <!-- Provider 12: Nizwa Delivery Co - APPROVED -->
+        <record id="partner_nizwa_delivery" model="res.partner">
+            <field name="name">Nizwa Delivery Co</field>
+            <field name="is_company">True</field>
+            <field name="is_provider">True</field>
+            <field name="state">approved</field>
+            <field name="is_approved_provider">True</field>
+            <field name="phone">+968 2512 7006</field>
+            <field name="email">ops@nizwadelivery.om</field>
+            <field name="city">Nizwa</field>
+            <field name="street">Nizwa Industrial Area, Street 9, Unit 21</field>
+            <field name="website">https://nizwadelivery.om</field>
+            <field name="tax_id">OM103344112</field>
+            <field name="cr_number">1122334455</field>
+            <field name="years_experience">3_5</field>
+            <field name="platform_fee_percentage">0.10</field>
+            <field name="approval_date" eval="(datetime.now() - timedelta(days=35)).strftime('%Y-%m-%d')"/>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- PENDING PROVIDERS -->
+        <!-- ========================================== -->
+
+        <!-- Provider 4: City Movers - PENDING -->
+        <record id="partner_city_movers" model="res.partner">
+            <field name="name">City Movers</field>
+            <field name="is_company">True</field>
+            <field name="is_provider">True</field>
+            <field name="state">pending</field>
+            <field name="is_approved_provider">False</field>
+            <field name="phone">+968 2443 3344</field>
+            <field name="email">info@citymovers.om</field>
+            <field name="city">Barka</field>
+            <field name="street">Barka Al Janubiyah, Street 7, Block 4</field>
+            <field name="tax_id">OM102223344</field>
+            <field name="cr_number">2223334444</field>
+            <field name="years_experience">1_2</field>
+            <field name="platform_fee_percentage">0.10</field>
+        </record>
+
+        <!-- Provider 5: Quick Delivery LLC - PENDING -->
+        <record id="partner_quick_delivery" model="res.partner">
+            <field name="name">Quick Delivery LLC</field>
+            <field name="is_company">True</field>
+            <field name="is_provider">True</field>
+            <field name="state">pending</field>
+            <field name="is_approved_provider">False</field>
+            <field name="phone">+968 2440 7788</field>
+            <field name="email">contact@quickdelivery.om</field>
+            <field name="city">Barka</field>
+            <field name="street">Barka Industrial, Warehouse 12</field>
+            <field name="tax_id">OM107778899</field>
+            <field name="cr_number">7778889999</field>
+            <field name="years_experience">less_1</field>
+            <field name="platform_fee_percentage">0.15</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- SUSPENDED PROVIDER -->
+        <!-- ========================================== -->
+
+        <!-- Provider 6: Suspended Transport - SUSPENDED -->
+        <record id="partner_suspended" model="res.partner">
+            <field name="name">Suspended Transport Co</field>
+            <field name="is_company">True</field>
+            <field name="is_provider">True</field>
+            <field name="state">suspended</field>
+            <field name="is_approved_provider">False</field>
+            <field name="phone">+968 2400 1111</field>
+            <field name="email">info@suspended.om</field>
+            <field name="city">Sohar</field>
+            <field name="street">Sohar Industrial City, Plot 99</field>
+            <field name="tax_id">OM100001112</field>
+            <field name="cr_number">0001112222</field>
+            <field name="years_experience">3_5</field>
+            <field name="platform_fee_percentage">0.10</field>
+            <field name="suspension_reason">Multiple customer complaints about late deliveries and vehicle condition</field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- PROVIDER CONTACTS (Child Partners) -->
+        <!-- ============================================ -->
+
+        <!-- ABC Logistics Contacts -->
+        <record id="contact_abc_sales" model="res.partner">
+            <field name="name">Ahmed Al-Rashid</field>
+            <field name="parent_id" ref="partner_abc_logistics"/>
+            <field name="function">Sales Manager</field>
+            <field name="phone">+968 9911 2233</field>
+            <field name="email">ahmed.rashid@abclogistics.om</field>
+        </record>
+
+        <record id="contact_abc_ops" model="res.partner">
+            <field name="name">Khalid Al-Omari</field>
+            <field name="parent_id" ref="partner_abc_logistics"/>
+            <field name="function">Operations Manager</field>
+            <field name="phone">+968 9933 4455</field>
+            <field name="email">khalid.omari@abclogistics.om</field>
+        </record>
+
+        <!-- Fast Truck Contacts -->
+        <record id="contact_ftc_dispatch" model="res.partner">
+            <field name="name">Fahad Al-Zahrani</field>
+            <field name="parent_id" ref="partner_fast_truck"/>
+            <field name="function">Dispatcher</field>
+            <field name="phone">+968 9955 6677</field>
+            <field name="email">fahad@fasttruck.om</field>
+        </record>
+
+        <record id="contact_ftc_service" model="res.partner">
+            <field name="name">Nora Al-Balushi</field>
+            <field name="parent_id" ref="partner_fast_truck"/>
+            <field name="function">Customer Service</field>
+            <field name="phone">+968 9977 8899</field>
+            <field name="email">nora@fasttruck.om</field>
+        </record>
+
+        <!-- Muscat Express Contacts -->
+        <record id="contact_se_ops" model="res.partner">
+            <field name="name">Mohammed Al-Harbi</field>
+            <field name="parent_id" ref="partner_saudi_express"/>
+            <field name="function">Operations Manager</field>
+            <field name="phone">+968 9234 5678</field>
+            <field name="email">mohammed@muscatexpress.om</field>
+        </record>
+
+        <!-- Muscat Cargo Contacts -->
+        <record id="contact_muscat_cargo" model="res.partner">
+            <field name="name">Salim Al-Balushi</field>
+            <field name="parent_id" ref="partner_muscat_cargo"/>
+            <field name="function">Operations Manager</field>
+            <field name="phone">+968 9901 2001</field>
+            <field name="email">salim@muscatcargo.om</field>
+        </record>
+
+        <!-- Seeb Logistics Contacts -->
+        <record id="contact_seeb_logistics" model="res.partner">
+            <field name="name">Yousuf Al-Habsi</field>
+            <field name="parent_id" ref="partner_seeb_logistics"/>
+            <field name="function">Fleet Manager</field>
+            <field name="phone">+968 9902 3002</field>
+            <field name="email">yousuf@seeblogistics.om</field>
+        </record>
+
+        <!-- Bousher Transport Contacts -->
+        <record id="contact_bousher_transport" model="res.partner">
+            <field name="name">Tariq Al-Shukaili</field>
+            <field name="parent_id" ref="partner_bousher_transport"/>
+            <field name="function">Logistics Coordinator</field>
+            <field name="phone">+968 9903 4003</field>
+            <field name="email">tariq@boushertransport.om</field>
+        </record>
+
+        <!-- Al Amrat Movers Contacts -->
+        <record id="contact_al_amrat_movers" model="res.partner">
+            <field name="name">Hashim Al-Rashdi</field>
+            <field name="parent_id" ref="partner_al_amrat_movers"/>
+            <field name="function">General Manager</field>
+            <field name="phone">+968 9904 5004</field>
+            <field name="email">hashim@alamratmovers.om</field>
+        </record>
+
+        <!-- Sohar Freight Contacts -->
+        <record id="contact_sohar_freight" model="res.partner">
+            <field name="name">Hamdan Al-Breiki</field>
+            <field name="parent_id" ref="partner_sohar_freight"/>
+            <field name="function">Port Operations Lead</field>
+            <field name="phone">+968 9905 6005</field>
+            <field name="email">hamdan@soharfreight.om</field>
+        </record>
+
+        <!-- Nizwa Delivery Contacts -->
+        <record id="contact_nizwa_delivery" model="res.partner">
+            <field name="name">Abdullah Al-Saidi</field>
+            <field name="parent_id" ref="partner_nizwa_delivery"/>
+            <field name="function">Delivery Supervisor</field>
+            <field name="phone">+968 9906 7006</field>
+            <field name="email">abdullah@nizwadelivery.om</field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- PROVIDER FLEET SUMMARY -->
+        <!-- ============================================ -->
+
+        <!-- ABC Logistics Fleet -->
+        <record id="fleet_abc_flatbed" model="logspace.provider.fleet.summary">
+            <field name="partner_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="fleet_count">5</field>
+            <field name="capacity_tons">3.0</field>
+            <field name="dimensions">600 x 240 x 220 cm</field>
+        </record>
+        <record id="fleet_abc_covered" model="logspace.provider.fleet.summary">
+            <field name="partner_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_covered_3t"/>
+            <field name="fleet_count">3</field>
+            <field name="capacity_tons">3.0</field>
+            <field name="dimensions">550 x 230 x 210 cm</field>
+        </record>
+        <record id="fleet_abc_van" model="logspace.provider.fleet.summary">
+            <field name="partner_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_van"/>
+            <field name="fleet_count">8</field>
+            <field name="capacity_tons">1.0</field>
+            <field name="dimensions">300 x 180 x 150 cm</field>
+        </record>
+
+        <!-- Fast Truck Fleet -->
+        <record id="fleet_ftc_flatbed5" model="logspace.provider.fleet.summary">
+            <field name="partner_id" ref="partner_fast_truck"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_5t"/>
+            <field name="fleet_count">4</field>
+            <field name="capacity_tons">5.0</field>
+            <field name="dimensions">750 x 250 x 240 cm</field>
+        </record>
+        <record id="fleet_ftc_flatbed3" model="logspace.provider.fleet.summary">
+            <field name="partner_id" ref="partner_fast_truck"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="fleet_count">6</field>
+            <field name="capacity_tons">3.0</field>
+            <field name="dimensions">600 x 240 x 220 cm</field>
+        </record>
+
+        <!-- Muscat Express Fleet -->
+        <record id="fleet_se_flatbed5" model="logspace.provider.fleet.summary">
+            <field name="partner_id" ref="partner_saudi_express"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_5t"/>
+            <field name="fleet_count">10</field>
+            <field name="capacity_tons">5.0</field>
+            <field name="dimensions">750 x 250 x 240 cm</field>
+        </record>
+        <record id="fleet_se_refrigerated" model="logspace.provider.fleet.summary">
+            <field name="partner_id" ref="partner_saudi_express"/>
+            <field name="vehicle_type_id" ref="vehicle_type_refrigerated"/>
+            <field name="fleet_count">4</field>
+            <field name="capacity_tons">2.5</field>
+            <field name="dimensions">550 x 220 x 200 cm</field>
+        </record>
+        <record id="fleet_se_covered" model="logspace.provider.fleet.summary">
+            <field name="partner_id" ref="partner_saudi_express"/>
+            <field name="vehicle_type_id" ref="vehicle_type_covered_3t"/>
+            <field name="fleet_count">7</field>
+            <field name="capacity_tons">3.0</field>
+            <field name="dimensions">550 x 230 x 210 cm</field>
+        </record>
+
+        <!-- Muscat Cargo Fleet -->
+        <record id="fleet_muscat_cargo_flatbed3" model="logspace.provider.fleet.summary">
+            <field name="partner_id" ref="partner_muscat_cargo"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="fleet_count">4</field>
+            <field name="capacity_tons">3.0</field>
+            <field name="dimensions">600 x 240 x 220 cm</field>
+        </record>
+
+        <!-- Seeb Logistics Fleet -->
+        <record id="fleet_seeb_logistics_flatbed3" model="logspace.provider.fleet.summary">
+            <field name="partner_id" ref="partner_seeb_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="fleet_count">5</field>
+            <field name="capacity_tons">3.0</field>
+            <field name="dimensions">600 x 240 x 220 cm</field>
+        </record>
+
+        <!-- Bousher Transport Fleet -->
+        <record id="fleet_bousher_transport_flatbed3" model="logspace.provider.fleet.summary">
+            <field name="partner_id" ref="partner_bousher_transport"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="fleet_count">3</field>
+            <field name="capacity_tons">3.0</field>
+            <field name="dimensions">600 x 240 x 220 cm</field>
+        </record>
+
+        <!-- Al Amrat Movers Fleet -->
+        <record id="fleet_al_amrat_van" model="logspace.provider.fleet.summary">
+            <field name="partner_id" ref="partner_al_amrat_movers"/>
+            <field name="vehicle_type_id" ref="vehicle_type_van"/>
+            <field name="fleet_count">6</field>
+            <field name="capacity_tons">1.0</field>
+            <field name="dimensions">300 x 180 x 150 cm</field>
+        </record>
+
+        <!-- Sohar Freight Fleet -->
+        <record id="fleet_sohar_freight_flatbed5" model="logspace.provider.fleet.summary">
+            <field name="partner_id" ref="partner_sohar_freight"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_5t"/>
+            <field name="fleet_count">8</field>
+            <field name="capacity_tons">5.0</field>
+            <field name="dimensions">750 x 250 x 240 cm</field>
+        </record>
+
+        <!-- Nizwa Delivery Fleet -->
+        <record id="fleet_nizwa_delivery_flatbed3" model="logspace.provider.fleet.summary">
+            <field name="partner_id" ref="partner_nizwa_delivery"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="fleet_count">3</field>
+            <field name="capacity_tons">3.0</field>
+            <field name="dimensions">600 x 240 x 220 cm</field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- PROVIDER TIME FRAMES -->
+        <!-- Created via post_init_hook in hooks.py -->
+        <!-- (XML ref() caching issue prevents time_slot M2M from resolving here) -->
+        <!-- ============================================ -->
+
+        <!-- ============================================ -->
+        <!-- PROVIDER SPECIAL INSTRUCTIONS -->
+        <!-- ============================================ -->
+
+        <!-- ABC Logistics Instructions -->
+        <record id="instruction_abc_flatbed" model="logspace.provider.special.instruction">
+            <field name="partner_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="instructions"><![CDATA[<p><strong>Loading Requirements:</strong></p>
+<ul>
+<li>Items must be securely tied down before transport</li>
+<li>Maximum height clearance: 2.2 meters</li>
+<li>Driver will assist with loading up to 500kg</li>
+</ul>]]></field>
+            <field name="is_active">True</field>
+        </record>
+        <record id="instruction_abc_covered" model="logspace.provider.special.instruction">
+            <field name="partner_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_covered_3t"/>
+            <field name="instructions"><![CDATA[<p><strong>Weather-Protected Transport:</strong></p>
+<ul>
+<li>Fully enclosed cargo area protects from rain and dust</li>
+<li>Climate-controlled ventilation available</li>
+<li>Maximum load height: 2.1 meters</li>
+</ul>]]></field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- Fast Truck Instructions -->
+        <record id="instruction_ftc_heavy" model="logspace.provider.special.instruction">
+            <field name="partner_id" ref="partner_fast_truck"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_5t"/>
+            <field name="instructions"><![CDATA[<p><strong>Heavy Load Notice:</strong></p>
+<ul>
+<li>Certified for loads up to 5 tons</li>
+<li>Hydraulic lift available</li>
+<li>Additional equipment on request</li>
+</ul>]]></field>
+            <field name="is_active">True</field>
+        </record>
+        <record id="instruction_ftc_flatbed3" model="logspace.provider.special.instruction">
+            <field name="partner_id" ref="partner_fast_truck"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="instructions"><![CDATA[<p><strong>Standard Flatbed Service:</strong></p>
+<ul>
+<li>Ratchet straps and tie-downs provided</li>
+<li>Tarpaulin available upon request</li>
+<li>Loading assistance included</li>
+</ul>]]></field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- Muscat Express Instructions -->
+        <record id="instruction_se_reefer" model="logspace.provider.special.instruction">
+            <field name="partner_id" ref="partner_saudi_express"/>
+            <field name="vehicle_type_id" ref="vehicle_type_refrigerated"/>
+            <field name="instructions"><![CDATA[<p><strong>Temperature Controlled Transport:</strong></p>
+<ul>
+<li>Maintains temperature between -18C to +4C</li>
+<li>Real-time temperature monitoring</li>
+<li>Suitable for frozen and fresh goods</li>
+<li>GPS tracking included</li>
+</ul>]]></field>
+            <field name="is_active">True</field>
+        </record>
+        <record id="instruction_se_covered" model="logspace.provider.special.instruction">
+            <field name="partner_id" ref="partner_saudi_express"/>
+            <field name="vehicle_type_id" ref="vehicle_type_covered_3t"/>
+            <field name="instructions"><![CDATA[<p><strong>Enclosed Cargo Service:</strong></p>
+<ul>
+<li>Secure lockable cargo area</li>
+<li>Suitable for electronics and fragile items</li>
+<li>Padding and securing materials provided</li>
+</ul>]]></field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- Muscat Cargo Instructions -->
+        <record id="instruction_muscat_cargo" model="logspace.provider.special.instruction">
+            <field name="partner_id" ref="partner_muscat_cargo"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="instructions"><![CDATA[<p><strong>General Cargo Service:</strong></p>
+<ul>
+<li>Experienced with construction materials</li>
+<li>Forklift loading available at warehouse</li>
+<li>Same-day delivery within Muscat</li>
+</ul>]]></field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- Seeb Logistics Instructions -->
+        <record id="instruction_seeb_logistics" model="logspace.provider.special.instruction">
+            <field name="partner_id" ref="partner_seeb_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="instructions"><![CDATA[<p><strong>Premium Logistics Service:</strong></p>
+<ul>
+<li>GPS tracking on all vehicles</li>
+<li>Photo confirmation at pickup and delivery</li>
+<li>Flexible scheduling available</li>
+</ul>]]></field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- Bousher Transport Instructions -->
+        <record id="instruction_bousher_transport" model="logspace.provider.special.instruction">
+            <field name="partner_id" ref="partner_bousher_transport"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="instructions"><![CDATA[<p><strong>Reliable Transport:</strong></p>
+<ul>
+<li>All vehicles equipped with securing straps</li>
+<li>Driver assistance with loading included</li>
+<li>Weekend service available</li>
+</ul>]]></field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- Al Amrat Movers Instructions -->
+        <record id="instruction_al_amrat" model="logspace.provider.special.instruction">
+            <field name="partner_id" ref="partner_al_amrat_movers"/>
+            <field name="vehicle_type_id" ref="vehicle_type_van"/>
+            <field name="instructions"><![CDATA[<p><strong>Small Load Specialists:</strong></p>
+<ul>
+<li>Perfect for apartment moves and small deliveries</li>
+<li>Blankets and padding provided for furniture</li>
+<li>Two-man crew available on request</li>
+</ul>]]></field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- Sohar Freight Instructions -->
+        <record id="instruction_sohar_freight" model="logspace.provider.special.instruction">
+            <field name="partner_id" ref="partner_sohar_freight"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_5t"/>
+            <field name="instructions"><![CDATA[<p><strong>Heavy Freight & Port Services:</strong></p>
+<ul>
+<li>Specialized in port-to-warehouse transport</li>
+<li>Container loading/unloading equipment</li>
+<li>Customs documentation assistance</li>
+<li>Heavy lift capacity up to 5 tons</li>
+</ul>]]></field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- Nizwa Delivery Instructions -->
+        <record id="instruction_nizwa_delivery" model="logspace.provider.special.instruction">
+            <field name="partner_id" ref="partner_nizwa_delivery"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="instructions"><![CDATA[<p><strong>Intra-City & Inter-City Delivery:</strong></p>
+<ul>
+<li>Specializing in Ad Dakhiliyah region</li>
+<li>Mountain route experienced drivers</li>
+<li>Next-day delivery to Muscat guaranteed</li>
+</ul>]]></field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- PROVIDER ADDONS (Custom Pricing) -->
+        <!-- ============================================ -->
+
+        <!-- ABC Logistics Addons -->
+        <record id="addon_abc_gps" model="logspace.provider.vehicle.type.addon">
+            <field name="provider_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="addon_id" ref="addon_gps"/>
+            <field name="provider_price">8.0</field>
+            <field name="is_active">True</field>
+        </record>
+        <record id="addon_abc_loading" model="logspace.provider.vehicle.type.addon">
+            <field name="provider_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="addon_id" ref="addon_loading"/>
+            <field name="provider_price">20.0</field>
+            <field name="is_active">True</field>
+        </record>
+        <record id="addon_abc_protection" model="logspace.provider.vehicle.type.addon">
+            <field name="provider_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="addon_id" ref="addon_protection"/>
+            <field name="provider_price">12.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- Fast Truck Addons -->
+        <record id="addon_ftc_express" model="logspace.provider.vehicle.type.addon">
+            <field name="provider_id" ref="partner_fast_truck"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_5t"/>
+            <field name="addon_id" ref="addon_express"/>
+            <field name="provider_price">45.0</field>
+            <field name="is_active">True</field>
+        </record>
+        <record id="addon_ftc_helper" model="logspace.provider.vehicle.type.addon">
+            <field name="provider_id" ref="partner_fast_truck"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_5t"/>
+            <field name="addon_id" ref="addon_helper"/>
+            <field name="provider_price">35.0</field>
+            <field name="is_active">True</field>
+        </record>
+        <record id="addon_ftc_gps" model="logspace.provider.vehicle.type.addon">
+            <field name="provider_id" ref="partner_fast_truck"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="addon_id" ref="addon_gps"/>
+            <field name="provider_price">10.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- Muscat Express Addons -->
+        <record id="addon_se_insurance" model="logspace.provider.vehicle.type.addon">
+            <field name="provider_id" ref="partner_saudi_express"/>
+            <field name="vehicle_type_id" ref="vehicle_type_refrigerated"/>
+            <field name="addon_id" ref="addon_insurance"/>
+            <field name="provider_price">30.0</field>
+            <field name="is_active">True</field>
+        </record>
+        <record id="addon_se_loading" model="logspace.provider.vehicle.type.addon">
+            <field name="provider_id" ref="partner_saudi_express"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_5t"/>
+            <field name="addon_id" ref="addon_loading"/>
+            <field name="provider_price">22.0</field>
+            <field name="is_active">True</field>
+        </record>
+        <record id="addon_se_express" model="logspace.provider.vehicle.type.addon">
+            <field name="provider_id" ref="partner_saudi_express"/>
+            <field name="vehicle_type_id" ref="vehicle_type_covered_3t"/>
+            <field name="addon_id" ref="addon_express"/>
+            <field name="provider_price">48.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- Muscat Cargo Addons -->
+        <record id="addon_muscat_cargo_loading" model="logspace.provider.vehicle.type.addon">
+            <field name="provider_id" ref="partner_muscat_cargo"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="addon_id" ref="addon_loading"/>
+            <field name="provider_price">18.0</field>
+            <field name="is_active">True</field>
+        </record>
+        <record id="addon_muscat_cargo_unloading" model="logspace.provider.vehicle.type.addon">
+            <field name="provider_id" ref="partner_muscat_cargo"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="addon_id" ref="addon_unloading"/>
+            <field name="provider_price">18.0</field>
+            <field name="is_active">True</field>
+        </record>
+        <record id="addon_muscat_cargo_insurance" model="logspace.provider.vehicle.type.addon">
+            <field name="provider_id" ref="partner_muscat_cargo"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="addon_id" ref="addon_insurance"/>
+            <field name="provider_price">28.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- Seeb Logistics Addons -->
+        <record id="addon_seeb_logistics_gps" model="logspace.provider.vehicle.type.addon">
+            <field name="provider_id" ref="partner_seeb_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="addon_id" ref="addon_gps"/>
+            <field name="provider_price">9.0</field>
+            <field name="is_active">True</field>
+        </record>
+        <record id="addon_seeb_logistics_protection" model="logspace.provider.vehicle.type.addon">
+            <field name="provider_id" ref="partner_seeb_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="addon_id" ref="addon_protection"/>
+            <field name="provider_price">14.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- Bousher Transport Addons -->
+        <record id="addon_bousher_loading" model="logspace.provider.vehicle.type.addon">
+            <field name="provider_id" ref="partner_bousher_transport"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="addon_id" ref="addon_loading"/>
+            <field name="provider_price">20.0</field>
+            <field name="is_active">True</field>
+        </record>
+        <record id="addon_bousher_helper" model="logspace.provider.vehicle.type.addon">
+            <field name="provider_id" ref="partner_bousher_transport"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="addon_id" ref="addon_helper"/>
+            <field name="provider_price">32.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- Al Amrat Movers Addons -->
+        <record id="addon_al_amrat_protection" model="logspace.provider.vehicle.type.addon">
+            <field name="provider_id" ref="partner_al_amrat_movers"/>
+            <field name="vehicle_type_id" ref="vehicle_type_van"/>
+            <field name="addon_id" ref="addon_protection"/>
+            <field name="provider_price">12.0</field>
+            <field name="is_active">True</field>
+        </record>
+        <record id="addon_al_amrat_helper" model="logspace.provider.vehicle.type.addon">
+            <field name="provider_id" ref="partner_al_amrat_movers"/>
+            <field name="vehicle_type_id" ref="vehicle_type_van"/>
+            <field name="addon_id" ref="addon_helper"/>
+            <field name="provider_price">30.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- Sohar Freight Addons -->
+        <record id="addon_sohar_express" model="logspace.provider.vehicle.type.addon">
+            <field name="provider_id" ref="partner_sohar_freight"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_5t"/>
+            <field name="addon_id" ref="addon_express"/>
+            <field name="provider_price">55.0</field>
+            <field name="is_active">True</field>
+        </record>
+        <record id="addon_sohar_insurance" model="logspace.provider.vehicle.type.addon">
+            <field name="provider_id" ref="partner_sohar_freight"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_5t"/>
+            <field name="addon_id" ref="addon_insurance"/>
+            <field name="provider_price">38.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- Nizwa Delivery Addons -->
+        <record id="addon_nizwa_loading" model="logspace.provider.vehicle.type.addon">
+            <field name="provider_id" ref="partner_nizwa_delivery"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="addon_id" ref="addon_loading"/>
+            <field name="provider_price">15.0</field>
+            <field name="is_active">True</field>
+        </record>
+        <record id="addon_nizwa_gps" model="logspace.provider.vehicle.type.addon">
+            <field name="provider_id" ref="partner_nizwa_delivery"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="addon_id" ref="addon_gps"/>
+            <field name="provider_price">8.0</field>
+            <field name="is_active">True</field>
+        </record>
+
+    </data>
+</odoo>

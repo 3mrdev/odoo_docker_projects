@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Fleet Summary Action -->
+    <record id="action_logspace_fleet_summary" model="ir.actions.act_window">
+        <field name="name">Fleet Summary</field>
+        <field name="res_model">logspace.provider.fleet.summary</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure fleet capacity by vehicle type!
+            </p>
+        </field>
+    </record>
+
+    <!-- Fleet Summary List View -->
+    <record id="view_logspace_fleet_summary_tree" model="ir.ui.view">
+        <field name="name">logspace.provider.fleet.summary.tree</field>
+        <field name="model">logspace.provider.fleet.summary</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="partner_id" domain="[('is_provider', '=', True)]"/>
+                <field name="vehicle_type_id"/>
+                <field name="fleet_count"/>
+                <field name="capacity_tons"/>
+                <field name="dimensions"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Fleet Summary Form View -->
+    <record id="view_logspace_fleet_summary_form" model="ir.ui.view">
+        <field name="name">logspace.provider.fleet.summary.form</field>
+        <field name="model">logspace.provider.fleet.summary</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="partner_id" domain="[('is_provider', '=', True)]"/>
+                            <field name="vehicle_type_id"/>
+                        </group>
+                        <group>
+                            <field name="fleet_count"/>
+                            <field name="capacity_tons"/>
+                            <field name="dimensions"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

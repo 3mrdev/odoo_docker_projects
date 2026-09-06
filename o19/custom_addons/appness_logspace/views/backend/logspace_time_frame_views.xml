@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Time Frame Action -->
+    <record id="action_logspace_time_frame" model="ir.actions.act_window">
+        <field name="name">Time Frames</field>
+        <field name="res_model">logspace.provider.time.frame</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure available time frames per vehicle type!
+            </p>
+        </field>
+    </record>
+
+    <!-- Time Frame List View -->
+    <record id="view_logspace_time_frame_tree" model="ir.ui.view">
+        <field name="name">logspace.provider.time.frame.tree</field>
+        <field name="model">logspace.provider.time.frame</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="partner_id" domain="[('is_provider', '=', True)]"/>
+                <field name="vehicle_type_id"/>
+                <field name="time_slot_ids" widget="many2many_tags" options="{'no_create_edit': True, 'no_create': True}"/>
+                <field name="display_name" readonly="1" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Time Frame Form View -->
+    <record id="view_logspace_time_frame_form" model="ir.ui.view">
+        <field name="name">logspace.provider.time.frame.form</field>
+        <field name="model">logspace.provider.time.frame</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="partner_id" domain="[('is_provider', '=', True)]"/>
+                            <field name="vehicle_type_id"/>
+                        </group>
+                        <group>
+                            <field name="time_slot_ids" widget="many2many_tags" options="{'no_create_edit': True, 'no_create': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

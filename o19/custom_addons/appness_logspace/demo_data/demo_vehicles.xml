@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- ============================================ -->
+        <!-- DEMO VEHICLES -->
+        <!-- 54 vehicles total distributed across zones -->
+        <!-- Zone distribution: Seeb 26, Bousher 15, Muttrah 10, Al Amrat 3 -->
+        <!-- Extra vehicles concentrated in Seeb to demonstrate pagination -->
+        <!-- ============================================ -->
+
+        <!-- ========================================== -->
+        <!-- ABC LOGISTICS (5 vehicles) -->
+        <!-- ========================================== -->
+
+        <record id="vehicle_abc_1" model="logspace.vehicle">
+            <field name="name">ABC Flatbed 01</field>
+            <field name="provider_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">123456</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_abc_2" model="logspace.vehicle">
+            <field name="name">ABC Flatbed 02</field>
+            <field name="provider_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">123457</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_abc_3" model="logspace.vehicle">
+            <field name="name">ABC Covered 01</field>
+            <field name="provider_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_covered_3t"/>
+            <field name="plate_number">123458</field>
+            <field name="zone_id" ref="om_zone_bousher"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_abc_4" model="logspace.vehicle">
+            <field name="name">ABC Van 01</field>
+            <field name="provider_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_van"/>
+            <field name="plate_number">123459</field>
+            <field name="zone_id" ref="om_zone_muttrah"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_abc_5" model="logspace.vehicle">
+            <field name="name">ABC Flatbed 03</field>
+            <field name="provider_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">123460</field>
+            <field name="zone_id" ref="om_zone_bousher"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- FAST TRUCK CO (5 vehicles) -->
+        <!-- ========================================== -->
+
+        <record id="vehicle_ftc_1" model="logspace.vehicle">
+            <field name="name">FTC Heavy 01</field>
+            <field name="provider_id" ref="partner_fast_truck"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_5t"/>
+            <field name="plate_number">234567</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_ftc_2" model="logspace.vehicle">
+            <field name="name">FTC Flatbed 01</field>
+            <field name="provider_id" ref="partner_fast_truck"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">234568</field>
+            <field name="zone_id" ref="om_zone_bousher"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_ftc_3" model="logspace.vehicle">
+            <field name="name">FTC Heavy 02</field>
+            <field name="provider_id" ref="partner_fast_truck"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_5t"/>
+            <field name="plate_number">234569</field>
+            <field name="zone_id" ref="om_zone_muttrah"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_ftc_4" model="logspace.vehicle">
+            <field name="name">FTC Flatbed 02</field>
+            <field name="provider_id" ref="partner_fast_truck"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">234570</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_ftc_5" model="logspace.vehicle">
+            <field name="name">FTC Flatbed 03</field>
+            <field name="provider_id" ref="partner_fast_truck"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">234571</field>
+            <field name="zone_id" ref="om_zone_bousher"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- MUSCAT EXPRESS TRANSPORT (5 vehicles) -->
+        <!-- ========================================== -->
+
+        <record id="vehicle_se_1" model="logspace.vehicle">
+            <field name="name">ME Flatbed 01</field>
+            <field name="provider_id" ref="partner_saudi_express"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_5t"/>
+            <field name="plate_number">345678</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_se_2" model="logspace.vehicle">
+            <field name="name">ME Reefer 01</field>
+            <field name="provider_id" ref="partner_saudi_express"/>
+            <field name="vehicle_type_id" ref="vehicle_type_refrigerated"/>
+            <field name="plate_number">345679</field>
+            <field name="zone_id" ref="om_zone_muttrah"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_se_3" model="logspace.vehicle">
+            <field name="name">ME Covered 01</field>
+            <field name="provider_id" ref="partner_saudi_express"/>
+            <field name="vehicle_type_id" ref="vehicle_type_covered_3t"/>
+            <field name="plate_number">345680</field>
+            <field name="zone_id" ref="om_zone_bousher"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_se_4" model="logspace.vehicle">
+            <field name="name">ME Flatbed 02</field>
+            <field name="provider_id" ref="partner_saudi_express"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_5t"/>
+            <field name="plate_number">345681</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_se_5" model="logspace.vehicle">
+            <field name="name">ME Covered 02</field>
+            <field name="provider_id" ref="partner_saudi_express"/>
+            <field name="vehicle_type_id" ref="vehicle_type_covered_3t"/>
+            <field name="plate_number">345682</field>
+            <field name="zone_id" ref="om_zone_bousher"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- MUSCAT CARGO LLC (4 vehicles) -->
+        <!-- ========================================== -->
+
+        <record id="vehicle_muscat_cargo_1" model="logspace.vehicle">
+            <field name="name">MC Flatbed 01</field>
+            <field name="provider_id" ref="partner_muscat_cargo"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">456789</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_muscat_cargo_2" model="logspace.vehicle">
+            <field name="name">MC Flatbed 02</field>
+            <field name="provider_id" ref="partner_muscat_cargo"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">456790</field>
+            <field name="zone_id" ref="om_zone_bousher"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_muscat_cargo_3" model="logspace.vehicle">
+            <field name="name">MC Flatbed 03</field>
+            <field name="provider_id" ref="partner_muscat_cargo"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">456791</field>
+            <field name="zone_id" ref="om_zone_muttrah"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_muscat_cargo_4" model="logspace.vehicle">
+            <field name="name">MC Minibus 01</field>
+            <field name="provider_id" ref="partner_muscat_cargo"/>
+            <field name="vehicle_type_id" ref="vehicle_type_minibus"/>
+            <field name="plate_number">456792</field>
+            <field name="zone_id" ref="om_zone_al_amrat"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- SEEB LOGISTICS CO (4 vehicles) -->
+        <!-- ========================================== -->
+
+        <record id="vehicle_seeb_logistics_1" model="logspace.vehicle">
+            <field name="name">SL Flatbed 01</field>
+            <field name="provider_id" ref="partner_seeb_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">567890</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_seeb_logistics_2" model="logspace.vehicle">
+            <field name="name">SL Flatbed 02</field>
+            <field name="provider_id" ref="partner_seeb_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">567891</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_seeb_logistics_3" model="logspace.vehicle">
+            <field name="name">SL Covered 01</field>
+            <field name="provider_id" ref="partner_seeb_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_covered_3t"/>
+            <field name="plate_number">567892</field>
+            <field name="zone_id" ref="om_zone_bousher"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_seeb_logistics_4" model="logspace.vehicle">
+            <field name="name">SL Van 01</field>
+            <field name="provider_id" ref="partner_seeb_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_van"/>
+            <field name="plate_number">567893</field>
+            <field name="zone_id" ref="om_zone_muttrah"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- BOUSHER TRANSPORT (4 vehicles) -->
+        <!-- ========================================== -->
+
+        <record id="vehicle_bousher_transport_1" model="logspace.vehicle">
+            <field name="name">BT Flatbed 01</field>
+            <field name="provider_id" ref="partner_bousher_transport"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">678901</field>
+            <field name="zone_id" ref="om_zone_bousher"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_bousher_transport_2" model="logspace.vehicle">
+            <field name="name">BT Flatbed 02</field>
+            <field name="provider_id" ref="partner_bousher_transport"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">678902</field>
+            <field name="zone_id" ref="om_zone_bousher"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_bousher_transport_3" model="logspace.vehicle">
+            <field name="name">BT Covered 01</field>
+            <field name="provider_id" ref="partner_bousher_transport"/>
+            <field name="vehicle_type_id" ref="vehicle_type_covered_3t"/>
+            <field name="plate_number">678903</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_bousher_transport_4" model="logspace.vehicle">
+            <field name="name">BT Flatbed 03</field>
+            <field name="provider_id" ref="partner_bousher_transport"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">678904</field>
+            <field name="zone_id" ref="om_zone_muttrah"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- AL AMRAT MOVERS (3 vehicles) -->
+        <!-- ========================================== -->
+
+        <record id="vehicle_al_amrat_1" model="logspace.vehicle">
+            <field name="name">AM Van 01</field>
+            <field name="provider_id" ref="partner_al_amrat_movers"/>
+            <field name="vehicle_type_id" ref="vehicle_type_van"/>
+            <field name="plate_number">789012</field>
+            <field name="zone_id" ref="om_zone_al_amrat"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_al_amrat_2" model="logspace.vehicle">
+            <field name="name">AM Van 02</field>
+            <field name="provider_id" ref="partner_al_amrat_movers"/>
+            <field name="vehicle_type_id" ref="vehicle_type_van"/>
+            <field name="plate_number">789013</field>
+            <field name="zone_id" ref="om_zone_al_amrat"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_al_amrat_3" model="logspace.vehicle">
+            <field name="name">AM Minibus 01</field>
+            <field name="provider_id" ref="partner_al_amrat_movers"/>
+            <field name="vehicle_type_id" ref="vehicle_type_minibus"/>
+            <field name="plate_number">789014</field>
+            <field name="zone_id" ref="om_zone_bousher"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- SOHAR FREIGHT SERVICES (4 vehicles) -->
+        <!-- ========================================== -->
+
+        <record id="vehicle_sohar_freight_1" model="logspace.vehicle">
+            <field name="name">SF Heavy 01</field>
+            <field name="provider_id" ref="partner_sohar_freight"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_5t"/>
+            <field name="plate_number">890123</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_sohar_freight_2" model="logspace.vehicle">
+            <field name="name">SF Heavy 02</field>
+            <field name="provider_id" ref="partner_sohar_freight"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_5t"/>
+            <field name="plate_number">890124</field>
+            <field name="zone_id" ref="om_zone_bousher"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_sohar_freight_3" model="logspace.vehicle">
+            <field name="name">SF Flatbed 01</field>
+            <field name="provider_id" ref="partner_sohar_freight"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">890125</field>
+            <field name="zone_id" ref="om_zone_muttrah"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_sohar_freight_4" model="logspace.vehicle">
+            <field name="name">SF Covered 01</field>
+            <field name="provider_id" ref="partner_sohar_freight"/>
+            <field name="vehicle_type_id" ref="vehicle_type_covered_3t"/>
+            <field name="plate_number">890126</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- NIZWA DELIVERY CO (4 vehicles) -->
+        <!-- ========================================== -->
+
+        <record id="vehicle_nizwa_delivery_1" model="logspace.vehicle">
+            <field name="name">ND Flatbed 01</field>
+            <field name="provider_id" ref="partner_nizwa_delivery"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">901234</field>
+            <field name="zone_id" ref="om_zone_bousher"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_nizwa_delivery_2" model="logspace.vehicle">
+            <field name="name">ND Flatbed 02</field>
+            <field name="provider_id" ref="partner_nizwa_delivery"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">901235</field>
+            <field name="zone_id" ref="om_zone_muttrah"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_nizwa_delivery_3" model="logspace.vehicle">
+            <field name="name">ND Van 01</field>
+            <field name="provider_id" ref="partner_nizwa_delivery"/>
+            <field name="vehicle_type_id" ref="vehicle_type_van"/>
+            <field name="plate_number">901236</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_nizwa_delivery_4" model="logspace.vehicle">
+            <field name="name">ND Covered 01</field>
+            <field name="provider_id" ref="partner_nizwa_delivery"/>
+            <field name="vehicle_type_id" ref="vehicle_type_covered_3t"/>
+            <field name="plate_number">901237</field>
+            <field name="zone_id" ref="om_zone_bousher"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- CITY MOVERS - PENDING (2 vehicles) -->
+        <!-- ========================================== -->
+
+        <record id="vehicle_city_movers_1" model="logspace.vehicle">
+            <field name="name">CM Van 01</field>
+            <field name="provider_id" ref="partner_city_movers"/>
+            <field name="vehicle_type_id" ref="vehicle_type_van"/>
+            <field name="plate_number">012345</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_city_movers_2" model="logspace.vehicle">
+            <field name="name">CM Minibus 01</field>
+            <field name="provider_id" ref="partner_city_movers"/>
+            <field name="vehicle_type_id" ref="vehicle_type_minibus"/>
+            <field name="plate_number">012346</field>
+            <field name="zone_id" ref="om_zone_bousher"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- QUICK DELIVERY LLC - PENDING (2 vehicles) -->
+        <!-- ========================================== -->
+
+        <record id="vehicle_quick_delivery_1" model="logspace.vehicle">
+            <field name="name">QD Van 01</field>
+            <field name="provider_id" ref="partner_quick_delivery"/>
+            <field name="vehicle_type_id" ref="vehicle_type_van"/>
+            <field name="plate_number">112233</field>
+            <field name="zone_id" ref="om_zone_muttrah"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_quick_delivery_2" model="logspace.vehicle">
+            <field name="name">QD Van 02</field>
+            <field name="provider_id" ref="partner_quick_delivery"/>
+            <field name="vehicle_type_id" ref="vehicle_type_van"/>
+            <field name="plate_number">112234</field>
+            <field name="zone_id" ref="om_zone_bousher"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- SUSPENDED TRANSPORT CO (2 vehicles) -->
+        <!-- ========================================== -->
+
+        <record id="vehicle_suspended_1" model="logspace.vehicle">
+            <field name="name">ST Flatbed 01</field>
+            <field name="provider_id" ref="partner_suspended"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">223344</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">False</field>
+        </record>
+
+        <record id="vehicle_suspended_2" model="logspace.vehicle">
+            <field name="name">ST Covered 01</field>
+            <field name="provider_id" ref="partner_suspended"/>
+            <field name="vehicle_type_id" ref="vehicle_type_covered_3t"/>
+            <field name="plate_number">223345</field>
+            <field name="zone_id" ref="om_zone_muttrah"/>
+            <field name="is_active">False</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- EXTRA VEHICLES IN SEEB (Pagination Demo) -->
+        <!-- 10 additional vehicles to trigger pagination (>10 results) -->
+        <!-- ========================================== -->
+
+        <record id="vehicle_abc_6" model="logspace.vehicle">
+            <field name="name">ABC Flatbed 04</field>
+            <field name="provider_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">123461</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_abc_7" model="logspace.vehicle">
+            <field name="name">ABC Flatbed 05</field>
+            <field name="provider_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">123462</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_abc_8" model="logspace.vehicle">
+            <field name="name">ABC Flatbed 06</field>
+            <field name="provider_id" ref="partner_abc_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">123463</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_ftc_6" model="logspace.vehicle">
+            <field name="name">FTC Flatbed 04</field>
+            <field name="provider_id" ref="partner_fast_truck"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">234572</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_ftc_7" model="logspace.vehicle">
+            <field name="name">FTC Flatbed 05</field>
+            <field name="provider_id" ref="partner_fast_truck"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">234573</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_muscat_cargo_5" model="logspace.vehicle">
+            <field name="name">MC Flatbed 04</field>
+            <field name="provider_id" ref="partner_muscat_cargo"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">456793</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_muscat_cargo_6" model="logspace.vehicle">
+            <field name="name">MC Flatbed 05</field>
+            <field name="provider_id" ref="partner_muscat_cargo"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">456794</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_seeb_logistics_5" model="logspace.vehicle">
+            <field name="name">SL Flatbed 03</field>
+            <field name="provider_id" ref="partner_seeb_logistics"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">567894</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_sohar_freight_5" model="logspace.vehicle">
+            <field name="name">SF Flatbed 02</field>
+            <field name="provider_id" ref="partner_sohar_freight"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">890127</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="vehicle_nizwa_delivery_5" model="logspace.vehicle">
+            <field name="name">ND Flatbed 03</field>
+            <field name="provider_id" ref="partner_nizwa_delivery"/>
+            <field name="vehicle_type_id" ref="vehicle_type_flatbed_3t"/>
+            <field name="plate_number">901238</field>
+            <field name="zone_id" ref="om_zone_seeb"/>
+            <field name="is_active">True</field>
+        </record>
+
+    </data>
+</odoo>

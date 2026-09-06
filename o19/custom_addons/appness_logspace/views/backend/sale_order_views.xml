@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ========================================================================= -->
+    <!-- Sale Order Form View Extension -->
+    <!-- ========================================================================= -->
+    <record id="view_sale_order_form_inherit_logspace" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.logspace</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Add Smart Buttons to button_box -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_logspace_tickets" type="object"
+                    class="oe_stat_button" icon="fa-ticket"
+                    invisible="not is_logspace_order">
+                    <field name="logspace_ticket_count" widget="statinfo" string="Tickets"/>
+                </button>
+                <button name="action_view_logspace_refunds" type="object"
+                    class="oe_stat_button" icon="fa-ticket"
+                    invisible="not is_logspace_order">
+                    <field name="logspace_refund_count" widget="statinfo" string="Refunds"/>
+                </button>
+            </xpath>
+
+            <!-- Add is_logspace_order checkbox in header -->
+            <xpath expr="//sheet/div[1]" position="before">
+                <field name="is_logspace_order" invisible="1"/>
+                <field name="logspace_state" widget="statusbar"
+                    invisible="not is_logspace_order"
+                    statusbar_visible="order_received,pickup_started,vendor_arrived_pickup,pickup_completed,arrived_destination,dropoff_completed,grace_period,order_completed"/>
+            </xpath>
+
+
+            <!-- Logspace Provider Tabs -->
+            <xpath expr="//notebook/page[1]" position="after">
+                <!-- Provider & Vehicle Page -->
+                <page string="Provider &amp; Vehicle" invisible="not is_logspace_order">
+                    <group>
+                        <group>
+                            <field name="logspace_provider_id" readonly="state in ['cancel', 'sale']"/>
+                            <field name="logspace_vehicle_id"
+                                domain="[('provider_id', '=', logspace_provider_id), ('is_active', '=', True)]" readonly="state in ['cancel', 'sale']"/>
+                            <field name="logspace_driver_id"/>
+                            <field name="driver_phone"/>
+                        </group>
+                        <group>
+                            <field name="pickup_zone_id" readonly="state in ['cancel', 'sale']"/>
+                            <field name="dropoff_zone_id" readonly="state in ['cancel', 'sale']"/>
+                            <field name="scheduled_date" readonly="state in ['cancel', 'sale']"/>
+                            <field name="delivery_date" readonly="1" invisible="not delivery_date"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Payment">
+                            <field name="payment_status" readonly="state in ['cancel', 'sale']"/>
+                            <field name="payment_method" readonly="state in ['cancel', 'sale']"/>
+                            <field name="transaction_ref" readonly="state in ['cancel', 'sale']"/>
+                        </group>
+                        <group string="Order Type">
+                            <field name="is_logspace_order" widget="boolean_toggle" readonly="state in ['cancel', 'sale']"/>
+                            <field name="is_guest_order" invisible="not is_logspace_order" readonly="state in ['cancel', 'sale']"/>
+                        </group>
+                    </group>
+                    <group string="Customer Rating" invisible="not logspace_customer_rating">
+                        <group>
+                            <field name="logspace_customer_rating" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="logspace_customer_rating_comment" readonly="1"/>
+                        </group>
+                    </group>
+                </page>
+
+                <page string="Items &amp; Add-ons" invisible="not is_logspace_order">
+                    <group>
+                        <field name="item_description" readonly="state in ['cancel', 'sale']"/>
+                    </group>
+                    <group string="Add-ons">
+                        <field name="logspace_addon_ids" widget="many2many_tags" readonly="state in ['cancel', 'sale']"/>
+                    </group>
+                    <group string="Contacts">
+                        <group string="Pickup">
+                            <field name="pickup_contact_name" readonly="state in ['cancel', 'sale']"/>
+                            <field name="pickup_contact_phone" readonly="state in ['cancel', 'sale']"/>
+                            <field name="pickup_address" readonly="state in ['cancel', 'sale']"/>
+                        </group>
+                        <group string="Dropoff">
+                            <field name="dropoff_contact_name" readonly="state in ['cancel', 'sale']"/>
+                            <field name="dropoff_contact_phone" readonly="state in ['cancel', 'sale']"/>
+                            <field name="dropoff_address" readonly="state in ['cancel', 'sale']"/>
+                        </group>
+                    </group>
+                    <group string="Scheduling">
+                        <field name="pickup_timeframe" readonly="state in ['cancel', 'sale']"/>
+                        <field name="dropoff_timeframe" readonly="state in ['cancel', 'sale']"/>
+                    </group>
+                    <group string="Verification" >
+                        <field name="verification_code_pickup" readonly="1"/>
+                        <field name="verification_code_dropoff" readonly="1"/>
+                    </group>
+                </page>
+            </xpath>
+
+            <!-- Add Logspace buttons to header - Sequential by logspace status -->
+            <xpath expr="//button[@name='action_confirm']" position="after">
+                <!-- Order Received: Start Pickup -->
+                <button name="action_start_pickup" string="Start Pickup"
+                    type="object" invisible="not is_logspace_order or logspace_state != 'order_received'"/>
+
+                <!-- Pickup Started: Arrived at Pickup -->
+                <button name="action_vendor_arrived_pickup" string="Arrived at Pickup"
+                    type="object" invisible="not is_logspace_order or logspace_state != 'pickup_started'"/>
+
+                <!-- Vendor Arrived at Pickup: Pickup Add-ons Done -->
+                <button name="action_pickup_addons" string="Pickup Add-ons Done"
+                    type="object" invisible="not is_logspace_order or logspace_state != 'vendor_arrived_pickup'"/>
+
+                <!-- Pickup Add-ons: Pickup Completed -->
+                <button name="action_pickup_completed" string="Pickup Completed"
+                    type="object" invisible="not is_logspace_order or logspace_state != 'pickup_addons'"
+                    class="oe_highlight"/>
+
+                <!-- Pickup Completed: Pre-Dropoff Add-ons -->
+                <button name="action_pre_dropoff_addons" string="Pre-Dropoff Add-ons"
+                    type="object" invisible="not is_logspace_order or logspace_state != 'pickup_completed'"/>
+
+                <!-- Pre-Dropoff Add-ons: Arrived at Destination -->
+                <button name="action_arrived_destination" string="Arrived at Destination"
+                    type="object" invisible="not is_logspace_order or logspace_state != 'pre_dropoff_addons'"/>
+
+                <!-- Arrived at Destination: Dropoff Completed -->
+                <button name="action_dropoff_completed" string="Dropoff Completed"
+                    type="object" invisible="not is_logspace_order or logspace_state != 'arrived_destination'"
+                    class="oe_highlight"/>
+
+                <!-- Dropoff Completed: Start Grace Period -->
+                <button name="action_start_grace_period" string="Start Grace Period"
+                    type="object" invisible="not is_logspace_order or logspace_state != 'dropoff_completed'"/>
+
+                <!-- Grace Period: Complete Order -->
+                <button name="action_complete_order" string="Complete Order"
+                    type="object" invisible="not is_logspace_order or logspace_state != 'grace_period'"
+                    class="oe_highlight"/>
+
+                <!-- Cancel Order (available until dropoff_completed) -->
+                <button name="action_cancel_logspace" string="Cancel Order"
+                    type="object" invisible="not is_logspace_order or logspace_state in ('dropoff_completed', 'grace_period', 'order_completed', 'cancelled')"/>
+
+                <!-- Reset to Draft (only when cancelled) -->
+                <button name="action_reset_logspace_to_draft" string="Reset to Draft"
+                    type="object" invisible="not is_logspace_order or logspace_state != 'cancelled'"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ========================================================================= -->
+    <!-- Sale Order Tree View Extension -->
+    <!-- ========================================================================= -->
+    <record id="view_sale_order_tree_inherit_logspace" model="ir.ui.view">
+        <field name="name">sale.order.tree.inherit.logspace</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="is_logspace_order" invisible="1"/>
+                <field name="logspace_state" invisible="not is_logspace_order" optional="show"/>
+                <field name="logspace_provider_id" invisible="not is_logspace_order" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ========================================================================= -->
+    <!-- Sale Order Search View (Standalone for Logspace) -->
+    <!-- ========================================================================= -->
+    <record id="view_sale_order_search_logspace" model="ir.ui.view">
+        <field name="name">sale.order.search.logspace</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="logspace_provider_id"/>
+                <field name="logspace_state"/>
+                <separator/>
+                <filter name="filter_logspace" string="Logspace Orders" domain="[('is_logspace_order', '=', True)]"/>
+                <filter name="filter_guest" string="Guest Orders" domain="[('is_guest_order', '=', True)]"/>
+                <separator/>
+                <filter name="group_by_logspace_state" string="Logspace Status" context="{'group_by': 'logspace_state'}"/>
+                <filter name="group_by_provider" string="Provider" context="{'group_by': 'logspace_provider_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- ========================================================================= -->
+    <!-- Provider Order - Standalone sale.order form for providers (copy of sale.view_order_form) -->
+    <!-- ========================================================================= -->
+    <record id="provider_order" model="ir.ui.view">
+        <field name="name">sale.order.form.provider</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object" invisible="1"/>
+                    <button name="action_start_pickup" string="Start Pickup"
+                        type="object" invisible="logspace_state != 'order_received'"/>
+                    <button name="action_vendor_arrived_pickup" string="Arrived at Pickup"
+                        type="object" invisible="logspace_state != 'pickup_started'"/>
+                    <button name="action_pickup_addons" string="Pickup Add-ons Done"
+                        type="object" invisible="logspace_state != 'vendor_arrived_pickup'"/>
+                    <button name="action_pickup_completed" string="Pickup Completed"
+                        type="object" invisible="logspace_state != 'pickup_addons'"
+                        class="oe_highlight"/>
+                    <button name="action_pre_dropoff_addons" string="Pre-Dropoff Add-ons"
+                        type="object" invisible="logspace_state != 'pickup_completed'"/>
+                    <button name="action_arrived_destination" string="Arrived at Destination"
+                        type="object" invisible="logspace_state != 'pre_dropoff_addons'"/>
+                    <button name="action_dropoff_completed" string="Dropoff Completed"
+                        type="object" invisible="logspace_state != 'arrived_destination'"
+                        class="oe_highlight"/>
+                    <button name="action_start_grace_period" string="Start Grace Period"
+                        type="object" invisible="logspace_state != 'dropoff_completed'"/>
+                    <button name="action_complete_order" string="Complete Order"
+                        type="object" invisible="logspace_state != 'grace_period'"
+                        class="oe_highlight"/>
+                    <button name="action_cancel_logspace" string="Cancel Order"
+                        type="object" invisible="logspace_state in ('dropoff_completed', 'grace_period', 'order_completed', 'cancelled')"/>
+                    <button name="action_reset_logspace_to_draft" string="Reset to Draft"
+                        type="object" invisible="logspace_state != 'cancelled'"/>
+                    <field name="logspace_state" widget="statusbar"
+                        statusbar_visible="order_received,pickup_started,vendor_arrived_pickup,pickup_completed,arrived_destination,dropoff_completed,grace_period,order_completed"/>
+                </header>
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button name="action_view_logspace_tickets" type="object"
+                            class="oe_stat_button" icon="fa-ticket">
+                            <field name="logspace_ticket_count" widget="statinfo" string="Tickets"/>
+                        </button>
+                        <button name="action_view_logspace_refunds" type="object"
+                            class="oe_stat_button" icon="fa-ticket">
+                            <field name="logspace_refund_count" widget="statinfo" string="Refunds"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group name="sale_header">
+                        <group name="partner_details">
+                            <field name="partner_id" widget="res_partner_many2one" context="{'res_partner_search_mode': 'customer', 'show_address': 1, 'show_vat': True}" placeholder="Type to find a customer..." readonly="state in ['cancel', 'sale']"/>
+                            <field name="partner_invoice_id" groups="account.group_delivery_invoice_address" options="{'no_quick_create': True}" context="{'default_type': 'invoice', 'show_address': False, 'show_vat': False, 'default_parent_id': partner_id}" readonly="state == 'cancel' or locked"/>
+                            <field name="partner_shipping_id" groups="account.group_delivery_invoice_address" options="{'no_quick_create': True}" context="{'default_type': 'delivery', 'show_address': False, 'show_vat': False, 'default_parent_id': partner_id}" readonly="state == 'cancel' or locked"/>
+                        </group>
+                        <group name="order_details">
+                            <field name="validity_date" invisible="state == 'sale'" readonly="state in ['cancel', 'sale']"/>
+                            <div class="o_td_label" groups="base.group_no_one" invisible="state in ['sale', 'cancel']">
+                                <label for="date_order" string="Quotation Date"/>
+                            </div>
+                            <field name="date_order" nolabel="1" groups="base.group_no_one" invisible="state in ['sale', 'cancel']" readonly="state in ['cancel', 'sale']"/>
+                            <div class="o_td_label" invisible="state in ['draft', 'sent']">
+                                <label for="date_order" string="Order Date"/>
+                            </div>
+                            <field name="date_order" nolabel="1" invisible="state in ['draft', 'sent']" readonly="state in ['cancel', 'sale']"/>
+                            <field name="show_update_pricelist" invisible="1"/>
+                            <label for="pricelist_id" groups="product.group_product_pricelist" invisible="not has_active_pricelist"/>
+                            <div groups="product.group_product_pricelist" class="o_row" invisible="not has_active_pricelist">
+                                <field name="pricelist_id" options="{'no_open': True, 'no_create': True}" readonly="state in ['cancel', 'sale']"/>
+                                <button name="action_update_prices" type="object" string="Update Prices" help="Recompute all prices based on this pricelist" class="btn-link mb-1 px-0" icon="fa-refresh" confirm="This will update the unit price of all products based on the new pricelist." invisible="not show_update_pricelist or state in ['sale', 'cancel']"/>
+                            </div>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="pricelist_id" invisible="1" readonly="state in ['cancel', 'sale']" groups="!product.group_product_pricelist"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Order Lines">
+                            <field name="order_line" widget="sol_o2m" mode="list,kanban" readonly="state == 'cancel' or locked" aggregated_fields="price_subtotal,price_total" options="{'hide_composition': True, 'hide_prices': True, 'subsections': True}">
+                                <list string="Sales Order Lines" editable="bottom" limit="200" decoration-warning="(state in ['draft', 'sent'] and is_product_archived) or sale_line_warn_msg">
+                                    <control>
+                                        <create name="add_product_control" string="Add a product"/>
+                                        <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
+                                        <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/>
+                                        <button string="Catalog" name="action_add_from_catalog" type="object" class="px-4 btn-link" context="{'order_id': parent.id}"/>
+                                    </control>
+
+                                    <!-- Non readonly invisible fields, must be specified manually, because fields added automatically by the ORM
+                                        are readonly, widgets fieldDependencies too -->
+                                    <field name="display_type" column_invisible="True"/>
+                                    <field name="product_custom_attribute_value_ids" column_invisible="1">
+                                        <list>
+                                            <field name="custom_product_template_attribute_value_id"/>
+                                            <field name="custom_value"/>
+                                        </list>
+                                    </field>
+                                    <field name="product_no_variant_attribute_value_ids" column_invisible="1"/>
+                                    <field name="technical_price_unit" column_invisible="1"/>
+                                    <field name="linked_line_id" column_invisible="1"/>
+                                    <field name="combo_item_id" column_invisible="1"/>
+                                    <field name="selected_combo_items" column_invisible="1"/>
+                                    <field name="virtual_id" column_invisible="1"/>
+                                    <field name="linked_virtual_id" column_invisible="1"/>
+                                    <field name="collapse_composition" column_invisible="1"/>
+                                    <field name="collapse_prices" column_invisible="1"/>
+
+                                    <!-- Currency, needed for monetary widgets to display the currency symbol -->
+                                    <field name="currency_id" column_invisible="True"/>
+
+                                    <!-- Standard fields -->
+                                    <field name="sequence" invisible="combo_item_id" widget="handle"/>
+                                    <field name="product_id" string="Product Variant" readonly="not product_updatable" required="not display_type and not is_downpayment" force_save="1" context="{                                         'default_lst_price': price_unit,                                         'default_uom_id': product_uom_id,                                         'partner_id': parent.partner_id,                                     }" options="{                                         'show_label_warning': True                                     }" optional="hide" widget="sol_product_many2one"/>
+                                    <field name="product_template_id" string="Product" readonly="id and not product_updatable" required="not display_type and not is_downpayment" context="{                                         'default_list_price': price_unit,                                         'default_uom_id': product_uom_id,                                         'partner_id': parent.partner_id,                                     }" options="{                                         'show_label_warning': True                                     }" optional="show" widget="sol_product_many2one" placeholder="Type to find a product..."/>
+                                    <field name="name" widget="sol_text" optional="show"/>
+                                    <field name="analytic_distribution" widget="analytic_distribution" options="{                                         'product_field': 'product_id',                                         'business_domain': 'sale_order',                                         'amount_field': 'price_subtotal',                                     }" optional="hide" groups="analytic.group_analytic_accounting"/>
+                                    <field name="product_uom_qty" decoration-info="(not display_type and invoice_status == 'to invoice')" decoration-bf="(not display_type and invoice_status == 'to invoice')" readonly="is_downpayment"/>
+                                    <field name="qty_delivered" string="Delivered" decoration-info="(not display_type and invoice_status == 'to invoice')" decoration-bf="(not display_type and invoice_status == 'to invoice')" column_invisible="parent.state != 'sale'" readonly="qty_delivered_method != 'manual' or is_downpayment" optional="show"/>
+                                    <field name="qty_invoiced" string="Invoiced" decoration-info="(not display_type and invoice_status == 'to invoice')" decoration-bf="(not display_type and invoice_status == 'to invoice')" column_invisible="parent.state != 'sale'" optional="show"/>
+                                    <field name="product_uom_id" force_save="1" readonly="product_uom_readonly" required="not display_type and not is_downpayment" widget="many2one_uom" groups="uom.group_uom" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" width="60px" optional="show"/>
+                                    <field name="customer_lead" optional="hide" width="80px" readonly="parent.state not in ['draft', 'sent', 'sale'] or is_downpayment or product_type != 'consu'"/>
+                                    <field name="price_unit" readonly="qty_invoiced &gt; 0"/>
+                                    <field name="tax_ids" widget="many2many_tax_tags" options="{'no_create': True}" context="{'active_test': True}" readonly="qty_invoiced &gt; 0 or is_downpayment" optional="show"/>
+                                    <field name="discount" string="Disc.%" groups="sale.group_discount_per_so_line" width="50px" optional="show"/>
+                                    <field name="price_subtotal" string="Amount" column_invisible="parent.company_price_include == 'tax_included'" invisible="is_downpayment"/>
+                                    <field name="price_total" string="Amount" column_invisible="parent.company_price_include == 'tax_excluded'" invisible="is_downpayment"/>
+                                    <!-- Optional amounts columns -->
+                                    <field name="price_total" string="Tax Incl." column_invisible="parent.company_price_include == 'tax_included'" invisible="is_downpayment" optional="hide"/>
+                                    <field name="price_subtotal" string="Tax Excl." column_invisible="parent.company_price_include == 'tax_excluded'" invisible="is_downpayment" optional="hide"/>
+                                </list>
+                                <kanban class="o_kanban_mobile">
+                                    <field name="display_type"/>
+                                    <field name="currency_id"/>
+                                    <control>
+                                        <create name="add_product_control" string="Add product"/>
+                                        <create name="add_section_control" string="Add section" context="{'default_display_type': 'line_section'}"/>
+                                        <create name="add_note_control" string="Add note" context="{'default_display_type': 'line_note'}"/>
+                                        <button string="Catalog" name="action_add_from_catalog" type="object" class="btn-secondary" context="{'order_id': parent.id}"/>
+                                    </control>
+                                    <templates>
+                                        <t t-name="card" class="row g-0 ps-0 pe-0">
+                                            <t t-if="!record.display_type.raw_value">
+                                                <aside class="col-2 p-1">
+                                                    <span t-att-title="record.product_id.value">
+                                                        <field name="product_id" widget="image" options="{'preview_image': 'image_128', 'img_class': 'object-fit-contain w-100'}"/>
+                                                    </span>
+                                                </aside>
+                                                <main class="col">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <span class="fa fa-exclamation-triangle text-warning me-1" title="This product is archived" invisible="state not in ['draft', 'sent'] or not is_product_archived"/>
+                                                            <field name="product_id" class="fw-bold"/>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <field name="price_subtotal" class="fw-bolder float-end pe-1" widget="monetary"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-muted">
+                                                        Quantity:
+                                                        <field name="product_uom_qty"/> <field name="product_uom_id"/>
+                                                    </div>
+                                                    <div class="text-muted">
+                                                        Unit Price:
+                                                        <field name="price_unit"/>
+                                                    </div>
+                                                    <t t-if="record.discount?.raw_value">
+                                                        <div class="text-muted">
+                                                            Discount:
+                                                            <field name="discount"/>%
+                                                        </div>
+                                                    </t>
+                                                </main>
+                                            </t>
+                                            <t t-if="['line_section', 'line_subsection', 'line_note'].includes(record.display_type.raw_value)">
+                                                <div t-att-class="{                                                 'fw-bolder': record.display_type.raw_value === 'line_section',                                                 'fw-bold': record.display_type.raw_value === 'line_subsection',                                                 'fst-italic': record.display_type.raw_value === 'line_note',                                             }">
+                                                    <field name="name"/>
+                                                </div>
+                                            </t>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+                            <div class="float-end d-flex d-print-none gap-1 mb-2" name="so_button_below_order_lines">
+                                <button string="Discount" name="action_open_discount_wizard" type="object" class="btn btn-secondary" groups="sale.group_discount_per_so_line" invisible="locked or state == 'cancel'"/>
+                                <button string="Discounts" name="action_open_discount_wizard" type="object" class="btn btn-secondary" groups="sale.group_discount_per_so_line" disabled="1" invisible="not (locked or state == 'cancel')"/>
+                            </div>
+                            <group name="note_group" col="6" class="mt-2 mt-md-0">
+                                <group colspan="4" class="order-1 order-lg-0">
+                                    <field colspan="2" name="note" nolabel="1" placeholder="Terms and conditions..."/>
+                                </group>
+                                <group class="oe_subtotal_footer d-flex order-0 order-lg-1 flex-column gap-0 gap-sm-3" colspan="2" name="sale_total">
+                                    <field name="tax_totals" widget="account-tax-totals-field" nolabel="1" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Provider &amp; Vehicle">
+                            <group>
+                                <group>
+                                    <field name="logspace_provider_id" readonly="state in ['cancel', 'sale']"/>
+                                    <field name="logspace_vehicle_id"
+                                        domain="[('provider_id', '=', logspace_provider_id), ('is_active', '=', True)]" readonly="state in ['cancel', 'sale']"/>
+                                    <field name="logspace_driver_id"/>
+                                    <field name="driver_phone"/>
+                                </group>
+                                <group>
+                                    <field name="pickup_zone_id" readonly="state in ['cancel', 'sale']"/>
+                                    <field name="dropoff_zone_id" readonly="state in ['cancel', 'sale']"/>
+                                    <field name="scheduled_date" readonly="state in ['cancel', 'sale']"/>
+                                    <field name="delivery_date" readonly="1" invisible="not delivery_date"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group string="Payment">
+                                    <field name="payment_status" readonly="state in ['cancel', 'sale']"/>
+                                    <field name="payment_method" readonly="state in ['cancel', 'sale']"/>
+                                    <field name="transaction_ref" readonly="state in ['cancel', 'sale']"/>
+                                </group>
+                                <group string="Order Type">
+                                    <field name="is_logspace_order" widget="boolean_toggle" readonly="state in ['cancel', 'sale']"/>
+                                    <field name="is_guest_order" readonly="state in ['cancel', 'sale']"/>
+                                </group>
+                            </group>
+                            <group string="Customer Rating" invisible="not logspace_customer_rating">
+                                <group>
+                                    <field name="logspace_customer_rating" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="logspace_customer_rating_comment" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Items &amp; Add-ons">
+                            <group>
+                                <field name="item_description" readonly="state in ['cancel', 'sale']"/>
+                            </group>
+                            <group string="Add-ons">
+                                <field name="logspace_addon_ids" widget="many2many_tags" readonly="state in ['cancel', 'sale']"/>
+                            </group>
+                            <group string="Contacts">
+                                <group string="Pickup">
+                                    <field name="pickup_contact_name" readonly="state in ['cancel', 'sale']"/>
+                                    <field name="pickup_contact_phone" readonly="state in ['cancel', 'sale']"/>
+                                    <field name="pickup_address" readonly="state in ['cancel', 'sale']"/>
+                                </group>
+                                <group string="Dropoff">
+                                    <field name="dropoff_contact_name" readonly="state in ['cancel', 'sale']"/>
+                                    <field name="dropoff_contact_phone" readonly="state in ['cancel', 'sale']"/>
+                                    <field name="dropoff_address" readonly="state in ['cancel', 'sale']"/>
+                                </group>
+                            </group>
+                            <group string="Scheduling">
+                                <field name="pickup_timeframe" readonly="state in ['cancel', 'sale']"/>
+                                <field name="dropoff_timeframe" readonly="state in ['cancel', 'sale']"/>
+                            </group>
+                            <group string="Verification">
+                                <field name="verification_code_pickup" readonly="1"/>
+                                <field name="verification_code_dropoff" readonly="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ========================================================================= -->
+    <!-- Provider Order Tree View -->
+    <!-- ========================================================================= -->
+    <record id="provider_order_tree" model="ir.ui.view">
+        <field name="name">sale.order.list.provider</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="logspace_provider_id"/>
+                <field name="logspace_state"/>
+                <field name="amount_total" widget="monetary"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ========================================================================= -->
+    <!-- Provider Order Search View -->
+    <!-- ========================================================================= -->
+    <record id="provider_order_search" model="ir.ui.view">
+        <field name="name">sale.order.search.provider</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="logspace_provider_id"/>
+                <field name="logspace_state"/>
+                <separator/>
+                <filter name="filter_logspace" string="Logspace Orders" domain="[('is_logspace_order', '=', True)]"/>
+                <separator/>
+                <filter name="group_by_logspace_state" string="Logspace Status" context="{'group_by': 'logspace_state'}"/>
+                <filter name="group_by_provider" string="Provider" context="{'group_by': 'logspace_provider_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- ========================================================================= -->
+    <!-- Logspace Orders Action (updated for provider view) -->
+    <!-- ========================================================================= -->
+    <record id="action_sale_order_logspace" model="ir.actions.act_window">
+        <field name="name">Logspace Orders</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">list,form,calendar,kanban</field>
+        <field name="search_view_id" ref="provider_order_search"/>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('provider_order_tree')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('provider_order')}),
+        ]"/>
+        <field name="context">{
+            'default_is_logspace_order': True,
+            'search_default_filter_logspace': 1,
+            'create': False,
+        }</field>
+        <field name="domain">[('is_logspace_order', '=', True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Logspace logistics orders
+            </p>
+        </field>
+    </record>
+
+</odoo>

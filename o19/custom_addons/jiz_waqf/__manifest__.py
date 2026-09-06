@@ -25,6 +25,8 @@
         'security/jiz_waqf_security.xml',
         'security/ir.model.access.csv',
         'data/ir_sequence.xml',
+        'data/documents_folder_data.xml',
+        'data/mail_activity_type.xml',
         'wizard/generate_units_wizard_view.xml',
         'views/jiz_waqf_view.xml',
         'views/jiz_waqf_unit_view.xml',

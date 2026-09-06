@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Budget Analytic: Project Access
+        Users can see:
+        - Budgets with no project (standalone budgets)
+        - Budgets linked to projects visible to all employees (privacy in employees/portal)
+        - Budgets linked to projects where the user is a follower
+    -->
+    <record id="budget_analytic_project_rule" model="ir.rule">
+        <field name="name">Budget Analytic: Project Access</field>
+        <field name="model_id" ref="account_budget.model_budget_analytic"/>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="domain_force">[
+            '|',
+            ('project_id', '=', False),
+            '|',
+            ('project_id.privacy_visibility', 'in', ['employees', 'portal']),
+            ('project_id.message_partner_ids', 'in', [user.partner_id.id])
+        ]</field>
+    </record>
+
+    <!--
+        Budget Line: inherit project access from parent budget
+    -->
+    <record id="budget_line_project_rule" model="ir.rule">
+        <field name="name">Budget Line: Project Access</field>
+        <field name="model_id" ref="account_budget.model_budget_line"/>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="domain_force">[
+            '|',
+            ('budget_analytic_id.project_id', '=', False),
+            '|',
+            ('budget_analytic_id.project_id.privacy_visibility', 'in', ['employees', 'portal']),
+            ('budget_analytic_id.project_id.message_partner_ids', 'in', [user.partner_id.id])
+        ]</field>
+    </record>
+
+    <!--
+        Rule 1: Project-only users see ONLY accounts from their projects.
+        Applies to users in project group who do NOT have accounting access.
+    -->
+    <!-- <record id="analytic_account_project_rule" model="ir.rule">
+        <field name="name">Analytic Account: Project User Restriction</field>
+        <field name="model_id" ref="analytic.model_account_analytic_account"/>
+        <field name="groups" eval="[(4, ref('project.group_project_user'))]"/>
+        <field name="domain_force">[('id', 'in', user.project_account_ids.ids)]</field>
+    </record> -->
+
+    <!--
+        Rule 2: Accounting users always see all analytic accounts.
+        When a user is in both project AND accounting groups, this rule
+        (match-all) is ANDed with rule 1 → no restriction.
+    -->
+    <!-- <record id="analytic_account_accounting_full_access" model="ir.rule">
+        <field name="name">Analytic Account: Accounting Full Access</field>
+        <field name="model_id" ref="analytic.model_account_analytic_account"/>
+        <field name="groups" eval="[(4, ref('account.group_account_readonly'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record> -->
+</odoo>

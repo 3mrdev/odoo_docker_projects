@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Inherit the base budget.analytic form:
+        - Add project_id field
+        - Add hidden project_account_id for the account_id domain below
+        - Restrict budget line analytic account to the project's account
+          When project has no analytic account, no restriction is applied.
+    -->
+    <record id="view_budget_analytic_form_project_inherit" model="ir.ui.view">
+        <field name="name">budget.analytic.form.project.inherit</field>
+        <field name="model">budget.analytic</field>
+        <field name="inherit_id" ref="account_budget.view_budget_analytic_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="before">
+                <field name="project_id"/>
+                <field name="project_account_id" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='budget_line_ids']//field[@name='account_id']" position="attributes">
+                <attribute name="domain">[('id', '=', parent.project_account_id)]</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Embedded action on project.project: Budgets tab (Tasks view) -->
+    <record id="project_embedded_action_project_budgets" model="ir.embedded.actions">
+        <field name="parent_res_model">project.project</field>
+        <field name="sequence">15</field>
+        <field name="name">Budgets</field>
+        <field name="parent_action_id" ref="project.act_project_project_2_project_task_all"/>
+        <field name="action_id" eval="False"/>
+        <field name="python_method">action_open_project_budgets</field>
+        <field name="context">{"from_embedded_action": true}</field>
+    </record>
+
+    <!-- Embedded action on project.project: Budgets tab (Dashboard view) -->
+    <record id="project_embedded_action_update_budgets" model="ir.embedded.actions">
+        <field name="parent_res_model">project.project</field>
+        <field name="sequence">30</field>
+        <field name="name">Budgets</field>
+        <field name="parent_action_id" ref="project.project_update_all_action"/>
+        <field name="action_id" eval="False"/>
+        <field name="python_method">action_open_project_budgets</field>
+        <field name="context">{"from_embedded_action": true}</field>
+    </record>
+</odoo>

@@ -47,6 +47,11 @@ docker compose logs -f web
 docker compose exec db psql -d db_name -U odoo docker exec -it o19-web-1 odoo -u module_name -d db_name --stop-after-init --db_host=db --db_user=user --db_password=password 2>&1 | tail -30
 
 docker compose exec -T web odoo -u module_name -d o19_db_3 --db_host=db --db_user=odoo --db_password=openpgpwd --stop-after-init 2>&1
+
+docker compose exec db psql -d o19_db_5 -U odoo docker exec -it o19-web-1 odoo -u payment_ompay -d o19_db_5 --stop-after-init --db_host=db --db_user=odoo --db_password=openpgpwd 2>&1 | tail -30
+
+docker compose exec -T web odoo -u payment_ompay -d o19_db_5 --db_host=db --db_user=odoo --db_password=openpgpwd --stop-after-init 2>&1
+
 odoo -u appness_logspace_mockup2 -d o19_db_4 --db_host=db --db_user=odoo --db_password=openpgpwd --stop-after-init 2>&1
 ```
 

@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_model_logspace_document_type,logspace.document.type,model_logspace_document_type,sales_team.group_sale_salesman,1,1,1,1
+access_model_logspace_address,logspace.address,model_logspace_address,sales_team.group_sale_salesman,1,1,1,1
+access_model_logspace_area,logspace.area,model_logspace_area,sales_team.group_sale_salesman,1,1,1,1
+access_model_res_city,res.city,base_address_extended.model_res_city,base.group_portal,1,0,0,0
+access_model_logspace_area_portal,logspace.area,model_logspace_area,base.group_portal,1,0,0,0

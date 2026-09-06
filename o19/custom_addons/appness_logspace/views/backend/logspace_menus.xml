@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Logspace Menu -->
+    <menuitem id="menu_logspace_root"
+              name="Logspace"
+              web_icon="appness_logspace,static/description/logo.png"
+              sequence="50"/>
+
+    <!-- Dashboard -->
+    <!-- <menuitem id="menu_logspace_dashboard"
+              name="Dashboard"
+              parent="menu_logspace_root"
+              sequence="10"/>
+
+    <menuitem id="menu_logspace_dashboard_overview"
+              name="Overview"
+              parent="menu_logspace_dashboard"
+              action="action_res_partner_provider"
+              sequence="10"/> -->
+
+    <!-- Providers -->
+    <menuitem id="menu_logspace_providers"
+              name="Providers"
+              parent="menu_logspace_root"
+              sequence="20"/>
+
+    <menuitem id="menu_logspace_providers_list"
+              name="Providers"
+              parent="menu_logspace_providers"
+              action="action_res_partner_provider"
+              sequence="10"/>
+
+    <menuitem id="menu_logspace_providers_vehicles"
+              name="Vehicles"
+              parent="menu_logspace_providers"
+              action="action_logspace_vehicle_list"
+              sequence="20"/>
+
+    <menuitem id="menu_logspace_providers_fleet_summary"
+              name="Fleet Summary"
+              parent="menu_logspace_providers"
+              action="action_logspace_fleet_summary"
+              sequence="30"/>
+
+    <menuitem id="menu_logspace_providers_time_frames"
+              name="Time Frames"
+              parent="menu_logspace_providers"
+              action="action_logspace_time_frame"
+              sequence="40"/>
+
+    <menuitem id="menu_logspace_providers_special_instructions"
+              name="Special Instructions"
+              parent="menu_logspace_providers"
+              action="action_logspace_special_instruction"
+              sequence="50"/>
+
+    <menuitem id="menu_logspace_provider_vtype_addons"
+              name="Vehicle Type Add-ons"
+              parent="menu_logspace_providers"
+              action="action_logspace_provider_vtype_addon"
+              sequence="60"/>
+
+    <menuitem id="menu_logspace_price_matrix"
+              name="Price Matrix"
+              parent="menu_logspace_providers"
+              action="action_logspace_price_matrix"
+              sequence="70"/>
+
+    <!-- Sales -->
+    <menuitem id="menu_logspace_sales"
+              name="Sales"
+              parent="menu_logspace_root"
+              sequence="30"/>
+
+    <menuitem id="menu_logspace_orders"
+              name="Orders"
+              parent="menu_logspace_sales"
+              action="action_sale_order_logspace"
+              sequence="10"/>
+
+    <!-- Customer Support -->
+    <menuitem id="menu_logspace_support"
+              name="Customer Support"
+              parent="menu_logspace_root"
+              sequence="40"/>
+
+    <menuitem id="menu_logspace_tickets"
+              name="Tickets"
+              parent="menu_logspace_support"
+              action="action_helpdesk_ticket_logspace"
+              sequence="10"/>
+
+    <menuitem id="menu_logspace_refunds"
+              name="Refund Requests"
+              parent="menu_logspace_support"
+              action="action_logspace_refund"
+              sequence="30"/>
+
+    <menuitem id="menu_logspace_notifications"
+              name="Notifications"
+              parent="menu_logspace_support"
+              action="action_logspace_notification"
+              sequence="40"/>
+
+    <!-- Configuration -->
+    <menuitem id="menu_logspace_configuration"
+              name="Configuration"
+              parent="menu_logspace_root"
+              sequence="40"/>
+
+    <menuitem id="menu_logspace_addons"
+              name="Add-ons"
+              parent="menu_logspace_configuration"
+              action="action_logspace_addon"
+              sequence="10"/>
+
+    <menuitem id="menu_logspace_zones"
+              name="Zones"
+              parent="menu_logspace_configuration"
+              action="action_logspace_zone"
+              sequence="20"/>
+
+    <menuitem id="menu_logspace_zone_distances"
+              name="Zone Distances"
+              parent="menu_logspace_configuration"
+              action="action_logspace_zone_distance"
+              sequence="25"/>
+
+    <menuitem id="menu_logspace_state_duration_config"
+              name="Timeline Durations"
+              parent="menu_logspace_configuration"
+              action="action_logspace_state_duration_config"
+              sequence="27"/>
+
+    <menuitem id="menu_logspace_vehicle_types"
+              name="Vehicle Types"
+              parent="menu_logspace_configuration"
+              action="action_logspace_vehicle_type"
+              sequence="30"/>
+
+    <menuitem id="menu_logspace_contact_roles"
+              name="Contact Roles"
+              parent="menu_logspace_configuration"
+              action="action_logspace_contact_roles"
+              sequence="40"/>
+
+    <record id="logspace_action_website" model="ir.actions.act_url">
+        <field name="name">Website</field>
+        <field name="url">/logspace</field>
+        <field name="target">self</field>
+    </record>
+
+    <menuitem id="logspace_website_menu" name="Website" groups="appness_logspace.group_logspace_provider" web_icon="website,static/description/icon.png" action="logspace_action_website"/>
+
+</odoo>

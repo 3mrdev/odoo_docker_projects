@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Annual Leave Accrual Plan: 2.5 days/month (30 days/year) -->
+        <record id="accrual_plan_annual" model="hr.leave.accrual.plan">
+            <field name="name">Annual Leave: 2.5 days/month</field>
+            <field name="time_off_type_id" ref="leave_type_annual"/>
+            <field name="accrued_gain_time">end</field>
+            <field name="can_be_carryover" eval="False"/>
+            <field name="level_ids" eval="[(0, 0, {
+                'added_value': 2.5,
+                'added_value_type': 'day',
+                'frequency': 'monthly',
+                'first_day': '1',
+                'start_count': 0,
+                'start_type': 'day',
+                'milestone_date': 'creation',
+                'action_with_unused_accruals': 'lost',
+            })]"/>
+        </record>
+
+        <!-- Accrual Plan 1: Sick Time Off 21 days (Paid at 100%) -->
+        <record id="accrual_plan_sick_100" model="hr.leave.accrual.plan">
+            <field name="name">Sick Time Off: 21 days (Paid at 100%)</field>
+            <field name="time_off_type_id" ref="leave_type_sick_100"/>
+            <field name="accrued_gain_time">start</field>
+            <field name="can_be_carryover" eval="False"/>
+            <field name="carryover_date">year_start</field>
+            <field name="carryover_day">1</field>
+            <field name="carryover_month">1</field>
+            <field name="level_ids" eval="[(0, 0, {
+                'added_value': 21,
+                'added_value_type': 'day',
+                'frequency': 'yearly',
+                'start_count': 0,
+                'start_type': 'day',
+                'milestone_date': 'creation',
+                'yearly_day': '1',
+                'yearly_month': '1',
+            })]"/>
+        </record>
+
+        <!-- Accrual Plan 2: Sick Time Off 21 days (Paid at 75%) -->
+        <record id="accrual_plan_sick_75" model="hr.leave.accrual.plan">
+            <field name="name">Sick Time Off: 21 days (Paid at 75%)</field>
+            <field name="time_off_type_id" ref="leave_type_sick_75"/>
+            <field name="accrued_gain_time">start</field>
+            <field name="can_be_carryover" eval="False"/>
+            <field name="carryover_date">year_start</field>
+            <field name="carryover_day">1</field>
+            <field name="carryover_month">1</field>
+            <field name="level_ids" eval="[(0, 0, {
+                'added_value': 21,
+                'added_value_type': 'day',
+                'frequency': 'yearly',
+                'start_count': 0,
+                'start_type': 'day',
+                'milestone_date': 'creation',
+                'yearly_day': '1',
+                'yearly_month': '1',
+            })]"/>
+        </record>
+
+        <!-- Accrual Plan 3: Sick Time Off 14 days (Paid at 50%) -->
+        <record id="accrual_plan_sick_50" model="hr.leave.accrual.plan">
+            <field name="name">Sick Time Off: 14 days (Paid at 50%)</field>
+            <field name="time_off_type_id" ref="leave_type_sick_50"/>
+            <field name="accrued_gain_time">start</field>
+            <field name="can_be_carryover" eval="False"/>
+            <field name="carryover_date">year_start</field>
+            <field name="carryover_day">1</field>
+            <field name="carryover_month">1</field>
+            <field name="level_ids" eval="[(0, 0, {
+                'added_value': 14,
+                'added_value_type': 'day',
+                'frequency': 'yearly',
+                'start_count': 0,
+                'start_type': 'day',
+                'milestone_date': 'creation',
+                'yearly_day': '1',
+                'yearly_month': '1',
+            })]"/>
+        </record>
+
+        <!-- Accrual Plan 4: Sick Time Off 14 days (Paid at 25%) -->
+        <record id="accrual_plan_sick_25" model="hr.leave.accrual.plan">
+            <field name="name">Sick Time Off: 14 days (Paid at 25%)</field>
+            <field name="time_off_type_id" ref="leave_type_sick_25"/>
+            <field name="accrued_gain_time">start</field>
+            <field name="can_be_carryover" eval="False"/>
+            <field name="carryover_date">year_start</field>
+            <field name="carryover_day">1</field>
+            <field name="carryover_month">1</field>
+            <field name="level_ids" eval="[(0, 0, {
+                'added_value': 14,
+                'added_value_type': 'day',
+                'frequency': 'yearly',
+                'start_count': 0,
+                'start_type': 'day',
+                'milestone_date': 'creation',
+                'yearly_day': '1',
+                'yearly_month': '1',
+            })]"/>
+        </record>
+
+    </data>
+</odoo>

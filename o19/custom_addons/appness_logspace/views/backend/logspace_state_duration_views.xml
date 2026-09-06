@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- State Duration Config: Action -->
+    <record id="action_logspace_state_duration_config" model="ir.actions.act_window">
+        <field name="name">Timeline Durations</field>
+        <field name="res_model">logspace.state.duration.config</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure estimated durations for each order workflow state.
+            </p>
+            <p>
+                Arrival states (Vendor Arrived at Pickup, Arrived at Destination) use zone distance data automatically.
+                All other states use the fixed duration you configure here.
+            </p>
+        </field>
+    </record>
+
+    <!-- State Duration Config: Tree View -->
+    <record id="view_logspace_state_duration_config_tree" model="ir.ui.view">
+        <field name="name">logspace.state.duration.config.tree</field>
+        <field name="model">logspace.state.duration.config</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="state_key"/>
+                <field name="duration_minutes"/>
+                <field name="notes"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- State Duration Config: Form View -->
+    <record id="view_logspace_state_duration_config_form" model="ir.ui.view">
+        <field name="name">logspace.state.duration.config.form</field>
+        <field name="model">logspace.state.duration.config</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="state_key"/>
+                            <field name="duration_minutes"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="active"/>
+                            <field name="notes"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

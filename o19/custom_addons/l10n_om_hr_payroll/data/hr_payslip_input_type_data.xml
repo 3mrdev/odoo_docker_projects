@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Deduction -->
+        <record id="om_input_deduction" model="hr.payslip.input.type">
+            <field name="name">Deduction</field>
+            <field name="code">DEDUCTION</field>
+            <field name="country_id" ref="base.om"/>
+            <field name="struct_ids" eval="[(4, ref('l10n_om_hr_payroll.om_regular_pay_structure'))]"/>
+        </record>
+
+        <!-- Reimbursement -->
+        <record id="om_input_reimbursement" model="hr.payslip.input.type">
+            <field name="name">Reimbursement</field>
+            <field name="code">REIMBURSEMENT</field>
+            <field name="country_id" ref="base.om"/>
+            <field name="struct_ids" eval="[(4, ref('l10n_om_hr_payroll.om_regular_pay_structure'))]"/>
+        </record>
+
+        <!-- Attachment of Salary -->
+        <record id="om_input_attach_salary" model="hr.payslip.input.type">
+            <field name="name">Attachment of Salary</field>
+            <field name="code">ATTACH_SALARY</field>
+            <field name="country_id" ref="base.om"/>
+            <field name="available_in_attachments" eval="True"/>
+            <field name="struct_ids" eval="[(4, ref('l10n_om_hr_payroll.om_regular_pay_structure'))]"/>
+        </record>
+
+        <!-- Assignment of Salary -->
+        <record id="om_input_assig_salary" model="hr.payslip.input.type">
+            <field name="name">Assignment of Salary</field>
+            <field name="code">ASSIG_SALARY</field>
+            <field name="country_id" ref="base.om"/>
+            <field name="available_in_attachments" eval="True"/>
+            <field name="struct_ids" eval="[(4, ref('l10n_om_hr_payroll.om_regular_pay_structure'))]"/>
+        </record>
+
+        <!-- Loan Deduction -->
+        <record id="om_input_loan_deduction" model="hr.payslip.input.type">
+            <field name="name">Loan Deduction</field>
+            <field name="code">LOAN_DED</field>
+            <field name="country_id" ref="base.om"/>
+            <field name="available_in_attachments" eval="True"/>
+            <field name="struct_ids" eval="[(4, ref('l10n_om_hr_payroll.om_regular_pay_structure'))]"/>
+        </record>
+
+        <!-- Child Support -->
+        <record id="om_input_child_support" model="hr.payslip.input.type">
+            <field name="name">Child Support</field>
+            <field name="code">CHILD_SUPPORT</field>
+            <field name="country_id" ref="base.om"/>
+            <field name="available_in_attachments" eval="True"/>
+            <field name="default_no_end_date" eval="True"/>
+            <field name="struct_ids" eval="[(4, ref('l10n_om_hr_payroll.om_regular_pay_structure'))]"/>
+        </record>
+
+        <!-- Air Fare -->
+        <record id="om_input_air_fare" model="hr.payslip.input.type">
+            <field name="name">Air Fare</field>
+            <field name="code">AIR_FARE</field>
+            <field name="country_id" ref="base.om"/>
+            <field name="struct_ids" eval="[(4, ref('l10n_om_hr_payroll.om_regular_pay_structure'))]"/>
+        </record>
+
+    </data>
+</odoo>

@@ -286,6 +286,15 @@ class JizWaqf(models.Model):
                     'company_id': waqf.company_id.id,
                     'currency_id': waqf.company_id.currency_id.id,
                     'model_id': waqf.asset_model_id.id,
+                    'account_asset_id': waqf.asset_model_id.account_asset_id.id,
+                    'display_account_asset_id':waqf.asset_model_id.account_asset_id.id,
+                    'account_depreciation_id': waqf.asset_model_id.account_depreciation_id.id,
+                    'account_depreciation_expense_id': waqf.asset_model_id.account_depreciation_expense_id.id,
+                    'equity_account_id':waqf.asset_model_id.equity_account_id.id,
+                    'equity_journal_id':waqf.asset_model_id.equity_journal_id.id,
+                    'analytic_distribution':waqf.analytic_distribution,
+                    'journal_id':waqf.asset_model_id.journal_id.id,
+                    'state':'draft'
                 })
                 waqf.asset_id = asset.id
 
@@ -294,6 +303,9 @@ class JizWaqf(models.Model):
                     partner = waqf.waqf_endower_contact_id
 
                     analytic_distribution = waqf.analytic_distribution or {}
+                    
+                    if not waqf.asset_model_id.equity_journal_id or not waqf.asset_model_id.account_asset_id or not waqf.asset_model_id.equity_account_id:
+                        raise UserError(_("You cannot create an asset bill without an equity account, journal or asset account.\n Please add them in the asset model"))
                     
                     data = {
                         'waqf_id': waqf.id,

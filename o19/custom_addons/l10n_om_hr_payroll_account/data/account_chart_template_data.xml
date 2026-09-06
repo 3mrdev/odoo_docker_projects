@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ============================================================ -->
+        <!-- Create accounts needed for Oman payroll                      -->
+        <!-- These accounts are created directly so the module works      -->
+        <!-- regardless of which chart template the company uses.         -->
+        <!-- ============================================================ -->
+
+        <!-- Liability accounts (2006xx range) -->
+        <record id="om_payroll_account_employees_payable" model="account.account">
+            <field name="code">200601</field>
+            <field name="name">Employees Payables</field>
+            <field name="account_type">liability_payable</field>
+            <field name="reconcile" eval="True"/>
+        </record>
+
+        <record id="om_payroll_account_eos_provision" model="account.account">
+            <field name="code">200602</field>
+            <field name="name">End of Service Provision</field>
+            <field name="account_type">liability_non_current</field>
+            <field name="reconcile" eval="False"/>
+        </record>
+
+        <record id="om_payroll_account_medical_insurance" model="account.account">
+            <field name="code">501206</field>
+            <field name="name">Medical Insurance</field>
+            <field name="account_type">expense</field>
+            <field name="reconcile" eval="False"/>
+        </record>
+
+        <record id="om_payroll_account_eos_indemnity" model="account.account">
+            <field name="code">501207</field>
+            <field name="name">End of Service Indemnity</field>
+            <field name="account_type">expense</field>
+            <field name="reconcile" eval="False"/>
+        </record>
+
+        <record id="om_payroll_account_basic_salary" model="account.account">
+            <field name="code">501201</field>
+            <field name="name">Basic Salary</field>
+            <field name="account_type">expense</field>
+            <field name="reconcile" eval="False"/>
+        </record>
+
+        <record id="om_payroll_account_housing_allowance" model="account.account">
+            <field name="code">501202</field>
+            <field name="name">Housing Allowance</field>
+            <field name="account_type">expense</field>
+            <field name="reconcile" eval="False"/>
+        </record>
+
+        <record id="om_payroll_account_transportation" model="account.account">
+            <field name="code">501203</field>
+            <field name="name">Transportation Allowance</field>
+            <field name="account_type">expense</field>
+            <field name="reconcile" eval="False"/>
+        </record>
+
+        <record id="om_payroll_account_staff_other" model="account.account">
+            <field name="code">501204</field>
+            <field name="name">Staff Other Allowances</field>
+            <field name="account_type">expense</field>
+            <field name="reconcile" eval="False"/>
+        </record>
+
+        <record id="om_payroll_account_air_tickets" model="account.account">
+            <field name="code">501205</field>
+            <field name="name">Air Tickets</field>
+            <field name="account_type">expense</field>
+            <field name="reconcile" eval="False"/>
+        </record>
+
+        <!-- Payroll-specific accounts -->
+        <record id="om_payroll_account_pasi_payable" model="account.account">
+            <field name="code">200603</field>
+            <field name="name">PASI Payable</field>
+            <field name="account_type">liability_current</field>
+            <field name="reconcile" eval="False"/>
+        </record>
+
+        <record id="om_payroll_account_pasi_expense" model="account.account">
+            <field name="code">501208</field>
+            <field name="name">PASI Employer Expense</field>
+            <field name="account_type">expense</field>
+            <field name="reconcile" eval="False"/>
+        </record>
+
+        <record id="om_payroll_account_salary_deductions" model="account.account">
+            <field name="code">501209</field>
+            <field name="name">Salary Deductions</field>
+            <field name="account_type">expense</field>
+            <field name="reconcile" eval="False"/>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- Trigger payroll account configuration for Oman                -->
+        <!-- Call _configure_payroll_account_om(companies) directly        -->
+        <!-- ============================================================ -->
+        <function model="account.chart.template" name="_configure_payroll_account_om">
+            <value model="res.company" eval="obj().search([('partner_id.country_id.code', '=', 'OM')])"/>
+</function></data></odoo>

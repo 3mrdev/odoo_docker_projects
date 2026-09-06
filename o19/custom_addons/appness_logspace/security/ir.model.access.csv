@@ -1,6 +1,75 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_model_logspace_document_type,logspace.document.type,model_logspace_document_type,sales_team.group_sale_salesman,1,1,1,1
-access_model_logspace_address,logspace.address,model_logspace_address,sales_team.group_sale_salesman,1,1,1,1
-access_model_logspace_area,logspace.area,model_logspace_area,sales_team.group_sale_salesman,1,1,1,1
-access_model_res_city,res.city,base_address_extended.model_res_city,base.group_portal,1,0,0,0
-access_model_logspace_area_portal,logspace.area,model_logspace_area,base.group_portal,1,0,0,0
+access_logspace_zone_provider,Zone Provider,model_logspace_zone,group_logspace_provider,1,0,0,0
+access_logspace_zone_admin,Zone Admin,model_logspace_zone,group_logspace_admin,1,1,1,1
+access_logspace_zone_portal,Zone Portal,model_logspace_zone,base.group_portal,1,0,0,0
+access_logspace_zone_public,Zone Public,model_logspace_zone,base.group_public,1,0,0,0
+
+access_logspace_vehicle_type_provider,Vehicle Type Provider,model_logspace_vehicle_type,group_logspace_provider,1,0,0,0
+access_logspace_vehicle_type_admin,Vehicle Type Admin,model_logspace_vehicle_type,group_logspace_admin,1,1,1,1
+access_logspace_vehicle_type_portal,Vehicle Type Portal,model_logspace_vehicle_type,base.group_portal,1,0,0,0
+access_logspace_vehicle_type_public,Vehicle Type Public,model_logspace_vehicle_type,base.group_public,1,0,0,0
+
+access_logspace_addon_provider,Addon Provider,model_logspace_addon,group_logspace_provider,1,0,0,0
+access_logspace_addon_admin,Addon Admin,model_logspace_addon,group_logspace_admin,1,1,1,1
+access_logspace_addon_portal,Addon Portal,model_logspace_addon,base.group_portal,1,0,0,0
+access_logspace_addon_public,Addon Public,model_logspace_addon,base.group_public,1,0,0,0
+
+access_logspace_fleet_summary_provider,Fleet Summary Provider,model_logspace_provider_fleet_summary,group_logspace_provider,1,1,1,1
+access_logspace_fleet_summary_admin,Fleet Summary Admin,model_logspace_provider_fleet_summary,group_logspace_admin,1,1,1,1
+access_logspace_fleet_summary_public,Fleet Summary Public,model_logspace_provider_fleet_summary,base.group_public,1,0,0,0
+
+access_logspace_time_frame_provider,Time Frame Provider,model_logspace_provider_time_frame,group_logspace_provider,1,1,1,1
+access_logspace_time_frame_admin,Time Frame Admin,model_logspace_provider_time_frame,group_logspace_admin,1,1,1,1
+access_logspace_time_frame_public,Time Frame Public,model_logspace_provider_time_frame,base.group_public,1,0,0,0
+
+access_logspace_special_instruction_provider,Special Instruction Provider,model_logspace_provider_special_instruction,group_logspace_provider,1,1,1,1
+access_logspace_special_instruction_admin,Special Instruction Admin,model_logspace_provider_special_instruction,group_logspace_admin,1,1,1,1
+access_logspace_special_instruction_public,Special Instruction Public,model_logspace_provider_special_instruction,base.group_public,1,0,0,0
+
+access_logspace_vehicle_provider,Vehicle Provider,model_logspace_vehicle,group_logspace_provider,1,1,1,1
+access_logspace_vehicle_admin,Vehicle Admin,model_logspace_vehicle,group_logspace_admin,1,1,1,1
+access_logspace_vehicle_portal,Vehicle Portal,model_logspace_vehicle,base.group_portal,1,0,0,0
+access_logspace_vehicle_public,Vehicle Public,model_logspace_vehicle,base.group_public,1,0,0,0
+
+access_logspace_price_matrix_provider,Price Matrix Provider,model_logspace_price_matrix,group_logspace_provider,1,1,1,1
+access_logspace_price_matrix_admin,Price Matrix Admin,model_logspace_price_matrix,group_logspace_admin,1,1,1,1
+access_logspace_price_matrix_public,Price Matrix Public,model_logspace_price_matrix,base.group_public,1,0,0,0
+
+access_logspace_order_timeline_provider,Order Timeline Provider,model_logspace_order_timeline,group_logspace_provider,1,1,1,0
+access_logspace_order_timeline_admin,Order Timeline Admin,model_logspace_order_timeline,group_logspace_admin,1,1,1,1
+access_logspace_order_timeline_portal,Order Timeline Portal,model_logspace_order_timeline,base.group_portal,1,0,0,0
+access_logspace_order_timeline_public,Order Timeline Public,model_logspace_order_timeline,base.group_public,1,0,0,0
+
+access_logspace_refund_provider,Refund Provider,model_logspace_refund,group_logspace_provider,1,0,0,0
+access_logspace_refund_admin,Refund Admin,model_logspace_refund,group_logspace_admin,1,1,1,1
+access_logspace_refund_portal,Refund Portal,model_logspace_refund,base.group_portal,1,0,1,0
+
+access_logspace_notification_provider,Notification Provider,model_logspace_notification,group_logspace_provider,1,1,1,0
+access_logspace_notification_admin,Notification Admin,model_logspace_notification,group_logspace_admin,1,1,1,1
+access_logspace_notification_portal,Notification Portal,model_logspace_notification,base.group_portal,1,1,1,0
+
+access_logspace_provider_vtype_addon_provider,Provider VType Addon Provider,model_logspace_provider_vehicle_type_addon,group_logspace_provider,1,1,1,1
+access_logspace_provider_vtype_addon_admin,Provider VType Addon Admin,model_logspace_provider_vehicle_type_addon,group_logspace_admin,1,1,1,1
+
+access_logspace_zone_distance_provider,Zone Distance Provider,model_logspace_zone_distance,group_logspace_provider,1,0,0,0
+access_logspace_zone_distance_admin,Zone Distance Admin,model_logspace_zone_distance,group_logspace_admin,1,1,1,1
+access_logspace_zone_distance_portal,Zone Distance Portal,model_logspace_zone_distance,base.group_portal,1,0,0,0
+access_logspace_zone_distance_public,Zone Distance Public,model_logspace_zone_distance,base.group_public,1,0,0,0
+
+access_logspace_zone_setup_wizard_provider,Zone Setup Wizard Provider,model_logspace_zone_setup_wizard,group_logspace_provider,1,1,1,1
+access_logspace_zone_setup_wizard_admin,Zone Setup Wizard Admin,model_logspace_zone_setup_wizard,group_logspace_admin,1,1,1,1
+
+access_logspace_vtype_document_admin,VType Document Admin,model_logspace_vehicle_type_document,group_logspace_admin,1,1,1,1
+access_logspace_vtype_document_provider,VType Document Provider,model_logspace_vehicle_type_document,group_logspace_provider,1,0,0,0
+access_logspace_vtype_document_public,VType Document Public,model_logspace_vehicle_type_document,base.group_public,1,0,0,0
+
+access_logspace_time_slot_admin,Time Slot Admin,model_logspace_time_slot,group_logspace_admin,1,1,1,1
+access_logspace_time_slot_provider,Time Slot Provider,model_logspace_time_slot,group_logspace_provider,1,0,0,0
+access_logspace_time_slot_public,Time Slot Public,model_logspace_time_slot,base.group_public,1,0,0,0
+
+access_logspace_state_duration_config_admin,State Duration Config Admin,model_logspace_state_duration_config,group_logspace_admin,1,1,1,1
+access_logspace_state_duration_config_provider,State Duration Config Provider,model_logspace_state_duration_config,group_logspace_provider,1,0,0,0
+access_logspace_state_duration_config_portal,State Duration Config Portal,model_logspace_state_duration_config,base.group_portal,1,0,0,0
+
+access_sale_order_provider,Sale Order Provider,sale.model_sale_order,group_logspace_provider,1,1,0,0
+access_sale_order_line_provider,Sale Order Line Provider,sale.model_sale_order_line,group_logspace_provider,1,1,1,1

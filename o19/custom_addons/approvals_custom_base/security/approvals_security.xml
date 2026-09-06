@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Allow executor group users to READ + WRITE approved requests
+             in their configured categories (no create, no unlink). -->
+        <record id="approval_request_executor_rule" model="ir.rule">
+            <field name="name">Approval Request: Executor access to approved requests</field>
+            <field name="model_id" ref="approvals.model_approval_request"/>
+            <field name="domain_force">[
+                ('category_id.executor_group_ids', 'in', user.group_ids.ids),
+                ('request_status', '=', 'approved'),
+            ]</field>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Companion rule on approval.product.line so executors can see
+             the product lines of requests they have access to. -->
+        <record id="approval_product_line_executor_rule" model="ir.rule">
+            <field name="name">Approval Product Line: Executor access via approved requests</field>
+            <field name="model_id" ref="approvals.model_approval_product_line"/>
+            <field name="domain_force">[
+                ('approval_request_id.category_id.executor_group_ids', 'in', user.group_ids.ids),
+                ('approval_request_id.request_status', '=', 'approved'),
+            ]</field>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+    </data>
+</odoo>
