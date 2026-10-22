@@ -65,8 +65,7 @@ class LogspaceProviderSpecialInstruction(models.Model):
     # =========================================================================
     # Constraints
     # =========================================================================
-    _sql_constraints = [
-        ('unique_instruction_vehicle',
-         'unique(partner_id, vehicle_type_id)',
-         'Special instructions for this vehicle type already exist!')
-    ]
+    _unique_instruction_vehicle = models.Constraint(
+        'unique(partner_id, vehicle_type_id)',
+        'Special instructions for this vehicle type already exist!',
+    )

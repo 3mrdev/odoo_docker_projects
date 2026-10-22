@@ -23,7 +23,7 @@
                 <field name="image" widget="image"/>
                 <field name="name"/>
                 <field name="code"/>
-                <field name="category"/>
+                <field name="category_id"/>
                 <field name="default_capacity_kg"/>
                 <field name="default_capacity_cbm"/>
                 <field name="active" widget="boolean_toggle"/>
@@ -48,7 +48,7 @@
                         <group>
                             <field name="code"/>
                             <!-- <field name="icon" placeholder="fa-truck"/> -->
-                            <field name="category"/>
+                            <field name="category_id"/>
                             <field name="sequence"/>
                             <field name="active"/>
                         </group>

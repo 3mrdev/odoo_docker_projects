@@ -21,8 +21,7 @@ class LogspaceVehicleTypeDocument(models.Model):
     sequence = fields.Integer(string='Sequence', default=10)
     is_active = fields.Boolean(default=True)
 
-    _sql_constraints = [
-        ('unique_vtype_document',
-         'unique(vehicle_type_id, name)',
-         'This document name already exists for this vehicle type!')
-    ]
+    _unique_vtype_document = models.Constraint(
+        'unique(vehicle_type_id, name)',
+        'This document name already exists for this vehicle type!',
+    )

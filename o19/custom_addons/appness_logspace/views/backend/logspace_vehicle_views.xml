@@ -32,7 +32,7 @@
                 <field name="vehicle_type_id"/>
                 <field name="zone_id"/>
                 <field name="plate_number"/>
-                <field name="driver_id"/>
+                <field name="driver_id" domain="[('is_company','=',True)]"/>
                 <field name="is_active" widget="boolean_toggle"/>
                 <field name="provider_state" optional="hide"/>
             </list>
@@ -53,7 +53,7 @@
                     </div>
                     <group>
                         <group>
-                            <field name="provider_id" options="{'no_create': True}" domain="[('is_provider', '=', True)]"/>
+                            <field name="provider_id" options="{'no_create': True}" domain="[('is_provider', '=', True),('is_company','=',True)]"/>
                             <field name="vehicle_type_id"/>
                             <field name="zone_id"/>
                             <field name="plate_number"/>
@@ -61,7 +61,7 @@
                         </group>
                         <group>
                             <field name="provider_state" readonly="1"/>
-                            <field name="driver_id"/>
+                            <field name="driver_id" domain="[('is_company','=',True)]"/>
                             <field name="registration_doc_id"/>
                             <field name="insurance_doc_id"/>
                         </group>

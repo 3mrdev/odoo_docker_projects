@@ -39,10 +39,10 @@ class LogspaceStateDurationConfig(models.Model):
     active = fields.Boolean(default=True)
     notes = fields.Char(string='Notes')
 
-    _sql_constraints = [
-        ('state_key_unique', 'unique(state_key)',
-         'A configuration already exists for this state.'),
-    ]
+    _state_key_unique = models.Constraint(
+        'unique(state_key)',
+        'A configuration already exists for this state.',
+    )
 
     # -------------------------------------------------------------------------
     # Helpers

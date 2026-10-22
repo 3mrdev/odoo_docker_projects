@@ -16,7 +16,7 @@
             <field name="categ_id" ref="product_category_logspace"/>
             <field name="type">service</field>
             <field name="sale_ok">True</field>
-            <field name="purchase_ok">False</field>
+            <field name="purchase_ok">True</field>
             <field name="default_code">LOGSPACE-SVC</field>
             <field name="description_sale">Logistics transport service including vehicle and driver</field>
         </record>

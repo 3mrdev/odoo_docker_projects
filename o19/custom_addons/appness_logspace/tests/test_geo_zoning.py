@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from odoo.tests.common import TransactionCase, tagged
-from odoo.exceptions import ValidationError
 
 
 @tagged('-at_install', 'post_install')
@@ -173,14 +172,34 @@ class TestZoneDistance(TransactionCase):
         result = self.ZoneDist.get_distance(self.city_a, None)
         self.assertAlmostEqual(result, 0.0)
 
-    def test_same_zone_constraint(self):
-        """From and To zone must be different."""
-        with self.assertRaises(ValidationError):
-            self.ZoneDist.create({
-                'zone_from_id': self.city_a.id,
-                'zone_to_id': self.city_a.id,
-                'estimated_km': 10.0,
-            })
+    def test_same_zone_distance_allowed(self):
+        """Explicit same-zone rows are allowed (local moves): zones are areas,
+        not points, so Muscat -> Muscat is a real ~25 km intra-zone distance.
+        The mirror of A -> A is itself: exactly one row must exist."""
+        self.ZoneDist.create({
+            'zone_from_id': self.city_a.id,
+            'zone_to_id': self.city_a.id,
+            'estimated_km': 25.0,
+        })
+        self.assertAlmostEqual(
+            self.ZoneDist.get_distance(self.city_a, self.city_a), 25.0)
+        same = self.ZoneDist.search([
+            ('zone_from_id', '=', self.city_a.id),
+            ('zone_to_id', '=', self.city_a.id),
+        ])
+        self.assertEqual(len(same), 1)
+
+    def test_same_zone_parent_fallback(self):
+        """A child zone with no same-zone row resolves to the parent's
+        same-zone row through the hierarchy walk (Ruwi -> Ruwi uses
+        Muscat -> Muscat)."""
+        self.ZoneDist.create({
+            'zone_from_id': self.gov.id,
+            'zone_to_id': self.gov.id,
+            'estimated_km': 500.0,
+        })
+        self.assertAlmostEqual(
+            self.ZoneDist.get_distance(self.city_a, self.city_a), 500.0)
 
 
 @tagged('-at_install', 'post_install')
@@ -211,7 +230,7 @@ class TestPriceMatrixDistanceAutoPopulate(TransactionCase):
         self.vtype = self.env['logspace.vehicle.type'].create({
             'name': 'Test VType PM',
             'code': 'VTYPE-PM',
-            'category': 'light',
+            'category_id': self.env.ref('appness_logspace.vehicle_category_light').id,
         })
 
     def test_onchange_populates_distance(self):
@@ -257,8 +276,62 @@ class TestZoneSetupWizard(TransactionCase):
         self.vtype = self.env['logspace.vehicle.type'].create({
             'name': 'Wiz VType',
             'code': 'VTYPE-WIZ',
-            'category': 'light',
+            'category_id': self.env.ref('appness_logspace.vehicle_category_light').id,
         })
+
+    def test_wizard_generates_same_zone_route(self):
+        """A single selected zone must still generate a local self-route,
+        priced from the explicit same-zone distance row."""
+        self.env['logspace.zone.distance'].create({
+            'zone_from_id': self.zone_a.id,
+            'zone_to_id': self.zone_a.id,
+            'estimated_km': 25.0,
+        })
+        wizard = self.env['logspace.zone.setup.wizard'].create({
+            'provider_id': self.provider.id,
+            'zone_ids': [(6, 0, [self.zone_a.id])],
+            'vehicle_type_ids': [(6, 0, [self.vtype.id])],
+            'base_rate': 10.0,
+            'per_km_rate': 1.0,
+        })
+        self.assertEqual(wizard.estimated_routes, 1)
+        wizard.action_confirm()
+
+        entries = self.env['logspace.price.matrix'].search([
+            ('provider_id', '=', self.provider.id),
+            ('vehicle_type_id', '=', self.vtype.id),
+        ])
+        self.assertEqual(len(entries), 1)
+        self.assertEqual(entries.zone_from_id, self.zone_a)
+        self.assertEqual(entries.zone_to_id, self.zone_a)
+        self.assertAlmostEqual(entries.distance_km, 25.0)
+        self.assertAlmostEqual(entries.provider_price, 35.0)  # 10 + 25 x 1.0
+
+    def test_wizard_two_zones_generate_self_routes(self):
+        """Two zones -> 4 rows (A<->B cross + A->A, B->B local); re-running
+        the wizard updates instead of duplicating."""
+        wizard = self.env['logspace.zone.setup.wizard'].create({
+            'provider_id': self.provider.id,
+            'zone_ids': [(6, 0, [self.zone_a.id, self.zone_b.id])],
+            'vehicle_type_ids': [(6, 0, [self.vtype.id])],
+            'base_rate': 5.0,
+            'per_km_rate': 1.0,
+        })
+        self.assertEqual(wizard.estimated_routes, 4)
+        wizard.action_confirm()
+        Matrix = self.env['logspace.price.matrix']
+        entries = Matrix.search([
+            ('provider_id', '=', self.provider.id),
+            ('vehicle_type_id', '=', self.vtype.id),
+        ])
+        self.assertEqual(len(entries), 4)
+        self.assertEqual(
+            len(entries.filtered(lambda e: e.zone_from_id == e.zone_to_id)), 2)
+        wizard.action_confirm()
+        self.assertEqual(len(Matrix.search([
+            ('provider_id', '=', self.provider.id),
+            ('vehicle_type_id', '=', self.vtype.id),
+        ])), 4)
 
     def test_wizard_creates_price_matrix(self):
         """Wizard should create price matrix entries for zone pair permutations."""
@@ -275,12 +348,19 @@ class TestZoneSetupWizard(TransactionCase):
             ('provider_id', '=', self.provider.id),
             ('vehicle_type_id', '=', self.vtype.id),
         ])
-        # 2 zones = 2 permutations (A→B and B→A)
-        self.assertEqual(len(entries), 2)
+        # 2 zones = A→B, B→A cross + A→A, B→B local self-routes
+        self.assertEqual(len(entries), 4)
 
-    def test_wizard_skips_existing(self):
-        """Wizard should not duplicate existing price matrix entries."""
-        # Pre-create one entry
+    def test_wizard_updates_existing(self):
+        """With Skip Existing unticked, the wizard updates existing price
+        matrix entries with the new rates instead of skipping them."""
+        # 50 km between the zones (auto-creates the reverse B→A row too)
+        self.env['logspace.zone.distance'].create({
+            'zone_from_id': self.zone_a.id,
+            'zone_to_id': self.zone_b.id,
+            'estimated_km': 50.0,
+        })
+        # Pre-create one entry at a distinct price
         self.env['logspace.price.matrix'].create({
             'provider_id': self.provider.id,
             'vehicle_type_id': self.vtype.id,
@@ -294,6 +374,7 @@ class TestZoneSetupWizard(TransactionCase):
             'vehicle_type_ids': [(6, 0, [self.vtype.id])],
             'base_rate': 10.0,
             'per_km_rate': 1.0,
+            'skip_existing': False,
         })
         wizard.action_confirm()
 
@@ -301,15 +382,24 @@ class TestZoneSetupWizard(TransactionCase):
             ('provider_id', '=', self.provider.id),
             ('vehicle_type_id', '=', self.vtype.id),
         ])
-        # Only 1 new (B→A), the existing A→B should be preserved
-        self.assertEqual(len(entries), 2)
-        existing = entries.filtered(
-            lambda e: e.zone_from_id == self.zone_a and e.zone_to_id == self.zone_b
-        )
-        self.assertAlmostEqual(existing.provider_price, 999.0)
+        # A→B and B→A updated to 10.0 + 50.0 x 1.0; the two new self-routes
+        # use the 5.0 km same-zone default (no explicit A→A row)
+        self.assertEqual(len(entries), 4)
+        cross = entries.filtered(lambda e: e.zone_from_id != e.zone_to_id)
+        local = entries.filtered(lambda e: e.zone_from_id == e.zone_to_id)
+        self.assertEqual(len(cross), 2)
+        self.assertEqual(len(local), 2)
+        self.assertTrue(all(
+            abs(e.provider_price - 60.0) < 0.01 for e in cross
+        ), 'Existing entries must be recomputed from the wizard rates')
+        self.assertTrue(all(
+            abs(e.provider_price - 15.0) < 0.01 for e in local
+        ), 'Self-routes fall back to the 5.0 km same-zone default')
 
-    def test_wizard_includes_child_zones(self):
-        """Wizard should include child zones of selected governorates."""
+    def test_wizard_uses_selected_zones_only(self):
+        """The wizard generates routes for explicitly selected zones only -
+        child zones are covered by the portal search's hierarchy walk, not
+        expanded here (see _get_selected_zones)."""
         gov = self.env['logspace.zone'].create({
             'name': 'Wiz Gov',
             'code': 'WIZ-GOV',
@@ -328,8 +418,7 @@ class TestZoneSetupWizard(TransactionCase):
             'base_rate': 5.0,
             'per_km_rate': 0.5,
         })
-        # _get_all_zones should include gov + child + zone_a
-        all_zones = wizard._get_all_zones()
-        self.assertIn(gov, all_zones)
-        self.assertIn(child, all_zones)
-        self.assertIn(self.zone_a, all_zones)
+        selected = wizard._get_selected_zones()
+        self.assertIn(gov, selected)
+        self.assertIn(self.zone_a, selected)
+        self.assertNotIn(child, selected)

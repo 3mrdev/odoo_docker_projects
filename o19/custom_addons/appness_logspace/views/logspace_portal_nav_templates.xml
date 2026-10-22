@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Repoint the portal user-dropdown "My Account" entry at this module's own
+         account page instead of core's /my/home.
+
+         Core hardcodes the href in portal.my_account_link
+         (addons/portal/views/portal_templates.xml:638-644). That anchor carries
+         no id and no name, so the xpath has to select it by the href itself.
+
+         Inheriting portal.my_account_link rather than portal.user_dropdown avoids
+         competing with that view's own priority. One view is enough to cover
+         every header: portal.user_dropdown is t-called from the portal navbar and
+         from all the website header variants, so they all render this anchor.
+
+         This applies to every portal user, not only drivers. That matches what
+         already happens today - controllers/portal.py registers /my/home on
+         logspace_my_account, so core's portal dashboard is not reachable from
+         this URL for anyone. -->
+    <template id="my_account_link_logspace" inherit_id="portal.my_account_link"
+              name="My Account → Logspace account page">
+        <xpath expr="//a[@href='/my/home']" position="attributes">
+            <attribute name="href">/logspace/my</attribute>
+        </xpath>
+    </template>
+
+</odoo>

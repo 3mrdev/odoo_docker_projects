@@ -58,11 +58,10 @@ class LogspaceProviderFleetSummary(models.Model):
     # =========================================================================
     # Constraints
     # =========================================================================
-    _sql_constraints = [
-        ('unique_provider_vehicle_type',
-         'unique(partner_id, vehicle_type_id)',
-         'Fleet summary for this vehicle type already exists!')
-    ]
+    _unique_provider_vehicle_type = models.Constraint(
+        'unique(partner_id, vehicle_type_id)',
+        'Fleet summary for this vehicle type already exists!',
+    )
 
     # =========================================================================
     # Onchange Methods

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Work orders list (incl. the Work Orders tab of the MO form) -->
+    <record id="mrp_production_workorder_tree_editable_view_shift" model="ir.ui.view">
+        <field name="name">mrp.production.work.order.list.inherit.shift</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.mrp_production_workorder_tree_editable_view"/>
+        <field name="arch" type="xml">
+            <field name="workcenter_id" position="after">
+                <field name="shift_id" optional="show" readonly="state in ['cancel', 'done']"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Work order form -->
+    <record id="mrp_production_workorder_form_view_inherit_shift" model="ir.ui.view">
+        <field name="name">mrp.production.work.order.form.inherit.shift</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.mrp_production_workorder_form_view_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='production_id']" position="after">
+                <field name="shift_id" readonly="state in ['cancel', 'done']"/>
+            </xpath>
+            <xpath expr="//field[@name='time_ids']/list/field[@name='user_id']" position="after">
+                <field name="shift_id" string="Shift"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

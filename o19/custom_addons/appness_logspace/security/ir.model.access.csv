@@ -9,6 +9,11 @@ access_logspace_vehicle_type_admin,Vehicle Type Admin,model_logspace_vehicle_typ
 access_logspace_vehicle_type_portal,Vehicle Type Portal,model_logspace_vehicle_type,base.group_portal,1,0,0,0
 access_logspace_vehicle_type_public,Vehicle Type Public,model_logspace_vehicle_type,base.group_public,1,0,0,0
 
+access_logspace_vehicle_category_provider,Vehicle Category Provider,model_logspace_vehicle_category,group_logspace_provider,1,0,0,0
+access_logspace_vehicle_category_admin,Vehicle Category Admin,model_logspace_vehicle_category,group_logspace_admin,1,1,1,1
+access_logspace_vehicle_category_portal,Vehicle Category Portal,model_logspace_vehicle_category,base.group_portal,1,0,0,0
+access_logspace_vehicle_category_public,Vehicle Category Public,model_logspace_vehicle_category,base.group_public,1,0,0,0
+
 access_logspace_addon_provider,Addon Provider,model_logspace_addon,group_logspace_provider,1,0,0,0
 access_logspace_addon_admin,Addon Admin,model_logspace_addon,group_logspace_admin,1,1,1,1
 access_logspace_addon_portal,Addon Portal,model_logspace_addon,base.group_portal,1,0,0,0
@@ -73,3 +78,14 @@ access_logspace_state_duration_config_portal,State Duration Config Portal,model_
 
 access_sale_order_provider,Sale Order Provider,sale.model_sale_order,group_logspace_provider,1,1,0,0
 access_sale_order_line_provider,Sale Order Line Provider,sale.model_sale_order_line,group_logspace_provider,1,1,1,1
+
+access_account_move_provider,Account Move Provider,account.model_account_move,group_logspace_provider,1,0,0,0
+access_account_move_line_provider,Account Move Line Provider,account.model_account_move_line,group_logspace_provider,1,0,0,0
+
+access_res_partner_provider,Res Partner Provider,base.model_res_partner,group_logspace_provider,1,1,1,0
+
+access_logspace_verification_wizard_provider,Verification Wizard Provider,model_logspace_verification_wizard,group_logspace_provider,1,1,1,1
+access_logspace_verification_wizard_admin,Verification Wizard Admin,model_logspace_verification_wizard,group_logspace_admin,1,1,1,1
+access_logspace_verification_wizard_sales,Verification Wizard Sales,model_logspace_verification_wizard,sales_team.group_sale_salesman,1,1,1,1
+
+access_res_config_settings_logspace_admin,Res Config Settings Logspace Admin,base.model_res_config_settings,group_logspace_admin,1,1,1,0

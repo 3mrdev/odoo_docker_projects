@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_production_plan_document">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="doc.with_context()"/>
+            <div class="page">
+                <div class="oe_structure"/>
+                <h2 class="text-center">
+                    <span t-out="doc.name"/> — <span>Production Plan Report</span>
+                </h2>
+                <div class="row mb-4">
+                    <div class="col-6">
+                        <strong>Period:</strong>
+                        <span t-out="doc.date_from"/> to <span t-out="doc.date_to"/>
+                    </div>
+                    <div class="col-6 text-end">
+                        <strong>Responsible:</strong>
+                        <span t-out="doc.user_id.name or ''"/>
+                    </div>
+                </div>
+
+                <t t-foreach="doc.line_ids" t-as="line">
+                    <h4>
+                        <span t-out="line.product_id.display_name"/>
+                    </h4>
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Period</th>
+                                <th class="text-end">Target Qty</th>
+                                <th class="text-end">Actual Qty</th>
+                                <th class="text-end">Achieved %</th>
+                                <th class="text-end">Target Gold (g)</th>
+                                <th class="text-end">Actual Gold (g)</th>
+                                <th>MOs</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="fw-bold">
+                                <td>Total</td>
+                                <td class="text-end"><span t-out="'%.2f' % line.target_qty_total"/></td>
+                                <td class="text-end"><span t-out="'%.2f' % line.actual_qty"/></td>
+                                <td class="text-end"><span t-out="'%.1f' % (line.achieved_percentage * 100) + '%'"/></td>
+                                <td class="text-end"><span t-out="'%.2f' % line.target_gold_total"/></td>
+                                <td class="text-end"><span t-out="'%.2f' % line.actual_gold_content"/></td>
+                                <td class="text-end"><span t-out="line.mo_count"/></td>
+                            </tr>
+                            <tr t-foreach="line.target_ids" t-as="target" t-att-class="'text-danger fw-bold' if target.achieved_percentage &gt; 1 else ''">
+                                <td>
+                                    <span t-out="dict(target._fields['period_type'].selection).get(target.period_type, target.period_type)"/>
+                                    (<span t-out="target.date_from"/> - <span t-out="target.date_to"/>)
+                                </td>
+                                <td class="text-end"><span t-out="'%.2f' % target.target_qty"/></td>
+                                <td class="text-end"><span t-out="'%.2f' % target.actual_qty"/></td>
+                                <td class="text-end">
+                                    <span t-out="'%.1f' % (target.achieved_percentage * 100) + '%'"/>
+                                </td>
+                                <td class="text-end"><span t-out="'%.2f' % target.target_gold_content"/></td>
+                                <td class="text-end"><span t-out="'%.2f' % target.actual_gold_content"/></td>
+                                <td class="text-end"><span t-out="target.mo_count"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+                <t t-if="not doc.line_ids">
+                    <p>No plan lines defined.</p>
+                </t>
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_production_plan">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="mrp_production_plan.report_production_plan_document" t-lang="doc.company_id.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_production_plan" model="ir.actions.report">
+        <field name="name">Production Plan Report</field>
+        <field name="model">mrp.production.plan</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">mrp_production_plan.report_production_plan</field>
+        <field name="report_file">mrp_production_plan.report_production_plan</field>
+        <field name="print_report_name">'Production Plan - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_mrp_production_plan"/>
+    </record>
+
+</odoo>

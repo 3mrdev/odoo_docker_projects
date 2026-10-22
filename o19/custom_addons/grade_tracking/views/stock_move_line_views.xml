@@ -1,0 +1,67 @@
+<odoo>
+
+    <!-- Stock Move Line Form View (Detailed Operations popup) -->
+    <record id="stock_move_line_form_grade_tracking" model="ir.ui.view">
+        <field name="name">stock.move.line.form.grade.tracking</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_move_line_form" />
+        <field name="arch" type="xml">
+            <field name="lot_id" position="after">
+                <field name="is_grade_tracked" invisible="1"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="mining_location_id"
+                    invisible="not is_grade_tracked or picking_code != 'incoming'"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="mining_level_id"
+                    invisible="not is_grade_tracked or picking_code != 'incoming'"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="average_grade"
+                    invisible="not is_grade_tracked or picking_code != 'incoming'"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="grade_tier_id"
+                    invisible="not is_grade_tracked or picking_code != 'incoming'"
+                    options="{'no_open': True, 'no_create': True}"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="gold_content"
+                    invisible="not is_grade_tracked or picking_code != 'incoming'"
+                    groups="grade_tracking.group_grade_tracked" />
+            </field>
+        </field>
+    </record>
+
+    <!-- Stock Move Line List View -->
+    <record id="stock_move_line_tree_grade_tracking" model="ir.ui.view">
+        <field name="name">stock.move.line.tree.grade.tracking</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_move_line_tree" />
+        <field name="arch" type="xml">
+            <field name="lot_id" position="after">
+                <field name="is_grade_tracked" column_invisible="True"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="mining_location_id"
+                    invisible="not is_grade_tracked or not lot_id"
+                    optional="show"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="mining_level_id"
+                    invisible="not is_grade_tracked or not lot_id"
+                    optional="show"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="average_grade"
+                    invisible="not is_grade_tracked or not lot_id"
+                    optional="show"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="grade_tier_id"
+                    invisible="not is_grade_tracked or not lot_id"
+                    options="{'no_open': True, 'no_create': True}"
+                    optional="hide"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="gold_content"
+                    invisible="not is_grade_tracked or not lot_id"
+                    optional="hide"
+                    sum="Total Gold Content"
+                    groups="grade_tracking.group_grade_tracked" />
+            </field>
+        </field>
+    </record>
+
+</odoo>

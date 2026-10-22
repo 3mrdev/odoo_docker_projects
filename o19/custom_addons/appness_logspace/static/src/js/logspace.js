@@ -1,15 +1,19 @@
 /** @odoo-module **/
 
 import publicWidget from '@web/legacy/js/public/public_widget';
+import { _t } from "@web/core/l10n/translation";
 
 publicWidget.registry.Logspace = publicWidget.Widget.extend({
     selector: '.logspace-page, .logspace-rate-page',
     events: {
         'click .js-addons-toggle': '_onAddonsToggle',
+        'change .js-addon-checkbox': '_onAddonsToggle',
         'click .js-star-rating': '_onStarRating',
         'click .js-booking-next': '_onBookingNext',
         'click .js-booking-back': '_onBookingBack',
         'change .js-file-upload': '_onFileUpload',
+        'change .js-same-as-pickup': '_onSameAsPickup',
+        'change .js-use-my-details': '_onUseMyDetails',
     },
 
     /**
@@ -73,25 +77,114 @@ publicWidget.registry.Logspace = publicWidget.Widget.extend({
         const card = checkbox.closest('.addon-card');
         if (card) {
             card.classList.toggle('selected', checkbox.checked);
-            this._updateTotal();
+        }
+        this._updateTotal();
+    },
+
+    /**
+     * Update the booking summary sidebar when add-ons change.
+     * Reads data-base-price / data-tax-rate / data-currency-symbol from the
+     * .js-booking-summary element and rebuilds the selected add-on rows.
+     */
+    _updateTotal: function () {
+        const summary = document.querySelector('.js-booking-summary');
+        if (!summary) return;
+        const basePrice = parseFloat(summary.dataset.basePrice || 0);
+        const taxRate = parseFloat(summary.dataset.taxRate || 0);
+        const symbol = summary.dataset.currencySymbol || '';
+
+        let addonsTotal = 0;
+        const selected = [];
+        document.querySelectorAll('.js-addon-checkbox:checked').forEach((checkbox) => {
+            const price = parseFloat(checkbox.dataset.price || 0);
+            addonsTotal += price;
+            selected.push({ name: checkbox.dataset.name || '', price: price });
+        });
+
+        const subtotal = basePrice + addonsTotal;
+        const tax = subtotal * taxRate;
+        const total = subtotal + tax;
+
+        const addonRows = summary.querySelector('.js-summary-addons');
+        if (addonRows) {
+            addonRows.innerHTML = '';
+            selected.forEach((addon) => {
+                const row = document.createElement('div');
+                row.className = 'd-flex justify-content-between small mb-1';
+                const label = document.createElement('span');
+                const icon = document.createElement('i');
+                icon.className = 'fa fa-plus text-success me-1';
+                label.appendChild(icon);
+                label.appendChild(document.createTextNode(addon.name));
+                const price = document.createElement('span');
+                price.textContent = '+ ' + symbol + ' ' + addon.price.toFixed(2);
+                row.appendChild(label);
+                row.appendChild(price);
+                addonRows.appendChild(row);
+            });
+        }
+        this._setSummaryAmount(summary, '.js-summary-subtotal', symbol, subtotal);
+        this._setSummaryAmount(summary, '.js-summary-tax', symbol, tax);
+        this._setSummaryAmount(summary, '.js-total-price', symbol, total);
+    },
+
+    /**
+     * Write a formatted amount into a summary element.
+     */
+    _setSummaryAmount: function (summary, selector, symbol, amount) {
+        const el = summary.querySelector(selector);
+        if (el) {
+            el.textContent = symbol + ' ' + amount.toFixed(2);
         }
     },
 
     /**
-     * Update total price when add-ons change
+     * Handle "Same as Pickup" checkbox: copy pickup contact name and phone
+     * into the dropoff contact fields.
      */
-    _updateTotal: function () {
-        const basePrice = parseFloat(document.querySelector('[data-base-price]')?.dataset.basePrice || 0);
-        let addonsTotal = 0;
+    _onSameAsPickup: function (ev) {
+        const checkbox = ev.currentTarget;
+        if (!checkbox.checked) return;
+        const form = checkbox.closest('form');
+        if (!form) return;
+        const pickupName = form.querySelector('[name="pickup_contact_name"]');
+        const dropoffName = form.querySelector('[name="dropoff_contact_name"]');
+        const pickupPhone = form.querySelector('[name="pickup_contact_phone_display"]');
+        const dropoffPhone = form.querySelector('[name="dropoff_contact_phone_display"]');
+        if (dropoffName && pickupName && !dropoffName.value) {
+            dropoffName.value = pickupName.value;
+        }
+        if (dropoffPhone && pickupPhone && pickupPhone.value) {
+            if (dropoffPhone._iti && pickupPhone._iti) {
+                dropoffPhone._iti.setNumber(pickupPhone._iti.getNumber());
+            } else {
+                dropoffPhone.value = pickupPhone.value;
+            }
+            dropoffPhone.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+    },
 
-        document.querySelectorAll('.js-addon-checkbox:checked').forEach((checkbox) => {
-            addonsTotal += parseFloat(checkbox.dataset.price || 0);
-        });
-
-        const total = basePrice + addonsTotal;
-        const totalElement = document.querySelector('.js-total-price');
-        if (totalElement) {
-            totalElement.textContent = '$' + total.toFixed(2);
+    /**
+     * Handle "Use my details" checkbox: fill pickup contact with the logged-in
+     * user's name and phone (from data attributes on the checkbox).
+     */
+    _onUseMyDetails: function (ev) {
+        const checkbox = ev.currentTarget;
+        if (!checkbox.checked) return;
+        const form = checkbox.closest('form');
+        if (!form) return;
+        const nameInput = form.querySelector('[name="pickup_contact_name"]');
+        const phoneInput = form.querySelector('[name="pickup_contact_phone_display"]');
+        if (nameInput && checkbox.dataset.name && !nameInput.value) {
+            nameInput.value = checkbox.dataset.name;
+        }
+        if (phoneInput && checkbox.dataset.phone && !phoneInput.value) {
+            if (phoneInput._iti) {
+                phoneInput._iti.setNumber(checkbox.dataset.phone);
+            } else {
+                phoneInput.value = checkbox.dataset.phone;
+            }
+            phoneInput.dispatchEvent(new Event('change', { bubbles: true }));
         }
     },
 
@@ -202,20 +295,128 @@ publicWidget.registry.LogspacePortalSidebar = publicWidget.Widget.extend({
 });
 
 /**
- * Search form enhancements
+ * Cascading Vehicle Category -> Vehicle Type filter on the search form.
+ *
+ * The server renders the type dropdown already narrowed to the chosen category
+ * (so the page is correct with JavaScript disabled); this widget re-renders it
+ * live. It reads the full type list from the JSON blob next to the zones one.
  */
-publicWidget.registry.LogspaceSearch = publicWidget.Widget.extend({
-    selector: '.search-hero form',
+publicWidget.registry.LogspaceVehicleCategoryFilter = publicWidget.Widget.extend({
+    selector: '.logspace-search-form',
     events: {
-        'submit': '_onSearchSubmit',
+        'change select[name="vehicle_category_id"]': '_onCategoryChange',
     },
 
-    _onSearchSubmit: function (ev) {
-        // Add loading state to button
-        const submitBtn = ev.currentTarget.querySelector('button[type="submit"]');
-        if (submitBtn) {
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+    start: function () {
+        this._super.apply(this, arguments);
+
+        this.typeSelect = this.el.querySelector('select[name="vehicle_type_id"]');
+        if (!this.typeSelect) return Promise.resolve();
+
+        const typesDataEl = document.getElementById('logspace-vehicle-types-data');
+        try {
+            this.vehicleTypes = typesDataEl ? JSON.parse(typesDataEl.textContent || '[]') : [];
+        } catch (e) {
+            console.error("Failed to parse logspace vehicle types JSON data", e);
+            this.vehicleTypes = [];
+        }
+        return Promise.resolve();
+    },
+
+    _onCategoryChange: function (ev) {
+        const categoryId = ev.target.value;
+        const selected = this.typeSelect.value;
+
+        // Rebuild the options rather than toggling option.hidden: a rebuild is
+        // deterministic across browsers and makes the "reset to first match"
+        // behaviour explicit instead of depending on which options happen to be
+        // display:none.
+        this.typeSelect.innerHTML = '';
+
+        if (!categoryId) {
+            const all = document.createElement('option');
+            all.value = '';
+            all.textContent = _t('All Vehicle Types');
+            this.typeSelect.appendChild(all);
+        }
+
+        this.vehicleTypes
+            .filter(vt => !categoryId || String(vt.category_id) === categoryId)
+            .forEach(vt => {
+                const opt = document.createElement('option');
+                opt.value = vt.id;
+                opt.textContent = vt.name;
+                this.typeSelect.appendChild(opt);
+            });
+
+        // Keep the selection when it still fits the new category, otherwise
+        // fall through to the first valid type (or the "All" option).
+        if ([...this.typeSelect.options].some(o => o.value === selected)) {
+            this.typeSelect.value = selected;
+        }
+    },
+});
+
+/**
+ * Provider registration - documents step.
+ *
+ * The documents upload is a plain multipart POST: on success the server
+ * redirects to the review step, on failure it re-renders this page. Either way
+ * the whole document is replaced, so the busy state does not need restoring on
+ * the normal paths - only on a back/forward-cache restore of the old page.
+ */
+publicWidget.registry.LogspaceProviderDocuments = publicWidget.Widget.extend({
+    selector: '.logspace-provider-documents-form',
+    events: {
+        // 'submit', not 'click': the submit event only fires AFTER HTML5
+        // constraint validation passes, and this form has three required file
+        // inputs plus a required confirmation checkbox. A click handler would
+        // disable the button before validation, and a rejected submit performs
+        // no navigation, so there would be no page load to reset it.
+        'submit': '_onSubmit',
+    },
+
+    start: function () {
+        this._super.apply(this, arguments);
+        this.submitBtn = this.el.querySelector('button[type="submit"]');
+        // Submit -> step 5 -> Back can restore this page from the back/forward
+        // cache with the button still disabled, so clear it when the page shows.
+        this._onPageShow = this._onPageShow.bind(this);
+        window.addEventListener('pageshow', this._onPageShow);
+        return Promise.resolve();
+    },
+
+    destroy: function () {
+        window.removeEventListener('pageshow', this._onPageShow);
+        this._super.apply(this, arguments);
+    },
+
+    _onPageShow: function () {
+        this._setBusy(false);
+    },
+
+    _onSubmit: function (ev) {
+        // Never preventDefault: the server answers with a redirect or a full
+        // re-render, and both are complete document loads.
+        this._setBusy(true);
+    },
+
+    _setBusy: function (busy) {
+        if (!this.submitBtn) {
+            return;
+        }
+        this.submitBtn.disabled = busy;
+        this.submitBtn.classList.toggle('disabled', busy);
+
+        // Append a spinner instead of overwriting innerHTML, so the label span
+        // survives and can be restored if this page is shown again.
+        let spinner = this.submitBtn.querySelector('.logspace-provider-documents-spinner');
+        if (busy && !spinner) {
+            spinner = document.createElement('i');
+            spinner.className = 'fa fa-spinner fa-spin ms-2 logspace-provider-documents-spinner';
+            this.submitBtn.appendChild(spinner);
+        } else if (!busy && spinner) {
+            spinner.remove();
         }
     },
 });
@@ -357,7 +558,7 @@ publicWidget.registry.LogspaceZoneAutocomplete = publicWidget.Widget.extend({
         // Filter zones client-side by name or full hierarchical address
         const matchedZones = this.zones.filter(zone => {
             return (zone.full_address && zone.full_address.toLowerCase().includes(query)) ||
-                   (zone.name && zone.name.toLowerCase().includes(query));
+                (zone.name && zone.name.toLowerCase().includes(query));
         });
 
         this.suggestions = matchedZones.slice(0, 8); // limit to 8 results
@@ -384,7 +585,7 @@ publicWidget.registry.LogspaceZoneAutocomplete = publicWidget.Widget.extend({
             const isActive = index === this.activeIndex ? 'active' : '';
             const query = this.input.value.trim();
             let displayAddress = zone.full_address;
-            
+
             if (query) {
                 const regex = new RegExp(`(${this._escapeRegExp(query)})`, 'gi');
                 displayAddress = zone.full_address.replace(regex, '<span class="highlight">$1</span>');
@@ -510,7 +711,6 @@ publicWidget.registry.LogspaceZoneAutocomplete = publicWidget.Widget.extend({
 export default {
     Logspace: publicWidget.registry.Logspace,
     LogspacePortalSidebar: publicWidget.registry.LogspacePortalSidebar,
-    LogspaceSearch: publicWidget.registry.LogspaceSearch,
     LogspaceResultsView: publicWidget.registry.LogspaceResultsView,
     LogspaceZoneAutocomplete: publicWidget.registry.LogspaceZoneAutocomplete,
 };

@@ -18,7 +18,7 @@
         <field name="model">logspace.provider.special.instruction</field>
         <field name="arch" type="xml">
             <list editable="bottom">
-                <field name="partner_id" domain="[('is_provider', '=', True)]"/>
+                <field name="partner_id" domain="[('is_provider', '=', True),('is_company','=',True)]"/>
                 <field name="vehicle_type_id"/>
                 <field name="instructions" widget="html"/>
                 <field name="is_active"/>
@@ -35,7 +35,7 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="partner_id" domain="[('is_provider', '=', True)]"/>
+                            <field name="partner_id" domain="[('is_provider', '=', True),('is_company','=',True)]"/>
                             <field name="vehicle_type_id"/>
                             <field name="is_active"/>
                         </group>

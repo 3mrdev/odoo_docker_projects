@@ -1,6 +1,6 @@
 {
     'name': 'Approvals Liquidity Transfer',
-    'version': '1.0',
+    'version': '1.1',
     'category': 'Human Resources/Approvals',
     "author":"Appness",
 	"license":"LGPL-3",

@@ -15,7 +15,9 @@
                 <separator string="Operating Zones"/>
                 <p class="text-muted">
                     Select the zones where this provider operates.
-                    Routes are generated only between the zones you pick.
+                    Routes are generated only between the zones you pick, plus a
+                    local same-zone route per zone (e.g. Muscat → Muscat) for
+                    intra-zone moves - set its real distance in Zone Distances.
                     The customer search handles sub-zone hierarchy automatically.
                 </p>
                 <div class="d-flex gap-2 mb-2">
@@ -34,6 +36,7 @@
                        placeholder="Choose zones..."/>
 
                 <separator string="Vehicle Types"/>
+                <field name="active_vehicle_type_ids" invisible="1"/>
                 <field name="vehicle_type_ids" widget="many2many_tags"
                        options="{'no_create': True}"
                        placeholder="Choose vehicle types..."/>
@@ -43,6 +46,7 @@
                     <group>
                         <field name="base_rate"/>
                         <field name="per_km_rate"/>
+                        <field name="skip_existing"/>
                     </group>
                     <group>
                         <p class="text-muted">
@@ -64,7 +68,9 @@
                         <p class="text-muted">
                             Number of price matrix rows that will be created or updated.
                             <br/>
-                            Existing routes will be <b>updated</b> with the new rates.
+                            With <b>Skip Existing Routes</b> ticked, routes that already
+                            exist keep their current prices. Untick it to
+                            <b>update</b> the existing routes with the rates entered here.
                         </p>
                     </group>
                 </group>

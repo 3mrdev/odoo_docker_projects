@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 import datetime
 import logging
+import urllib.parse
 import pytz
 
-from odoo import http, fields
+from odoo import _, http, fields
 from odoo.http import request
 
 from .common import LogspaceController
@@ -14,9 +15,15 @@ _logger = logging.getLogger(__name__)
 class LogspacePortal(LogspaceController):
     """Customer portal routes: account, profile, orders, tracking, notifications, ratings, refunds, tickets."""
 
+    DRAFT_RETRY_AFTER = datetime.timedelta(minutes=30)
+
 
     # My Account Landing Page (Standard Odoo /my style)
-    @http.route(['/logspace/my', '/logspace/my/home', '/my/home'], type='http', auth='user', website=True)
+    # /my and /my/home are NOT listed here on purpose: they are redirected here by
+    # LogspacePortalHome.home (controllers/portal_home.py). Declaring the path on
+    # this method too never worked - inside the merged controller class endpoints
+    # are enumerated alphabetically, so the inherited core home() won the path.
+    @http.route(['/logspace/my', '/logspace/my/home'], type='http', auth='user', website=True)
     def logspace_my_account(self, **kwargs):
         """My Account landing page with navigation cards"""
         partner = request.env.user.partner_id
@@ -29,8 +36,10 @@ class LogspacePortal(LogspaceController):
                                   'order_counts': order_counts,
                               }))
 
-    # Screen 11: Profile - accessible from both /logspace/my/profile and standard /my/account
-    @http.route(['/logspace/my/profile', '/my/account', '/my/profile'], type='http', auth='user', website=True, csrf=False)
+    # Screen 11: Profile - /my/account is redirected here by
+    # LogspacePortalHome.account (controllers/portal_home.py); listing the path
+    # here as well never took effect and the inherited core endpoint 500'd.
+    @http.route(['/logspace/my/profile', '/my/profile'], type='http', auth='user', website=True, csrf=False)
     def logspace_profile(self, **kwargs):
         """Screen 11: Customer Profile - Real Data"""
         user = request.env.user
@@ -69,7 +78,7 @@ class LogspacePortal(LogspaceController):
             address_parts.append(partner.state_id.name)
         if partner.zip:
             address_parts.append(partner.zip)
-        address = ', '.join(address_parts) if address_parts else 'No address set'
+        address = ', '.join(address_parts) if address_parts else _('No address set')
 
         # Timezone list for the select dropdown
         # Filter to common zones first, then add the rest
@@ -87,7 +96,7 @@ class LogspacePortal(LogspaceController):
                                   'user': {
                                       'name': user.name,
                                       'email': user.email,
-                                      'phone': partner.phone or 'Not set',
+                                      'phone': partner.phone or _('Not set'),
                                       'address': address,
                                       'tz': user.tz or partner.tz or 'UTC',
                                   },
@@ -130,6 +139,14 @@ class LogspacePortal(LogspaceController):
         current_user = request.env.user
         partner = current_user.partner_id
 
+        # A driver delivers the orders a provider assigns to them; they never
+        # place one. The "My Orders" card is hidden from them on /logspace/my, so
+        # this is the matching guard on the URL behind it - otherwise hiding the
+        # card would be cosmetic. Mirrors how the driver pages bounce non-drivers
+        # back to /logspace/my (controllers/driver.py:118-120).
+        if partner.is_driver:
+            return request.redirect('/logspace/driver/orders')
+
         # Get real order counts
         counts = self._get_logspace_order_counts(partner.id)
 
@@ -146,22 +163,45 @@ class LogspacePortal(LogspaceController):
                               }))
 
     # Screen 13: Track Order (NO MAP - Timeline only) - REAL DATA
-    @http.route(['/logspace/my/orders/track', '/logspace/my/orders/track/<string:order_id>', '/my/orders/track', '/my/orders/track/<string:order_id>'], type='http', auth='user', website=True)
-    def logspace_track(self, order_id=None, **kwargs):
+    # auth='public' so guests can open their token-protected order view;
+    # authenticated visitors keep the normal partner-scoped access below.
+    @http.route(['/logspace/my/orders/track', '/logspace/my/orders/track/<string:order_id>', '/my/orders/track', '/my/orders/track/<string:order_id>'], type='http', auth='public', website=True)
+    def logspace_track(self, order_id=None, access_token=None, **kwargs):
         """Screen 13: Order tracking with timeline (no map) - REAL DATA"""
         current_user = request.env.user
         partner = current_user.partner_id
+        is_public = current_user._is_public()
 
-        # Find order by name - check both partner and parent company
-        domain = [
-            '|',
-            ('partner_id', '=', partner.id),
-            ('partner_id.parent_id', '=', partner.id),
-            ('is_logspace_order', '=', True),
-        ]
-        if order_id:
-            domain.append(('name', '=', order_id))
-        order = request.env['sale.order'].sudo().search(domain, limit=1, order='create_date desc')
+        # `/logspace/my/orders/track/cancel` is a sibling POST-only route. Werkzeug
+        # prefers the static rule for POST, so cancelling is unaffected; a GET on
+        # that path has no method match and falls through to here with
+        # order_id='cancel'. That used to be accidental - it only worked because an
+        # order name never matches, so the lookup failed and bounced to the orders
+        # list. Stated explicitly so nobody "simplifies" this route's matching
+        # later and silently breaks order cancellation.
+        if order_id == 'cancel':
+            return request.redirect('/logspace/my/orders')
+
+        if is_public:
+            # Guests (booked without an account) may only view an order through
+            # its token-protected URL, e.g. coming from the payment result page.
+            order = request.env['sale.order'].sudo().search([
+                ('name', '=', order_id or ''),
+                ('is_logspace_order', '=', True),
+            ], limit=1)
+            if not order or not access_token or access_token != order._portal_ensure_token():
+                return request.redirect('/web/login')
+        else:
+            # Find order by name - check both partner and parent company
+            domain = [
+                '|',
+                ('partner_id', '=', partner.id),
+                ('partner_id.parent_id', '=', partner.id),
+                ('is_logspace_order', '=', True),
+            ]
+            if order_id:
+                domain.append(('name', '=', order_id))
+            order = request.env['sale.order'].sudo().search(domain, limit=1, order='create_date desc')
 
         if not order:
             # Redirect to orders list if not found
@@ -178,25 +218,73 @@ class LogspacePortal(LogspaceController):
         show_dropoff_code = order.logspace_state in [
             'arrived_destination', 'dropoff_completed', 'grace_period', 'order_completed'
         ]
+        # The vehicle code is internal until the dropoff is done: customers see
+        # it on the tracking page only once the dropoff has been completed.
+        show_vehicle_code = order.logspace_state in [
+            'dropoff_completed', 'grace_period', 'order_completed'
+        ]
+        timeframe_labels = request.env['logspace.time.slot']._get_labels_by_code()
 
         tracking_info = {
             'id': order.name,
-            'status': order.logspace_state.replace('_', ' ').title(),
+            'status': (order.logspace_state or '').replace('_', ' ').title() or 'Draft',
+            'amount': order.amount_total,
+            'formatted_amount': order.currency_id.format(order.amount_total),
+            'currency_symbol': order.currency_id.symbol or '',
             'pickup': order.pickup_address or 'Not set',
             'dropoff': order.dropoff_address or 'Not set',
             'pickup_zone': order.pickup_zone_id.display_name if order.pickup_zone_id else '',
             'dropoff_zone': order.dropoff_zone_id.display_name if order.dropoff_zone_id else '',
             'truck': order.logspace_vehicle_id.vehicle_type_id.name if order.logspace_vehicle_id and order.logspace_vehicle_id.vehicle_type_id else 'Logspace Service',
             'vendor': order.logspace_provider_id.name if order.logspace_provider_id else 'Not assigned',
-            'driver': order.logspace_driver_id.name if order.logspace_driver_id else 'Not assigned',
-            'driver_phone': order.logspace_driver_id.phone if order.logspace_driver_id else 'Not available',
-            'create_date': order.create_date.strftime('%b %d, %Y') if order.create_date else 'N/A',
-            'scheduled_datetime': order.scheduled_date.strftime('%b %d, %Y') if order.scheduled_date else 'N/A',
+            'vendor_email': order.logspace_provider_id.email if order.logspace_provider_id else '',
+            'vendor_phone': (order.logspace_provider_id.phone or '') if order.logspace_provider_id else '',
+            'vehicle_code': order.logspace_vehicle_id.name if order.logspace_vehicle_id else '',
+            'show_vehicle_code': show_vehicle_code,
+            'driver': order.logspace_driver_id.name if order.logspace_driver_id else _('Not assigned'),
+            'driver_phone': order.logspace_driver_id.phone if order.logspace_driver_id else _('Not available'),
+            'create_date': order.create_date.strftime('%b %d, %Y') if order.create_date else _('N/A'),
+            'scheduled_datetime': order.scheduled_date.strftime('%b %d, %Y') if order.scheduled_date else _('N/A'),
             'approve_date': order.date_order.strftime('%b %d, %Y') if order.date_order else False,
-            'pickup_timeframe': order.pickup_timeframe or 'Not set',
+            'pickup_timeframe': timeframe_labels.get(order.pickup_timeframe, order.pickup_timeframe or _('Not set')),
+            'dropoff_timeframe': timeframe_labels.get(order.dropoff_timeframe, order.dropoff_timeframe or ''),
+            'item_description': order.item_description or '',
+            'pickup_contact_name': order.pickup_contact_name or '',
+            'pickup_contact_phone': order.pickup_contact_phone or '',
+            'dropoff_contact_name': order.dropoff_contact_name or '',
+            'dropoff_contact_phone': order.dropoff_contact_phone or '',
             'pickup_verification_code': order.verification_code_pickup if show_pickup_code else None,
             'dropoff_verification_code': order.verification_code_dropoff if show_dropoff_code else None,
+            'payment_status': order.payment_status,
         }
+
+        # Full price breakdown mirroring the checkout page: the first order line
+        # is the truck service, the remaining ones are the selected add-ons.
+        order_lines = order.order_line
+        tracking_info['price_breakdown'] = {
+            'truck_name': order_lines[0].name if order_lines else 'Truck Service',
+            'truck_price': order_lines[0].price_unit if order_lines else 0.0,
+            'addons': [
+                {'name': line.name, 'price': line.price_unit}
+                for line in order_lines[1:]
+            ],
+            'subtotal': order.amount_untaxed,
+            'tax': order.amount_tax,
+            'total': order.amount_total,
+        }
+
+        # Payment recovery: let the customer pay an unpaid order that never got
+        # through checkout (e.g. the payment tab was closed by accident).
+        unpaid_and_open = (
+            order.state in ('draft', 'sent') and order.payment_status != 'paid'
+        )
+        has_blocking_tx = bool(order._get_blocking_logspace_transactions(self.DRAFT_RETRY_AFTER))
+        pay_query = urllib.parse.urlencode({'access_token': order._portal_ensure_token()})
+        tracking_info.update({
+            'can_pay': unpaid_and_open and not has_blocking_tx,
+            'payment_in_progress': unpaid_and_open and has_blocking_tx,
+            'pay_url': f'/logspace/booking/payment/{order.id}?{pay_query}',
+        })
 
         # User can cancel order before pickup_completed stage
         cancelable_states = ['order_received', 'pickup_started', 'vendor_arrived_pickup', 'pickup_addons']
@@ -215,12 +303,15 @@ class LogspacePortal(LogspaceController):
 
         return request.render('appness_logspace.logspace_track_page',
                               self._get_page_context({
+                                  'order': order,
+                                  'currency': order.currency_id,
                                   'tracking_info': tracking_info,
                                   'timeline': timeline,
                                   'order_id': order.name,
                                   'order': order,
-                                  'can_cancel': can_cancel,
-                                  'can_rate': can_rate,
+                                  'can_cancel': can_cancel and not is_public,
+                                  'can_rate': can_rate and not is_public,
+                                  'is_public': is_public,
                                   'unread_notif_count': unread_notif_count,
                               }))
 
@@ -253,8 +344,8 @@ class LogspacePortal(LogspaceController):
             order.action_cancel_logspace()
             request.env['logspace.notification'].sudo().create_notification(
                 user_id=current_user.id,
-                title='Order Cancelled',
-                message='Your order %s has been cancelled.' % order.name,
+                title=_('Order Cancelled'),
+                message=_('Your order %s has been cancelled.', order.name),
                 type='warning',
                 action_link='/logspace/my/orders/track/%s' % order.name,
             )
@@ -352,8 +443,9 @@ class LogspacePortal(LogspaceController):
                 # Create notification for customer
                 request.env['logspace.notification'].sudo().create_notification(
                     user_id=user.id,
-                    title='Rating Submitted',
-                    message=f'Thank you for rating your experience with {order.logspace_provider_id.name or "the provider"}',
+                    title=_('Rating Submitted'),
+                    message=_('Thank you for rating your experience with %s',
+                              order.logspace_provider_id.name or _('the provider')),
                     type='success',
                     action_link=f'/logspace/my/orders/track/{order.name}',
                 )
@@ -364,8 +456,8 @@ class LogspacePortal(LogspaceController):
                               self._get_page_context({
                                   'order_id': order_id,
                                   'order': order,
-                                  'vendor': order.logspace_provider_id.name if order.logspace_provider_id else 'Unknown',
-                                  'driver': order.logspace_driver_id.name if order.logspace_driver_id else 'Not assigned',
+                                  'vendor': order.logspace_provider_id.name if order.logspace_provider_id else _('Unknown'),
+                                  'driver': order.logspace_driver_id.name if order.logspace_driver_id else _('Not assigned'),
                                   'already_rated': already_rated,
                               }))
 
@@ -408,8 +500,8 @@ class LogspacePortal(LogspaceController):
             # Create notification
             request.env['logspace.notification'].sudo().create_notification(
                 user_id=user.id,
-                title='Refund Requested',
-                message=f'Your refund request for order {order.name} has been submitted and is under review.',
+                title=_('Refund Requested'),
+                message=_('Your refund request for order %s has been submitted and is under review.', order.name),
                 type='info',
                 action_link=f'/logspace/my/orders/{order_id}/refunds',
             )
@@ -423,16 +515,18 @@ class LogspacePortal(LogspaceController):
                               self._get_page_context({
                                   'order_id': order_id,
                                   'order': order,
+                                  'currency': order.currency_id,
                                   'tracking_info_id': order.name,
                                   'amount': refundable_amount,
+                                  'formatted_amount': order.currency_id.format(refundable_amount),
                                   'reasons': [
-                                      ('service_not_provided', 'Service was not provided'),
-                                      ('late_delivery', 'Late delivery'),
-                                      ('damaged_goods', 'Damaged goods'),
-                                      ('wrong_vehicle', 'Wrong vehicle type'),
-                                      ('overcharged', 'Overcharged'),
-                                      ('cancelled_by_provider', 'Cancelled by provider'),
-                                      ('other', 'Other reason')
+                                      ('service_not_provided', _('Service was not provided')),
+                                      ('late_delivery', _('Late delivery')),
+                                      ('damaged_goods', _('Damaged goods')),
+                                      ('wrong_vehicle', _('Wrong vehicle type')),
+                                      ('overcharged', _('Overcharged')),
+                                      ('cancelled_by_provider', _('Cancelled by provider')),
+                                      ('other', _('Other reason'))
                                   ]
                               }))
 
@@ -461,19 +555,22 @@ class LogspacePortal(LogspaceController):
 
         refunds_list = []
         for refund in refunds:
+            currency = refund.currency_id or (order.currency_id if order else request.env.company.currency_id)
             status_labels = {
-                'draft': 'Draft',
-                'submitted': 'Submitted',
-                'under_review': 'Under Review',
-                'approved': 'Approved',
-                'rejected': 'Rejected',
-                'processed': 'Processed',
+                'draft': _('Draft'),
+                'submitted': _('Submitted'),
+                'under_review': _('Under Review'),
+                'approved': _('Approved'),
+                'rejected': _('Rejected'),
+                'processed': _('Processed'),
             }
             refunds_list.append({
                 'id': refund.name,
                 'refund_id': refund.id,
                 'date': refund.submitted_date.strftime('%b %d, %Y') if refund.submitted_date else refund.create_date.strftime('%b %d, %Y'),
                 'amount': refund.amount,
+                'formatted_amount': currency.format(refund.amount) if currency else f'{refund.amount:.2f}',
+                'currency_symbol': currency.symbol if currency else '',
                 'reason': dict(refund._fields['reason'].selection).get(refund.reason, refund.reason),
                 'status': refund.state,
                 'status_label': status_labels.get(refund.state, refund.state.title()),
@@ -531,8 +628,8 @@ class LogspacePortal(LogspaceController):
             # Create notification
             request.env['logspace.notification'].sudo().create_notification(
                 user_id=user.id,
-                title='Support Ticket Created',
-                message=f'Your ticket #{ticket.name} has been created and will be reviewed shortly.',
+                title=_('Support Ticket Created'),
+                message=_('Your ticket #%s has been created and will be reviewed shortly.', ticket.name),
                 type='success',
                 action_link=f'/logspace/my/orders/{order_id}/tickets' if order_id else '/logspace/my/notifications',
             )
@@ -589,10 +686,10 @@ class LogspacePortal(LogspaceController):
                 'cancelled': 'resolved',
             }
             status_label_map = {
-                'new': 'Open',
-                'in_progress': 'In Progress',
-                'solved': 'Resolved',
-                'cancelled': 'Cancelled',
+                'new': _('Open'),
+                'in_progress': _('In Progress'),
+                'solved': _('Resolved'),
+                'cancelled': _('Cancelled'),
             }
             stage_name = ticket.stage_id.name.lower() if ticket.stage_id else 'new'
             status = status_map.get(stage_name, 'open')
@@ -601,9 +698,9 @@ class LogspacePortal(LogspaceController):
             tickets_list.append({
                 'id': ticket.name,
                 'ticket_id': ticket.id,
-                'date': ticket.create_date.strftime('%b %d, %Y') if ticket.create_date else 'N/A',
+                'date': ticket.create_date.strftime('%b %d, %Y') if ticket.create_date else _('N/A'),
                 'subject': ticket.name,
-                'category': dict(ticket._fields['logspace_ticket_type'].selection).get(ticket.logspace_ticket_type, 'Other'),
+                'category': dict(ticket._fields['logspace_ticket_type'].selection).get(ticket.logspace_ticket_type, _('Other')),
                 'status': status,
                 'status_label': status_label,
             })
@@ -651,10 +748,10 @@ class LogspacePortal(LogspaceController):
             'cancelled': 'resolved',
         }
         status_label_map = {
-            'new': 'Open',
-            'in_progress': 'In Progress',
-            'solved': 'Resolved',
-            'cancelled': 'Cancelled',
+            'new': _('Open'),
+            'in_progress': _('In Progress'),
+            'solved': _('Resolved'),
+            'cancelled': _('Cancelled'),
         }
         stage_name = ticket.stage_id.name.lower() if ticket.stage_id else 'new'
         status = status_map.get(stage_name, 'open')
@@ -663,9 +760,9 @@ class LogspacePortal(LogspaceController):
         ticket_data = {
             'id': ticket.name,
             'ticket_id': ticket.id,
-            'date': ticket.create_date.strftime('%b %d, %Y') if ticket.create_date else 'N/A',
+            'date': ticket.create_date.strftime('%b %d, %Y') if ticket.create_date else _('N/A'),
             'subject': ticket.name,
-            'category': dict(ticket._fields['logspace_ticket_type'].selection).get(ticket.logspace_ticket_type, 'Other'),
+            'category': dict(ticket._fields['logspace_ticket_type'].selection).get(ticket.logspace_ticket_type, _('Other')),
             'status': status,
             'status_label': status_label,
             'description': ticket.description or '',
@@ -706,18 +803,22 @@ class LogspacePortal(LogspaceController):
             return request.redirect(f'/logspace/my/orders/{order_id}/refunds')
 
         state_label_map = {
-            'draft': 'Draft',
-            'submitted': 'Submitted',
-            'under_review': 'Under Review',
-            'approved': 'Approved',
-            'rejected': 'Rejected',
-            'processed': 'Processed',
+            'draft': _('Draft'),
+            'submitted': _('Submitted'),
+            'under_review': _('Under Review'),
+            'approved': _('Approved'),
+            'rejected': _('Rejected'),
+            'processed': _('Processed'),
         }
 
+        currency = refund.currency_id or (order.currency_id if order else request.env.company.currency_id)
         refund_data = {
             'id': refund.name,
-            'date': refund.create_date.strftime('%b %d, %Y') if refund.create_date else 'N/A',
+            'date': refund.create_date.strftime('%b %d, %Y') if refund.create_date else _('N/A'),
             'amount': refund.amount,
+            'formatted_amount': currency.format(refund.amount) if currency else f'{refund.amount:.2f}',
+            'currency_symbol': currency.symbol if currency else '',
+            'currency': currency,
             'reason': refund.reason,
             'reason_label': dict(refund._fields['reason'].selection).get(refund.reason, refund.reason),
             'status': refund.state,
@@ -730,6 +831,7 @@ class LogspacePortal(LogspaceController):
                               self._get_page_context({
                                   'order_id': order_id,
                                   'order': order,
+                                  'currency': currency,
                                   'refund': refund_data,
                               }))
 

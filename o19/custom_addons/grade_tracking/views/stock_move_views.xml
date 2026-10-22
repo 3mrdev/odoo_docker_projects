@@ -1,0 +1,50 @@
+<odoo>
+
+    <!-- Stock Move Form View (Detailed Operations popup) -->
+    <record id="stock_move_form_operations_grade_tracking" model="ir.ui.view">
+        <field name="name">stock.move.form.operations.grade.tracking</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_stock_move_operations" />
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="is_grade_tracked" invisible="1"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="mining_location_id"
+                    invisible="not is_grade_tracked or not display_assign_serial"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="mining_level_id"
+                    invisible="not is_grade_tracked or not display_assign_serial"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="average_grade"
+                    invisible="not is_grade_tracked or not display_assign_serial"
+                    groups="grade_tracking.group_grade_tracked" />
+            </field>
+        </field>
+    </record>
+
+    <!-- Stock Move List View -->
+    <record id="stock_move_tree_grade_tracking" model="ir.ui.view">
+        <field name="name">stock.move.tree.grade.tracking</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_tree" />
+        <field name="arch" type="xml">
+            <field name="product_uom_qty" position="after">
+                <field name="is_grade_tracked" column_invisible="True"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="mining_location_id"
+                    invisible="not is_grade_tracked or picking_code not in ['incoming', 'outgoing']"
+                    optional="show"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="mining_level_id"
+                    invisible="not is_grade_tracked or picking_code not in ['incoming', 'outgoing']"
+                    optional="show"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="average_grade"
+                    invisible="not is_grade_tracked or picking_code not in ['incoming', 'outgoing']"
+                    optional="show"
+                    groups="grade_tracking.group_grade_tracked" />
+            </field>
+        </field>
+    </record>
+
+</odoo>

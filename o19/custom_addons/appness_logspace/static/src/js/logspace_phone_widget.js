@@ -35,11 +35,15 @@ publicWidget.registry.LogspacePhoneWidget = publicWidget.Widget.extend({
                     .then(function (data) { callback(data.country_code); })
                     .catch(function () { callback("om"); });
             },
-            onlyCountries: ["om"],
+            preferredCountries: ["om"],
             loadUtils: function () {
                 return import("https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.0/build/js/utils.js");
             },
         });
+
+        // Expose the ITI instance on the input so other scripts can read/copy
+        // the number programmatically (e.g., "Same as Pickup" checkbox).
+        input._iti = this.iti;
 
         // Pre-fill with stored phone number if data-value is set.
         // setNumber() accepts any format (E.164, national, with/without country code).
@@ -129,11 +133,14 @@ window.initLogspacePhoneInput = function (wrapperEl) {
                 .then(function (data) { callback(data.country_code); })
                 .catch(function () { callback("om"); });
         },
-        onlyCountries: ["om"],
+        preferredCountries: ["om"],
         loadUtils: function () {
             return import("https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.0/build/js/utils.js");
         },
     });
+
+    // Expose the ITI instance on the input for programmatic access.
+    input._iti = iti;
 
     // Wire up event listeners for validation feedback
     var phone_output = wrapperEl.querySelector('.phone_output');

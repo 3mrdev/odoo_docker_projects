@@ -439,11 +439,12 @@ class JizWaqf(models.Model):
             rec.waqf_sequence_number = self.env['ir.sequence'].next_by_code('jiz.waqf')
 
         if not rec.analytic_account_id:
-            analytic_plan = self.env['account.analytic.plan'].search([('name', '=', 'WAQFS')])
+            analytic_plan = rec.company_id.waqf_analytic_plan_id
             if not analytic_plan:
-                analytic_plan = self.env['account.analytic.plan'].create({
-                    'name': 'WAQFS',
-                })
+                raise UserError(_(
+                    "No Waqf Analytic Plan is configured.\n"
+                    "Please select one in Settings, then try again."
+                ))
             analytic_account_id = self.env['account.analytic.account'].create({
                 'name': rec.name,
                 'code': rec.waqf_sequence_number,

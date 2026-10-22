@@ -17,7 +17,7 @@
         <field name="name">logspace.addon.tree</field>
         <field name="model">logspace.addon</field>
         <field name="arch" type="xml">
-            <list editable="bottom">
+            <list>
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="code"/>
@@ -26,7 +26,6 @@
                 <field name="price_type"/>
                 <field name="product_tmpl_id"/>
                 <field name="icon" optional="hide"/>
-                <field name="active" widget="boolean_toggle"/>
             </list>
         </field>
     </record>

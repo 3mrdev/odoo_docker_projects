@@ -4,6 +4,7 @@ from odoo import models, fields
 
 class DocumentType(models.Model):
     _name = "jiz.document.type"
+    _description = "Document Type"
     _inherit = ['mail.thread','mail.activity.mixin']
 
     name = fields.Char(required=True, translate=True)

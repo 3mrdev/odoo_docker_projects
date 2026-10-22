@@ -3,8 +3,14 @@ import logging
 import datetime
 import pytz
 
-from odoo import http, fields
+from odoo import _, http, fields
+from odoo.exceptions import ValidationError
 from odoo.http import request
+
+from ..models.res_config_settings import (
+    DEFAULT_CANCEL_REFUND_POLICY,
+    DEFAULT_ESTIMATED_TIME_POLICY,
+)
 
 _logger = logging.getLogger(__name__)
 
@@ -13,10 +19,27 @@ class LogspaceController(http.Controller):
     """Base controller for Logspace - shared helper methods."""
 
     def _get_page_context(self, extra=None):
-        """Get base page context"""
-        ctx = {}
+        """Get base page context with system and order currency support."""
+        company_currency = request.env.company.currency_id
+        params = request.env['ir.config_parameter'].sudo()
+        ctx = {
+            'company_currency': company_currency,
+            'currency': company_currency,
+            'currency_symbol': company_currency.symbol or '',
+            'logspace_cancel_refund_policy': params.get_param(
+                'appness_logspace.cancel_refund_policy',
+                DEFAULT_CANCEL_REFUND_POLICY),
+            'logspace_estimated_time_policy': params.get_param(
+                'appness_logspace.estimated_time_policy',
+                DEFAULT_ESTIMATED_TIME_POLICY),
+        }
         if extra:
             ctx.update(extra)
+        if not extra or 'currency' not in extra:
+            order = ctx.get('order')
+            if order and getattr(order, 'currency_id', False):
+                ctx['currency'] = order.currency_id
+                ctx['currency_symbol'] = order.currency_id.symbol or ''
         return ctx
 
     def _get_real_orders(self, partner_id, status='all'):
@@ -81,8 +104,8 @@ class LogspaceController(http.Controller):
                         break
 
             # Format dates
-            create_date = order.create_date.strftime('%b %d, %Y') if order.create_date else 'N/A'
-            scheduled_date = order.scheduled_date.strftime('%b %d, %Y') if order.scheduled_date else 'N/A'
+            create_date = order.create_date.strftime('%b %d, %Y') if order.create_date else _('N/A')
+            scheduled_date = order.scheduled_date.strftime('%b %d, %Y') if order.scheduled_date else _('N/A')
             approve_date = False
             if order.logspace_state != 'order_received' and order.write_date:
                 approve_date = order.write_date.strftime('%b %d, %Y')
@@ -91,17 +114,21 @@ class LogspaceController(http.Controller):
                 'id': order.name,
                 'order_id': order.id,
                 'status': state_category_map.get(order.logspace_state, 'pending'),
-                'status_label': order.logspace_state.replace('_', ' ').title() if order.logspace_state else 'Order Received',
-                'pickup': order.pickup_address or 'Not set',
-                'dropoff': order.dropoff_address or 'Not set',
-                'zone_from': order.pickup_zone_id.name if order.pickup_zone_id else 'Not set',
-                'zone_to': order.dropoff_zone_id.name if order.dropoff_zone_id else 'Not set',
+                'status_label': order.logspace_state.replace('_', ' ').title() if order.logspace_state else _('Order Received'),
+                'pickup': order.pickup_address or _('Not set'),
+                'dropoff': order.dropoff_address or _('Not set'),
+                'zone_from': order.pickup_zone_id.name if order.pickup_zone_id else _('Not set'),
+                'zone_to': order.dropoff_zone_id.name if order.dropoff_zone_id else _('Not set'),
                 'truck': vehicle_type_name,
                 'date': create_date,
                 'create_date': create_date,
                 'scheduled_datetime': scheduled_date,
                 'approve_date': approve_date,
                 'amount': order.amount_total or order.amount_untaxed or 0,
+                'formatted_amount': order.currency_id.format(order.amount_total or order.amount_untaxed or 0),
+                'currency_symbol': order.currency_id.symbol or '',
+                'currency_id': order.currency_id,
+                'order': order,
                 'vendor': order.logspace_provider_id.name if order.logspace_provider_id else 'Not assigned',
                 'logspace_state': order.logspace_state,
                 'has_rating': bool(order.logspace_customer_rating),
@@ -138,18 +165,18 @@ class LogspaceController(http.Controller):
 
         # Event display info
         event_type_map = {
-            'booked': {'label': 'Booked', 'icon': 'fa-calendar-check-o'},
-            'payment_received': {'label': 'Payment Received', 'icon': 'fa-credit-card'},
-            'order_received': {'label': 'Order Received', 'icon': 'fa-inbox'},
-            'pickup_started': {'label': 'Pickup Started', 'icon': 'fa-play-circle'},
-            'vendor_arrived_pickup': {'label': 'Vendor Arrived at Pickup', 'icon': 'fa-map-marker'},
-            'pickup_addons': {'label': 'Pickup Add-ons Performed', 'icon': 'fa-plus-circle'},
-            'pickup_completed': {'label': 'Pickup Completed', 'icon': 'fa-check-circle'},
-            'pre_dropoff_addons': {'label': 'Pre-Drop-off Add-ons', 'icon': 'fa-cogs'},
-            'arrived_destination': {'label': 'Arrived at Destination', 'icon': 'fa-flag'},
-            'dropoff_completed': {'label': 'Drop-off Completed', 'icon': 'fa-arrow-circle-down'},
-            'grace_period': {'label': 'Grace Period', 'icon': 'fa-clock-o'},
-            'order_completed': {'label': 'Order Completed', 'icon': 'fa-trophy'},
+            'booked': {'label': _('Booked'), 'icon': 'fa-calendar-check-o'},
+            'payment_received': {'label': _('Payment Received'), 'icon': 'fa-credit-card'},
+            'order_received': {'label': _('Order Received'), 'icon': 'fa-inbox'},
+            'pickup_started': {'label': _('Pickup Started'), 'icon': 'fa-play-circle'},
+            'vendor_arrived_pickup': {'label': _('Vendor Arrived at Pickup'), 'icon': 'fa-map-marker'},
+            'pickup_addons': {'label': _('Pickup Add-ons Performed'), 'icon': 'fa-plus-circle'},
+            'pickup_completed': {'label': _('Pickup Completed'), 'icon': 'fa-check-circle'},
+            'pre_dropoff_addons': {'label': _('Pre-Drop-off Add-ons'), 'icon': 'fa-cogs'},
+            'arrived_destination': {'label': _('Arrived at Destination'), 'icon': 'fa-flag'},
+            'dropoff_completed': {'label': _('Drop-off Completed'), 'icon': 'fa-arrow-circle-down'},
+            'grace_period': {'label': _('Grace Period'), 'icon': 'fa-clock-o'},
+            'order_completed': {'label': _('Order Completed'), 'icon': 'fa-trophy'},
         }
 
         # Build a map of recorded events by type
@@ -262,25 +289,28 @@ class LogspaceController(http.Controller):
 
             # Get time from recorded event if available
             recorded_event = recorded_events.get(status)
+            is_estimated = False
             if recorded_event and recorded_event.event_time:
                 time_str = _fmt_dt(recorded_event.event_time)
             elif status == 'order_received' and order.create_date:
                 time_str = _fmt_dt(order.create_date)
             elif is_done:
                 # Done but no recorded event — show as completed
-                time_str = 'Completed'
+                time_str = _('Completed')
             else:
                 # Future state — show estimated time
                 est_dt = estimated_dt.get(status)
                 if est_dt:
-                    time_str = 'Estimated: ' + _fmt_dt(est_dt)
+                    time_str = '%s: %s' % (_('Estimated'), _fmt_dt(est_dt))
+                    is_estimated = True
                 else:
-                    time_str = 'Expected'
+                    time_str = _('Expected')
 
             timeline.append({
                 'status': status,
                 'label': event_info['label'],
                 'time': time_str,
+                'estimated': is_estimated,
                 'done': is_done,
                 'current': is_current,
                 'icon': event_info['icon'],
@@ -326,8 +356,7 @@ class LogspaceController(http.Controller):
             'appness_logspace.dropoff_delay_minutes', 30
         ))
         total_min = dist_rec.estimated_minutes + extra_delay
-        SLOT_HOURS = {'morning': 6, 'afternoon': 12, 'evening': 18}
-        start_h = SLOT_HOURS.get(pickup_timeframe, 6)
+        start_h = request.env['logspace.time.slot']._start_hour_by_code().get(pickup_timeframe, 6)
         drop_h = start_h + (total_min / 60)
 
         if drop_h < 12:
@@ -337,43 +366,52 @@ class LogspaceController(http.Controller):
         else:
             return 'evening'
 
+    def _get_validated_booking_data(self, booking_data):
+        """Replace all client-controlled booking identifiers and prices with records."""
+        required_ids = (
+            'price_matrix_id', 'provider_id', 'vehicle_type_id', 'zone_from_id',
+            'zone_to_id', 'vehicle_id',
+        )
+        try:
+            identifiers = {
+                field_name: int(booking_data.get(field_name) or 0)
+                for field_name in required_ids
+            }
+        except (TypeError, ValueError):
+            raise ValidationError(_('The selected booking is invalid.'))
+        if any(value <= 0 for value in identifiers.values()):
+            raise ValidationError(_('The selected booking is incomplete.'))
+
+        selection = request.env['logspace.price.matrix'].sudo()._validate_booking_selection(
+            matrix_id=identifiers['price_matrix_id'],
+            provider_id=identifiers['provider_id'],
+            vehicle_type_id=identifiers['vehicle_type_id'],
+            zone_from_id=identifiers['zone_from_id'],
+            zone_to_id=identifiers['zone_to_id'],
+            vehicle_id=identifiers['vehicle_id'],
+            pickup_date=booking_data.get('pickup_date'),
+        )
+        addon_values = selection['matrix']._get_validated_booking_addons(
+            booking_data.get('addon_ids', [])
+        )
+        trusted_data = dict(booking_data, **identifiers)
+        trusted_data.update({
+            'price': selection['price'],
+            'addon_ids': [value['addon'].id for value in addon_values],
+        })
+        return trusted_data, selection, addon_values
+
     def _calculate_booking_total(self, booking_data):
         """Calculate total, tax, and breakdown from booking session data."""
-        truck_price = float(booking_data.get('price', 0) or 0)
-        addon_total = 0
-        addon_lines_data = []
-
-        # Batch fetch all provider-specific addons at once
-        addon_ids = booking_data.get('addon_ids', [])
-        if addon_ids:
-            provider_addons = request.env['logspace.provider.vehicle.type.addon'].sudo().search([
-                ('provider_id', '=', booking_data['provider_id']),
-                ('addon_id', 'in', addon_ids),
-            ])
-            provider_addon_map = {pa.addon_id.id: pa for pa in provider_addons}
-
-            # Batch fetch master addons for fallback
-            master_addons = request.env['logspace.addon'].sudo().browse(addon_ids)
-            master_addon_map = {ma.id: ma for ma in master_addons}
-
-            for addon_id in addon_ids:
-                provider_addon = provider_addon_map.get(addon_id)
-                if provider_addon:
-                    addon_total += provider_addon.provider_price
-                    addon_lines_data.append({
-                        'product_tmpl_id': provider_addon.addon_id.product_tmpl_id.id if provider_addon.addon_id.product_tmpl_id else False,
-                        'price': provider_addon.provider_price,
-                        'name': provider_addon.addon_id.name,
-                    })
-                else:
-                    master_addon = master_addon_map.get(addon_id)
-                    if master_addon:
-                        addon_total += master_addon.price
-                        addon_lines_data.append({
-                            'product_tmpl_id': master_addon.product_tmpl_id.id if master_addon.product_tmpl_id else False,
-                            'price': master_addon.price,
-                            'name': master_addon.name,
-                        })
+        booking_data, selection, addon_values = self._get_validated_booking_data(booking_data)
+        truck_price = selection['price']
+        addon_lines_data = [{
+            'product_tmpl_id': value['addon'].product_tmpl_id.id
+            if value['addon'].product_tmpl_id else False,
+            'price': value['price'],
+            'name': value['addon'].name,
+        } for value in addon_values]
+        addon_total = sum(value['price'] for value in addon_values)
 
         subtotal = truck_price + addon_total
         ProductTmpl = request.env['product.template'].sudo()
@@ -382,7 +420,7 @@ class LogspaceController(http.Controller):
             service_product_tmpl = ProductTmpl.search([('default_code', '=', 'LOGSPACE-SVC')], limit=1)
 
         tax_amount = 0.0
-        currency = request.env.company.currency_id
+        currency = selection['currency']
         if service_product_tmpl and service_product_tmpl.exists() and service_product_tmpl.taxes_id:
             taxes = service_product_tmpl.taxes_id.compute_all(truck_price, currency=currency, quantity=1, product=service_product_tmpl)
             tax_amount += taxes['total_included'] - taxes['total_excluded']
@@ -403,11 +441,15 @@ class LogspaceController(http.Controller):
             'addon_lines': addon_lines_data,
         }
 
-    def _create_logspace_sale_order(self, booking_data, partner):
-        """Create a draft sale order from booking session data. Returns the order."""
-        truck_price = float(booking_data.get('price', 0) or 0)
-        addon_total = 0
-        addon_lines_data = []
+    def _create_logspace_sale_order(self, booking_data, partner, order=None):
+        """Create or fully refresh a session-owned draft sale order."""
+        booking_data, selection, addon_values = self._get_validated_booking_data(booking_data)
+        truck_price = selection['price']
+        pricelist = partner.property_product_pricelist
+        if not pricelist or pricelist.currency_id != selection['currency']:
+            raise ValidationError(_(
+                'The selected route currency is not available for this customer.'
+            ))
 
         # Get service product
         ProductTmpl = request.env['product.template'].sudo()
@@ -422,37 +464,17 @@ class LogspaceController(http.Controller):
             service_product = request.env['product.product'].sudo().search(
                 [('product_tmpl_id', '=', service_product_tmpl.id)], limit=1)
 
-        # Batch fetch all provider-specific addons at once
-        addon_ids = booking_data.get('addon_ids', [])
-        if addon_ids:
-            provider_addons = request.env['logspace.provider.vehicle.type.addon'].sudo().search([
-                ('provider_id', '=', booking_data['provider_id']),
-                ('addon_id', 'in', addon_ids),
-            ])
-            provider_addon_map = {pa.addon_id.id: pa for pa in provider_addons}
-
-            # Batch fetch master addons for fallback
-            master_addons = request.env['logspace.addon'].sudo().browse(addon_ids)
-            master_addon_map = {ma.id: ma for ma in master_addons}
-
-            for addon_id in addon_ids:
-                provider_addon = provider_addon_map.get(addon_id)
-                if provider_addon:
-                    addon_price = provider_addon.provider_price
-                    addon_name = provider_addon.addon_id.name
-                    addon_total += addon_price
-                    addon_product = request.env['product.product'].sudo().search(
-                        [('product_tmpl_id', '=', provider_addon.addon_id.product_tmpl_id.id)],
-                        limit=1) if provider_addon.addon_id.product_tmpl_id else False
-                    addon_lines_data.append({'product': addon_product, 'price': addon_price, 'name': addon_name})
-                else:
-                    master_addon = master_addon_map.get(addon_id)
-                    if master_addon:
-                        addon_total += master_addon.price
-                        addon_product = request.env['product.product'].sudo().search(
-                            [('product_tmpl_id', '=', master_addon.product_tmpl_id.id)],
-                            limit=1) if master_addon.product_tmpl_id else False
-                        addon_lines_data.append({'product': addon_product, 'price': master_addon.price, 'name': master_addon.name})
+        addon_lines_data = []
+        for value in addon_values:
+            addon = value['addon']
+            addon_product = request.env['product.product'].sudo().search(
+                [('product_tmpl_id', '=', addon.product_tmpl_id.id)], limit=1
+            ) if addon.product_tmpl_id else False
+            addon_lines_data.append({
+                'product': addon_product,
+                'price': value['price'],
+                'name': addon.name,
+            })
 
         # Build order lines
         order_lines = []
@@ -494,12 +516,18 @@ class LogspaceController(http.Controller):
         if provider_partner and provider_partner.user_ids:
             provider_user_id = provider_partner.user_ids[0].id
 
-        order = request.env['sale.order'].sudo().create({
+        order_values = {
             'partner_id': partner.id,
+            'pricelist_id': pricelist.id,
             'is_logspace_order': True,
             'logspace_provider_id': booking_data.get('provider_id'),
             'logspace_vehicle_id': vehicle_id,
             'logspace_driver_id': driver_id,
+            # Snapshot of what the matrix quoted; the completion bill pays the
+            # quoted provider price instead of re-deriving the commission from
+            # the customer subtotal (which would charge fee on the fee).
+            'logspace_quoted_provider_price': selection['matrix'].provider_price,
+            'logspace_quoted_platform_fee': selection['matrix'].platform_fee,
             'pickup_zone_id': booking_data.get('zone_from_id'),
             'dropoff_zone_id': booking_data.get('zone_to_id'),
             'pickup_address': booking_data.get('pickup_address'),
@@ -516,11 +544,15 @@ class LogspaceController(http.Controller):
             'guest_email': guest_email if is_public else False,
             'guest_phone': booking_data.get('guest_phone') if is_public else False,
             'user_id': provider_user_id,
-            'order_line': order_lines,
-        })
+            'order_line': ([(5, 0, 0)] + order_lines) if order else order_lines,
+        }
 
-        if booking_data.get('addon_ids'):
-            order.logspace_addon_ids = [(6, 0, booking_data['addon_ids'])]
+        if order:
+            order.write(order_values)
+        else:
+            order = request.env['sale.order'].sudo().create(order_values)
+
+        order.logspace_addon_ids = [(6, 0, booking_data.get('addon_ids', []))]
 
         return order
 

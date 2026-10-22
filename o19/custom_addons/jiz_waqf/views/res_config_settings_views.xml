@@ -21,6 +21,12 @@
                             </div>
                         </div>
                     </setting>
+                    <setting company_dependent="1" string="Waqf Analytic Plan" help="Analytic plan in which Waqf analytic accounts are automatically created">
+                        <div class="row mt16">
+                            <label class="o_form_label col-lg-3" for="waqf_analytic_plan_id" string="Analytic Plan"/>
+                            <field name="waqf_analytic_plan_id" required="1" placeholder="Select the plan Waqfs will be created in"/>
+                        </div>
+                    </setting>
                 </xpath>
             </field>
         </record>

@@ -1,7 +1,7 @@
 services:
   web:
     image: odoo:18.0
-    command: -d o18_tileline
+    command: -d o18_db2
     env_file: .env
     depends_on:
       - db

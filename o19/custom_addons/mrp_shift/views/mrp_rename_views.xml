@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ============================================================ -->
+    <!-- Rebrand: "Manufacturing" -> "Production"                     -->
+    <!-- ============================================================ -->
+
+    <!-- Menus -->
+    <record id="mrp.menu_mrp_root" model="ir.ui.menu">
+        <field name="name">Production</field>
+    </record>
+    <record id="mrp.mrp_operation_picking" model="ir.ui.menu">
+        <field name="name">Production Orders</field>
+    </record>
+    <record id="mrp.menu_mrp_production_action" model="ir.ui.menu">
+        <field name="name">Production Orders</field>
+    </record>
+
+    <!-- Access rights privilege (Users form, Access Rights tab) -->
+    <record id="mrp.res_groups_privilege_manufacturing" model="res.groups.privilege">
+        <field name="name">Production</field>
+    </record>
+
+    <!-- Actions -->
+    <record id="mrp.action_mrp_display_fullscreen" model="ir.actions.client">
+        <field name="name">Production</field>
+    </record>
+    <record id="mrp.mrp_production_action" model="ir.actions.act_window">
+        <field name="name">Production Orders</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+                No production order found. Let's create one.
+          </p><p>
+                Use Production Orders (MO) to build finished products while consuming components: i.e. 1 Table = 4 Table Legs + 1 Table Top
+          </p>
+        </field>
+    </record>
+    <record id="mrp.mrp_production_action_picking_deshboard" model="ir.actions.act_window">
+        <field name="name">Production Orders</field>
+    </record>
+    <record id="mrp.action_mrp_production_form" model="ir.actions.act_window">
+        <field name="name">Production Orders</field>
+    </record>
+    <record id="mrp.action_picking_tree_mrp_operation" model="ir.actions.act_window">
+        <field name="name">Production Orders</field>
+    </record>
+    <record id="mrp.action_picking_tree_mrp_operation_graph" model="ir.actions.act_window">
+        <field name="name">Production Orders</field>
+    </record>
+
+    <!-- Replenishment route (Inventory > Configuration > Routes) -->
+    <record id="mrp.route_warehouse0_manufacture" model="stock.route">
+        <field name="name">Produce</field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- View string overrides: mrp.production                        -->
+    <!-- ============================================================ -->
+    <record id="view_mrp_production_activity_rename" model="ir.ui.view">
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_view_activity"/>
+        <field name="arch" type="xml">
+            <activity position="attributes">
+                <attribute name="string">Production Orders</attribute>
+            </activity>
+        </field>
+    </record>
+
+    <record id="view_mrp_production_list_rename" model="ir.ui.view">
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_tree_view"/>
+        <field name="arch" type="xml">
+            <list position="attributes">
+                <attribute name="string">Production Orders</attribute>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_mrp_production_form_rename" model="ir.ui.view">
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <form position="attributes">
+                <attribute name="string">Production Orders</attribute>
+            </form>
+            <xpath expr="//h1/field[@name='name']" position="attributes">
+                <attribute name="placeholder">Production Reference</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_mrp_production_calendar_rename" model="ir.ui.view">
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.view_production_calendar"/>
+        <field name="arch" type="xml">
+            <calendar position="attributes">
+                <attribute name="string">Production Orders</attribute>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_mrp_production_pivot_rename" model="ir.ui.view">
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.view_production_pivot"/>
+        <field name="arch" type="xml">
+            <pivot position="attributes">
+                <attribute name="string">Production Orders</attribute>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_mrp_production_graph_rename" model="ir.ui.view">
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.view_production_graph"/>
+        <field name="arch" type="xml">
+            <graph position="attributes">
+                <attribute name="string">Production Orders</attribute>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_mrp_production_search_rename" model="ir.ui.view">
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.view_mrp_production_filter"/>
+        <field name="arch" type="xml">
+            <field name="name" filter_domain="['|', ('name', 'ilike', self), ('origin', 'ilike', self)]" position="attributes">
+                <attribute name="string">Production Order</attribute>
+            </field>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Group-by filters named "Manufacturing Order"                 -->
+    <!-- ============================================================ -->
+    <record id="view_mrp_workorder_search_rename" model="ir.ui.view">
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.view_mrp_production_workorder_form_view_filter"/>
+        <field name="arch" type="xml">
+            <filter name="production" position="attributes">
+                <attribute name="string">Production Order</attribute>
+            </filter>
+        </field>
+    </record>
+
+    <record id="view_mrp_unbuild_search_rename" model="ir.ui.view">
+        <field name="model">mrp.unbuild</field>
+        <field name="inherit_id" ref="mrp.mrp_unbuild_search_view"/>
+        <field name="arch" type="xml">
+            <filter name="mogroup" position="attributes">
+                <attribute name="string">Production Order</attribute>
+            </filter>
+        </field>
+    </record>
+
+    <record id="view_mrp_scrap_search_rename" model="ir.ui.view">
+        <field name="model">stock.scrap</field>
+        <field name="inherit_id" ref="mrp.stock_scrap_search_view_inherit_mrp"/>
+        <field name="arch" type="xml">
+            <filter name="production_id" position="attributes">
+                <attribute name="string">Production Order</attribute>
+            </filter>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- BoM views                                                    -->
+    <!-- ============================================================ -->
+    <record id="view_mrp_bom_form_rename" model="ir.ui.view">
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+        <field name="arch" type="xml">
+            <field name="ready_to_produce" position="attributes">
+                <attribute name="string">Production Readiness</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_mrp_bom_search_rename" model="ir.ui.view">
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.view_mrp_bom_filter"/>
+        <field name="arch" type="xml">
+            <filter name="normal" position="attributes">
+                <attribute name="string">Production</attribute>
+            </filter>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Product views (smart button + filters)                       -->
+    <!-- ============================================================ -->
+    <record id="mrp_product_template_search_view_rename" model="ir.ui.view">
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="mrp.mrp_product_template_search_view"/>
+        <field name="arch" type="xml">
+            <filter name="manufactured_products" position="attributes">
+                <attribute name="string">Produced Products</attribute>
+            </filter>
+        </field>
+    </record>
+
+    <record id="mrp_product_product_search_view_rename" model="ir.ui.view">
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="mrp.mrp_product_product_search_view"/>
+        <field name="arch" type="xml">
+            <filter name="manufactured_products" position="attributes">
+                <attribute name="string">Produced Products</attribute>
+            </filter>
+        </field>
+    </record>
+
+    <record id="product_template_form_view_bom_button_rename" model="ir.ui.view">
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="mrp.product_template_form_view_bom_button"/>
+        <field name="arch" type="xml">
+            <xpath expr="//span[hasclass('o_stat_text')][.='Manufactured']" position="replace">
+                <span class="o_stat_text">Produced</span>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_product_form_view_bom_button_rename" model="ir.ui.view">
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="mrp.product_product_form_view_bom_button"/>
+        <field name="arch" type="xml">
+            <xpath expr="//span[hasclass('o_stat_text')][.='Manufactured']" position="replace">
+                <span class="o_stat_text">Produced</span>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Transfer / picking dashboard                                 -->
+    <!-- ============================================================ -->
+    <record id="stock_production_type_kanban_rename" model="ir.ui.view">
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="mrp.stock_production_type_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//a[.='Manufacturing Order']" position="replace">
+                <a name="%(mrp.action_mrp_production_form)d" context="{'default_picking_type_id': id}" type="action">Production Order</a>
+            </xpath>
+            <xpath expr="//span[@t-if='record.count_mo_todo.raw_value > 0']" position="replace">
+                <span t-if="record.count_mo_todo.raw_value > 0">
+                    <field name="count_mo_todo"/> To Produce
+                </span>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_picking_form_inherit_mrp_rename" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="mrp.view_picking_form_inherit_mrp"/>
+        <field name="arch" type="xml">
+            <xpath expr="//span[hasclass('o_stat_text')][.='Manufacturing']" position="replace">
+                <span class="o_stat_text">Production</span>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Product documents page                                       -->
+    <!-- ============================================================ -->
+    <record id="product_document_form_rename" model="ir.ui.view">
+        <field name="model">product.document</field>
+        <field name="inherit_id" ref="mrp.product_document_form"/>
+        <field name="arch" type="xml">
+            <group name="mrp" position="attributes">
+                <attribute name="string">Production</attribute>
+            </group>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Settings: app section label                                  -->
+    <!-- ============================================================ -->
+    <record id="res_config_settings_view_form_rename" model="ir.ui.view">
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="mrp.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <app name="mrp" position="attributes">
+                <attribute name="string">Production</attribute>
+                <attribute name="data-string">Production</attribute>
+            </app>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Enterprise mrp_workorder strings                             -->
+    <!-- ============================================================ -->
+    <record id="mrp_production_gantt_view_rename" model="ir.ui.view">
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp_workorder.mrp_production_gantt_view"/>
+        <field name="arch" type="xml">
+            <gantt position="attributes">
+                <attribute name="string">Production Orders</attribute>
+            </gantt>
+        </field>
+    </record>
+
+    <record id="mrp_production_tree_view_planning_rename" model="ir.ui.view">
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp_workorder.mrp_production_tree_view_planning"/>
+        <field name="arch" type="xml">
+            <list position="attributes">
+                <attribute name="string">Production Orders</attribute>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_mrp_production_filter_shop_floor_rename" model="ir.ui.view">
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp_workorder.view_mrp_production_filter_shop_floor"/>
+        <field name="arch" type="xml">
+            <field name="name" filter_domain="['|', ('name', 'ilike', self), ('origin', 'ilike', self)]" position="attributes">
+                <attribute name="string">Production Order</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

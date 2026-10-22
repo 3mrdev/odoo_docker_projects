@@ -1,0 +1,241 @@
+{
+  "review_date": "2026-10-22",
+  "module_version": "19.0.2.6.0",
+  "repository_head": "1d1bcdf",
+  "branch": "main",
+  "working_tree": "contains uncommitted module changes",
+  "method": "Temporary ORM fixtures, real role users, rollback; outbound template mail and password invitations mocked; admin force-completion probe mocks bill creation. Payment evidence uses synthetic transactions, not a gateway or bank.",
+  "results": {
+    "test_database": [
+      {
+        "probe": "driver_can_read_verification_codes_and_customer_token",
+        "outcome": "allowed",
+        "detail": {
+          "verification_code_pickup": true,
+          "verification_code_dropoff": true,
+          "access_token": true
+        }
+      },
+      {
+        "probe": "customer_can_call_start_pickup",
+        "outcome": "allowed",
+        "detail": "pickup_started"
+      },
+      {
+        "probe": "driver_can_complete_pickup_without_code_via_model_action",
+        "outcome": "allowed",
+        "detail": "pickup_completed"
+      },
+      {
+        "probe": "provider_can_change_payment_status_and_payout_quote",
+        "outcome": "allowed",
+        "detail": {
+          "payment_status": "paid",
+          "quoted_provider_price": 999.0
+        }
+      },
+      {
+        "probe": "provider_can_change_confirmed_order_line_price",
+        "outcome": "allowed",
+        "detail": 500.0
+      },
+      {
+        "probe": "logspace_admin_can_edit_provider_fee",
+        "outcome": "blocked",
+        "error": "UserError"
+      },
+      {
+        "probe": "provider_can_create_approved_provider_child",
+        "outcome": "allowed",
+        "detail": true
+      },
+      {
+        "probe": "portal_customer_can_read_approved_provider_fee",
+        "outcome": "allowed",
+        "detail": true
+      },
+      {
+        "probe": "public_can_read_inactive_vehicle_and_plate",
+        "outcome": "allowed",
+        "detail": true
+      },
+      {
+        "probe": "public_can_read_internal_price_matrix",
+        "outcome": "allowed",
+        "detail": true
+      },
+      {
+        "probe": "customer_can_force_admin_complete_order",
+        "outcome": "allowed",
+        "detail": "order_completed"
+      }
+    ],
+    "active_database": [
+      {
+        "probe": "driver_can_read_verification_codes_and_customer_token",
+        "outcome": "allowed",
+        "detail": {
+          "verification_code_pickup": true,
+          "verification_code_dropoff": true,
+          "access_token": true
+        }
+      },
+      {
+        "probe": "customer_can_call_start_pickup",
+        "outcome": "allowed",
+        "detail": "pickup_started"
+      },
+      {
+        "probe": "driver_can_complete_pickup_without_code_via_model_action",
+        "outcome": "allowed",
+        "detail": "pickup_completed"
+      },
+      {
+        "probe": "provider_can_change_payment_status_and_payout_quote",
+        "outcome": "allowed",
+        "detail": {
+          "payment_status": "paid",
+          "quoted_provider_price": 999.0
+        }
+      },
+      {
+        "probe": "provider_can_change_confirmed_order_line_price",
+        "outcome": "allowed",
+        "detail": 500.0
+      },
+      {
+        "probe": "logspace_admin_can_edit_provider_fee",
+        "outcome": "blocked",
+        "error": "UserError"
+      },
+      {
+        "probe": "provider_can_create_approved_provider_child",
+        "outcome": "allowed",
+        "detail": true
+      },
+      {
+        "probe": "portal_customer_can_read_approved_provider_fee",
+        "outcome": "allowed",
+        "detail": true
+      },
+      {
+        "probe": "public_can_read_inactive_vehicle_and_plate",
+        "outcome": "allowed",
+        "detail": true
+      },
+      {
+        "probe": "public_can_read_internal_price_matrix",
+        "outcome": "allowed",
+        "detail": true
+      },
+      {
+        "probe": "customer_can_force_admin_complete_order",
+        "outcome": "allowed",
+        "detail": "order_completed"
+      }
+    ],
+    "additional_test_database": [
+      {
+        "probe": "provider_can_change_other_provider_email",
+        "outcome": "blocked",
+        "error": "AccessError"
+      },
+      {
+        "probe": "provider_can_provision_other_provider_login",
+        "outcome": "blocked",
+        "error": "AccessError"
+      },
+      {
+        "probe": "provider_can_read_other_provider_bank_document",
+        "outcome": "allowed",
+        "detail": true
+      },
+      {
+        "probe": "provider_can_read_other_provider_bank_attachment_content",
+        "outcome": "blocked",
+        "error": "AccessError"
+      },
+      {
+        "probe": "two_quotations_can_be_paid_for_same_vehicle",
+        "outcome": "allowed",
+        "detail": {
+          "both_confirmed": true,
+          "both_paid": true,
+          "same_vehicle": true
+        }
+      }
+    ],
+    "additional_active_database": [
+      {
+        "probe": "provider_can_change_other_provider_email",
+        "outcome": "blocked",
+        "error": "AccessError"
+      },
+      {
+        "probe": "provider_can_provision_other_provider_login",
+        "outcome": "blocked",
+        "error": "AccessError"
+      },
+      {
+        "probe": "provider_can_read_other_provider_bank_document",
+        "outcome": "allowed",
+        "detail": true
+      },
+      {
+        "probe": "provider_can_read_other_provider_bank_document_content",
+        "outcome": "allowed",
+        "detail": true
+      },
+      {
+        "probe": "provider_can_read_other_provider_bank_attachment_content",
+        "outcome": "blocked",
+        "error": "AccessError"
+      },
+      {
+        "probe": "two_quotations_can_be_paid_for_same_vehicle",
+        "outcome": "allowed",
+        "detail": {
+          "both_confirmed": true,
+          "both_paid": true,
+          "same_vehicle": true
+        }
+      }
+    ]
+  },
+  "source_sha256": {
+    "models/sale_order.py": "2becb9509c66a8957352c9c2a964d6f13455bb394f4da3ca77f04ac643fde2af",
+    "models/res_partner.py": "22cd4478bef3ba23f80e82bcb2c004884195150d83dfe7962176944f16281225",
+    "controllers/portal.py": "890adbadf1adac2fac24e577c3b546bf610489bd8821198c46908f306e647fb1",
+    "controllers/provider.py": "b3267eaa3a9c43c7c047218fd318d82e4c9c24bdb79547ddea8de2dc94bd37e1",
+    "controllers/booking.py": "5030001d6cb0324c3f843a0d7ff08bd3f62016fc6b9778a1bdeb4919874cf457",
+    "controllers/payment.py": "059be388c78150dad2134e2384e403cb0aae2ec1342deb3a0f23e46c56d6ef62",
+    "models/logspace_refund.py": "554d233f3bf2da8407eb9162abeffd7ff54a68bbf3462e6eecf620c232acc372",
+    "security/logspace_security.xml": "e0f98cd2a77a6e41cb453ec0a78086dd7d065bcc5f9b8ba6d39e48ba24eba98c",
+    "security/ir.model.access.csv": "288a84e00e0b771a80c605644389b3754aef1b1fb78a9bdc4789805b61d0db19"
+  },
+  "environment": {
+    "o19_db_5": {
+      "installed_version": "19.0.2.6.0",
+      "installed_modules": 229,
+      "payment_providers": [
+        {
+          "code": "ompay",
+          "state": "test"
+        },
+        {
+          "code": "custom",
+          "state": "enabled"
+        }
+      ]
+    },
+    "o19_db_6": {
+      "installed_version": "19.0.2.5.0",
+      "installed_modules": 174,
+      "enabled_or_test_payment_providers": 0,
+      "approved_providers": 0,
+      "active_vehicles": 0,
+      "active_price_routes": 0
+    }
+  },
+  "test_inventory": 170
+}

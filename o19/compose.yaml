@@ -1,7 +1,7 @@
 services:
   web:
     image: odoo:19.0
-    command: -d o19_db_5
+    command: -d o19_db_6
     env_file: .env
     depends_on:
       - db

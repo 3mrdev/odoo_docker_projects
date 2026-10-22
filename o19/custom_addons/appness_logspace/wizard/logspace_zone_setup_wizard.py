@@ -21,7 +21,7 @@ class LogspaceZoneSetupWizard(models.TransientModel):
     provider_id = fields.Many2one(
         'res.partner', string='Provider',
         required=True,
-        domain=[('is_provider', '=', True)],
+        domain=[('is_provider', '=', True),('is_company','=',True)],
         default=lambda self: self.env.context.get('default_provider_id'),
     )
 
@@ -40,7 +40,15 @@ class LogspaceZoneSetupWizard(models.TransientModel):
         'logspace_zone_setup_wizard_vtype_rel',
         'wizard_id', 'vehicle_type_id',
         string='Vehicle Types',
-        help='Select vehicle types this provider offers.',
+        domain="[('id', 'in', active_vehicle_type_ids)]",
+        help='Select vehicle types this provider offers. Only the types he '
+             'has active vehicles for can be chosen.',
+    )
+    # Record-limiting helper for the domain above: the vehicle types in which
+    # the selected provider has at least one active vehicle.
+    active_vehicle_type_ids = fields.Many2many(
+        'logspace.vehicle.type',
+        compute='_compute_active_vehicle_type_ids',
     )
 
     # ---- Pricing configuration ----
@@ -55,6 +63,13 @@ class LogspaceZoneSetupWizard(models.TransientModel):
         help='Price per estimated kilometre. '
              'Formula: provider_price = base_rate + (estimated_km x per_km_rate)',
     )
+    skip_existing = fields.Boolean(
+        string='Skip Existing Routes',
+        default=True,
+        help='When ticked, price matrix rows that already exist for this '
+             'provider keep their current prices. Untick to overwrite the '
+             'existing routes with the rates entered here.',
+    )
 
     # ---- Preview ----
     estimated_routes = fields.Integer(
@@ -67,8 +82,15 @@ class LogspaceZoneSetupWizard(models.TransientModel):
         for wiz in self:
             n_zones = len(wiz.zone_ids)
             n_vtypes = len(wiz.vehicle_type_ids)
-            # permutations(n, 2) = n * (n - 1)
-            wiz.estimated_routes = max(0, n_zones * (n_zones - 1) * n_vtypes)
+            # n * n = n * (n - 1) cross-routes + n local same-zone routes
+            wiz.estimated_routes = max(0, n_zones * n_zones * n_vtypes)
+
+    @api.depends('provider_id')
+    def _compute_active_vehicle_type_ids(self):
+        for wiz in self:
+            wiz.active_vehicle_type_ids = (
+                wiz.provider_id.logspace_active_vehicle_type_ids
+            )
 
     # -------------------------------------------------------------------------
     # Helper buttons
@@ -153,7 +175,11 @@ class LogspaceZoneSetupWizard(models.TransientModel):
         """Generate or update price matrix entries for all zone pair combinations.
 
         Only the explicitly selected zones are used (no child expansion).
-        Existing entries are updated with the new rates instead of being skipped.
+        Every selected zone also gets a local same-zone route (e.g.
+        Muscat -> Muscat for intra-zone moves), priced from the same
+        distance matrix. Existing entries are skipped when `skip_existing`
+        is ticked (the default) and overwritten with the new rates when it
+        is unticked.
         """
         self.ensure_one()
 
@@ -169,6 +195,7 @@ class LogspaceZoneSetupWizard(models.TransientModel):
 
         created_count = 0
         updated_count = 0
+        skipped_count = 0
 
         # Pre-load existing price matrix entries for this provider + zones
         # This replaces per-permutation DB hits with a single query
@@ -185,8 +212,13 @@ class LogspaceZoneSetupWizard(models.TransientModel):
             for m in existing_matrices
         }
 
+        # Cross-routes between distinct zones + one local self-route per zone
+        zone_pairs = list(permutations(selected_zones, 2)) + [
+            (zone, zone) for zone in selected_zones
+        ]
+
         for vtype in self.vehicle_type_ids:
-            for zone_from, zone_to in permutations(selected_zones, 2):
+            for zone_from, zone_to in zone_pairs:
                 # Lookup distance from the zone distance matrix
                 distance_km = DistanceModel.get_distance(zone_from, zone_to)
 
@@ -199,6 +231,10 @@ class LogspaceZoneSetupWizard(models.TransientModel):
                 existing_id = existing_map.get((vtype.id, zone_from.id, zone_to.id))
 
                 if existing_id:
+                    if self.skip_existing:
+                        # Keep the provider's existing prices for this route.
+                        skipped_count += 1
+                        continue
                     # Update existing entry with new rates
                     PriceMatrix.browse(existing_id).write({
                         'distance_km': distance_km,
@@ -218,7 +254,7 @@ class LogspaceZoneSetupWizard(models.TransientModel):
                     })
                     created_count += 1
 
-        total = created_count + updated_count
+        total = created_count + updated_count + skipped_count
         return {
             'type': 'ir.actions.client',
             'tag': 'display_notification',
@@ -227,10 +263,12 @@ class LogspaceZoneSetupWizard(models.TransientModel):
                 'message': _(
                     'Created %(created)d new routes. '
                     'Updated %(updated)d existing routes. '
+                    'Skipped %(skipped)d existing routes. '
                     'Total: %(total)d routes.'
                 ) % {
                     'created': created_count,
                     'updated': updated_count,
+                    'skipped': skipped_count,
                     'total': total,
                 },
                 'type': 'success',

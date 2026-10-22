@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_grade_tier_user,grade.tier user,model_grade_tier,base.group_user,1,0,0,0
+access_grade_tier_manager,grade.tier manager,model_grade_tier,grade_tracking.group_grade_history_user,1,1,1,1
+access_grade_mining_level_user,grade.mining.level user,model_grade_mining_level,base.group_user,1,0,0,0
+access_grade_mining_level_manager,grade.mining.level manager,model_grade_mining_level,stock.group_stock_manager,1,1,1,1
+access_grade_change_history_user,grade.change.history user,model_grade_change_history,grade_tracking.group_grade_history_user,1,0,0,0

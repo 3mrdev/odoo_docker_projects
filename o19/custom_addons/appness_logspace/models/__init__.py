@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
-from . import ir_ui_menu
+from . import ir_ui_menu       # backend menus
+from . import website_menu     # website navbar menus
+from . import ir_http          # frontend JavaScript translations
+from . import res_config_settings  # module configuration (policies)
 
 # Core Master Data
 from . import logspace_zone
+from . import logspace_vehicle_category
 from . import logspace_vehicle_type
 from . import logspace_addon
 from . import logspace_vtype_document
@@ -27,6 +31,7 @@ from . import logspace_zone_distance
 from . import sale_order
 from . import logspace_order  # Timeline model
 from . import logspace_state_duration_config
+from . import logspace_verification_wizard
 
 # Customer Features
 from . import logspace_refund
@@ -39,3 +44,9 @@ from . import logspace_notification
 
 # Payment Integration
 from . import logspace_payment
+
+# Provider commission vendor bills
+from . import account_move
+
+# Provider registration uploads (documents integration)
+from . import documents_document

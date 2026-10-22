@@ -1,0 +1,28 @@
+<odoo>
+
+    <!-- MRP Production Form View -->
+    <record id="mrp_production_form_view_grade_tracking" model="ir.ui.view">
+        <field name="name">mrp.production.form.grade.tracking</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field name="is_grade_tracked" widget="boolean_toggle" readonly="1" invisible="1"
+                    groups="grade_tracking.group_grade_tracked" />
+                <!-- <field name="mining_location_id"
+                    invisible="not is_grade_tracked"
+                    groups="grade_tracking.group_grade_tracked"
+                    readonly="state != 'draft'" />
+                <field name="mining_level_id"
+                    invisible="not is_grade_tracked"
+                    groups="grade_tracking.group_grade_tracked"
+                    readonly="state != 'draft'" /> -->
+                <field name="average_grade"
+                    invisible="not is_grade_tracked"
+                    groups="grade_tracking.group_grade_tracked"
+                    readonly="state != 'draft'" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

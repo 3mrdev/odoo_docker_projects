@@ -4,6 +4,7 @@
     "category": "Purchase",
     "summary": "Purchase Only Own Documents",
     "author": "Appness",
+    "license": "LGPL-3",
     "depends": [
         "purchase"
     ],

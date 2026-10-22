@@ -30,6 +30,29 @@
 
             <!-- Provider-specific notebook pages -->
             <xpath expr="//notebook/page[1]" position="after">
+                <!-- Record-limiting helper: the vehicle types in which this
+                     provider has an active vehicle. Used by the vehicle-type
+                     domains on the Price Matrix and Add-ons pages below. -->
+                <field name="logspace_active_vehicle_type_ids" invisible="1"/>
+                <!-- Drivers Page: contacts of this provider flagged as drivers.
+                     Flagging one auto-provisions a portal login (see
+                     res.partner._create_driver_portal_user). -->
+                <page string="Drivers" name="logspace_drivers" invisible="not is_provider">
+                    <field name="logspace_driver_ids">
+                        <list editable="bottom">
+                            <field name="name"/>
+                            <field name="email"/>
+                            <field name="phone"/>
+                            <field name="function"/>
+                            <field name="is_driver" column_invisible="True"/>
+                            <field name="driver_portal_user_id" readonly="1" optional="show"/>
+                            <button name="action_create_driver_portal_user" type="object"
+                                    string="Portal Access" icon="fa-user-plus"
+                                    title="Create or re-invite the driver portal account"/>
+                        </list>
+                    </field>
+                </page>
+
                 <page string="General Info" invisible="not is_provider">
                     <group>
                         <group>
@@ -74,7 +97,7 @@
                     <group string="Special Instructions"></group>
                     <field name="special_instruction_ids">
                         <list editable="bottom">
-                            <field name="vehicle_type_id"/>
+                            <field name="vehicle_type_id" domain="[('id', 'in', parent.logspace_active_vehicle_type_ids)]"/>
                             <field name="instructions" widget="html"/>
                             <field name="is_active"/>
                         </list>
@@ -82,7 +105,7 @@
                     <group string="Time Frames"></group>
                     <field name="time_frame_ids">
                         <list editable="bottom">
-                            <field name="vehicle_type_id"/>
+                            <field name="vehicle_type_id" domain="[('id', 'in', parent.logspace_active_vehicle_type_ids)]"/>
                             <field name="time_slot_ids" widget="many2many_tags" options="{'no_create_edit': True, 'no_create': True}"/>
                             <field name="display_name" readonly="1" optional="hide"/>
                         </list>
@@ -117,7 +140,7 @@
                         <list editable="bottom">
                             <field name="zone_from_id"/>
                             <field name="zone_to_id"/>
-                            <field name="vehicle_type_id"/>
+                            <field name="vehicle_type_id" domain="[('id', 'in', parent.logspace_active_vehicle_type_ids)]"/>
                             <field name="distance_km"/>
                             <field name="provider_price"/>
                             <field name="is_active"/>
@@ -130,7 +153,7 @@
                     <field name="vehicle_type_addon_ids">
                         <list editable="bottom">
                             <field name="sequence" widget="handle"/>
-                            <field name="vehicle_type_id"/>
+                            <field name="vehicle_type_id" domain="[('id', 'in', parent.logspace_active_vehicle_type_ids)]"/>
                             <field name="addon_id"/>
                             <field name="provider_price"/>
                             <field name="is_active"/>
@@ -235,12 +258,19 @@
                     </div>
 
                     <notebook colspan="4">
+                        <!-- Record-limiting helper for the vehicle-type domains
+                             on the Price Matrix and Add-ons pages below. -->
+                        <field name="logspace_active_vehicle_type_ids" invisible="1"/>
                         <page string="Contacts" name="contact_addresses" autofocus="autofocus">
-                            <field name="child_ids" mode="kanban" context="{'default_parent_id': id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_lang': lang, 'default_user_id': user_id, 'default_type': is_company and 'contact' or 'other'}">
+                            <!-- Drivers are excluded here: they are managed in
+                                 the dedicated Drivers page below, so they are
+                                 not shown twice as generic contacts. -->
+                            <field name="child_ids" mode="kanban" domain="[('is_driver', '=', False)]" context="{'default_parent_id': id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_lang': lang, 'default_user_id': user_id, 'default_type': is_company and 'contact' or 'other'}">
                                 <kanban color="color">
                                     <field name="color"/>
                                     <field name="type"/>
                                     <field name="is_company"/>
+                                    <field name="is_driver"/>
                                     <templates>
                                         <t t-name="card" class="flex-row">
                                             <aside class="o_kanban_aside_full">
@@ -261,6 +291,10 @@
                                                 <div invisible="not function or is_company">
                                                     <i class="fa fa-fw me-1 fa-suitcase text-primary" title="Position"/>
                                                     <field name="function"/>
+                                                </div>
+                                                <div t-if="record.is_driver.raw_value">
+                                                    <i class="fa fa-fw me-1 fa-truck text-success" title="Driver"/>
+                                                    <span class="badge text-bg-success">Driver</span>
                                                 </div>
                                                 <div t-if="record.type.raw_value != 'contact' and (record.city.raw_value or record.country_id.raw_value)">
                                                     <i class="fa fa-fw me-1 fa-map-marker text-primary" title="Location"/>
@@ -284,7 +318,7 @@
                                                 <div class="row flex-row">
                                                     <div class="d-flex align-items-baseline">
                                                         <i class="fa fa-fw me-1 fa-envelope text-primary" title="Email"/>
-                                                        <field name="email" widget="email" class="w-100" context="{'gravatar_image': True}" required="user_ids" placeholder="Email"/>
+                                                        <field name="email" widget="email" class="w-100" context="{'gravatar_image': True}" required="1" placeholder="Email"/>
                                                     </div>
                                                     <div class="d-flex align-items-baseline">
                                                         <i class="fa fa-fw me-1 fa-phone text-primary" title="Phone"/>
@@ -293,6 +327,12 @@
                                                     <div invisible="is_company or type != 'contact'" class="d-flex align-items-baseline">
                                                         <i class="fa fa-fw me-1 fa-suitcase text-primary" title="Position"/>
                                                         <field name="function" placeholder="Job title"/>
+                                                    </div>
+                                                    <!-- Driver portal: flag this contact so they can
+                                                         advance their own deliveries from the portal. -->
+                                                    <div invisible="is_company or type != 'contact'" class="d-flex align-items-center gap-2">
+                                                        <field name="is_driver" widget="boolean_toggle"/>
+                                                        <label for="is_driver" class="text-nowrap mb-0"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -322,6 +362,26 @@
                                 </form>
                             </field>
                         </page>
+
+                        <!-- Drivers Page: contacts of this provider flagged as drivers.
+                             Flagging one auto-provisions a portal login (see
+                             res.partner._create_driver_portal_user). -->
+                        <page string="Drivers" name="logspace_drivers" invisible="not is_provider">
+                            <field name="logspace_driver_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="email" required="1"/>
+                                    <field name="phone"/>
+                                    <field name="function"/>
+                                    <field name="is_driver" column_invisible="True"/>
+                                    <field name="driver_portal_user_id" readonly="1" optional="show"/>
+                                    <button name="action_create_driver_portal_user" type="object"
+                                            string="Portal Access" icon="fa-user-plus"
+                                            title="Create or re-invite the driver portal account"/>
+                                </list>
+                            </field>
+                        </page>
+
                         <page string="General Info" invisible="not is_provider">
                             <group string="Rating">
                                 <group>
@@ -329,9 +389,11 @@
                                     <field name="logspace_review_count" readonly="1"/>
                                 </group>
                             </group>
-                            <group string="Fleet Summary"></group>
-                            <field name="fleet_summary_ids">
-                                <list editable="bottom">
+                            <group string="Fleet Summary">
+                                <div class="alert alert-info" role="alert"> Fleet summary is the what the provider filled in his registration form it contains his fleet as totals it doesn't reflect the current fleet he has on the system.</div>
+                            </group>
+                            <field name="fleet_summary_ids" readonly="1">
+                                <list>
                                     <field name="vehicle_type_id"/>
                                     <field name="fleet_count"/>
                                     <field name="capacity_tons"/>
@@ -341,7 +403,7 @@
                             <group string="Special Instructions"></group>
                             <field name="special_instruction_ids">
                                 <list editable="bottom">
-                                    <field name="vehicle_type_id"/>
+                                    <field name="vehicle_type_id" domain="[('id', 'in', parent.logspace_active_vehicle_type_ids)]"/>
                                     <field name="instructions" widget="html"/>
                                     <field name="is_active"/>
                                 </list>
@@ -349,13 +411,13 @@
                             <group string="Time Frames"></group>
                             <field name="time_frame_ids">
                                 <list editable="bottom">
-                                    <field name="vehicle_type_id"/>
+                                    <field name="vehicle_type_id" domain="[('id', 'in', parent.logspace_active_vehicle_type_ids)]"/>
                                     <field name="time_slot_ids" widget="many2many_tags" options="{'no_create_edit': True, 'no_create': True}"/>
                                     <field name="display_name" readonly="1" optional="hide"/>
                                 </list>
                             </field>
-                            <group string="Working Hours"></group>
-                            <field name="calendar_id"/>
+                            <!-- <group string="Working Hours"></group>
+                            <field name="calendar_id"/> -->
                         </page>
 
                         <!-- Vehicles Page -->
@@ -366,7 +428,7 @@
                                     <field name="plate_number"/>
                                     <field name="vehicle_type_id"/>
                                     <field name="zone_id"/>
-                                    <field name="driver_id"/>
+                                    <field name="driver_id" domain="[('is_company','=',False)]"/>
                                     <field name="is_active"/>
                                 </list>
                             </field>
@@ -378,7 +440,7 @@
                                 <list editable="bottom">
                                     <field name="zone_from_id"/>
                                     <field name="zone_to_id"/>
-                                    <field name="vehicle_type_id"/>
+                                    <field name="vehicle_type_id" domain="[('id', 'in', parent.logspace_active_vehicle_type_ids)]"/>
                                     <field name="distance_km"/>
                                     <field name="provider_price"/>
                                     <field name="is_active"/>
@@ -391,7 +453,7 @@
                             <field name="vehicle_type_addon_ids">
                                 <list editable="bottom">
                                     <field name="sequence" widget="handle"/>
-                                    <field name="vehicle_type_id"/>
+                                    <field name="vehicle_type_id" domain="[('id', 'in', parent.logspace_active_vehicle_type_ids)]"/>
                                     <field name="addon_id"/>
                                     <field name="provider_price"/>
                                     <field name="is_active"/>
@@ -466,7 +528,7 @@
         ]"/>
         <field name="search_view_id" ref="view_res_partner_provider_search"/>
         <field name="context">{'default_is_provider': True, 'default_is_company': True}</field>
-        <field name="domain">[('is_provider', '=', True)]</field>
+        <field name="domain">[('is_provider', '=', True),('is_company','=',True)]</field>
     </record>
 
     <!-- ========================================================================= -->

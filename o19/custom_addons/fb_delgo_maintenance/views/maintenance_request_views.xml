@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Maintenance Request: form -->
+    <record id="hr_equipment_request_view_form" model="ir.ui.view">
+        <field name="name">maintenance.request.form.delgo</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+        <field name="arch" type="xml">
+            <!-- R1: stage changes only through the header buttons -->
+            <xpath expr="//header/field[@name='stage_id']" position="attributes">
+                <attribute name="options">{'clickable': 0}</attribute>
+            </xpath>
+            <xpath expr="//header/field[@name='stage_id']" position="before">
+                <button string="Previous Stage" name="button_previous_stage" type="object"
+                        invisible="not previous_stage_id or archive"/>
+                <button string="Next Stage" name="button_next_stage" type="object" class="btn-primary"
+                        invisible="not next_stage_id or archive"/>
+                <field name="next_stage_id" invisible="1"/>
+                <field name="previous_stage_id" invisible="1"/>
+            </xpath>
+            <!-- R6: spare-parts consumption through approval requests -->
+            <xpath expr="//header/field[@name='stage_id']" position="before">
+                <button string="Request Spare Parts" name="action_open_spare_parts_wizard" type="object"
+                        groups="fb_delgo_maintenance.group_maintenance_spare_parts"/>
+            </xpath>
+            <!-- R1: identify closed requests + R5: approvals smart button -->
+            <xpath expr="//sheet/div[1]" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button name="action_view_approval_requests" type="object" class="oe_stat_button" icon="fa-check-square-o">
+                        <field name="approval_request_count" widget="statinfo" string="Approvals"/>
+                    </button>
+                </div>
+                <widget name="web_ribbon" title="Done" bg_color="text-bg-success" invisible="not done"/>
+            </xpath>
+            <!-- R3: request reference from the team code -->
+            <xpath expr="//div[hasclass('oe_title')]" position="after">
+                <h3 class="text-muted" invisible="not request_code">
+                    <field name="request_code" readonly="1"/>
+                </h3>
+            </xpath>
+            <!-- R1: lock closed requests (views level) -->
+            <xpath expr="//h1/field[@name='name']" position="attributes">
+                <attribute name="readonly">done</attribute>
+            </xpath>
+            <xpath expr="//field[@name='kanban_state']" position="attributes">
+                <attribute name="readonly">done</attribute>
+            </xpath>
+            <xpath expr="//field[@name='equipment_id']" position="attributes">
+                <attribute name="readonly">done</attribute>
+            </xpath>
+            <xpath expr="//group//field[@name='category_id']" position="attributes">
+                <attribute name="readonly">done</attribute>
+            </xpath>
+            <!-- hr_maintenance replaces owner_user_id with employee_id ("Created By") -->
+            <xpath expr="//field[@name='employee_id']" position="attributes">
+                <attribute name="readonly">done</attribute>
+            </xpath>
+            <xpath expr="//field[@name='maintenance_type']" position="attributes">
+                <attribute name="readonly">done</attribute>
+            </xpath>
+            <xpath expr="//field[@name='maintenance_team_id']" position="attributes">
+                <attribute name="readonly">done</attribute>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="readonly">done</attribute>
+            </xpath>
+            <!-- R2: scheduled/closing dates only by the dedicated group while open -->
+            <xpath expr="//field[@name='schedule_date']" position="attributes">
+                <attribute name="readonly">done or not can_edit_schedule_fields</attribute>
+            </xpath>
+            <xpath expr="//field[@name='schedule_end']" position="attributes">
+                <attribute name="readonly">done or not can_edit_schedule_fields</attribute>
+            </xpath>
+            <xpath expr="//field[@name='close_date']" position="attributes">
+                <attribute name="readonly">done or not can_edit_schedule_fields</attribute>
+                <attribute name="invisible">not done and not can_edit_schedule_fields</attribute>
+            </xpath>
+            <xpath expr="//field[@name='schedule_end']" position="after">
+                <field name="can_edit_schedule_fields" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='priority']" position="attributes">
+                <attribute name="readonly">done</attribute>
+            </xpath>
+            <xpath expr="//label[@for='recurring_maintenance']" position="attributes">
+                <attribute name="invisible">maintenance_type == 'corrective' or done</attribute>
+            </xpath>
+            <xpath expr="//div[hasclass('d-inline-flex')]" position="attributes">
+                <attribute name="invisible">maintenance_type == 'corrective' or done</attribute>
+            </xpath>
+            <xpath expr="//label[@for='repeat_interval']" position="attributes">
+                <attribute name="invisible">not recurring_maintenance or done</attribute>
+            </xpath>
+            <xpath expr="//div[hasclass('d-flex')]" position="attributes">
+                <attribute name="invisible">not recurring_maintenance or done</attribute>
+            </xpath>
+            <!-- R4: extra categorization level (targets the visible group field only) -->
+            <xpath expr="//group//field[@name='category_id']" position="after">
+                <field name="maintenance_category_id" options="{'no_create': True}" readonly="done"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Maintenance Request: list -->
+    <record id="hr_equipment_request_view_tree" model="ir.ui.view">
+        <field name="name">maintenance.request.list.delgo</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="request_code" string="Reference"/>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="readonly">done</attribute>
+            </xpath>
+            <xpath expr="//field[@name='employee_id']" position="attributes">
+                <attribute name="readonly">done</attribute>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="readonly">done</attribute>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="maintenance_category_id" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Maintenance Request: search -->
+    <record id="hr_equipment_request_view_search" model="ir.ui.view">
+        <field name="name">maintenance.request.search.delgo</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="request_code" string="Reference"/>
+                <field name="maintenance_category_id"/>
+            </xpath>
+            <xpath expr="//group" position="inside">
+                <filter string='Maintenance Category' name="maintenance_category" domain="[]" context="{'group_by': 'maintenance_category_id'}"/>
+                <filter string='Team' name="team" domain="[]" context="{'group_by': 'maintenance_team_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

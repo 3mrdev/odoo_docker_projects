@@ -1,0 +1,63 @@
+<odoo>
+
+    <!-- Stock Lot Form View -->
+    <record id="stock_lot_form_inherit_grade" model="ir.ui.view">
+        <field name="name">stock.lot.form.grade.tracking</field>
+        <field name="model">stock.lot</field>
+        <field name="priority" eval="25" />
+        <field name="inherit_id" ref="stock.view_production_lot_form" />
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_grade_history"
+                    type="object"
+                    icon="fa-history"
+                    class="oe_stat_button"
+                    invisible="not is_grade_tracked"
+                    groups="grade_tracking.group_grade_history_user"
+                    help="Audit trail of grade data changes on this lot/serial.">
+                    <field name="grade_history_count" widget="statinfo" string="Grade History" />
+                </button>
+            </div>
+            <group name="main_group" position="inside">
+                <group name="grade_group" string="Mining &amp; Grade"
+                    invisible="not is_grade_tracked"
+                    groups="grade_tracking.group_grade_tracked,grade_tracking.group_grade_history_user">
+                    <field name="is_grade_tracked" widget="boolean_toggle" readonly="1" />
+                    <field name="mining_location_id" />
+                    <field name="mining_level_id" />
+                    <field name="average_grade" />
+                    <field name="grade_tier_id" readonly="1" options="{'no_open': True, 'no_create': True}"/>
+                    <field name="gold_content" readonly="1" />
+                </group>
+            </group>
+        </field>
+    </record>
+
+    <!-- Stock Lot List View -->
+    <record id="stock_lot_list_inherit_grade" model="ir.ui.view">
+        <field name="name">stock.lot.list.grade.tracking</field>
+        <field name="model">stock.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_tree" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="mining_location_id" optional="show"
+                    invisible="not is_grade_tracked"
+                    groups="grade_tracking.group_grade_tracked,grade_tracking.group_grade_history_user" />
+                <field name="mining_level_id" optional="show"
+                    invisible="not is_grade_tracked"
+                    groups="grade_tracking.group_grade_tracked,grade_tracking.group_grade_history_user" />
+                <field name="average_grade" optional="show"
+                    invisible="not is_grade_tracked"
+                    groups="grade_tracking.group_grade_tracked,grade_tracking.group_grade_history_user" />
+                <field name="grade_tier_id" optional="show"
+                    invisible="not is_grade_tracked"
+                    options="{'no_open': True, 'no_create': True}"
+                    groups="grade_tracking.group_grade_tracked,grade_tracking.group_grade_history_user" />
+                <field name="gold_content" optional="show"
+                    invisible="not is_grade_tracked"
+                    groups="grade_tracking.group_grade_tracked,grade_tracking.group_grade_history_user" />
+            </field>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ================================================================ -->
+        <!-- SAME-ZONE (INTRA-GOVERNORATE) DISTANCES                          -->
+        <!-- One "gov → gov" row per governorate: zones are areas, not        -->
+        <!-- points, so a Muscat → Muscat move is a real intra-zone trip.     -->
+        <!-- The zone setup wizard reads these for its generated local        -->
+        <!-- self-routes, and get_distance() prefers them over the 5.0 km     -->
+        <!-- default. Estimates only - refine per governorate as needed.      -->
+        <!-- ================================================================ -->
+
+        <record id="om_zone_dist_muscat_self" model="logspace.zone.distance">
+            <field name="zone_from_id" ref="om_zone_muscat"/>
+            <field name="zone_to_id" ref="om_zone_muscat"/>
+            <field name="estimated_km">25</field>
+            <field name="estimated_minutes">40</field>
+        </record>
+
+        <record id="om_zone_dist_sohar_self" model="logspace.zone.distance">
+            <field name="zone_from_id" ref="om_zone_sohar"/>
+            <field name="zone_to_id" ref="om_zone_sohar"/>
+            <field name="estimated_km">20</field>
+            <field name="estimated_minutes">30</field>
+        </record>
+
+        <record id="om_zone_dist_barka_self" model="logspace.zone.distance">
+            <field name="zone_from_id" ref="om_zone_barka"/>
+            <field name="zone_to_id" ref="om_zone_barka"/>
+            <field name="estimated_km">20</field>
+            <field name="estimated_minutes">30</field>
+        </record>
+
+        <record id="om_zone_dist_buraimi_self" model="logspace.zone.distance">
+            <field name="zone_from_id" ref="om_zone_buraimi"/>
+            <field name="zone_to_id" ref="om_zone_buraimi"/>
+            <field name="estimated_km">15</field>
+            <field name="estimated_minutes">20</field>
+        </record>
+
+        <record id="om_zone_dist_dhafra_self" model="logspace.zone.distance">
+            <field name="zone_from_id" ref="om_zone_dhafra"/>
+            <field name="zone_to_id" ref="om_zone_dhafra"/>
+            <field name="estimated_km">25</field>
+            <field name="estimated_minutes">35</field>
+        </record>
+
+        <record id="om_zone_dist_dakhliya_self" model="logspace.zone.distance">
+            <field name="zone_from_id" ref="om_zone_dakhliya"/>
+            <field name="zone_to_id" ref="om_zone_dakhliya"/>
+            <field name="estimated_km">30</field>
+            <field name="estimated_minutes">40</field>
+        </record>
+
+        <record id="om_zone_dist_sharqiya_n_self" model="logspace.zone.distance">
+            <field name="zone_from_id" ref="om_zone_sharqiya_n"/>
+            <field name="zone_to_id" ref="om_zone_sharqiya_n"/>
+            <field name="estimated_km">35</field>
+            <field name="estimated_minutes">45</field>
+        </record>
+
+        <record id="om_zone_dist_sharqiya_s_self" model="logspace.zone.distance">
+            <field name="zone_from_id" ref="om_zone_sharqiya_s"/>
+            <field name="zone_to_id" ref="om_zone_sharqiya_s"/>
+            <field name="estimated_km">30</field>
+            <field name="estimated_minutes">40</field>
+        </record>
+
+        <record id="om_zone_dist_wusta_self" model="logspace.zone.distance">
+            <field name="zone_from_id" ref="om_zone_wusta"/>
+            <field name="zone_to_id" ref="om_zone_wusta"/>
+            <field name="estimated_km">60</field>
+            <field name="estimated_minutes">70</field>
+        </record>
+
+        <record id="om_zone_dist_dhofar_self" model="logspace.zone.distance">
+            <field name="zone_from_id" ref="om_zone_dhofar"/>
+            <field name="zone_to_id" ref="om_zone_dhofar"/>
+            <field name="estimated_km">20</field>
+            <field name="estimated_minutes">30</field>
+        </record>
+
+        <record id="om_zone_dist_musandam_self" model="logspace.zone.distance">
+            <field name="zone_from_id" ref="om_zone_musandam"/>
+            <field name="zone_to_id" ref="om_zone_musandam"/>
+            <field name="estimated_km">30</field>
+            <field name="estimated_minutes">45</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,54 @@
+<odoo>
+
+    <!-- Sale Order Form View - Add grade data to line -->
+    <record id="view_sale_order_form_grade_tracking" model="ir.ui.view">
+        <field name="name">sale.order.form.grade.tracking</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_unit']"
+                position="after">
+                <field name="is_grade_tracked" column_invisible="True"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="mining_location_id"
+                    invisible="not is_grade_tracked"
+                    optional="show"
+                    groups="grade_tracking.group_grade_tracked"
+                    readonly="state in ('sale', 'cancel')" />
+                <field name="mining_level_id"
+                    invisible="not is_grade_tracked"
+                    optional="show"
+                    groups="grade_tracking.group_grade_tracked"
+                    readonly="state in ('sale', 'cancel')" />
+                <field name="average_grade"
+                    invisible="not is_grade_tracked"
+                    optional="show"
+                    groups="grade_tracking.group_grade_tracked"
+                    readonly="state in ('sale', 'cancel')" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Sale Order Line Form View (popup) -->
+    <record id="sale_order_line_form_grade_tracking" model="ir.ui.view">
+        <field name="name">sale.order.line.form.grade.tracking</field>
+        <field name="model">sale.order.line</field>
+        <field name="inherit_id" ref="sale.sale_order_line_view_form_readonly" />
+        <field name="arch" type="xml">
+            <field name="product_uom_qty" position="after">
+                <field name="is_grade_tracked" invisible="1"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="mining_location_id"
+                    invisible="not is_grade_tracked"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="mining_level_id"
+                    invisible="not is_grade_tracked"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="average_grade"
+                    invisible="not is_grade_tracked"
+                    groups="grade_tracking.group_grade_tracked" />
+            </field>
+        </field>
+    </record>
+
+</odoo>

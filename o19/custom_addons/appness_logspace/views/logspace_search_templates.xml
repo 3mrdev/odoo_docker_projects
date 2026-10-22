@@ -13,33 +13,21 @@
 
                             <div class="card shadow-sm">
                                 <div class="card-body p-4">
-                                    <form action="/logspace/search" method="POST" enctype="multipart/form-data">
+                                    <form action="/logspace/search" method="POST" enctype="multipart/form-data" class="logspace-search-form">
                                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                         <script type="application/json" id="logspace-zones-data">
                                              <t t-out="zones_json"/>
                                          </script>
-                                        <!-- Row 1: Vehicle Type and Zones -->
+                                        <script type="application/json" id="logspace-vehicle-types-data">
+                                             <t t-out="vehicle_types_json"/>
+                                         </script>
+                                        <!-- Row 1: Pickup / Dropoff / Date -->
                                         <div class="row g-3 mb-3">
-                                            <!-- Vehicle Type -->
-                                            <div class="col-md-4">
-                                                <label class="form-label small text-muted mb-1">
-                                                    <i class="fa fa-truck me-1"/>
-                                                    Vehicle Type
-                                                </label>
-                                                <select class="form-select" name="vehicle_type_id">
-                                                    <option value="">All Vehicle Types</option>
-                                                    <t t-foreach="vehicle_types" t-as="vt">
-                                                        <option t-att-value="vt.id" t-att-selected="search_params.get('vehicle_type_id') and str(vt.id) == str(search_params.get('vehicle_type_id'))">
-                                                            <t t-esc="vt.name"/>
-                                                        </option>
-                                                    </t>
-                                                </select>
-                                            </div>
                                             <!-- Pickup Zone -->
                                             <div class="col-md-4 zone-autocomplete-wrapper position-relative">
                                                 <label class="form-label small text-muted mb-1">
                                                     <i class="fa fa-circle text-primary me-1"/>
-                                                    Pickup From 
+                                                    Pickup From
                                                 </label>
                                                 <input type="text" class="form-control zone-autocomplete-input" placeholder="Type pickup address..." t-att-value="search_params.get('pickup_address_text', '')" autocomplete="off" data-role="zone-autocomplete" data-target-id="zone_from_id" data-target-text="pickup_address_text" required="required"/>
                                                 <input type="hidden" name="zone_from_id" id="zone_from_id" t-att-value="search_params.get('zone_from_id', '')"/>
@@ -49,35 +37,57 @@
                                             <div class="col-md-4 zone-autocomplete-wrapper position-relative">
                                                 <label class="form-label small text-muted mb-1">
                                                     <i class="fa fa-map-marker text-danger me-1"/>
-                                                    Dropoff To 
+                                                    Dropoff To
                                                 </label>
                                                 <input type="text" class="form-control zone-autocomplete-input" placeholder="Type dropoff address..." t-att-value="search_params.get('dropoff_address_text', '')" autocomplete="off" data-role="zone-autocomplete" data-target-id="zone_to_id" data-target-text="dropoff_address_text" required="required"/>
                                                 <input type="hidden" name="zone_to_id" id="zone_to_id" t-att-value="search_params.get('zone_to_id', '')"/>
                                                 <input type="hidden" name="dropoff_address_text" id="dropoff_address_text" t-att-value="search_params.get('dropoff_address_text', '')"/>
                                             </div>
-                                            
-                                        </div>
-                                        <!-- Row 2: Timeframe and Search -->
-                                        <div class="row g-3 align-items-end">
                                             <!-- Pickup Date -->
                                             <div class="col-md-4">
                                                 <label class="form-label small text-muted mb-1">
                                                     <i class="fa fa-calendar me-1"/>
                                                     Pickup Date
                                                 </label>
-                                                <input type="date" class="form-control" name="pickup_date" t-att-value="search_params.get('pickup_date')" t-att-min="datetime.date.today().strftime('%Y-%m-%d')"/>
+                                                <input type="date" class="form-control" name="pickup_date" required="required" t-att-value="search_params.get('pickup_date')" t-att-min="(datetime.date.today()+ datetime.timedelta(days=1)).strftime('%Y-%m-%d')"/>
                                             </div>
-                                            <!-- Pickup Timeframe -->
+                                        </div>
+                                        <!-- Row 2: Category / Type / Search.
+                                             The pickup timeframe moved to the booking item-details
+                                             page, where the customer already knows which provider
+                                             and vehicle he is booking. -->
+                                        <div class="row g-3 align-items-end">
+                                            <!-- Vehicle Category -->
                                             <div class="col-md-4">
                                                 <label class="form-label small text-muted mb-1">
-                                                    <i class="fa fa-clock-o text-primary me-1"/>
-                                                    Pickup Timeframe
+                                                    <i class="fa fa-tags me-1"/>
+                                                    Vehicle Category
                                                 </label>
-                                                <select class="form-select" name="pickup_timeframe">
-                                                    <option value="">Any Time...</option>
-                                                    <option value="morning" t-att-selected="search_params.get('pickup_timeframe') == 'morning'">Morning</option>
-                                                    <option value="afternoon" t-att-selected="search_params.get('pickup_timeframe') == 'afternoon'">Afternoon</option>
-                                                    <option value="evening" t-att-selected="search_params.get('pickup_timeframe') == 'evening'">Evening</option>
+                                                <select class="form-select" name="vehicle_category_id">
+                                                    <option value="">All Categories</option>
+                                                    <t t-foreach="vehicle_categories" t-as="vc">
+                                                        <option t-att-value="vc.id" t-att-selected="search_params.get('vehicle_category_id') and str(vc.id) == str(search_params.get('vehicle_category_id'))">
+                                                            <t t-esc="vc.name"/>
+                                                        </option>
+                                                    </t>
+                                                </select>
+                                            </div>
+                                            <!-- Vehicle Type -->
+                                            <div class="col-md-4">
+                                                <label class="form-label small text-muted mb-1">
+                                                    <i class="fa fa-truck me-1"/>
+                                                    Vehicle Type
+                                                </label>
+                                                <select class="form-select" name="vehicle_type_id">
+                                                    <!-- Once a category is chosen every type in it is a
+                                                         valid answer, so "All Vehicle Types" would only
+                                                         let the customer submit a filter he just set. -->
+                                                    <option value="" t-if="not search_params.get('vehicle_category_id')">All Vehicle Types</option>
+                                                    <t t-foreach="vehicle_types" t-as="vt">
+                                                        <option t-att-value="vt.id" t-att-selected="search_params.get('vehicle_type_id') and str(vt.id) == str(search_params.get('vehicle_type_id'))">
+                                                            <t t-esc="vt.name"/>
+                                                        </option>
+                                                    </t>
                                                 </select>
                                             </div>
                                             <!-- Search Button -->
@@ -97,6 +107,16 @@
             </section>
 
             <!-- Results Section -->
+            <t t-if="search_error">
+                <section class="py-4">
+                    <div class="container">
+                        <div class="alert alert-warning text-center" role="alert">
+                            <i class="fa fa-calendar me-2"/>
+                            <t t-esc="search_error"/>
+                        </div>
+                    </div>
+                </section>
+            </t>
             <t t-if="show_results">
                 <section class="py-4">
                     <div class="container logspace-results">
@@ -113,7 +133,9 @@
                         <t t-if="results">
                             <div class="d-flex justify-content-between align-items-center mb-4">
                                 <h5 class="mb-0">
-                                    <span t-esc="total_results"/> Provider<t t-if="total_results != 1">s</t> Available
+                                    <t t-esc="total_results"/>
+                                    <t t-if="total_results != 1"> Providers Available</t>
+                                    <t t-else=""> Provider Available</t>
                                 </h5>
                                 <div class="btn-group" role="group">
                                     <button type="button" class="btn btn-outline-secondary js-view-grid">
@@ -130,12 +152,6 @@
                                 <t t-foreach="page_results" t-as="result">
                                     <div class="col-md-6 col-lg-4">
                                         <div class="card h-100 shadow-sm border-0">
-                                            <!-- Timeframe Warning Badge -->
-                                            <t t-if="not result['timeframe_available'] and result['requested_timeframe']">
-                                                <div class="position-absolute top-0 end-0 m-2">
-                                                    <span class="badge bg-warning">Timeframe Limited</span>
-                                                </div>
-                                            </t>
                                             <div class="card-img-top bg-light text-center">
                                                 <img t-att-src="result['vehicle_type_image']" class="img-fluid" style="width: 100%; height: 200px; object-fit: cover;" t-att-alt="result['vehicle_type_name']"/>
                                             </div>
@@ -143,7 +159,7 @@
                                                 <div class="d-flex justify-content-between align-items-start mb-2">
                                                     <h5 class="card-title mb-0" t-esc="result['vehicle_type_name']"/>
                                                     <span class="badge bg-success">
-                                                        $<t t-esc="'%.2f' % result['price']"/>
+                                                        <t t-esc="result['formatted_price']"/>
                                                     </span>
                                                 </div>
                                                 <p class="text-muted small mb-2">
@@ -239,7 +255,7 @@
                                                         </td>
                                                         <td>
                                                             <span class="fw-bold text-success">
-                                                                $<t t-esc="'%.2f' % result['price']"/>
+                                                                <t t-esc="result['formatted_price']"/>
                                                             </span>
                                                         </td>
                                                         <td>
@@ -295,7 +311,7 @@
                             <div class="col-lg-8">
                                 <i class="fa fa-search fa-4x text-muted mb-4"/>
                                 <h3>Start Your Search</h3>
-                                <p class="text-muted">Select your pickup and dropoff zones, vehicle type, and preferred pickup timeframe to find available Vehicles.</p>
+                                <p class="text-muted">Select your pickup and dropoff zones, a vehicle category or type, and your pickup date to find available Vehicles.</p>
                             </div>
                         </div>
                     </div>

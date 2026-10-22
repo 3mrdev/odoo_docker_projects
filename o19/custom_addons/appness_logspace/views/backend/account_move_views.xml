@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Read-only views for the provider commission vendor bills.
+
+        Deliberately NOT core's bill views: they reference account.journal, which
+        base.group_user cannot read (addons/account/security/ir.model.access.csv),
+        so a provider would hit an AccessError. Every field below is a plain or
+        stored field on account.move / account.move.line.
+    -->
+    <record id="view_logspace_provider_bill_tree" model="ir.ui.view">
+        <field name="name">logspace.provider.bill.tree</field>
+        <field name="model">account.move</field>
+        <field name="arch" type="xml">
+            <list create="false" edit="false" delete="false">
+                <field name="name"/>
+                <field name="invoice_date"/>
+                <field name="invoice_origin"/>
+                <field name="ref" optional="show"/>
+                <field name="payment_state" widget="badge"
+                       decoration-success="payment_state == 'paid'"
+                       decoration-info="payment_state in ('not_paid', 'in_payment')"
+                       decoration-warning="payment_state == 'partial'"
+                       decoration-danger="payment_state == 'reversed'"
+                       optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-success="state == 'posted'"/>
+                <field name="amount_total" widget="monetary"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_logspace_provider_bill_form" model="ir.ui.view">
+        <field name="name">logspace.provider.bill.form</field>
+        <field name="model">account.move</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false" delete="false">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="invoice_date"/>
+                            <field name="invoice_origin"/>
+                            <field name="ref"/>
+                        </group>
+                        <group>
+                            <field name="state" widget="badge"
+                                   decoration-info="state == 'draft'"
+                                   decoration-success="state == 'posted'"/>
+                            <field name="payment_state" widget="badge"
+                                   decoration-success="payment_state == 'paid'"
+                                   decoration-info="payment_state in ('not_paid', 'in_payment')"
+                                   decoration-warning="payment_state == 'partial'"
+                                   decoration-danger="payment_state == 'reversed'"/>
+                            <field name="amount_total" widget="monetary"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Bill Lines" name="bill_lines">
+                            <field name="invoice_line_ids" nolabel="1"
+                                   readonly="1" mode="list"
+                                   domain="[('display_type', '=', 'product')]">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="quantity"/>
+                                    <field name="price_unit"/>
+                                    <field name="price_subtotal"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_logspace_provider_bills" model="ir.actions.act_window">
+        <field name="name">Provider Bills</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('view_logspace_provider_bill_tree')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('view_logspace_provider_bill_form')})]"/>
+        <field name="domain">[('is_logspace_provider_bill', '=', True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No provider bills yet.
+            </p>
+            <p>
+                A bill is created automatically when a Logspace order is completed.
+            </p>
+        </field>
+    </record>
+</odoo>

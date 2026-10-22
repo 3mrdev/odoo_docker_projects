@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_lot_lab_user,stock.lot lab user,stock.model_stock_lot,grade_sample_approval.group_grade_lab_user,1,0,0,0

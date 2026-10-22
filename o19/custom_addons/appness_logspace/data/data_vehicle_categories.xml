@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- ============================================ -->
+        <!-- MASTER DATA: Vehicle Categories -->
+        <!-- Reproduces the former logspace.vehicle.type.category -->
+        <!-- Selection exactly; the codes are the stable key used -->
+        <!-- by the image fallback and by the upgrade script. -->
+        <!-- ============================================ -->
+        <record id="vehicle_category_light" model="logspace.vehicle.category">
+            <field name="name">Light</field>
+            <field name="code">light</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="vehicle_category_medium" model="logspace.vehicle.category">
+            <field name="name">Medium</field>
+            <field name="code">medium</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="vehicle_category_heavy" model="logspace.vehicle.category">
+            <field name="name">Heavy</field>
+            <field name="code">heavy</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="vehicle_category_special" model="logspace.vehicle.category">
+            <field name="name">Special</field>
+            <field name="code">special</field>
+            <field name="sequence">40</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Work order PDF: "Manufacturing Order:" -> "Production Order:" -->
+    <template id="report_mrp_workorder_rename" inherit_id="mrp.report_mrp_workorder">
+        <xpath expr="//strong[.='Manufacturing Order:']" position="replace">
+            <strong>Production Order:</strong><br/>
+        </xpath>
+    </template>
+
+    <!-- Stock rule report legend: "Manufacture" -> "Produce" -->
+    <template id="mrp_report_stock_rule_rename" inherit_id="mrp.mrp_report_stock_rule">
+        <xpath expr="//div[hasclass('o_report_stock_rule_legend_label')][.='Manufacture']" position="replace">
+            <div class="o_report_stock_rule_legend_label">Produce</div>
+        </xpath>
+    </template>
+</odoo>

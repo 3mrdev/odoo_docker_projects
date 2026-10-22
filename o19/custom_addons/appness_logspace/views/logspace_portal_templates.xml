@@ -119,11 +119,10 @@
                     <thead class="table-light">
                         <tr>
                             <th>Order ID</th>
-                            <th>Truck</th>
+                            <th>Vehicle</th>
                             <th>Route</th>
                             <th>Order Created</th>
                             <th>Scheduled</th>
-                            <th>Approved</th>
                             <th>Amount</th>
                             <th>Status</th>
                             <th>Actions</th>
@@ -141,8 +140,7 @@
                                 </td>
                                 <td><small t-esc="order_item.get('create_date', order_item['date'])"/></td>
                                 <td><small class="text-primary" t-esc="order_item.get('scheduled_datetime', order_item['date'])"/></td>
-                                <td><small t-if="order_item.get('approve_date')" t-esc="order_item['approve_date']"/><small t-if="not order_item.get('approve_date')" class="text-muted">-</small></td>
-                                <td t-esc="'$' + str(int(order_item['amount']))"/>
+                                <td t-esc="order_item.get('formatted_amount') or (order_item.get('currency_symbol', '') + ' ' + str(int(order_item['amount'])) if order_item.get('currency_symbol') else str(int(order_item['amount'])))"/>
                                 <td>
                                     <t t-if="order_item['status'] == 'active' or order_item['status'] == 'in_transit'">
                                         <span class="badge bg-info" t-esc="order_item['status_label']"/>
@@ -210,26 +208,62 @@
                                         <p class="small text-primary fw-semibold mb-1"><i class="fa fa-map-marker me-1"></i><span t-esc="tracking_info['pickup_zone']"/></p>
                                     </t>
                                     <p><i class="fa fa-circle text-muted me-2"></i><span t-esc="tracking_info['pickup']"/></p>
+                                    <p class="small" t-if="tracking_info.get('pickup_contact_name')"><i class="fa fa-user text-muted me-2"></i><span t-esc="tracking_info['pickup_contact_name']"/><t t-if="tracking_info.get('pickup_contact_phone')"> <span t-esc="' · ' + tracking_info['pickup_contact_phone']"/></t></p>
                                     <p class="small"><i class="fa fa-clock-o text-primary me-2"></i><strong>Timeframe:</strong> <span t-esc="tracking_info.get('pickup_timeframe', 'Not set')"/></p>
                                     <h6 class="text-muted mt-3">Dropoff</h6>
                                     <t t-if="tracking_info.get('dropoff_zone')">
                                         <p class="small text-danger fw-semibold mb-1"><i class="fa fa-map-marker me-1"></i><span t-esc="tracking_info['dropoff_zone']"/></p>
                                     </t>
                                     <p><i class="fa fa-map-marker text-danger me-2"></i><span t-esc="tracking_info['dropoff']"/></p>
+                                    <p class="small" t-if="tracking_info.get('dropoff_contact_name')"><i class="fa fa-user text-muted me-2"></i><span t-esc="tracking_info['dropoff_contact_name']"/><t t-if="tracking_info.get('dropoff_contact_phone')"> <span t-esc="' · ' + tracking_info['dropoff_contact_phone']"/></t></p>
+                                    <p class="small" t-if="tracking_info.get('dropoff_timeframe')"><i class="fa fa-clock-o text-success me-2"></i><strong>Timeframe:</strong> <span t-esc="tracking_info['dropoff_timeframe']"/></p>
                                 </div>
                                 <div class="col-md-6">
                                     <h6 class="text-muted">Vendor</h6>
                                     <p><span t-esc="tracking_info['vendor']"/></p>
+                                    <p class="small mb-1" t-if="tracking_info.get('vendor_email')">
+                                        <i class="fa fa-envelope me-1"></i> <a t-attf-href="mailto:#{tracking_info['vendor_email']}" t-esc="tracking_info['vendor_email']"/>
+                                    </p>
+                                    <p class="small mb-1" t-if="tracking_info.get('vendor_phone')">
+                                        <i class="fa fa-phone me-1"></i> <a t-attf-href="tel:#{tracking_info['vendor_phone']}" t-esc="tracking_info['vendor_phone']"/>
+                                    </p>
+                                    <p class="small mb-1" t-if="tracking_info.get('show_vehicle_code') and tracking_info.get('vehicle_code')">
+                                        <i class="fa fa-truck me-1"></i> Vehicle Code: <span t-esc="tracking_info['vehicle_code']"/>
+                                    </p>
                                     <h6 class="text-muted">Current Status</h6>
                                     <span class="badge bg-info fs-6" t-esc="tracking_info['status']"/>
+                                    <span t-if="tracking_info.get('payment_status') == 'paid'" class="badge bg-success fs-6 ms-1">Paid</span>
+                                    <span t-elif="tracking_info.get('payment_status') == 'pending'" class="badge bg-warning text-dark fs-6 ms-1">Payment Pending</span>
+                                    <span t-elif="tracking_info.get('payment_status') == 'failed'" class="badge bg-danger fs-6 ms-1">Payment Failed</span>
+                                    <span t-elif="tracking_info.get('payment_status') == 'refunded'" class="badge bg-secondary fs-6 ms-1">Refunded</span>
                                     <div class="mt-3">
                                         <p class="small text-muted mb-1"><i class="fa fa-calendar-plus-o me-1"></i> Order Created: <span t-esc="tracking_info.get('create_date', 'N/A')"/></p>
                                         <p class="small text-primary mb-1"><i class="fa fa-calendar-check-o me-1"></i> Scheduled: <span t-esc="tracking_info.get('scheduled_datetime', 'N/A')"/></p>
                                         <p t-if="tracking_info.get('approve_date')" class="small text-success mb-0"><i class="fa fa-check-circle me-1"></i> Approved: <span t-esc="tracking_info['approve_date']"/></p>
                                     </div>
                                 </div>
+                                <t t-if="tracking_info.get('item_description')">
+                                    <hr/>
+                                    <h6 class="text-muted">Item Description</h6>
+                                    <p class="mb-0" t-esc="tracking_info['item_description']"/>
+                                </t>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Payment Recovery (unpaid orders) -->
+                    <div t-if="tracking_info.get('can_pay')" class="alert alert-warning d-flex justify-content-between align-items-center mb-4" role="alert">
+                        <div>
+                            <h6 class="alert-heading mb-1">Payment not completed</h6>
+                            <p class="mb-0 small">This booking is not confirmed until the payment is completed.</p>
+                        </div>
+                        <a t-att-href="tracking_info['pay_url']" class="btn btn-primary ms-3 text-nowrap">
+                            <i class="fa fa-credit-card me-1"></i> Retry Payment
+                        </a>
+                    </div>
+                    <div t-elif="tracking_info.get('payment_in_progress')" class="alert alert-info mb-4" role="alert">
+                        <h6 class="alert-heading mb-1">Payment is being processed</h6>
+                        <p class="mb-0 small">We are confirming your payment. This page will update once it is completed.</p>
                     </div>
 
                     <!-- Verification Codes Card (Conditional Display) -->
@@ -292,7 +326,7 @@
                                                     <span class="badge bg-primary">Current</span>
                                                 </t>
                                             </div>
-                                            <t t-if="item['time'] and item['time'].startswith('Estimated')">
+                                            <t t-if="item['estimated']">
                                                 <small class="text-primary"><i class="fa fa-clock-o me-1"></i><span t-esc="item['time']"/></small>
                                             </t>
                                             <t t-else="">
@@ -319,15 +353,48 @@
                         </div>
                     </div> -->
 
+                    <!-- Price Breakdown -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="fw-bold mb-3">Price Breakdown</h5>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span t-esc="tracking_info['price_breakdown']['truck_name']"/>
+                                <span t-esc="tracking_info['currency_symbol'] + ' ' + ('%.2f' % tracking_info['price_breakdown']['truck_price'])"/>
+                            </div>
+                            <t t-foreach="tracking_info['price_breakdown']['addons']" t-as="addon">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span t-esc="addon['name']"/>
+                                    <span t-esc="tracking_info['currency_symbol'] + ' ' + ('%.2f' % addon['price'])"/>
+                                </div>
+                            </t>
+                            <hr class="my-2"/>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="fw-semibold">Subtotal</span>
+                                <span t-esc="tracking_info['currency_symbol'] + ' ' + ('%.2f' % tracking_info['price_breakdown']['subtotal'])"/>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="fw-semibold">Tax</span>
+                                <span t-esc="tracking_info['currency_symbol'] + ' ' + ('%.2f' % tracking_info['price_breakdown']['tax'])"/>
+                            </div>
+                            <hr class="my-2"/>
+                            <div class="d-flex justify-content-between fw-bold fs-5">
+                                <span>Total</span>
+                                <span class="text-success" t-esc="tracking_info['currency_symbol'] + ' ' + ('%.2f' % tracking_info['price_breakdown']['total'])"/>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Support Links -->
                     <div class="card">
                         <div class="list-group list-group-flush">
-                            <a t-attf-href="/logspace/my/orders/#{order_id}/tickets" class="list-group-item list-group-item-action">
-                                <i class="fa fa-life-ring me-2"></i> Contact Support
-                            </a>
-                            <a t-attf-href="/logspace/my/orders/#{order_id}/refunds" class="list-group-item list-group-item-action">
-                                <i class="fa fa-undo me-2"></i> Request Refund
-                            </a>
+                            <t t-if="not is_public">
+                                <a t-attf-href="/logspace/my/orders/#{order_id}/tickets" class="list-group-item list-group-item-action">
+                                    <i class="fa fa-life-ring me-2"></i> Contact Support
+                                </a>
+                                <a t-attf-href="/logspace/my/orders/#{order_id}/refunds" class="list-group-item list-group-item-action">
+                                    <i class="fa fa-undo me-2"></i> Request Refund
+                                </a>
+                            </t>
                             <t t-if="order and order.logspace_customer_rating">
                                 <div class="list-group-item">
                                     <div class="d-flex align-items-center">
@@ -353,7 +420,7 @@
                                     </div>
                                 </t>
                             </t>
-                            <a t-attf-href="/logspace/my/orders/#{order_id}/notifications" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            <a t-if="not is_public" t-attf-href="/logspace/my/orders/#{order_id}/notifications" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                                 <span><i class="fa fa-bell me-2 text-info"></i> Order Notifications</span>
                                 <t t-if="unread_notif_count">
                                     <span class="badge bg-danger rounded-pill" t-esc="unread_notif_count"/>
@@ -381,6 +448,7 @@
                             </div>
                             <div class="modal-body">
                                 <p>Are you sure you want to cancel order <strong t-esc="order_id"/></p>
+                                <p class="text-muted small">Terms and conditions will be applied. <a href="/terms">View Terms and Conditions</a></p>
                                 <p class="text-muted small">This action cannot be undone.</p>
                             </div>
                             <div class="modal-footer">
@@ -558,7 +626,7 @@
                         <div class="card-body">
                             <div class="alert alert-info mb-4">
                                 <h6 class="alert-heading">Order <span t-esc="tracking_info_id"/></h6>
-                                <p class="mb-0">Refund Amount: <strong t-esc="'$' + str(amount)"/></p>
+                                <p class="mb-0">Refund Amount: <strong t-esc="formatted_amount or (order and order.currency_id.format(amount)) or (currency and currency.format(amount)) or str(amount)"/></p>
                             </div>
 
                             <form method="POST" enctype="multipart/form-data">
@@ -825,7 +893,7 @@
                                     <tr>
                                         <td><a t-attf-href="/logspace/my/orders/#{order_id}/refunds/#{refund['refund_id']}" t-esc="refund['id']"/></td>
                                         <td t-esc="refund['date']"/>
-                                        <td t-esc="'$' + str(int(refund['amount']))"/>
+                                        <td t-esc="refund.get('formatted_amount') or (refund.get('currency_symbol', '') + ' ' + str(int(refund['amount'])) if refund.get('currency_symbol') else str(int(refund['amount'])))"/>
                                         <td t-esc="refund['reason']"/>
                                         <td>
                                             <t t-if="refund['status'] == 'approved'">
@@ -849,7 +917,7 @@
                         <i class="fa fa-undo fa-3x text-muted mb-3"></i>
                         <h5 class="text-muted">No refund requests yet</h5>
                         <a t-attf-href="/logspace/my/orders/#{order_id}/refunds/new" class="btn btn-warning mt-2">
-                            <i class="fa fa-plus me-1"></i> Submit Your First Refund Request
+                            <i class="fa fa-plus me-1"></i> Submit Refund Request
                         </a>
                     </div>
                 </t>
@@ -1013,7 +1081,7 @@
                                 <ul class="list-group list-group-flush small">
                                     <li class="list-group-item d-flex justify-content-between px-0">
                                         <span class="text-muted">Amount:</span>
-                                        <strong t-esc="'$' + str(int(refund['amount']))"/>
+                                        <strong t-esc="refund.get('formatted_amount') or (refund.get('currency_symbol', '') + ' ' + str(int(refund['amount'])) if refund.get('currency_symbol') else str(int(refund['amount'])))"/>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between px-0">
                                         <span class="text-muted">Order:</span>

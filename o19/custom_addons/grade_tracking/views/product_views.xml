@@ -1,0 +1,31 @@
+<odoo>
+
+    <!-- Product Template Form View -->
+    <record id="product_template_form_view_grade_tracking" model="ir.ui.view">
+        <field name="name">product.template.form.grade.tracking</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view" />
+        <field name="arch" type="xml">
+            <field name="show_qty_update_button" position="before">
+                <field name="is_grade_tracked"
+                    invisible="tracking == 'none'"
+                    widget="boolean_toggle"
+                    groups="grade_tracking.group_grade_tracked" />
+            </field>
+        </field>
+    </record>
+
+    <!-- Product Template List View -->
+    <record id="product_template_list_view_grade_tracking" model="ir.ui.view">
+        <field name="name">product.template.list.grade.tracking</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view" />
+        <field name="arch" type="xml">
+            <field name="type" position="after">
+                <field name="is_grade_tracked" optional="hide"
+                    groups="grade_tracking.group_grade_tracked" />
+            </field>
+        </field>
+    </record>
+
+</odoo>

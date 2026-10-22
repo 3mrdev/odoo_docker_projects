@@ -32,6 +32,24 @@ class ResPartner(models.Model):
     )
 
     # =========================================================================
+    # Driver Identification
+    # =========================================================================
+    # Set on a *child contact* of a provider. Flipping it on creates a portal
+    # (not internal) login for that contact so they can advance the delivery
+    # status of the orders they are assigned to from /logspace/driver/orders.
+    is_driver = fields.Boolean(
+        string='Is Driver',
+        default=False,
+        help='Check this on a provider contact to give them a driver portal account'
+    )
+    driver_portal_user_id = fields.Many2one(
+        'res.users',
+        string='Driver Portal User',
+        compute='_compute_driver_portal_user_id',
+        help='Portal login linked to this driver contact'
+    )
+
+    # =========================================================================
     # Provider State Workflow
     # =========================================================================
     state = fields.Selection([
@@ -138,6 +156,23 @@ class ResPartner(models.Model):
         'provider_id',
         string='Vehicle Type Add-ons'
     )
+    # Driver contacts of this provider (child_ids filtered on is_driver)
+    logspace_driver_ids = fields.One2many(
+        'res.partner',
+        'parent_id',
+        string='Drivers',
+        domain=[('is_driver', '=', True)],
+        context={'default_is_driver': True, 'default_type': 'contact'},
+    )
+    # Vehicle types the provider can currently price / offer add-ons for:
+    # the types of his ACTIVE vehicles. Used as the record-limiting domain on
+    # the vehicle-type selectors (price matrix, add-ons, zone setup wizard).
+    logspace_active_vehicle_type_ids = fields.Many2many(
+        'logspace.vehicle.type',
+        compute='_compute_logspace_active_vehicle_type_ids',
+        string='Active Vehicle Types',
+        help='Vehicle types in which this provider has at least one active vehicle.',
+    )
 
     # =========================================================================
     # Computed Fields
@@ -192,6 +227,13 @@ class ResPartner(models.Model):
         for partner in self:
             partner.logspace_vehicle_count = len(partner.logspace_vehicle_ids)
 
+    @api.depends('logspace_vehicle_ids.is_active', 'logspace_vehicle_ids.vehicle_type_id')
+    def _compute_logspace_active_vehicle_type_ids(self):
+        for partner in self:
+            partner.logspace_active_vehicle_type_ids = (
+                partner.logspace_vehicle_ids.filtered('is_active').mapped('vehicle_type_id')
+            )
+
     @api.depends('fleet_summary_ids', 'logspace_price_matrix_ids', 'time_frame_ids',
                  'special_instruction_ids', 'vehicle_type_addon_ids')
     def _compute_logspace_sub_counts(self):
@@ -201,6 +243,29 @@ class ResPartner(models.Model):
             partner.logspace_time_frame_count = len(partner.time_frame_ids)
             partner.logspace_special_instruction_count = len(partner.special_instruction_ids)
             partner.logspace_vtype_addon_count = len(partner.vehicle_type_addon_ids)
+
+    @api.depends('user_ids')
+    def _compute_driver_portal_user_id(self):
+        driver_group = self.env.ref('appness_logspace.group_logspace_driver', raise_if_not_found=False)
+        for partner in self:
+            if not partner.is_driver:
+                partner.driver_portal_user_id = False
+                continue
+            users = partner.sudo().user_ids
+            if driver_group:
+                users = users.filtered(lambda u: driver_group in u.sudo().group_ids)
+            partner.driver_portal_user_id = users[:1].id
+
+    @api.constrains('is_driver', 'is_company', 'parent_id')
+    def _check_is_driver(self):
+        for partner in self.filtered(lambda p: p.is_driver):
+            if partner.is_company:
+                raise UserError(_('A driver must be an individual contact, not a company.'))
+            if not partner.parent_id.is_provider:
+                raise UserError(_(
+                    'A driver must be a contact of a Logspace provider. '
+                    'Set this on a contact inside the provider record.'
+                ))
 
     def _compute_logspace_rating(self):
         """Compute provider rating from sale.order logspace_customer_rating field.
@@ -225,6 +290,52 @@ class ResPartner(models.Model):
     # =========================================================================
     # Workflow Actions
     # =========================================================================
+    _PROVIDER_ADMIN_ONLY_FIELDS = {
+        'state', 'is_provider', 'is_approved_provider', 'approval_date',
+        'platform_fee_percentage', 'rejection_reason', 'suspension_reason',
+        'tax_id', 'cr_number', 'years_experience',
+    }
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        partners = super().create(vals_list)
+        # A contact created directly with is_driver=True (e.g. from the provider's
+        # Drivers tab) gets its portal login right away.
+        partners.filtered(lambda p: p.is_driver and p.email)._create_driver_portal_user()
+        return partners
+
+    def write(self, vals):
+        """Guard: provider-group users may not alter provider business/admin
+        fields (workflow state, fee, IDs). They can still edit their own
+        contact info (name, email, phone, ...) and related records.
+        Admins and system users (sudo) bypass this guard.
+        """
+        protected = self._PROVIDER_ADMIN_ONLY_FIELDS & set(vals)
+        if protected and any(p.is_provider for p in self):
+            is_admin = (
+                self.env.su
+                or self.env.user._is_superuser()
+                or self.env.user.has_group('base.group_system')
+            )
+            if not is_admin and self.env.user.has_group('appness_logspace.group_logspace_provider'):
+                raise UserError(_(
+                    'You are not allowed to modify the following fields: %s.',
+                    ', '.join(
+                        self._fields[f].get_description(self.env)['string']
+                        for f in sorted(protected)
+                    ),
+                ))
+        # Contacts flagged as drivers just now, so we know which ones to provision.
+        # The provider guard above does not fire on child contacts (is_provider is
+        # False for them), so this write is not blocked.
+        newly_drivers = self.browse()
+        if vals.get('is_driver'):
+            newly_drivers = self.filtered(lambda p: not p.is_driver)
+        res = super().write(vals)
+        if newly_drivers:
+            newly_drivers.filtered(lambda p: p.email)._create_driver_portal_user()
+        return res
+
     def action_submit_provider(self):
         """Submit provider for approval"""
         for partner in self.filtered(lambda p: p.is_provider):
@@ -274,7 +385,9 @@ class ResPartner(models.Model):
         for partner in self.filtered(lambda p: p.is_provider):
             if partner.state != 'rejected':
                 raise UserError(_('Only rejected providers can be resubmitted.'))
-            partner.state = 'draft'
+            # sudo: providers may trigger resubmit of their own record, but
+            # 'state' itself is an admin-only field (see write guard).
+            partner.sudo().state = 'draft'
 
     def action_suspend_provider(self, reason=None):
         """Suspend approved provider — warns if orders are in progress"""
@@ -359,8 +472,7 @@ class ResPartner(models.Model):
                 'state': 'approved',
                 'is_approved_provider': True,
             })
-            # Recompute partner_share after user reactivation/creation
-            self.env.add_todo(partner._fields['partner_share'], partner)
+            # partner_share auto-recomputes from user_ids; flush pending computes
         self.env.flush_all()
 
     def action_create_provider_user(self):
@@ -383,8 +495,8 @@ class ResPartner(models.Model):
                 # Link existing user and ensure provider group
                 group_logspace_provider = self.env.ref('appness_logspace.group_logspace_provider')
                 vals = {'partner_id': partner.id}
-                if group_logspace_provider not in existing_user.groups_id:
-                    vals['groups_id'] = existing_user.groups_id | group_logspace_provider
+                if group_logspace_provider not in existing_user.group_ids:
+                    vals['group_ids'] = [Command.link(group_logspace_provider.id)]
                 existing_user.write(vals)
                 if not existing_user.active:
                     existing_user.active = True
@@ -400,11 +512,68 @@ class ResPartner(models.Model):
                 })
                 user.action_reset_password()
 
-            # Recompute partner_share: now that an internal user is linked,
-            # partner_share must become False so the global "res.partner company"
-            # record rule allows write access on this partner.
-            self.env.add_todo(partner._fields['partner_share'], partner)
+            # partner_share auto-recomputes from user_ids; flush pending computes
         self.env.flush_all()
+
+    def _create_driver_portal_user(self):
+        """Create (or link) a PORTAL user for each driver contact.
+
+        Mirrors action_create_provider_user but grants base.group_portal +
+        group_logspace_driver instead of base.group_user. The distinction is
+        load-bearing: res.users._compute_share marks any user holding
+        base.group_user as internal, which would drop the driver into the
+        backend rather than the website portal.
+        """
+        driver_group = self.env.ref('appness_logspace.group_logspace_driver', raise_if_not_found=False)
+        portal_group = self.env.ref('base.group_portal')
+        if not driver_group:
+            return self.env['res.users']
+
+        created = self.env['res.users']
+        for partner in self.filtered(lambda p: p.is_driver and p.email):
+            existing_user = self.env['res.users'].with_context(active_test=False).sudo().search([
+                ('partner_id', '=', partner.id),
+            ], limit=1)
+
+            if existing_user:
+                existing_user = existing_user.sudo()
+                vals = {}
+                missing = [g for g in (portal_group, driver_group) if g not in existing_user.group_ids]
+                if missing:
+                    vals['group_ids'] = [Command.link(g.id) for g in missing]
+                if not existing_user.active:
+                    vals['active'] = True
+                if vals:
+                    existing_user.write(vals)
+                # An existing internal user must not be silently converted: skip it
+                # and let the provider resolve the conflict deliberately.
+                if existing_user._is_internal():
+                    continue
+                existing_user.action_reset_password()
+                created |= existing_user
+            else:
+                user = self.env['res.users'].with_context(no_reset_password=True).sudo().create({
+                    'name': partner.name,
+                    'login': partner.email,
+                    'email': partner.email,
+                    'partner_id': partner.id,
+                    'group_ids': [Command.set([portal_group.id, driver_group.id])],
+                })
+                user.action_reset_password()
+                created |= user
+
+        self.env.flush_all()
+        return created
+
+    def action_create_driver_portal_user(self):
+        """Button: provision / re-invite the driver portal account."""
+        for partner in self:
+            if not partner.is_driver:
+                raise UserError(_('Only contacts flagged as drivers can get a driver portal account.'))
+            if not partner.email:
+                raise UserError(_('The driver must have an email to create a portal account.'))
+        self._create_driver_portal_user()
+        return True
 
     # =========================================================================
     # Smart Button Actions

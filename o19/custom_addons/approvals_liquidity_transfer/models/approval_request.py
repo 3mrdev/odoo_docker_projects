@@ -160,11 +160,13 @@ class ApprovalRequest(models.Model):
         if not liquidity_transfer_account:
             raise UserError(_("No transfer account configured in company settings."))
 
-        # Build memo text (reference + payment note if provided)
-        memo_parts = [self.name]
+        # Build memo text: prefix OUT/ or IN/ applied to the approval sequence
+        # name only, then the payment note appended after (if provided).
+        memo_out = f'OUT/{self.name}'
+        memo_in = f'IN/{self.name}'
         if self.payment_note:
-            memo_parts.append(self.payment_note)
-        memo = ' - '.join(memo_parts)
+            memo_out += f' - {self.payment_note}'
+            memo_in += f' - {self.payment_note}'
 
         # Determine payment method lines (use selected or default)
         payment_method_source = self.payment_method_line_source_id or self.env['account.payment.method.line'].search([
@@ -192,20 +194,10 @@ class ApprovalRequest(models.Model):
             'journal_id': self.journal_source.id,
             'payment_method_line_id': payment_method_source.id if payment_method_source else False,
             'amount': self.amount,
-            'date': fields.Date.today(),
-            'memo': memo,
+            'date': self.date,
+            'memo': memo_out,
             'destination_account_id': liquidity_transfer_account.id,
         })
-
-        # Force outstanding account and generate journal entry if needed
-        # (outstanding_account_id is computed/stored, must be set after create)
-        if outstanding_account_source:
-            payment_source.outstanding_account_id = outstanding_account_source.id
-            # Explicitly generate journal entry since write() won't catch computed field change
-            payment_source._generate_journal_entry()
-            payment_source.move_id.approval_request_id = self.id
-            payment_source.move_id.action_post()
-            payment_source.state = 'paid' if outstanding_account_source.account_type == 'asset_cash' else 'in_process'
 
         # Create destination payment (inbound to destination journal)
         payment_destination = self.env['account.payment'].create({
@@ -215,30 +207,33 @@ class ApprovalRequest(models.Model):
             'payment_method_line_id': payment_method_destination.id if payment_method_destination else False,
             'amount': self.amount,
             'date': self.date,
-            'memo': memo,
+            'memo': memo_in,
             'destination_account_id': liquidity_transfer_account.id,
         })
 
-        # Force outstanding account and generate journal entry if needed
-        if outstanding_account_destination:
-            payment_destination.outstanding_account_id = outstanding_account_destination.id
-            # Explicitly generate journal entry since write() won't catch computed field change
-            payment_destination._generate_journal_entry()
-            payment_destination.move_id.approval_request_id = self.id
-            payment_destination.move_id.action_post()
-            payment_destination.state = 'paid' if outstanding_account_destination.account_type == 'asset_cash' else 'in_process'
+        # Force outstanding account when the payment method has none and the
+        # user asked to force journal entries (must be set before posting).
+        for payment, outstanding_account in (
+            (payment_source, outstanding_account_source),
+            (payment_destination, outstanding_account_destination),
+        ):
+            if outstanding_account:
+                payment.outstanding_account_id = outstanding_account.id
 
-        # For payments where we didn't force outstanding account, use standard action_post
-        payments_to_post = (payment_source if not outstanding_account_source else payment_source.browse([])) + \
-                          (payment_destination if not outstanding_account_destination else payment_destination.browse([]))
-        if payments_to_post:
-            payments_to_post.action_post()
+        # Post through the standard flow: Odoo 19 generates and posts the
+        # journal entry itself on payment.action_post(), assigns the entry
+        # name from the journal sequence safely, and sets the state to
+        # 'paid' when the outstanding account is a liquidity (cash/bank)
+        # account, 'in_process' otherwise.
+        payments = payment_source + payment_destination
+        payments.action_post()
+        payments.move_id.approval_request_id = self.id
 
         return {
             'type': 'ir.actions.act_window',
             'name': _('Payments'),
             'res_model': 'account.payment',
-            'domain': [('id', 'in', (payments_to_post + payment_source + payment_destination).ids)],
+            'domain': [('id', 'in', payments.ids)],
             'view_mode': 'list,form',
             'target': 'current',
         }

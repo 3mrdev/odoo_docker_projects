@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="approval_grade_sample_request_view_form_inherit" model="ir.ui.view">
+        <field name="name">approval.grade.sample.request.view.form.inherit</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals.approval_request_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Smart button: open the lot/serial of the sample -->
+            <xpath expr="//button[@name='action_get_attachment_view']" position="after">
+                <button name="action_open_grade_lots" type="object"
+                    groups="grade_sample_approval.group_grade_lab_user"
+                    class="oe_stat_button" icon="fa-cubes"
+                    invisible="approval_type != 'grade_sample' or grade_lot_count == 0">
+                    <field name="grade_lot_count" string="Lot/Serial" widget="statinfo"/>
+                </button>
+            </xpath>
+            <!-- Apply Grade: approved requests only; never changes the status -->
+            <xpath expr="//button[@name='action_confirm']" position="after">
+                <button name="action_apply_grade" type="object"
+                    groups="grade_sample_approval.group_grade_lab_manager"
+                    string="Apply Grade" class="btn-primary"
+                    invisible="approval_type != 'grade_sample' or request_status != 'approved' or grade_applied"/>
+            </xpath>
+            <!-- Grade Sample page -->
+            <xpath expr="//page[@name='approvers']" position="before">
+                <page string="Grade Sample" name="grade_sample" invisible="approval_type != 'grade_sample'"
+                    groups="grade_sample_approval.group_grade_lab_user">
+                    <group>
+                        <group string="Sample">
+                            <field name="average_grade" readonly="grade_applied"/>
+                            <field name="grade_applied" readonly="1" options="{'no_open': True, 'no_create': True}"/>
+                        </group>
+                        <group string="Lot/Serial">
+                            <field name="lot_id" readonly="request_status != 'new'"/>
+                            <field name="mining_location_id" readonly="1"/>
+                            <field name="mining_level_id" readonly="1"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="approval_grade_sample_request_view_list_inherit" model="ir.ui.view">
+        <field name="name">approval.grade.sample.request.view.list.inherit</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals.approval_request_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="category_id" position="after">
+                <field name="average_grade" optional="show" invisible="approval_type != 'grade_sample'"/>
+                <field name="grade_applied" optional="hide" invisible="approval_type != 'grade_sample'"/>
+            </field>
+        </field>
+    </record>
+</odoo>

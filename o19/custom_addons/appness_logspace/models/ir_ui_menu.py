@@ -8,14 +8,26 @@ class IrUiMenu(models.Model):
 
     def filter_logspace_menus(self, menu_ids):
         """ Return the ids of the menu items visible to the user. """
-        menu_objs = self.browse(menu_ids).exists()
-        mp_menu_list = [
-            self.env.ref('appness_logspace.logspace_action_website').id, 
-            self.env.ref('appness_logspace.menu_logspace_root').id,
-            self.env.ref('appness_logspace.menu_logspace_configuration').id,
-        ]
+        # menu_ids is a SET, so browse() yields records in hash order (id %
+        # table size), not ascending id. This whitelist is built in a single
+        # forward pass - a menu is kept only if its parent was already listed -
+        # so a level-3 menu survives only when its parent happens to be visited
+        # first. Sorting by id makes that deterministic: every parent is
+        # declared before its children in logspace_menus.xml and therefore has
+        # a lower id.
+        menu_objs = self.browse(menu_ids).exists().sorted('id')
+        # Whitelist seed: the Logspace backend root. Never seed
+        # logspace_action_website here - it is an ir.actions.act_url id, not a
+        # menu id; comparing it against parent_id would collide with an
+        # unrelated menu id. logspace_website_menu (the root menuitem that
+        # uses it) is deliberately NOT whitelisted either: providers reach the
+        # site from the frontend, and the menu hides for everyone holding the
+        # core Website menu (see hide_logspace_menus_to_user).
+        root_id = self.env.ref('appness_logspace.menu_logspace_root').id
+        mp_menu_list = [root_id] if root_id in menu_ids else []
         for menu in menu_objs:
-            if menu.parent_id.id in mp_menu_list:
+            if (menu.parent_id.id in mp_menu_list
+                    and (not menu.group_ids or menu.group_ids & self.env.user.all_group_ids)):
                 mp_menu_list.append(menu.id)
         return mp_menu_list
 
@@ -25,9 +37,13 @@ class IrUiMenu(models.Model):
         core_website_menu_id = self.env.ref(
             'website.menu_website_configuration').id
         if core_website_menu_id in menu_data:
-            menu_ids.extend((
-                self.env.ref('appness_logspace.logspace_action_website').id,
-            ))
+            # Hide the Logspace Website root menu (a menuitem) for users who
+            # also have the core Website menu. The historical code removed
+            # logspace_action_website - an act_url id, never a menu id - so
+            # the dedup was a no-op (or hid an unrelated colliding menu id).
+            menu_ids.append(
+                self.env.ref('appness_logspace.logspace_website_menu').id,
+            )
         else:
             menu_ids = []
 

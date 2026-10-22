@@ -116,6 +116,18 @@
         <field name="perm_unlink">False</field>
     </record>
 
+    <!-- Drivers read the timeline of the orders they are assigned to -->
+    <record id="rule_logspace_order_timeline_driver" model="ir.rule">
+        <field name="name">Order Timeline - Driver Assigned Orders</field>
+        <field name="model_id" ref="model_logspace_order_timeline"/>
+        <field name="domain_force">[('order_id.logspace_driver_id', '=', user.partner_id.id)]</field>
+        <field name="groups" eval="[(4, ref('group_logspace_driver'))]"/>
+        <field name="perm_read">True</field>
+        <field name="perm_write">False</field>
+        <field name="perm_create">False</field>
+        <field name="perm_unlink">False</field>
+    </record>
+
     <!-- ============================================================================
          RES.PARTNER (Provider) Rules
          ============================================================================ -->
@@ -179,6 +191,23 @@
         <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
         <field name="perm_read">True</field>
         <field name="perm_write">False</field>
+        <field name="perm_create">False</field>
+        <field name="perm_unlink">False</field>
+    </record>
+
+    <!-- Drivers see only the Logspace orders they are assigned to.
+         Scoped to group_logspace_driver (not base.group_portal) so this does not
+         widen what a customer portal user can see. -->
+    <record id="rule_sale_order_logspace_driver" model="ir.rule">
+        <field name="name">Logspace Orders - Driver Assigned</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="domain_force">[
+            ('is_logspace_order', '=', True),
+            ('logspace_driver_id', '=', user.partner_id.id)
+        ]</field>
+        <field name="groups" eval="[(4, ref('group_logspace_driver'))]"/>
+        <field name="perm_read">True</field>
+        <field name="perm_write">True</field>
         <field name="perm_create">False</field>
         <field name="perm_unlink">False</field>
     </record>
@@ -687,6 +716,64 @@
         <field name="name">Logspace Payment Transaction - All</field>
         <field name="model_id" ref="payment.model_payment_transaction"/>
         <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_logspace_admin'))]"/>
+        <field name="perm_read">True</field>
+        <field name="perm_write">False</field>
+        <field name="perm_create">False</field>
+        <field name="perm_unlink">False</field>
+    </record>
+
+    <!-- ============================================================================
+         ACCOUNT.MOVE - the provider commission vendor bills.
+         These rules are what make the read-only ACLs in ir.model.access.csv safe:
+         core has NO base.group_user rule on account.move, so without them a provider
+         would see every vendor bill in the company. Group rules OR together, and
+         group_logspace_admin implies group_logspace_provider, so the admin rule
+         correctly widens the provider's own-bill rule back out to all vendor bills.
+         ============================================================================ -->
+    <record id="rule_account_move_logspace_provider" model="ir.rule">
+        <field name="name">Logspace Provider Bills - Provider Own</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="domain_force">[
+            ('move_type', '=', 'in_invoice'),
+            ('partner_id', '=', user.partner_id.id)
+        ]</field>
+        <field name="groups" eval="[(4, ref('group_logspace_provider'))]"/>
+        <field name="perm_read">True</field>
+        <field name="perm_write">False</field>
+        <field name="perm_create">False</field>
+        <field name="perm_unlink">False</field>
+    </record>
+
+    <record id="rule_account_move_logspace_admin" model="ir.rule">
+        <field name="name">Logspace Provider Bills - Admin</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="domain_force">[('move_type', '=', 'in_invoice')]</field>
+        <field name="groups" eval="[(4, ref('group_logspace_admin'))]"/>
+        <field name="perm_read">True</field>
+        <field name="perm_write">False</field>
+        <field name="perm_create">False</field>
+        <field name="perm_unlink">False</field>
+    </record>
+
+    <record id="rule_account_move_line_logspace_provider" model="ir.rule">
+        <field name="name">Logspace Provider Bill Lines - Provider Own</field>
+        <field name="model_id" ref="account.model_account_move_line"/>
+        <field name="domain_force">[
+            ('move_id.move_type', '=', 'in_invoice'),
+            ('move_id.partner_id', '=', user.partner_id.id)
+        ]</field>
+        <field name="groups" eval="[(4, ref('group_logspace_provider'))]"/>
+        <field name="perm_read">True</field>
+        <field name="perm_write">False</field>
+        <field name="perm_create">False</field>
+        <field name="perm_unlink">False</field>
+    </record>
+
+    <record id="rule_account_move_line_logspace_admin" model="ir.rule">
+        <field name="name">Logspace Provider Bill Lines - Admin</field>
+        <field name="model_id" ref="account.model_account_move_line"/>
+        <field name="domain_force">[('move_id.move_type', '=', 'in_invoice')]</field>
         <field name="groups" eval="[(4, ref('group_logspace_admin'))]"/>
         <field name="perm_read">True</field>
         <field name="perm_write">False</field>

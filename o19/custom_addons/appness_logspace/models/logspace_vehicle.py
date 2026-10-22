@@ -48,15 +48,19 @@ class LogspaceVehicle(models.Model):
             if rec.name == 'New':
                 rec.name = self.env['ir.sequence'].next_by_code('logspace.vehicle') or '/'
 
-    def is_available_on_date(self, date_str):
-        """Check if this vehicle is available on the given date.
+    # States at which a paid booking releases the vehicle for new bookings
+    BOOKED_RELEASE_STATES = ('grace_period', 'order_completed')
 
-        Availability depends on:
-        1. Provider's working calendar (resource.calendar) - date must be a working day
-        2. No existing paid booking for this vehicle on the same date or within 24h after
+    def is_available_on_date(self, date_str=None):
+        """Check if this vehicle is bookable.
+
+        A vehicle with a paid, non-cancelled booking is hidden from search
+        results until that order reaches the grace period (or is completed or
+        cancelled). Additionally, when a date is given, it must fall on the
+        provider's working calendar.
 
         Args:
-            date_str: Date string in 'YYYY-MM-DD' format
+            date_str: Optional date string in 'YYYY-MM-DD' format
 
         Returns:
             bool: True if vehicle is available, False otherwise
@@ -64,14 +68,29 @@ class LogspaceVehicle(models.Model):
         if not self.ensure_one():
             return False
 
-        from datetime import datetime, timedelta
+        from datetime import datetime
+
+        # 1. A paid booking keeps the vehicle out of search results until the
+        #    order reaches the grace period / is completed / is cancelled.
+        active_booking = self.env['sale.order'].sudo().search([
+            ('is_logspace_order', '=', True),
+            ('logspace_vehicle_id', '=', self.id),
+            ('payment_status', '=', 'paid'),
+            ('logspace_state', 'not in', list(self.BOOKED_RELEASE_STATES) + ['cancelled']),
+        ], limit=1)
+
+        if active_booking:
+            return False
+
+        if not date_str:
+            return True
 
         try:
             target_date = datetime.strptime(date_str, '%Y-%m-%d').date()
         except (ValueError, TypeError):
             return False
 
-        # 1. Check provider working calendar (weekday only, not time)
+        # 2. Check provider working calendar (weekday only, not time)
         provider = self.provider_id
         if provider and provider.calendar_id:
             weekday = target_date.weekday()  # 0=Mon, 6=Sun
@@ -93,23 +112,6 @@ class LogspaceVehicle(models.Model):
             if not working_day:
                 return False
 
-        # 2. Check for existing paid bookings on same date or within 24h buffer
-        #    A vehicle becomes available 24 hours after the last booked date
-        booking_date = datetime.combine(target_date, datetime.min.time())
-        buffer_end = booking_date + timedelta(days=1)  # 24h after start of booking date
-
-        existing_booking = self.env['sale.order'].sudo().search([
-            ('is_logspace_order', '=', True),
-            ('logspace_vehicle_id', '=', self.id),
-            ('payment_status', '=', 'paid'),
-            ('logspace_state', '!=', 'cancelled'),
-            ('scheduled_date', '>=', booking_date),
-            ('scheduled_date', '<', buffer_end),
-        ], limit=1, order='scheduled_date asc')
-
-        if existing_booking:
-            return False
-
         return True
 
     @api.model
@@ -126,7 +128,8 @@ class LogspaceVehicle(models.Model):
             vehicle_type_id: Vehicle type ID
             zone_from_id: Pickup zone ID (vehicle must be in this zone hierarchy)
             zone_to_id: Dropoff zone ID (kept for API compatibility, not used for vehicle matching)
-            date_str: Optional date string 'YYYY-MM-DD'. If not provided, no date filtering.
+            date_str: Optional date string 'YYYY-MM-DD'. If not provided, only the
+                booked-vehicle rule applies (no working-calendar filtering).
 
         Returns:
             recordset of available logspace.vehicle records
@@ -147,9 +150,6 @@ class LogspaceVehicle(models.Model):
 
         vehicles = self.sudo().search(vehicle_domain)
 
-        if date_str:
-            vehicles = vehicles.filtered(lambda v: v.is_available_on_date(date_str))
-
-        return vehicles
+        return vehicles.filtered(lambda v: v.is_available_on_date(date_str))
 
 

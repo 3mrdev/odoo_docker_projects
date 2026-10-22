@@ -10,7 +10,7 @@
             <field name="icon">fa-truck</field>
             <field name="default_capacity_kg">3000</field>
             <field name="default_capacity_cbm">15.0</field>
-            <field name="category">medium</field>
+            <field name="category_id" ref="vehicle_category_medium"/>
             <field name="description">Standard flatbed truck for general cargo</field>
             <field name="sequence">10</field>
         </record>
@@ -21,7 +21,7 @@
             <field name="icon">fa-truck</field>
             <field name="default_capacity_kg">5000</field>
             <field name="default_capacity_cbm">25.0</field>
-            <field name="category">heavy</field>
+            <field name="category_id" ref="vehicle_category_heavy"/>
             <field name="description">Heavy flatbed truck for large cargo</field>
             <field name="sequence">20</field>
         </record>
@@ -32,7 +32,7 @@
             <field name="icon">fa-truck-moving</field>
             <field name="default_capacity_kg">3000</field>
             <field name="default_capacity_cbm">18.0</field>
-            <field name="category">medium</field>
+            <field name="category_id" ref="vehicle_category_medium"/>
             <field name="description">Covered truck for weather-sensitive cargo</field>
             <field name="sequence">30</field>
         </record>
@@ -43,7 +43,7 @@
             <field name="icon">fa-shuttle-van</field>
             <field name="default_capacity_kg">1000</field>
             <field name="default_capacity_cbm">6.0</field>
-            <field name="category">light</field>
+            <field name="category_id" ref="vehicle_category_light"/>
             <field name="description">Small van for light deliveries</field>
             <field name="sequence">40</field>
         </record>
@@ -54,7 +54,7 @@
             <field name="icon">fa-snowflake</field>
             <field name="default_capacity_kg">2500</field>
             <field name="default_capacity_cbm">14.0</field>
-            <field name="category">special</field>
+            <field name="category_id" ref="vehicle_category_special"/>
             <field name="description">Temperature-controlled transport for perishables</field>
             <field name="sequence">50</field>
         </record>
@@ -65,7 +65,7 @@
             <field name="icon">fa-bus</field>
             <field name="default_capacity_kg">1500</field>
             <field name="default_capacity_cbm">8.0</field>
-            <field name="category">light</field>
+            <field name="category_id" ref="vehicle_category_light"/>
             <field name="description">Compact cargo bus for urban deliveries</field>
             <field name="sequence">60</field>
         </record>

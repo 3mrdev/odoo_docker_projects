@@ -1,6 +1,6 @@
 {
     'name': 'Logspace',
-    'version': '2.0',
+    'version': '19.0.2.6.0',
     'category': 'Website',
     'summary': 'Logspace customer and provider logistics platform',
     'description': """
@@ -18,6 +18,7 @@
         'web',
         'auth_signup',
         'sale',
+        'account',      # For provider vendor bills and financial integration
         'mail',
         'hr',           # For job positions (contact roles)
         'helpdesk',     # For support tickets
@@ -31,19 +32,23 @@
         'data/website_menu.xml',
         # Master Data (updatable)
         'data/data_products.xml',
+        # Categories must load BEFORE the types that reference them.
+        'data/data_vehicle_categories.xml',
         'data/data_vehicle_types.xml',
         'data/data_addons.xml',
         # Time slots master data
         'data/data_time_slots.xml',
         # Oman geo-zoning data
-        'data/data_oman_zones.xml',
+        # 'data/data_oman_zones.xml',
+        # Same-zone (intra-governorate) distance estimates; needs the zones
+        # 'data/data_zone_distances.xml',
         # Module Configuration
         'data/logspace_config_data.xml',
         # Demo Data (noupdate)
-        'demo_data/demo_providers.xml',
-        'demo_data/demo_timeframes.xml',
-        'demo_data/demo_vehicles.xml',
-        'demo_data/demo_price_matrix.xml',
+        # 'demo_data/demo_providers.xml',
+        # 'demo_data/demo_timeframes.xml',
+        # 'demo_data/demo_vehicles.xml',
+        # 'demo_data/demo_price_matrix.xml',
         'security/logspace_groups.xml',
         'security/ir.model.access.csv',
         'security/logspace_security.xml',
@@ -51,13 +56,19 @@
         'views/logspace_search_templates.xml',
         'views/logspace_vendor_templates.xml',
         'views/logspace_booking_templates.xml',
-        'views/logspace_auth_templates.xml',
         'views/logspace_portal_templates.xml',
+        # Overrides of CORE portal templates (the only ones in this module).
+        'views/logspace_portal_nav_templates.xml',
+        # Driver portal - separate file on purpose: the customer track page
+        # renders the pickup/dropoff verification codes in plain text and a
+        # driver must never see either one.
+        'views/logspace_driver_templates.xml',
         'views/logspace_provider_templates.xml',
         # Backend views - Master data first
         # Backend views - Master data
         'views/backend/logspace_zone_views.xml',
         'views/backend/logspace_zone_distance_views.xml',
+        'views/backend/logspace_vehicle_category_views.xml',
         'views/backend/logspace_vehicle_type_views.xml',
         'views/backend/logspace_addon_views.xml',
         'views/backend/logspace_vehicle_views.xml',
@@ -65,6 +76,7 @@
 
         # Wizard (must load before res_partner_views which references its action)
         'wizard/logspace_zone_setup_wizard_views.xml',
+        'views/logspace_verification_wizard_views.xml',
 
         # Provider management (using res.partner)
         'views/backend/logspace_price_matrix_views.xml',
@@ -87,6 +99,13 @@
         # 'views/backend/logspace_ticket_views.xml',
         'views/backend/logspace_notification_views.xml',
 
+        # Provider commission vendor bills (read-only, no journal references -
+        # a provider cannot read account.journal)
+        'views/backend/account_move_views.xml',
+
+        # Settings (res.config.settings - policies)
+        'views/backend/res_config_settings_views.xml',
+
         # Menus
         'views/backend/logspace_menus.xml',
     ],
@@ -95,6 +114,7 @@
             'appness_logspace/static/lib/intl-tel-input/css/intlTelInput.css',
             'appness_logspace/static/src/scss/logspace.scss',
             'appness_logspace/static/src/js/logspace.js',
+            'appness_logspace/static/src/js/logspace_driver.js',
             'appness_logspace/static/lib/intl-tel-input/js/intlTelInput.js',
             'appness_logspace/static/src/js/logspace_phone_widget.js',
         ],

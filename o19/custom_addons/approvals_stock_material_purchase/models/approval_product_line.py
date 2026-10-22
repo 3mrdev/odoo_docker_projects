@@ -31,7 +31,7 @@ class ApprovalProductLine(models.Model):
             if category.approval_type == 'stock_material_purchase':
                 # Combined type: must be BOTH storable AND purchasable
                 return [
-                    ('type', '=', 'product'),       # Storable (for stock transfer)
+                    ('is_storable', '=', True),      # Storable (for stock transfer)
                     ('purchase_ok', '=', True),      # Purchasable (for PO)
                 ]
 
@@ -41,7 +41,7 @@ class ApprovalProductLine(models.Model):
                 self.env.context['default_category_id']
             )
             if category.approval_type == 'stock_material':
-                return [('type', '=', 'product')]
+                return [('is_storable', '=', True)]
 
         # For purchase type (from approvals_purchase context handling)
         if 'default_category_id' in self.env.context:

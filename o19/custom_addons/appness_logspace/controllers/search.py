@@ -4,7 +4,8 @@ import json
 import logging
 from urllib.parse import urlencode
 
-from odoo import http
+from odoo import http, _
+from odoo.exceptions import ValidationError
 from odoo.http import request
 from markupsafe import Markup
 
@@ -16,7 +17,7 @@ _logger = logging.getLogger(__name__)
 class LogspaceSearch(LogspaceController):
     """Search and vehicle info routes."""
 
-    @http.route(['/logspace', '/logspace/search'], type='http', auth='public', website=True, csrf=False)
+    @http.route(['/logspace', '/logspace/search'], type='http', auth='public', website=True, csrf=True)
     def logspace_search(self, **kwargs):
         """Screen 1 & 2: Search page with real results from price matrix"""
         # Get all zones and vehicle types for the search form
@@ -26,6 +27,7 @@ class LogspaceSearch(LogspaceController):
             ('child_ids', '=', False)
         ])
         vehicle_types = request.env['logspace.vehicle.type'].sudo().search([('active', '=', True)])
+        vehicle_categories = request.env['logspace.vehicle.category'].sudo().search([('active', '=', True)])
 
         # Construct full addresses JSON for frontend autocomplete
         zones_data = []
@@ -38,12 +40,23 @@ class LogspaceSearch(LogspaceController):
             })
         zones_json = Markup(json.dumps(zones_data))
 
+        # Full (unfiltered) type list for the cascading Vehicle Category filter:
+        # the widget rebuilds the <option>s client-side, so it needs every type
+        # and its category, not just the ones the server rendered.
+        vehicle_types_json = Markup(json.dumps([{
+            'id': vt.id,
+            'name': vt.name,
+            'category_id': vt.category_id.id or False,
+        } for vt in vehicle_types]))
+
         # Initialize context — no results by default; user must search
         ctx = {
             'datetime': datetime,
             'zones': zones,
             'zones_json': zones_json,
             'vehicle_types': vehicle_types,
+            'vehicle_categories': vehicle_categories,
+            'vehicle_types_json': vehicle_types_json,
             'show_results': False,
             'results': [],
             'search_params': {},
@@ -51,13 +64,23 @@ class LogspaceSearch(LogspaceController):
         }
 
         # Always populate search_params from kwargs so the form retains values
-        zone_from_id = int(kwargs.get('zone_from_id', 0))
-        zone_to_id = int(kwargs.get('zone_to_id', 0))
-        vehicle_type_id = int(kwargs.get('vehicle_type_id') or 0)
+        try:
+            zone_from_id = int(kwargs.get('zone_from_id', 0) or 0)
+            zone_to_id = int(kwargs.get('zone_to_id', 0) or 0)
+            vehicle_type_id = int(kwargs.get('vehicle_type_id') or 0)
+            vehicle_category_id = int(kwargs.get('vehicle_category_id') or 0)
+        except (TypeError, ValueError):
+            zone_from_id = zone_to_id = vehicle_type_id = vehicle_category_id = 0
         pickup_date = kwargs.get('pickup_date', '')
-        pickup_timeframe = kwargs.get('pickup_timeframe', '')
 
-        # Dropoff timeframe is auto-calculated, not user-selected
+        # Narrow the rendered type dropdown to the chosen category so the page is
+        # still correct with JavaScript disabled; the widget does the same live.
+        if vehicle_category_id:
+            ctx['vehicle_types'] = vehicle_types.filtered(
+                lambda vt: vt.category_id.id == vehicle_category_id
+            )
+
+        # Dropoff timeframe is auto-calculated on the booking details page
         dropoff_timeframe = kwargs.get('dropoff_timeframe', '')
 
         # Address texts from kwargs or session
@@ -91,10 +114,10 @@ class LogspaceSearch(LogspaceController):
             'zone_to_id': zone_to_id,
             'pickup_address_text': pickup_address_text,
             'dropoff_address_text': dropoff_address_text,
+            'vehicle_category_id': vehicle_category_id,
             'vehicle_type_id': vehicle_type_id,
             'pickup_date': pickup_date,
-            'pickup_timeframe': pickup_timeframe,
-            'dropoff_timeframe': '',  # auto-calculated below
+            'dropoff_timeframe': '',  # auto-calculated on the booking details page
         }
 
         # Check if this is a filtered search (user clicked search button)
@@ -111,8 +134,17 @@ class LogspaceSearch(LogspaceController):
                 if hasattr(request.session, 'should_save'):
                     request.session.should_save = True
 
+            # The pickup date is mandatory: without it availability cannot be
+            # guaranteed (the date picker enforces this in the browser; this
+            # guard covers non-JS / crafted submissions). Old GET links without
+            # a date keep working - only the explicit search submit is blocked.
+            if request.httprequest.method == 'POST' and not pickup_date:
+                ctx['search_error'] = _(
+                    'Please choose a pickup date before searching.'
+                )
+
             # Only search if zone params provided (vehicle_type_id is optional - empty means "all")
-            if zone_from_id and zone_to_id:
+            if zone_from_id and zone_to_id and not ctx.get('search_error'):
                 results = []
 
                 # Read config: show all vehicles per provider or just 1
@@ -140,39 +172,17 @@ class LogspaceSearch(LogspaceController):
                 ]
                 if vehicle_type_id:
                     matrix_domain.append(('vehicle_type_id', '=', vehicle_type_id))
+                elif vehicle_category_id:
+                    # No specific type chosen, but a category was: still narrow the
+                    # results, otherwise picking a category and searching returns
+                    # everything and the filter looks broken.
+                    matrix_domain.append(('vehicle_type_id.category_id', '=', vehicle_category_id))
 
                 price_matrices = request.env['logspace.price.matrix'].sudo().search(matrix_domain)
 
                 # Dedup: track (provider, vehicle_type) to avoid duplicate results
                 # when multiple price matrices cover the same route+type combination
                 seen_combos = set()
-
-                # Pre-fetch distance record and config (same for all matrices)
-                distance_record = request.env['logspace.zone.distance'].sudo().search([
-                    ('zone_from_id', '=', zone_from_id),
-                    ('zone_to_id', '=', zone_to_id),
-                ], limit=1)
-                extra_delay = int(request.env['ir.config_parameter'].sudo().get_param(
-                    'appness_logspace.dropoff_delay_minutes', 30
-                )) if distance_record else 0
-
-                # Pre-calculate dropoff timeframe (same for all results)
-                auto_dropoff_timeframe = ''
-                if distance_record:
-                    total_minutes = distance_record.estimated_minutes + extra_delay
-                    SLOT_MAP = {
-                        'morning': 6,    # 6:00 start
-                        'afternoon': 12, # 12:00 start
-                        'evening': 18,   # 18:00 start
-                    }
-                    pickup_start_hour = SLOT_MAP.get(pickup_timeframe, 6)
-                    dropoff_start_hour = pickup_start_hour + (total_minutes / 60)
-                    if dropoff_start_hour < 12:
-                        auto_dropoff_timeframe = 'morning'
-                    elif dropoff_start_hour < 18:
-                        auto_dropoff_timeframe = 'afternoon'
-                    else:
-                        auto_dropoff_timeframe = 'evening'
 
                 for matrix in price_matrices:
                     provider = matrix.provider_id
@@ -205,14 +215,6 @@ class LogspaceSearch(LogspaceController):
                         lambda t: t.vehicle_type_id.id == current_vehicle_type_id
                     )
 
-                    # Check if requested pickup timeframe slot is available
-                    timeframe_available = True
-                    if pickup_timeframe and timeframes:
-                        available_codes = set()
-                        for tf in timeframes:
-                            available_codes.update(tf.time_slot_ids.mapped('code'))
-                        timeframe_available = pickup_timeframe in available_codes
-
                     # Step 4: Get special instructions for this provider + vehicle type
                     special_instruction = request.env['logspace.provider.special.instruction'].sudo().search([
                         ('partner_id', '=', provider.id),
@@ -237,10 +239,12 @@ class LogspaceSearch(LogspaceController):
                             'provider_name': provider.name,
                             'vehicle_type_id': current_vehicle_type_id,
                             'vehicle_type_name': vehicle_type.name,
-                            'vehicle_type_image': vehicle_type.image_url or '/appness_logspace/static/src/img/truck_default.jpg',
+                            'vehicle_type_image': vehicle_type.image_url or '/appness_logspace/static/src/img/truck_flatbed.jpg',
                             'vehicle_id': vehicle.id,
                             'vehicle_name': vehicle.name,
                             'price': matrix.customer_price,
+                            'formatted_price': (matrix.currency_id or request.env.company.currency_id).format(matrix.customer_price),
+                            'currency_symbol': (matrix.currency_id or request.env.company.currency_id).symbol or '',
                             'provider_price': matrix.provider_price,
                             'platform_fee': matrix.platform_fee,
                             'rating': provider.logspace_rating or 0.0,
@@ -250,19 +254,14 @@ class LogspaceSearch(LogspaceController):
                             'zone_from_id': zone_from_id,
                             'zone_to_id': zone_to_id,
                             'timeframes': timeframes,
-                            'timeframe_available': timeframe_available,
-                            'requested_timeframe': pickup_timeframe,
-                            'auto_dropoff_timeframe': auto_dropoff_timeframe,
                             'fleet_count': fleet_count,
                             'special_instructions': special_instruction.instructions if special_instruction else '',
                             'special_instruction_id': special_instruction.id if special_instruction else False,
                             # For booking link - point to vehicle info page, which then leads to booking
-                            'vehicle_info_url': '/logspace/vendor/vehicle/%d?provider_id=%d&vehicle_type_id=%d&zone_from_id=%d&zone_to_id=%d&price=%s&matrix_id=%d%s%s%s' % (
+                            'vehicle_info_url': '/logspace/vendor/vehicle/%d?provider_id=%d&vehicle_type_id=%d&zone_from_id=%d&zone_to_id=%d&matrix_id=%d%s' % (
                                 vehicle.id,
-                                provider.id, current_vehicle_type_id, zone_from_id, zone_to_id, matrix.customer_price, matrix.id,
+                                provider.id, current_vehicle_type_id, zone_from_id, zone_to_id, matrix.id,
                                 '&pickup_date=%s' % pickup_date if pickup_date else '',
-                                '&pickup_timeframe=%s' % pickup_timeframe if pickup_timeframe else '',
-                                '&dropoff_timeframe=%s' % auto_dropoff_timeframe if auto_dropoff_timeframe else '',
                             ),
                         })
 
@@ -300,8 +299,8 @@ class LogspaceSearch(LogspaceController):
         # Build pagination URLs preserving search params
         search_params = ctx.get('search_params', {})
         base_params = {}
-        for k in ['zone_from_id', 'zone_to_id', 'vehicle_type_id', 'pickup_date',
-                  'pickup_timeframe', 'pickup_address_text', 'dropoff_address_text']:
+        for k in ['zone_from_id', 'zone_to_id', 'vehicle_category_id', 'vehicle_type_id',
+                  'pickup_date', 'pickup_address_text', 'dropoff_address_text']:
             v = search_params.get(k, '')
             if v:
                 base_params[k] = v
@@ -322,7 +321,7 @@ class LogspaceSearch(LogspaceController):
             'page_urls': page_urls,
         })
 
-        return request.render('appness_logspace.logspace_search_page', ctx)
+        return request.render('appness_logspace.logspace_search_page', self._get_page_context(ctx))
 
     # Screen 3b: Vehicle Info Page (real data) - between search and booking
     @http.route(['/logspace/vendor/vehicle/<int:vehicle_id>'], type='http', auth='public', website=True)
@@ -337,18 +336,30 @@ class LogspaceSearch(LogspaceController):
         if not vehicle.exists():
             return request.redirect('/logspace/search')
 
-        provider = vehicle.provider_id
-        vehicle_type = vehicle.vehicle_type_id
+        try:
+            selection = request.env['logspace.price.matrix'].sudo()._validate_booking_selection(
+                matrix_id=int(kwargs.get('matrix_id', 0) or 0),
+                provider_id=int(kwargs.get('provider_id', 0) or 0),
+                vehicle_type_id=int(kwargs.get('vehicle_type_id', 0) or 0),
+                zone_from_id=int(kwargs.get('zone_from_id', 0) or 0),
+                zone_to_id=int(kwargs.get('zone_to_id', 0) or 0),
+                vehicle_id=vehicle_id,
+                pickup_date=kwargs.get('pickup_date'),
+            )
+        except (TypeError, ValueError, ValidationError):
+            return request.redirect('/logspace/search')
+
+        provider = selection['provider']
+        vehicle_type = selection['vehicle_type']
         zone = vehicle.zone_id
 
         # Build booking URL with all params passed through from search
         booking_params = [
-            ('provider_id', kwargs.get('provider_id', provider.id)),
-            ('vehicle_type_id', kwargs.get('vehicle_type_id', vehicle_type.id)),
-            ('zone_from_id', kwargs.get('zone_from_id')),
-            ('zone_to_id', kwargs.get('zone_to_id')),
-            ('price', kwargs.get('price')),
-            ('matrix_id', kwargs.get('matrix_id')),
+            ('provider_id', provider.id),
+            ('vehicle_type_id', vehicle_type.id),
+            ('zone_from_id', selection['zone_from'].id),
+            ('zone_to_id', selection['zone_to'].id),
+            ('matrix_id', selection['matrix'].id),
             ('vehicle_id', vehicle_id),
             ('pickup_date', kwargs.get('pickup_date')),
             ('pickup_timeframe', kwargs.get('pickup_timeframe')),
@@ -377,10 +388,21 @@ class LogspaceSearch(LogspaceController):
         required_documents = vehicle_type.required_document_ids.filtered(lambda d: d.is_active)
 
         # Get provider-specific addons for this vehicle type
-        provider_addons = request.env['logspace.provider.vehicle.type.addon'].sudo().search([
+        provider_addon_model = request.env[
+            'logspace.provider.vehicle.type.addon'
+        ].sudo()
+        provider_domain = [
             ('provider_id', '=', provider.id),
             ('vehicle_type_id', '=', vehicle_type.id),
             ('is_active', '=', True),
+        ]
+        provider_addons_configured = bool(
+            provider_addon_model.search_count(provider_domain, limit=1)
+        )
+        provider_addons = provider_addon_model.search(provider_domain + [
+            ('addon_id.active', '=', True),
+            ('currency_id', '=', selection['currency'].id),
+            ('provider_price', '>=', 0),
         ])
         addons_list = []
         for pa in provider_addons:
@@ -391,8 +413,12 @@ class LogspaceSearch(LogspaceController):
                 'price': pa.provider_price,
                 'icon': pa.addon_id.icon or 'fa-plus',
             })
-        if not addons_list:
-            master_addons = request.env['logspace.addon'].sudo().search([('active', '=', True)])
+        if not addons_list and not provider_addons_configured:
+            master_addons = request.env['logspace.addon'].sudo().search([
+                ('active', '=', True),
+                ('currency_id', '=', selection['currency'].id),
+                ('price', '>=', 0),
+            ])
             for addon in master_addons:
                 addons_list.append({
                     'id': addon.id,
@@ -416,9 +442,8 @@ class LogspaceSearch(LogspaceController):
                                       'dropoff_timeframe': kwargs.get('dropoff_timeframe', ''),
                                   } if kwargs.get('dropoff_timeframe') else {},
                                   'booking_url': booking_url,
-                                  'price': kwargs.get('price'),
+                                  'price': selection['price'],
                                   'pickup_date': kwargs.get('pickup_date'),
                                   'zone_from_id': kwargs.get('zone_from_id'),
                                   'zone_to_id': kwargs.get('zone_to_id'),
                               }))
-

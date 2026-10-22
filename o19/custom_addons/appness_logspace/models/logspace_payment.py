@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
-import logging
-
-_logger = logging.getLogger(__name__)
+from odoo import Command, fields, models
 
 
 class PaymentTransaction(models.Model):
@@ -12,33 +9,29 @@ class PaymentTransaction(models.Model):
     logspace_order_id = fields.Many2one(
         'sale.order', string='Logspace Order',
         domain=[('is_logspace_order', '=', True)],
+        copy=False,
+        index=True,
         help='Linked logspace booking order',
     )
 
     def _post_process(self):
-        """Override to handle logspace order confirmation on payment."""
-        super()._post_process()
+        """Keep legacy links compatible, then defer confirmation entirely to Odoo sale."""
+        legacy_transactions = self.sudo().filtered(
+            lambda tx: tx.logspace_order_id and tx.logspace_order_id not in tx.sale_order_ids
+        )
+        for transaction in legacy_transactions:
+            transaction.write({
+                'sale_order_ids': [Command.link(transaction.logspace_order_id.id)],
+            })
 
-        for tx in self:
-            if not tx.logspace_order_id:
-                continue
+        result = super()._post_process()
 
-            order = tx.logspace_order_id
-
-            if tx.state == 'pending':
-                # Wire transfer: order stays in draft, mark payment as pending
-                if order.logspace_state == 'order_received':
-                    order.write({'payment_status': 'pending'})
-                _logger.info("Logspace payment pending for order %s", order.name)
-
-            elif tx.state in ('authorized', 'done'):
-                # Payment confirmed: update order payment status
-                if order.payment_status != 'paid':
-                    order.write({'payment_status': 'paid'})
-                    _logger.info("Logspace payment confirmed for order %s", order.name)
-
-            elif tx.state == 'cancel':
-                order.write({'payment_status': 'failed'})
-
-            elif tx.state == 'error':
-                order.write({'payment_status': 'failed'})
+        transactions_sudo = self.sudo()
+        logspace_orders = transactions_sudo.mapped('sale_order_ids').filtered(
+            'is_logspace_order'
+        )
+        logspace_orders |= transactions_sudo.mapped('logspace_order_id').filtered(
+            'is_logspace_order'
+        )
+        logspace_orders.sudo()._sync_logspace_payment_fields()
+        return result

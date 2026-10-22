@@ -34,11 +34,10 @@ class LogspaceProviderTimeFrame(models.Model):
             tf.display_name = ', '.join(slots.mapped('name')) if slots else ''
             tf.name = tf.display_name
 
-    _sql_constraints = [
-        ('unique_provider_vtype',
-         'unique(partner_id, vehicle_type_id)',
-         'This vehicle type is already configured for this provider!')
-    ]
+    _unique_provider_vtype = models.Constraint(
+        'unique(partner_id, vehicle_type_id)',
+        'This vehicle type is already configured for this provider!',
+    )
 
     @api.model_create_multi
     def create(self, vals_list):

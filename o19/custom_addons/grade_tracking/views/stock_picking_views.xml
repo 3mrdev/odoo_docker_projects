@@ -1,0 +1,35 @@
+<odoo>
+
+    <!-- Stock Picking Form View - move-level grade columns -->
+    <record id="stock_picking_form_grade_tracking" model="ir.ui.view">
+        <field name="name">stock.picking.form.grade.tracking</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_ids']/list/field[@name='product_uom_qty']"
+                position="before">
+                <field name="is_grade_tracked" column_invisible="True"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="mining_location_id"
+                    invisible="not is_grade_tracked or parent.picking_type_code not in ['incoming', 'outgoing']"
+                    column_invisible="parent.picking_type_code not in ['incoming', 'outgoing']"
+                    optional="show"
+                    readonly="(state != 'draft' and not additional) or move_lines_count &gt; 0 or origin"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="mining_level_id"
+                    invisible="not is_grade_tracked or parent.picking_type_code not in ['incoming', 'outgoing']"
+                    column_invisible="parent.picking_type_code not in ['incoming', 'outgoing']"
+                    optional="show"
+                    readonly="(state != 'draft' and not additional) or move_lines_count &gt; 0 or origin"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="average_grade"
+                    invisible="not is_grade_tracked or parent.picking_type_code not in ['incoming', 'outgoing']"
+                    column_invisible="parent.picking_type_code not in ['incoming', 'outgoing']"
+                    optional="show"
+                    readonly="(state != 'draft' and not additional) or move_lines_count &gt; 0 or origin"
+                    groups="grade_tracking.group_grade_tracked" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,53 @@
+<odoo>
+
+    <record id="grade_mining_level_view_list" model="ir.ui.view">
+        <field name="name">grade.mining.level.view.list</field>
+        <field name="model">grade.mining.level</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sequence" widget="handle" />
+                <field name="project_id" />
+                <field name="name" />
+            </list>
+        </field>
+    </record>
+
+    <record id="grade_mining_level_view_form" model="ir.ui.view">
+        <field name="name">grade.mining.level.view.form</field>
+        <field name="model">grade.mining.level</field>
+        <field name="arch" type="xml">
+            <form string="Mining Level">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="project_id" />
+                            <field name="name" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_grade_mining_level" model="ir.actions.act_window">
+        <field name="name">Mining Levels</field>
+        <field name="res_model">grade.mining.level</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first mining level
+            </p>
+            <p>
+                Mining levels belong to a mining location (project) and their
+                display name shows the location followed by the level name.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_grade_mining_level"
+        name="Mining Levels"
+        action="action_grade_mining_level"
+        parent="menu_grade_tracking_config"
+        sequence="20" />
+
+</odoo>

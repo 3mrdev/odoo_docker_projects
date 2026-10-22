@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_maintenance_request_category_manager,maintenance.request.category manager,model_maintenance_request_category,maintenance.group_equipment_manager,1,1,1,1
+access_maintenance_request_category_user,maintenance.request.category user,model_maintenance_request_category,base.group_user,1,0,0,0
+access_account_account_equipment_manager,maintenance.equipment expense account reader,account.model_account_account,maintenance.group_equipment_manager,1,0,0,0
+access_maintenance_spare_parts_wizard_user,maintenance.spare.parts.wizard user,model_maintenance_spare_parts_wizard,fb_delgo_maintenance.group_maintenance_spare_parts,1,1,1,1

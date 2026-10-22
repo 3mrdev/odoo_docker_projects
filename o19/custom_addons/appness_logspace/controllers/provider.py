@@ -2,18 +2,30 @@
 import base64
 import logging
 
-from odoo import http
+from odoo import _, http
 from odoo.http import request
 
 from .common import LogspaceController
 
 _logger = logging.getLogger(__name__)
 
+# Registration document slots: (form field, human label). The slot key is the
+# deterministic identity of a provider's registration upload - the human label
+# is display text only.
+_DOC_TYPES = [
+    ('vehicles_doc', 'Vehicles Documents'),
+    ('company_doc', 'Company Registration'),
+    ('bank_statement', 'Bank Statement'),
+]
+# Server-side upload guards; the template's `accept=` promises pdf/jpeg/png.
+MAX_DOCUMENT_BYTES = 20 * 1024 * 1024
+ALLOWED_DOCUMENT_MIMETYPES = {'application/pdf', 'image/jpeg', 'image/png'}
+
 
 class LogspaceProvider(LogspaceController):
     """Provider registration and management routes."""
 
-    @http.route(['/logspace/provider/register', '/logspace/provider/register/<int:step>'], type='http', auth='public', website=True, csrf=False)
+    @http.route(['/logspace/provider/register', '/logspace/provider/register/<int:step>'], type='http', auth='public', website=True, csrf=True)
     def logspace_provider_register(self, step=1, **kwargs):
         """Screens 18-22: Provider registration stepper - creates draft partner at step 1"""
         pass
@@ -44,7 +56,7 @@ class LogspaceProvider(LogspaceController):
                 if existing_partner and (not draft_provider or existing_partner.id != draft_provider.id):
                     # Email already exists - re-render step 1 with error
                     return request.render('appness_logspace.logspace_provider_step1', {
-                        'email_error': 'This email is already registered. Please use a different email address or contact support if you already have a provider account.',
+                        'email_error': _('This email is already registered. Please use a different email address or contact support if you already have a provider account.'),
                         'provider_data': {'business': {k: kwargs.get(k, '') for k in ['email', 'phone', 'business_name', 'tax_id', 'cr_number', 'years_experience', 'address']}},
                     })
 
@@ -205,11 +217,29 @@ class LogspaceProvider(LogspaceController):
             elif step == 4:
                 # Save documents directly to draft provider
                 draft_provider_id = provider_data.get('draft_provider_id')
-                doc_types = [
-                    ('vehicles_doc', 'Vehicles Documents'),
-                    ('company_doc', 'Company Registration'),
-                    ('bank_statement', 'Bank Statement'),
-                ]
+                doc_types = _DOC_TYPES
+
+                # Serialize concurrent uploads for the same draft provider: the
+                # second POST waits here for the first to commit, then sees its
+                # attachments and takes the replace path instead of duplicating
+                # them (two transactions no longer run unlink+create blind).
+                if draft_provider_id:
+                    request.env.cr.execute(
+                        'SELECT pg_advisory_xact_lock(%s)', (int(draft_provider_id),))
+
+                # Validate sizes and mimetypes before touching the database
+                oversized_docs, invalid_docs = [], []
+                for field_name, doc_name in doc_types:
+                    uploaded_file = kwargs.get(field_name)
+                    if not (uploaded_file and hasattr(uploaded_file, 'read')
+                            and hasattr(uploaded_file, 'filename') and uploaded_file.filename):
+                        continue
+                    data = uploaded_file.read()
+                    uploaded_file.seek(0)
+                    if len(data) > MAX_DOCUMENT_BYTES:
+                        oversized_docs.append(doc_name)
+                    elif (uploaded_file.mimetype or '') not in ALLOWED_DOCUMENT_MIMETYPES:
+                        invalid_docs.append(doc_name)
 
                 # Check that all required documents are uploaded
                 missing_docs = []
@@ -218,18 +248,17 @@ class LogspaceProvider(LogspaceController):
                     has_new_file = (uploaded_file and hasattr(uploaded_file, 'read')
                                     and hasattr(uploaded_file, 'filename') and uploaded_file.filename)
                     if not has_new_file:
-                        # Check if already uploaded in DB
+                        # Check if already uploaded in DB (slot-keyed identity)
                         already_uploaded = False
                         if draft_provider_id:
-                            already_uploaded = request.env['ir.attachment'].sudo().search_count([
-                                ('res_model', '=', 'res.partner'),
-                                ('res_id', '=', int(draft_provider_id)),
-                                ('name', 'like', doc_name),
+                            already_uploaded = request.env['documents.document'].sudo().search_count([
+                                ('partner_id', '=', int(draft_provider_id)),
+                                ('logspace_doc_slot', '=', field_name),
                             ]) > 0
                         if not already_uploaded:
                             missing_docs.append(doc_name)
 
-                if missing_docs:
+                if missing_docs or oversized_docs or invalid_docs:
                     ctx = {
                         'current_step': step,
                         'total_steps': 5,
@@ -239,6 +268,9 @@ class LogspaceProvider(LogspaceController):
                         'provider_data': provider_data,
                         'document_error': True,
                         'missing_documents': missing_docs,
+                        'oversized_documents': oversized_docs,
+                        'invalid_documents': invalid_docs,
+                        'from_review': provider_data.get('from_review', False),
                     }
                     template = 'appness_logspace.logspace_provider_step4'
                     return request.render(template, self._get_page_context(ctx))
@@ -249,13 +281,15 @@ class LogspaceProvider(LogspaceController):
                         for field_name, doc_name in doc_types:
                             uploaded_file = kwargs.get(field_name)
                             if uploaded_file and hasattr(uploaded_file, 'read') and hasattr(uploaded_file, 'filename'):
-                                # Remove existing attachment of same type
-                                existing = request.env['ir.attachment'].sudo().search([
-                                    ('res_model', '=', 'res.partner'),
-                                    ('res_id', '=', draft_provider.id),
-                                    ('name', 'like', doc_name),
-                                ])
-                                existing.unlink()
+                                # Replace by slot, not by name match: unlinking the
+                                # previous document for this slot also removes its
+                                # access rows and the underlying attachment.
+                                old_doc = request.env['documents.document'].sudo().search([
+                                    ('partner_id', '=', draft_provider.id),
+                                    ('logspace_doc_slot', '=', field_name),
+                                ], limit=1)
+                                if old_doc:
+                                    old_doc.unlink()
 
                                 attachment_vals = {
                                     'name': '%s - %s' % (doc_name, uploaded_file.filename),
@@ -271,6 +305,7 @@ class LogspaceProvider(LogspaceController):
                                 document = request.env['documents.document'].sudo().create({
                                     'attachment_id': attachment.id,
                                     'partner_id': draft_provider.id,
+                                    'logspace_doc_slot': field_name,
                                     'access_internal': 'view',
                                 })
                                 # Grant provider view access via documents.access
@@ -341,22 +376,16 @@ class LogspaceProvider(LogspaceController):
                     for fs in draft_provider.fleet_summary_ids
                 ]
             elif step == 4:
-                # Load document filenames from DB attachments
+                # Load document filenames from the slot-keyed documents
                 if draft_provider_id:
-                    doc_type_map = {
-                        'Vehicles Documents': 'vehicles_doc',
-                        'Company Registration': 'company_doc',
-                        'Bank Statement': 'bank_statement',
-                    }
                     documents_from_db = {}
-                    for doc_name, field_name in doc_type_map.items():
-                        att = request.env['ir.attachment'].sudo().search([
-                            ('res_model', '=', 'res.partner'),
-                            ('res_id', '=', int(draft_provider_id)),
-                            ('name', 'like', doc_name),
+                    for field_name, doc_name in _DOC_TYPES:
+                        doc = request.env['documents.document'].sudo().search([
+                            ('partner_id', '=', int(draft_provider_id)),
+                            ('logspace_doc_slot', '=', field_name),
                         ], limit=1)
-                        if att:
-                            filename = att.name.replace(doc_name + ' - ', '')
+                        if doc and doc.attachment_id:
+                            filename = doc.attachment_id.name.replace(doc_name + ' - ', '')
                             documents_from_db[field_name] = {'filename': filename}
                     if documents_from_db:
                         # Merge with session documents (new uploads take priority)
@@ -401,25 +430,22 @@ class LogspaceProvider(LogspaceController):
                     })
                 ctx['fleet'] = fleet
 
-                # Documents from attachments
-                attachments = request.env['ir.attachment'].sudo().search([
-                    ('res_model', '=', 'res.partner'),
-                    ('res_id', '=', draft_provider.id),
-                ])
+                # Documents from the slot-keyed documents
                 documents = {}
-                for att in attachments:
-                    if 'Vehicles Documents' in att.name:
-                        documents['vehicles_doc'] = {'filename': att.name.replace('Vehicles Documents - ', '')}
-                    elif 'Company Registration' in att.name:
-                        documents['company_doc'] = {'filename': att.name.replace('Company Registration - ', '')}
-                    elif 'Bank Statement' in att.name:
-                        documents['bank_statement'] = {'filename': att.name.replace('Bank Statement - ', '')}
+                for field_name, doc_name in _DOC_TYPES:
+                    doc = request.env['documents.document'].sudo().search([
+                        ('partner_id', '=', draft_provider.id),
+                        ('logspace_doc_slot', '=', field_name),
+                    ], limit=1)
+                    if doc and doc.attachment_id:
+                        filename = doc.attachment_id.name.replace(doc_name + ' - ', '')
+                        documents[field_name] = {'filename': filename}
                 ctx['documents'] = documents
 
         return request.render(template, self._get_page_context(ctx))
 
     # Success page after provider submission - REAL DATA
-    @http.route(['/logspace/provider/done'], type='http', auth='public', website=True, csrf=False)
+    @http.route(['/logspace/provider/done'], type='http', auth='public', website=True, csrf=True)
     def logspace_provider_done(self, **kwargs):
         """Provider registration complete - Update draft provider to pending"""
         # Get session data
@@ -437,21 +463,30 @@ class LogspaceProvider(LogspaceController):
 
         # Check if already submitted
         if request.httprequest.method == 'POST' or kwargs.get('submit') == 'true':
-            # Update provider state to pending - data already saved during steps
-            provider.write({
-                'state': 'pending',
-            })
+            # Serialize racing double clicks: the transaction-level lock makes
+            # the second POST wait for the first to commit, then see the state
+            # it wrote instead of re-running the submission.
+            request.env.cr.execute('SELECT pg_advisory_xact_lock(%s)', (draft_provider_id,))
 
-            # Send application received email
-            try:
-                template = request.env.ref('appness_logspace.email_template_provider_application_received')
-                if template:
-                    template.send_mail(provider.id, force_send=True)
-            except Exception:
-                pass  # Don't fail if email sending fails
-
-            # Clear session
+            # Clear the session BEFORE writing/emailing: a replayed POST finds
+            # no session and bounces to step 1 instead of re-emailing.
             request.session.pop('logspace_provider_registration', None)
+
+            # Submit only from draft: never re-email, and never flip an
+            # already pending/approved/rejected provider back to pending.
+            if provider.state == 'draft':
+                provider.write({
+                    'state': 'pending',
+                })
+
+                # Send application received email
+                try:
+                    template = request.env.ref('appness_logspace.email_template_provider_application_received')
+                    if template:
+                        template.send_mail(provider.id, force_send=True)
+                except Exception:
+                    pass  # Don't fail if email sending fails
+
             return request.render('appness_logspace.logspace_provider_done',
                                   self._get_page_context({
                                       'status': 'pending_approval',
@@ -472,5 +507,5 @@ class LogspaceProvider(LogspaceController):
         """Download vehicles as Excel file"""
         #return empty response
         return request.make_response(
-            'Excel file for provider ' + str(provider_id) + ' is not implemented yet.',
+            _('Excel file for provider %s is not implemented yet.', provider_id),
         )

@@ -151,7 +151,7 @@
     
     <template id="portal_snippet_input" name="Snippet Input">
         <div t-attf-id="#{'swms_intl_tel_widget' if field['validation_type'] == 'phone' else ''}" t-attf-class="mb-3 #{error.get(field['name']) and 'o_has_error' or ''} #{'swms_v_' + str(field['validation_type'])} col-xl-4" t-if="field['type'] in ['text','tel','number','date','datetime-local']">
-            <label class="col-form-label" t-attf-for="{{field['name']}}" t-esc="field['label']"></label>
+            <label class="col-form-label" t-attf-for="{{field['name']}}" t-esc="field['label']"></label> <span t-if="field['required']" style="color:red;">*</span>
             <p t-if="field['tip']" t-esc="field['tip']" style="font-size: 12px; color: #6c757d;"></p>
             <input t-if="field['required']" required="1" t-attf-type="{{field['type']}}" t-attf-name="{{field['name']}}" t-att-value="field['value']" t-attf-class="form-control required-form-control #{'intl_tel_widget' if field['validation_type'] == 'phone' else ''} #{error.get(field['name']) and 'is-invalid' or ''}" t-att-disabled="'1' if field['disabled'] else None"/>
             <input t-else="" t-attf-type="{{field['type']}}" t-attf-name="{{field['name']}}" t-att-value="field['value']" t-attf-class="form-control #{'intl_tel_widget' if field['validation_type'] == 'phone' else ''} #{error.get(field['name']) and 'is-invalid' or ''}" t-att-disabled="'1' if field['disabled'] else None"/>
@@ -162,27 +162,28 @@
         </div>
         
         <div t-attf-class="mb-3 #{error.get(field['name']) and 'o_has_error' or ''} col-xl-12" t-if="field['type'] in ['textarea']">
-            <label class="col-form-label" t-attf-for="{{field['name']}}" t-esc="field['label']"></label>
+            <label class="col-form-label" t-attf-for="{{field['name']}}" t-esc="field['label']"></label> <span t-if="field['required']" style="color:red;">*</span>
             <p t-if="field['tip']" t-esc="field['tip']" style="font-size: 12px; color: #6c757d;"></p>
             <textarea t-if="field['required']" required="1" rows="4" t-attf-name="{{field['name']}}" t-esc="field['value']" t-attf-class="form-control required-form-control border-0 #{error.get(field['name']) and 'is-invalid' or ''}" placeholder="Write a message..." style="resize:none;" t-att-disabled="'1' if field['disabled'] else None"/>
             <textarea t-else="" rows="4" t-attf-name="{{field['name']}}" t-esc="field['value']" t-attf-class="form-control required-form-control border-0 #{error.get(field['name']) and 'is-invalid' or ''}" placeholder="Write a message..." style="resize:none;" t-att-disabled="'1' if field['disabled'] else None"/>  
         </div>
         <div t-attf-class="mb-3 md-3 #{error.get(field['name']) and 'o_has_error' or ''} col-xl-4 form-check" t-if="field['type'] in ['checkbox']">
+            <label class="form-check-label" t-attf-for="{{field['name']}}" t-esc="field['label']"></label> <span t-if="field['required']" style="color:red;">*</span>
+            <p t-if="field['tip']" t-esc="field['tip']" style="font-size: 12px; color: #6c757d;"></p>
+            <br/>
             <t t-if="field['value']">
-                <input class="form-check-input" type="checkbox" id="warn" t-attf-name="{{field['name']}}" value="1" checked="1"/>
+                <input class="form-check-input" type="checkbox" id="warn" t-attf-name="{{field['name']}}" value="1" checked="1" style="margin-right: 24px;"  t-att-disabled="'1' if field['disabled'] else None"/>
             </t>
             <t t-else="">
-                <input class="form-check-input" type="checkbox" id="warn" t-attf-name="{{field['name']}}" value="0"/>
+                <input class="form-check-input" type="checkbox" id="warn" t-attf-name="{{field['name']}}" value="0" style="margin-right: 24px;"  t-att-disabled="'1' if field['disabled'] else None"/>
             </t>
-            <label class="form-check-label" t-attf-for="{{field['name']}}" t-esc="field['label']"></label>
-            <p t-if="field['tip']" t-esc="field['tip']" style="font-size: 12px; color: #6c757d;"></p>
         </div>
     </template>
 
     <template id="portal_snippet_select" name="Snippet Select">
         <!-- label-optional -->
         <div t-attf-class="mb-3 #{error.get(field['name']) and 'o_has_error' or ''} col-xl-4" t-if="field['type'] in ['select']">
-            <label class="col-form-label " t-attf-for="{{field['name']}}" t-esc="field['label']"></label>
+            <label class="col-form-label " t-attf-for="{{field['name']}}" t-esc="field['label']"></label> <span t-if="field['required']" style="color:red;">*</span>
             <p t-if="field['tip']" t-esc="field['tip']" style="font-size: 12px; color: #6c757d;"></p>
             <select t-if="field['required']" required="1" t-attf-name="{{field['name']}}" t-attf-class="form-select required-form-control #{error.get(field['name']) and 'is-invalid' or ''}" t-att-disabled="'1' if field['disabled'] else None">
                 <option value="">select...</option>
@@ -212,7 +213,7 @@
                         class="img-fluid" t-att-alt="'%s'%(field['name'])"/>
                 </div>
                 <div class="col-9" style="font-size: 10px;">
-                    <label class="col-form-label" t-attf-for="{{field['name']}}" t-esc="field['label']"></label>
+                    <label class="col-form-label" t-attf-for="{{field['name']}}" t-esc="field['label']"></label> <span t-if="field['required']" style="color:red;">*</span>
                     <p t-if="field['tip']" t-esc="field['tip']" style="font-size: 12px; color: #6c757d;"></p>
                     <input t-if="field['required']" required="1" t-attf-type="{{field['type']}}" t-attf-name="{{field['name']}}" accept="image/*" t-attf-class="form-control required-form-control #{error.get(field['name']) and 'is-invalid' or ''}" t-att-disabled="'1' if field['disabled'] else None"/>
                     <input t-else="" t-attf-type="{{field['type']}}" t-attf-name="{{field['name']}}" accept="image/*" t-attf-class="form-control #{error.get(field['name']) and 'is-invalid' or ''}" t-att-disabled="'1' if field['disabled'] else None"/>
@@ -224,7 +225,7 @@
     <template id="portal_snippet_m2o" name="Snippet m2o">
         <!-- label-optional -->
         <div t-attf-class="mb-3 #{error.get(field['name']) and 'o_has_error' or ''} #{'swms_v_' + str(field['validation_type'])} col-xl-4" t-if="field['type'] in ['many2one']">
-            <label class="col-form-label " t-attf-for="{{field['name']}}" t-esc="field['label']"></label>
+            <label class="col-form-label " t-attf-for="{{field['name']}}" t-esc="field['label']"></label> <span t-if="field['required']" style="color:red;">*</span>
             <p t-if="field['tip']" t-esc="field['tip']" style="font-size: 12px; color: #6c757d;"></p>
             <select t-if="field['required']" required="1" t-attf-name="{{field['name']+'_m2o_'+field['type']}}" t-attf-class="form-select required-form-control #{error.get(field['name']) and 'is-invalid' or ''}" t-att-disabled="'1' if field['disabled'] else None">
                 <option value="">select...</option>
@@ -248,7 +249,7 @@
 
     <template id="portal_snippet_x2m" name="Snippet x2m">
         <div id="wrap" t-attf-class="mb-3 #{error.get(field['name']) and 'o_has_error' or ''} col-xl-12" t-if="field['type'] in ['one2many']">
-            <label class="col-form-label" t-attf-for="{{field['name']}}"><h3 t-esc="field['label']"/></label>
+            <label class="col-form-label" t-attf-for="{{field['name']}}"><h3 t-esc="field['label']"/></label> <span t-if="field['required']" style="color:red;">*</span>
             <p t-if="field['tip']" t-esc="field['tip']" style="font-size: 12px; color: #6c757d;"></p>
             <table class="table o2m_records" style="display: block; overflow-x: auto; white-space: nowrap;">
                 <thead>
@@ -257,7 +258,7 @@
                         </td>
                         <t t-foreach="field['x2m_fields']" t-as="x2m_field">
                             <td t-if="x2m_field['type'] in ['text','tel','date','datetime-local','number','file','select','many2one']">
-                                <label class="col-form-label" t-attf-for="{{x2m_field['name']}}" t-esc="x2m_field['label']"></label>
+                                <label class="col-form-label" t-attf-for="{{x2m_field['name']}}" t-esc="x2m_field['label']"></label> <span t-if="x2m_field['required']" style="color:red;">*</span>
                             </td>
                         </t>
                         <td>
@@ -406,7 +407,7 @@
                     <t t-set="document_label" t-value="document_label +' ('+str(document['member_name'])+')'"/>
                 </t>
                 
-                <label class="col-form-label" t-attf-for="{{document['name']}}" t-esc="document_label"></label>
+                <label class="col-form-label" t-attf-for="{{document['name']}}" t-esc="document_label"></label> <span t-if="document['is_mandatory']" style="color:red;">*</span>
                 <p t-if="document['description']" t-esc="document['description']" style="font-size: 12px; color: #6c757d;"></p>
                 <input t-if="document['is_mandatory']" required="1" type="file" t-attf-name="{{document['name']}}" accept="image/jepg, image/png, application/pdf" max-size="1024" t-attf-class="form-control required-form-control #{error.get(document['name']) and 'is-invalid' or ''}" t-att-disabled="'1' if document['disabled'] else None"/>
                 <input t-else="" type="file" t-attf-name="{{document['name']}}" accept="image/jepg, image/png, application/pdf" max-size="1024" t-attf-class="form-control #{error.get(document['name']) and 'is-invalid' or ''}" t-att-disabled="'1' if document['disabled'] else None"/>

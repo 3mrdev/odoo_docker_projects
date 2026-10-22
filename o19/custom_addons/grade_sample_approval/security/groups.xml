@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+
+        <record model="res.groups.privilege" id="res_groups_privilege_grade_lab">
+            <field name="name">Grade Sample</field>
+            <field name="sequence">11</field>
+        </record>
+
+        <record id="group_grade_lab_user" model="res.groups">
+            <field name="name">Lab User</field>
+            <field name="privilege_id" ref="res_groups_privilege_grade_lab" />
+        </record>
+
+        <record id="group_grade_lab_manager" model="res.groups">
+            <field name="name">Lab Manager</field>
+            <field name="privilege_id" ref="res_groups_privilege_grade_lab" />
+            <field name="implied_ids" eval="[(4, ref('group_grade_lab_user'))]" />
+        </record>
+
+    </data>
+</odoo>

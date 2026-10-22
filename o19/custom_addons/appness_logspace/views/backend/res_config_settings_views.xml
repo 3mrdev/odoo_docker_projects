@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.logspace</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Logspace" string="Logspace" name="appness_logspace">
+                    <block title="Policies" id="logspace_policy_settings">
+                        <setting id="logspace_cancel_refund_policy_setting"
+                                 string="Cancel / Refund Policy"
+                                 help="Displayed under the Book Now button on the vehicle info page. One policy point per line.">
+                            <field name="logspace_cancel_refund_policy" widget="text" placeholder="One policy point per line"/>
+                        </setting>
+                        <setting id="logspace_estimated_time_policy_setting"
+                                 string="Estimated Time Policy"
+                                 help="Displayed above the Book Now button on the vehicle info page.">
+                            <field name="logspace_estimated_time_policy" widget="text"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_logspace_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="context">{'module' : 'appness_logspace'}</field>
+    </record>
+</odoo>

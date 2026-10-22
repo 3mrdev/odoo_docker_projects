@@ -237,6 +237,20 @@
                     const table = document.getElementById('contactsTable');
                     const tbody = table.querySelector('tbody');
                     const template = document.getElementById('contactTemplate');
+
+                    // The template row's phone input is initialised by
+                    // LogspacePhoneWidget at page load (publicWidget matches
+                    // every .logspace_intl_tel_widget, even a hidden one).
+                    // Cloning it would copy intl-tel-input's generated markup,
+                    // and re-initialising that clone leaves a duplicated
+                    // flag/country widget behind.  Destroy the instance first
+                    // so the clone is a pristine input.
+                    const templateInput = template.querySelector('.intl_tel_widget');
+                    if (templateInput && templateInput._iti) {
+                        templateInput._iti.destroy();
+                        templateInput._iti = null;
+                    }
+
                     const newRow = template.cloneNode(true);
 
                     // Enable and clear inputs
@@ -433,18 +447,38 @@
                     <!-- Validation Error Alert -->
                     <t t-if="document_error">
                         <div class="alert alert-danger mb-4">
-                            <i class="fa fa-exclamation-triangle me-2"></i>
-                            <strong>Required documents missing:</strong>
-                            <ul class="mb-0 mt-2">
-                                <t t-foreach="missing_documents" t-as="doc">
-                                    <li t-esc="doc"/>
-                                </t>
-                            </ul>
-                            <p class="mb-0 mt-2 small">Please upload all required documents before proceeding.</p>
+                            <t t-if="missing_documents">
+                                <i class="fa fa-exclamation-triangle me-2"></i>
+                                <strong>Required documents missing:</strong>
+                                <ul class="mb-0 mt-2">
+                                    <t t-foreach="missing_documents" t-as="doc">
+                                        <li t-esc="doc"/>
+                                    </t>
+                                </ul>
+                                <p class="mb-0 mt-2 small">Please upload all required documents before proceeding.</p>
+                            </t>
+                            <t t-if="oversized_documents">
+                                <i class="fa fa-exclamation-triangle me-2"></i>
+                                <strong>Files too large (20 MB max):</strong>
+                                <ul class="mb-0 mt-2">
+                                    <t t-foreach="oversized_documents" t-as="doc">
+                                        <li t-esc="doc"/>
+                                    </t>
+                                </ul>
+                            </t>
+                            <t t-if="invalid_documents">
+                                <i class="fa fa-exclamation-triangle me-2"></i>
+                                <strong>Unsupported file type (PDF, JPG or PNG only):</strong>
+                                <ul class="mb-0 mt-2">
+                                    <t t-foreach="invalid_documents" t-as="doc">
+                                        <li t-esc="doc"/>
+                                    </t>
+                                </ul>
+                            </t>
                         </div>
                     </t>
 
-                    <form method="POST" enctype="multipart/form-data">
+                    <form method="POST" enctype="multipart/form-data" class="logspace-provider-documents-form">
                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                         <div class="mb-4">
                             <label class="form-label">Vehicles Documents *</label>
@@ -524,7 +558,9 @@
                                     </a>
                                 </t>
                             </div>
-                            <button type="submit" class="btn btn-primary">Next: Review</button>
+                            <button type="submit" class="btn btn-primary">
+                                <span class="logspace-provider-documents-label">Next: Review</span>
+                            </button>
                         </div>
                     </form>
                 </div>

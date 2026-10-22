@@ -9,7 +9,7 @@ class ApprovalProductLine(models.Model):
         if self.env.context.get('default_category_id'):
             category = self.env['approval.category'].browse(self.env.context['default_category_id'])
             if category.approval_type == 'stock_material':
-                return [('type', '=', 'product')]  # Only storable products
+                return [('is_storable', '=', True)]  # Only storable products
         return []
 
     # Domain for stock material - only allow storable products

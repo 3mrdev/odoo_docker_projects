@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- R1: visually identify the done stages in the configuration -->
+    <record id="hr_equipment_stage_view_tree" model="ir.ui.view">
+        <field name="name">maintenance.stage.list.delgo</field>
+        <field name="model">maintenance.stage</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_stage_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='done']" position="attributes">
+                <attribute name="widget">badge</attribute>
+                <attribute name="decoration-success">done</attribute>
+                <attribute name="decoration-muted">not done</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

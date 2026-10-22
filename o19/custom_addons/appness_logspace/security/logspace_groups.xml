@@ -3,8 +3,9 @@
     <!--
         Logspace Security Groups
         ========================
-        - Provider group: sees only own records via record rules
-        - Admin group: sees all records, full access
+        - Provider group: sees only own records via record rules (internal user)
+        - Admin group: sees all records, full access (internal user)
+        - Driver group: portal-only, advances delivery status on own orders
     -->
 
     
@@ -39,5 +40,24 @@
             (4, ref('documents.group_documents_manager')),
         ]"/>
         <field name="comment">Logspace administrator - full access to all Logspace data</field>
+    </record>
+
+    <!-- Driver privilege: kept separate from the provider privilege because
+         privileges are mutually exclusive in the user form, and a driver is a
+         *portal* user while a provider is an *internal* user (group_logspace_provider
+         implies base.group_user, which res.users._compute_share treats as internal). -->
+    <record model="res.groups.privilege" id="res_groups_privilege_logspace_driver">
+        <field name="name">Logspace Driver</field>
+        <field name="sequence">10</field>
+        <field name="category_id" ref="module_category_logspace" />
+    </record>
+
+    <!-- Driver group - portal-only access to the orders assigned to them.
+         Must NOT imply base.group_user or the driver becomes an internal user. -->
+    <record id="group_logspace_driver" model="res.groups">
+        <field name="name">Driver</field>
+        <field name="privilege_id" ref="res_groups_privilege_logspace_driver" />
+        <field name="implied_ids" eval="[(4, ref('base.group_portal'))]"/>
+        <field name="comment">Logspace driver - portal access to advance the delivery status of their own assigned orders</field>
     </record>
 </odoo>

@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Driver portal templates.
+        Kept in their own file, separate from logspace_portal_templates.xml,
+        because the customer track page renders the pickup / drop-off
+        verification codes in plain text. A driver must never see either code:
+        they read each one aloud from the customer. Nothing here may expose
+        verification_code_pickup or verification_code_dropoff.
+    -->
+
+    <!-- Driver: My Deliveries list -->
+    <template id="logspace_driver_orders_page" name="Logspace Driver Portal - My Deliveries">
+        <t t-call="portal.portal_layout">
+            <t t-set="no_breadcrumbs" t-value="True"/>
+            <div class="container logspace-driver-page py-4">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent px-0 mb-0">
+                        <li class="breadcrumb-item"><a href="/logspace/my">My Account</a></li>
+                        <li class="breadcrumb-item active">My Deliveries</li>
+                    </ol>
+                </nav>
+
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <h4 class="mt-2 mb-3">My Deliveries</h4>
+                    <span class="text-muted small mt-2 mb-3">
+                        Signed in as <strong t-esc="driver.name"/>
+                    </span>
+                </div>
+
+                <ul class="nav nav-tabs mb-4">
+                    <li class="nav-item">
+                        <a t-attf-class="nav-link #{current_status == 'all' and 'active' or ''}" href="/logspace/driver/orders/all">
+                            All <span class="badge bg-secondary" t-esc="counts['all']"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a t-attf-class="nav-link #{current_status == 'active' and 'active' or ''}" href="/logspace/driver/orders/active">
+                            Active <span class="badge bg-primary" t-esc="counts['active']"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a t-attf-class="nav-link #{current_status == 'completed' and 'active' or ''}" href="/logspace/driver/orders/completed">
+                            Completed <span class="badge bg-success" t-esc="counts['completed']"/>
+                        </a>
+                    </li>
+                </ul>
+
+                <div t-if="not orders" class="alert alert-info" role="alert">
+                    <i class="fa fa-info-circle me-2"></i>
+                    No deliveries assigned to you yet.
+                </div>
+
+                <div t-else="" class="table-responsive">
+                    <table class="table table-hover text-nowrap">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Booking</th>
+                                <th>Vehicle</th>
+                                <th>Route</th>
+                                <th>Scheduled</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="orders" t-as="order_item">
+                                <tr>
+                                    <td><a t-attf-href="/logspace/driver/orders/track/#{order_item['id']}" t-esc="order_item['id']"/></td>
+                                    <td>
+                                        <span t-esc="order_item['truck']"/>
+                                        <br/><small class="text-muted" t-esc="order_item['vendor']"/>
+                                    </td>
+                                    <td>
+                                        <strong><t t-esc="order_item.get('zone_from', 'Not set')"/> &#8594; <t t-esc="order_item.get('zone_to', 'Not set')"/></strong>
+                                        <br/>
+                                        <small class="text-muted"><t t-esc="order_item['pickup']"/> &#8594; <t t-esc="order_item['dropoff']"/></small>
+                                    </td>
+                                    <td><small class="text-primary" t-esc="order_item.get('scheduled_datetime', order_item['date'])"/></td>
+                                    <td>
+                                        <span t-if="order_item['status'] == 'active'" class="badge bg-info" t-esc="order_item['status_label']"/>
+                                        <span t-elif="order_item['status'] == 'pending'" class="badge bg-warning text-dark" t-esc="order_item['status_label']"/>
+                                        <span t-elif="order_item['status'] == 'completed'" class="badge bg-success" t-esc="order_item['status_label']"/>
+                                        <span t-elif="order_item['status'] == 'cancelled'" class="badge bg-danger" t-esc="order_item['status_label']"/>
+                                    </td>
+                                    <td>
+                                        <a t-attf-href="/logspace/driver/orders/track/#{order_item['id']}" class="btn btn-sm btn-outline-primary">Open</a>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Driver: delivery detail + status transition buttons -->
+    <template id="logspace_driver_track_page" name="Logspace Driver Portal - Delivery">
+        <t t-call="portal.portal_layout">
+            <t t-set="no_breadcrumbs" t-value="True"/>
+            <div class="container logspace-driver-page"
+                 t-att-data-order-name="order_id">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent px-0 mb-0">
+                        <li class="breadcrumb-item"><a href="/logspace/my">My Account</a></li>
+                        <li class="breadcrumb-item"><a href="/logspace/driver/orders">My Deliveries</a></li>
+                        <li class="breadcrumb-item active" t-esc="tracking_info['id']"/>
+                    </ol>
+                </nav>
+
+                <h4 class="mt-2">Delivery <span class="text-muted" t-esc="tracking_info['id']"/></h4>
+
+                <!-- Feedback banner driven by the JS widget -->
+                <div class="logspace-driver-feedback mt-3" role="status" aria-live="polite"></div>
+
+                <div class="row">
+                    <div class="col-lg-8">
+                        <!-- Delivery Actions -->
+                        <div class="card mb-4 border-primary">
+                            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Delivery Actions</h5>
+                                <span class="badge bg-light text-dark" t-esc="tracking_info['status']"/>
+                            </div>
+                            <div class="card-body">
+                                <div t-if="not tracking_info.get('is_confirmed')" class="alert alert-warning mb-0">
+                                    <i class="fa fa-exclamation-triangle me-2"></i>
+                                    This booking is not confirmed yet (payment pending). Actions unlock once it is confirmed.
+                                </div>
+
+                                <t t-set="available_actions" t-value="[a for a in driver_actions if a['available']]"/>
+                                <div t-if="tracking_info.get('is_confirmed') and not available_actions"
+                                     class="alert alert-secondary mb-0">
+                                    <i class="fa fa-check-circle me-2"></i>
+                                    No action is available at this stage. Your provider completes the remaining steps.
+                                </div>
+
+                                <div t-if="available_actions" class="d-flex flex-wrap gap-2">
+                                    <t t-foreach="available_actions" t-as="act">
+                                        <!-- The hook class must live INSIDE t-attf-class: qweb's
+                                             t-attf-class replaces a static class= attribute rather
+                                             than merging into it, so splitting them across the two
+                                             silently drops the class the JS widget binds to. -->
+                                        <button type="button"
+                                                t-attf-class="logspace-driver-action btn #{act['highlight'] and 'btn-primary' or 'btn-outline-primary'}"
+                                                t-att-data-action="act['key']"
+                                                t-att-data-needs-code="act['needs_code'] and '1' or ''"
+                                                t-att-data-code-type="act['code_type']"
+                                                t-att-data-label="act['label']">
+                                            <span class="logspace-driver-action-label" t-esc="act['label']"/>
+                                            <i t-if="act['needs_code']" class="fa fa-key ms-2" title="Requires the customer's verification code"></i>
+                                        </button>
+                                    </t>
+                                </div>
+
+                                <p t-if="available_actions" class="small text-muted mb-0 mt-3">
+                                    <i class="fa fa-info-circle me-1"></i>
+                                    For pickup and drop-off completion, ask the customer for their 4-digit
+                                    verification code. You will be prompted to enter it.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Order Info Card -->
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6 class="text-muted">Pickup</h6>
+                                        <p class="small text-primary fw-semibold mb-1" t-if="tracking_info.get('pickup_zone')">
+                                            <i class="fa fa-map-marker me-1"></i><span t-esc="tracking_info['pickup_zone']"/>
+                                        </p>
+                                        <p><i class="fa fa-circle text-muted me-2"></i><span t-esc="tracking_info['pickup']"/></p>
+                                        <p class="small mb-1" t-if="tracking_info.get('pickup_contact_name')">
+                                            <i class="fa fa-user text-muted me-2"></i><span t-esc="tracking_info['pickup_contact_name']"/>
+                                        </p>
+                                        <p class="small" t-if="tracking_info.get('pickup_contact_phone')">
+                                            <i class="fa fa-phone text-muted me-2"></i>
+                                            <a t-attf-href="tel:#{tracking_info['pickup_contact_phone']}" t-esc="tracking_info['pickup_contact_phone']"/>
+                                        </p>
+                                        <p class="small"><i class="fa fa-clock-o text-primary me-2"></i><strong>Timeframe:</strong> <span t-esc="tracking_info.get('pickup_timeframe', 'Not set')"/></p>
+
+                                        <h6 class="text-muted mt-3">Drop-off</h6>
+                                        <p class="small text-danger fw-semibold mb-1" t-if="tracking_info.get('dropoff_zone')">
+                                            <i class="fa fa-map-marker me-1"></i><span t-esc="tracking_info['dropoff_zone']"/>
+                                        </p>
+                                        <p><i class="fa fa-map-marker text-danger me-2"></i><span t-esc="tracking_info['dropoff']"/></p>
+                                        <p class="small mb-1" t-if="tracking_info.get('dropoff_contact_name')">
+                                            <i class="fa fa-user text-muted me-2"></i><span t-esc="tracking_info['dropoff_contact_name']"/>
+                                        </p>
+                                        <p class="small" t-if="tracking_info.get('dropoff_contact_phone')">
+                                            <i class="fa fa-phone text-muted me-2"></i>
+                                            <a t-attf-href="tel:#{tracking_info['dropoff_contact_phone']}" t-esc="tracking_info['dropoff_contact_phone']"/>
+                                        </p>
+                                        <p class="small" t-if="tracking_info.get('dropoff_timeframe')">
+                                            <i class="fa fa-clock-o text-success me-2"></i><strong>Timeframe:</strong> <span t-esc="tracking_info['dropoff_timeframe']"/>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6 class="text-muted">Customer</h6>
+                                        <p class="mb-1" t-esc="tracking_info.get('customer', '')"/>
+                                        <p class="small" t-if="tracking_info.get('customer_phone')">
+                                            <i class="fa fa-phone me-1"></i>
+                                            <a t-attf-href="tel:#{tracking_info['customer_phone']}" t-esc="tracking_info['customer_phone']"/>
+                                        </p>
+
+                                        <h6 class="text-muted mt-3">Provider</h6>
+                                        <p class="mb-1" t-esc="tracking_info['vendor']"/>
+                                        <p class="small" t-if="tracking_info.get('vendor_phone')">
+                                            <i class="fa fa-phone me-1"></i>
+                                            <a t-attf-href="tel:#{tracking_info['vendor_phone']}" t-esc="tracking_info['vendor_phone']"/>
+                                        </p>
+
+                                        <h6 class="text-muted mt-3">Vehicle</h6>
+                                        <p class="mb-1" t-esc="tracking_info['truck']"/>
+                                        <p class="small text-muted mb-0" t-if="tracking_info.get('plate_number')">
+                                            <i class="fa fa-car me-1"></i><span t-esc="tracking_info['plate_number']"/>
+                                        </p>
+
+                                        <div class="mt-3">
+                                            <p class="small text-primary mb-1">
+                                                <i class="fa fa-calendar-check-o me-1"></i> Scheduled: <span t-esc="tracking_info.get('scheduled_datetime', 'N/A')"/>
+                                            </p>
+                                            <span t-if="tracking_info.get('payment_status') == 'paid'" class="badge bg-success">Paid</span>
+                                            <span t-elif="tracking_info.get('payment_status') == 'pending'" class="badge bg-warning text-dark">Payment Pending</span>
+                                            <span t-elif="tracking_info.get('payment_status') == 'failed'" class="badge bg-danger">Payment Failed</span>
+                                        </div>
+                                    </div>
+                                    <t t-if="tracking_info.get('item_description')">
+                                        <hr/>
+                                        <h6 class="text-muted">Item Description</h6>
+                                        <p class="mb-0" t-esc="tracking_info['item_description']"/>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Timeline -->
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">Delivery Timeline</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="logspace-timeline">
+                                    <t t-foreach="timeline" t-as="item">
+                                        <div t-attf-class="logspace-timeline-item d-flex align-items-start mb-3 #{item_last and '' or 'pb-3'}" style="position: relative;">
+                                            <div t-if="not item_last" class="position-absolute" t-attf-style="left: 19px; top: 40px; bottom: 0; width: 2px; background-color: #{item['done'] and '#28a745' or '#dee2e6'};"/>
+                                            <div t-attf-class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 #{item['done'] and (item['current'] and 'bg-primary text-white' or 'bg-success text-white') or 'bg-light text-muted border'}" style="width: 40px; height: 40px; z-index: 1;">
+                                                <i t-att-class="'fa ' + item['icon']"/>
+                                            </div>
+                                            <div class="ms-3 flex-grow-1">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h6 t-attf-class="mb-0 #{item['current'] and 'text-primary fw-bold' or item['done'] and 'text-success' or 'text-muted'}" t-esc="item['label']"/>
+                                                    <t t-if="item['current']">
+                                                        <span class="badge bg-primary">Current</span>
+                                                    </t>
+                                                </div>
+                                                <t t-if="item['estimated']">
+                                                    <small class="text-primary"><i class="fa fa-clock-o me-1"></i><span t-esc="item['time']"/></small>
+                                                </t>
+                                                <t t-else="">
+                                                    <small class="text-muted" t-esc="item['time']"/>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="card mb-4">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">Need help?</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="small text-muted">
+                                    If the customer cannot provide a verification code, or the delivery
+                                    cannot be completed, contact your provider before continuing.
+                                </p>
+                                <p class="small mb-0" t-if="tracking_info.get('vendor_phone')">
+                                    <i class="fa fa-phone me-1"></i>
+                                    <a t-attf-href="tel:#{tracking_info['vendor_phone']}">Call <t t-esc="tracking_info['vendor']"/></a>
+                                </p>
+                            </div>
+                        </div>
+                        <a href="/logspace/driver/orders" class="btn btn-outline-secondary btn-sm">
+                            <i class="fa fa-arrow-left me-1"></i> Back to My Deliveries
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Verification code modal (shared by both code-requiring actions) -->
+                <div class="modal fade" id="logspaceDriverCodeModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Customer Verification Required</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="small text-muted logspace-driver-code-intro">
+                                    Ask the customer for their 4-digit verification code and enter it below.
+                                </p>
+                                <div class="alert alert-danger py-2 px-3 d-none logspace-driver-code-error" role="alert"></div>
+                                <input type="text"
+                                       class="form-control form-control-lg text-center font-monospace logspace-driver-code-input"
+                                       maxlength="4" inputmode="numeric" pattern="[0-9]*"
+                                       autocomplete="off" placeholder="&#8226;&#8226;&#8226;&#8226;"
+                                       aria-label="Verification code"/>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary logspace-driver-code-submit">
+                                    <span class="logspace-driver-code-submit-label">Confirm</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

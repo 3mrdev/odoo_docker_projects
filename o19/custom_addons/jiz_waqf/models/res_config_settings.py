@@ -12,6 +12,7 @@ class ResCompany(models.Model):
         domain="[('type', '=', 'folder'), ('shortcut_document_id', '=', False), '|', ('company_id', '=', False), ('company_id', '=', id)]",
     )
     documents_waqf_tags = fields.Many2many('documents.tag', 'documents_waqf_tags_table')
+    waqf_analytic_plan_id = fields.Many2one('account.analytic.plan', string="Waqf Analytic Plan")
 
 class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
@@ -34,4 +35,10 @@ class ResConfigSettings(models.TransientModel):
         related='company_id.documents_waqf_tags',
         readonly=False,
         string="Waqf Default Tags",
+    )
+    waqf_analytic_plan_id = fields.Many2one(
+        'account.analytic.plan',
+        string='Waqf Analytic Plan',
+        related='company_id.waqf_analytic_plan_id',
+        readonly=False,
     )

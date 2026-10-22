@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Approval Request: link to the maintenance request -->
+    <record id="approval_request_view_form" model="ir.ui.view">
+        <field name="name">approval.request.form.delgo</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals.approval_request_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/notebook" position="inside">
+                <page string="Maintenance" groups="maintenance.group_equipment_manager" invisible="approval_type not in ['stock_material', 'stock_material_purchase']">
+                    <group>
+                        <field name="maintenance_request_id" readonly="1" options="{'no_open': True, 'no_create': True}"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

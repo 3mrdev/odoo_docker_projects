@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_mrp_production_plan_target_form">
+        <field name="name">mrp.production.plan.target.view.form</field>
+        <field name="model">mrp.production.plan.target</field>
+        <field name="arch" type="xml">
+            <form string="Plan Target">
+                <sheet string="Plan Target">
+                    <group>
+                        <group>
+                            <field name="line_id" readonly="state != 'draft'" options="{'no_open': True}"/>
+                            <field name="product_id"/>
+                            <field name="period_type" readonly="state != 'draft'"/>
+                            <label for="date_from" string="Period"/>
+                            <div class="o_row">
+                                <field name="date_from" nolabel="1" class="oe_inline" readonly="state != 'draft'"/>
+                                <i class="fa fa-long-arrow-right mx-2" aria-label="to" title="to"/>
+                                <field name="date_to" nolabel="1" class="oe_inline" readonly="state != 'draft'"/>
+                            </div>
+                        </group>
+                        <group>
+                            <field name="target_qty" readonly="state != 'draft'"/>
+                            <field name="product_uom_id"/>
+                            <field name="expected_grade" readonly="state != 'draft'"/>
+                            <field name="target_gold_content" readonly="state != 'draft'"/>
+                            <field name="max_mo_qty" readonly="state != 'draft'"/>
+                        </group>
+                        <group string="Actuals" invisible="state in ('draft', 'cancelled')">
+                            <field name="actual_qty"/>
+                            <field name="actual_gold_content"/>
+                            <field name="achieved_percentage" widget="percentage"/>
+                            <field name="mo_count"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Editable list used by the line's "Targets" button: new rows get the
+         line (and thus product/plan) from the context, so only the target
+         fields itself need input. Fields lock once the plan is confirmed. -->
+    <record model="ir.ui.view" id="view_mrp_production_plan_target_list_editable">
+        <field name="name">mrp.production.plan.target.view.list.editable</field>
+        <field name="model">mrp.production.plan.target</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="achieved_percentage &gt; 1" string="Plan Targets" editable="bottom">
+                <field name="line_id" column_invisible="1"/>
+                <field name="product_id"/>
+                <field name="period_type" optional="show" readonly="state != 'draft'"/>
+                <field name="date_from" readonly="state != 'draft'"/>
+                <field name="date_to" readonly="state != 'draft'"/>
+                <field name="target_qty" sum="Target Qty" readonly="state != 'draft'"/>
+                <field name="product_uom_id" column_invisible="1"/>
+                <field name="expected_grade" optional="show" readonly="state != 'draft'"/>
+                <field name="target_gold_content" sum="Target Gold" optional="hide" readonly="state != 'draft'"/>
+                <field name="max_mo_qty" optional="show" readonly="state != 'draft'"/>
+                <field name="actual_qty" sum="Actual Qty"/>
+                <field name="actual_gold_content" sum="Actual Gold" optional="hide"/>
+                <field name="achieved_percentage" widget="percentage" optional="show"/>
+                <field name="mo_count" optional="hide" sum="MOs"/>
+                <field name="state" column_invisible="1"/>
+                <button type="object" name="action_open_mo_details" string="Details" width="60px" invisible="state in ('draft', 'cancelled')"/>
+                <button type="object" name="action_generate_mo" string="Generate MOs" width="90px" invisible="state != 'confirmed'"/>
+                <button type="object" name="action_open_breakdown_wizard" string="Break Down" width="90px" invisible="period_type not in ('year', 'month')"/>
+            </list>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_mrp_production_plan_target_list">
+        <field name="name">mrp.production.plan.target.view.list</field>
+        <field name="model">mrp.production.plan.target</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="achieved_percentage &gt; 1" string="Plan Targets">
+                <field name="plan_id" optional="show"/>
+                <field name="product_id" optional="show"/>
+                <field name="period_type" optional="show"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="target_qty" sum="Target Qty"/>
+                <field name="product_uom_id" column_invisible="1"/>
+                <field name="expected_grade" optional="hide"/>
+                <field name="target_gold_content" sum="Target Gold" optional="hide"/>
+                <field name="actual_qty" sum="Actual Qty"/>
+                <field name="actual_gold_content" sum="Actual Gold" optional="hide"/>
+                <field name="achieved_percentage" widget="percentage" optional="show"/>
+                <field name="mo_count" optional="hide" sum="MOs"/>
+                <field name="state" column_invisible="1"/>
+                <button type="object" name="action_open_mo_details" string="Details" width="60px" invisible="state in ('draft', 'cancelled')"/>
+                <button type="object" name="action_generate_mo" string="Generate MOs" width="90px" invisible="state != 'confirmed'"/>
+                <button type="object" name="action_open_breakdown_wizard" string="Break Down" width="90px" invisible="period_type not in ('year', 'month')"/>
+            </list>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_mrp_production_plan_target_search">
+        <field name="name">mrp.production.plan.target.view.search</field>
+        <field name="model">mrp.production.plan.target</field>
+        <field name="arch" type="xml">
+            <search string="Plan Targets">
+                <field name="product_id"/>
+                <field name="plan_id"/>
+                <filter string="Confirmed Plans" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
+                <group>
+                    <filter string="Plan" name="group_plan" context="{'group_by': 'plan_id'}"/>
+                    <filter string="Product" name="group_product" context="{'group_by': 'product_id'}"/>
+                    <filter string="Period Type" name="group_period_type" context="{'group_by': 'period_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>

@@ -2,21 +2,22 @@
 <odoo>
     <!-- Email Templates for Logspace -->
 
-    <!-- Template: Booking Confirmation to Customer -->
-    <record id="email_template_booking_confirmation" model="mail.template">
-        <field name="name">Logspace: Booking Confirmation</field>
+    <!-- Template: Guest Payment Recovery (sent when a guest draft order is created) -->
+    <record id="email_template_guest_payment_recovery" model="mail.template">
+        <field name="name">Logspace: Complete Your Payment</field>
         <field name="model_id" ref="sale.model_sale_order"/>
-        <field name="subject">Your Logspace Booking Confirmation - {{ object.name }}</field>
+        <field name="subject">Complete your payment - Logspace Booking {{ object.name }}</field>
         <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
-        <field name="partner_to">{{ object.partner_id.id }}</field>
+        <field name="email_to">{{ object.guest_email }}</field>
         <field name="body_html" type="html">
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
                 <div style="background: #1a237e; color: white; padding: 20px; text-align: center;">
-                    <h2>Booking Confirmed!</h2>
+                    <h2>Almost done!</h2>
                 </div>
                 <div style="padding: 20px; background: #f9f9f9;">
                     <p>Dear <t t-out="object.partner_id.name or ''"/>,</p>
-                    <p>Your Logspace booking has been confirmed. Here are your booking details:</p>
+                    <p>Your Logspace booking <strong t-out="object.name or ''"/> has been reserved. It is <strong>not confirmed yet</strong> — please complete the payment to confirm it.</p>
+                    <p>If you already paid, you can ignore this email or use the button below to check the status.</p>
 
                     <div style="background: white; padding: 15px; border-radius: 5px; margin: 20px 0;">
                         <h3 style="color: #1a237e; margin-top: 0;">Booking Details</h3>
@@ -44,24 +45,19 @@
                                 <td style="padding: 5px 0;"><strong>Dropoff:</strong></td>
                                 <td style="padding: 5px 0;" t-out="object.dropoff_address or ''">Not set</td>
                             </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Total:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.currency_id.format(object.amount_total) or ''"/>
+                            </tr>
                         </table>
                     </div>
 
-                    <div style="background: #e8f5e9; padding: 15px; border-radius: 5px; margin: 20px 0;">
-                        <h4 style="color: #2e7d32; margin-top: 0;">Pickup Verification Code</h4>
-                        <p style="font-size: 24px; font-weight: bold; color: #1a237e; margin: 10px 0;">
-                            <t t-if="object.verification_code_pickup" t-out="object.verification_code_pickup"/>
-                            <t t-else="">Will be sent when driver is assigned</t>
-                        </p>
-                        <p style="color: #666; font-size: 12px;">Show this code to the driver at pickup</p>
-                    </div>
-
                     <p style="text-align: center; margin: 30px 0;">
-                        <a t-attf-href="/logspace/my/orders/track/{{ object.name }}" style="background: #1a237e; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px;">Track Your Order</a>
+                        <a t-attf-href="/logspace/booking/payment/{{ object.id }}?access_token={{ object.access_token }}" style="background: #2e7d32; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px;">Complete Payment</a>
                     </p>
 
                     <p style="color: #666; font-size: 12px; margin-top: 30px;">
-                        Need help? Contact us at support@logspace.com
+                        This link is personal to this booking. Need help? Contact us at support@logspace.com
                     </p>
                 </div>
             </div>
@@ -76,6 +72,10 @@
         <field name="subject">Driver Assigned - Logspace Booking {{ object.name }}</field>
         <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
         <field name="partner_to">{{ object.partner_id.id }}</field>
+        <!-- False or Odoo ignores partner_to and mails the order's default
+             recipient (the customer) - which happens to be the same party
+             here, but never rely on that coincidence. -->
+        <field name="use_default_to" eval="False"/>
         <field name="body_html" type="html">
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
                 <div style="background: #1a237e; color: white; padding: 20px; text-align: center;">
@@ -117,7 +117,7 @@
                     </div>
 
                     <p style="text-align: center; margin: 30px 0;">
-                        <a t-attf-href="/logspace/my/orders/track/{{ object.name }}" style="background: #1a237e; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px;">Track Your Order</a>
+                        <a t-attf-href="/logspace/my/orders/track/{{ object.name }}?access_token={{ object.access_token }}" style="background: #1a237e; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px;">Track Your Order</a>
                     </p>
                 </div>
             </div>
@@ -259,6 +259,324 @@
 
                     <p style="color: #666; margin-top: 30px; font-size: 12px;">
                         Thank you for choosing Logspace!
+                    </p>
+                </div>
+            </div>
+        </field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+    <!-- Template: Driver Assignment Notice (sent TO THE DRIVER)
+         Deliberately contains NO verification codes: the driver must read each
+         code aloud from the customer at pickup / drop-off. -->
+    <record id="email_template_driver_assignment_notice" model="mail.template">
+        <field name="name">Logspace: Delivery Assigned to Driver</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">New Delivery Assigned - Logspace Booking {{ object.name }}</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.logspace_driver_id.id }}</field>
+        <!-- False or Odoo ignores partner_to and mails the order's default
+             recipient (the customer) instead of the driver. -->
+        <field name="use_default_to" eval="False"/>
+        <field name="body_html" type="html">
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <div style="background: #1a237e; color: white; padding: 20px; text-align: center;">
+                    <h2>New Delivery Assigned</h2>
+                </div>
+                <div style="padding: 20px; background: #f9f9f9;">
+                    <p>Dear <t t-out="object.logspace_driver_id.name or ''"/>,</p>
+                    <p>You have been assigned to booking <strong t-out="object.name or ''"/>.</p>
+
+                    <div style="background: white; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                        <h3 style="color: #1a237e; margin-top: 0;">Delivery Details</h3>
+                        <table style="width: 100%;">
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Pickup Address:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.pickup_address or ''"/>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Pickup Contact:</strong></td>
+                                <td style="padding: 5px 0;">
+                                    <t t-out="object.pickup_contact_name or ''"/>
+                                    <t t-if="object.pickup_contact_phone">
+                                        - <a t-attf-href="tel:{{ object.pickup_contact_phone }}" t-out="object.pickup_contact_phone"/>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Drop-off Address:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.dropoff_address or ''"/>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Drop-off Contact:</strong></td>
+                                <td style="padding: 5px 0;">
+                                    <t t-out="object.dropoff_contact_name or ''"/>
+                                    <t t-if="object.dropoff_contact_phone">
+                                        - <a t-attf-href="tel:{{ object.dropoff_contact_phone }}" t-out="object.dropoff_contact_phone"/>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Scheduled:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.scheduled_date or ''"/>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Vehicle:</strong></td>
+                                <td style="padding: 5px 0;">
+                                    <t t-if="object.logspace_vehicle_id">
+                                        <t t-out="object.logspace_vehicle_id.vehicle_type_id.name or ''"/>
+                                        <t t-if="object.logspace_vehicle_id.plate_number">
+                                            (<t t-out="object.logspace_vehicle_id.plate_number"/>)
+                                        </t>
+                                    </t>
+                                    <t t-else="">Not assigned</t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Provider:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.logspace_provider_id.name or ''"/>
+                            </tr>
+                            <tr t-if="object.item_description">
+                                <td style="padding: 5px 0;"><strong>Items:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.item_description"/>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div style="background: #fff8e1; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                        <h4 style="color: #e65100; margin-top: 0;">Verification Codes</h4>
+                        <p style="color: #666; font-size: 13px; margin-bottom: 0;">
+                            Ask the customer for the pickup code when you collect the items, and for the
+                            drop-off code when you deliver them. You will be prompted to enter each code
+                            from your delivery page.
+                        </p>
+                    </div>
+
+                    <p style="text-align: center; margin: 30px 0;">
+                        <a t-attf-href="/logspace/driver/orders/track/{{ object.name }}" style="background: #1a237e; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px;">Open My Delivery</a>
+                    </p>
+                </div>
+            </div>
+        </field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+    <!-- Status-change notifications, sent from sale.order.write() whenever
+         logspace_state changes. One template per party - each email is
+         addressed to a single recipient so replies never cross parties.
+         Only the customer template renders the verification codes: the
+         driver must collect them from the customer in person. -->
+
+    <!-- Status change: CUSTOMER (includes verification codes) -->
+    <record id="email_template_logspace_status_customer" model="mail.template">
+        <field name="name">Logspace: Status Update - Customer</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">Your Logspace booking {{ object.name }} is now: {{ object.logspace_state_label }}</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.partner_id.id }}</field>
+        <!-- False so partner_to is honoured verbatim; with the default True
+             Odoo mails the order's default recipient instead. -->
+        <field name="use_default_to" eval="False"/>
+        <field name="body_html" type="html">
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <div style="background: #1a237e; color: white; padding: 20px; text-align: center;">
+                    <h2>Order Status Update</h2>
+                </div>
+                <div style="padding: 20px; background: #f9f9f9;">
+                    <p>Dear <t t-out="object.partner_id.name or ''"/>,</p>
+                    <p>The status of your Logspace booking <strong t-out="object.name or ''"/> has been updated to:</p>
+                    <p style="text-align: center; font-size: 20px; font-weight: bold; color: #1a237e; background: #e8eaf6; padding: 12px; border-radius: 5px;" t-out="object.logspace_state_label or ''"/>
+
+                    <div style="background: white; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                        <h3 style="color: #1a237e; margin-top: 0;">Booking Details</h3>
+                        <table style="width: 100%;">
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Order Number:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.name or ''"/>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Provider:</strong></td>
+                                <td style="padding: 5px 0;">
+                                    <t t-if="object.logspace_provider_id" t-out="object.logspace_provider_id.name"/>
+                                    <t t-else="">TBD</t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Scheduled Date:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.scheduled_date or ''">To be confirmed</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Pickup:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.pickup_address or ''">Not set</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Dropoff:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.dropoff_address or ''">Not set</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div t-if="object.verification_code_pickup" style="background: #e8f5e9; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                        <h4 style="color: #2e7d32; margin-top: 0;">Pickup Verification Code</h4>
+                        <p style="font-size: 32px; font-weight: bold; color: #1a237e; margin: 10px 0; text-align: center; letter-spacing: 5px;" t-out="object.verification_code_pickup"/>
+                        <p style="color: #666; font-size: 12px; text-align: center;">Give this code to the driver at pickup - keep it private.</p>
+                    </div>
+
+                    <div t-if="object.verification_code_dropoff" style="background: #fff8e1; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                        <h4 style="color: #e65100; margin-top: 0;">Drop-off Verification Code</h4>
+                        <p style="font-size: 32px; font-weight: bold; color: #1a237e; margin: 10px 0; text-align: center; letter-spacing: 5px;" t-out="object.verification_code_dropoff"/>
+                        <p style="color: #666; font-size: 12px; text-align: center;">Give this code to the driver at drop-off - keep it private.</p>
+                    </div>
+
+                    <p style="text-align: center; margin: 30px 0;">
+                        <a t-attf-href="/logspace/my/orders/track/{{ object.name }}?access_token={{ object.access_token }}" style="background: #1a237e; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px;">Track Your Order</a>
+                    </p>
+
+                    <p style="color: #666; font-size: 12px; margin-top: 30px;">
+                        This is an automated message - please do not reply.
+                    </p>
+                </div>
+            </div>
+        </field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+    <!-- Status change: PROVIDER (no verification codes) -->
+    <record id="email_template_logspace_status_provider" model="mail.template">
+        <field name="name">Logspace: Status Update - Provider</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">Logspace booking {{ object.name }} is now: {{ object.logspace_state_label }}</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.logspace_provider_id.id }}</field>
+        <field name="use_default_to" eval="False"/>
+        <field name="body_html" type="html">
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <div style="background: #1a237e; color: white; padding: 20px; text-align: center;">
+                    <h2>Order Status Update</h2>
+                </div>
+                <div style="padding: 20px; background: #f9f9f9;">
+                    <p>Dear <t t-out="object.logspace_provider_id.name or ''"/>,</p>
+                    <p>Booking <strong t-out="object.name or ''"/> status has been updated to:</p>
+                    <p style="text-align: center; font-size: 20px; font-weight: bold; color: #1a237e; background: #e8eaf6; padding: 12px; border-radius: 5px;" t-out="object.logspace_state_label or ''"/>
+
+                    <div style="background: white; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                        <h3 style="color: #1a237e; margin-top: 0;">Order Details</h3>
+                        <table style="width: 100%;">
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Order Number:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.name or ''"/>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Customer:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.partner_id.name or ''"/>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Scheduled Date:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.scheduled_date or ''">To be confirmed</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Pickup:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.pickup_address or ''">Not set</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Dropoff:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.dropoff_address or ''">Not set</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Vehicle:</strong></td>
+                                <td style="padding: 5px 0;">
+                                    <t t-if="object.logspace_vehicle_id and object.logspace_vehicle_id.vehicle_type_id" t-out="object.logspace_vehicle_id.vehicle_type_id.name"/>
+                                    <t t-else="">Not assigned</t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Driver:</strong></td>
+                                <td style="padding: 5px 0;">
+                                    <t t-if="object.logspace_driver_id" t-out="object.logspace_driver_id.name"/>
+                                    <t t-else="">Not assigned</t>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <p style="text-align: center; margin: 30px 0;">
+                        <a t-attf-href="/logspace/my/orders" style="background: #1a237e; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px;">Open My Orders</a>
+                    </p>
+
+                    <p style="color: #666; font-size: 12px; margin-top: 30px;">
+                        This is an automated message - please do not reply.
+                    </p>
+                </div>
+            </div>
+        </field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+    <!-- Status change: DRIVER (no verification codes - collect them from the
+         customer in person). Reuses the delivery-page wording of
+         email_template_driver_assignment_notice. -->
+    <record id="email_template_logspace_status_driver" model="mail.template">
+        <field name="name">Logspace: Status Update - Driver</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">Delivery {{ object.name }} is now: {{ object.logspace_state_label }}</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.logspace_driver_id.id }}</field>
+        <field name="use_default_to" eval="False"/>
+        <field name="body_html" type="html">
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <div style="background: #1a237e; color: white; padding: 20px; text-align: center;">
+                    <h2>Delivery Status Update</h2>
+                </div>
+                <div style="padding: 20px; background: #f9f9f9;">
+                    <p>Dear <t t-out="object.logspace_driver_id.name or ''"/>,</p>
+                    <p>Delivery <strong t-out="object.name or ''"/> status has been updated to:</p>
+                    <p style="text-align: center; font-size: 20px; font-weight: bold; color: #1a237e; background: #e8eaf6; padding: 12px; border-radius: 5px;" t-out="object.logspace_state_label or ''"/>
+
+                    <div style="background: white; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                        <h3 style="color: #1a237e; margin-top: 0;">Delivery Details</h3>
+                        <table style="width: 100%;">
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Pickup Address:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.pickup_address or ''"/>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Drop-off Address:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.dropoff_address or ''"/>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Scheduled:</strong></td>
+                                <td style="padding: 5px 0;" t-out="object.scheduled_date or ''"/>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 0;"><strong>Vehicle:</strong></td>
+                                <td style="padding: 5px 0;">
+                                    <t t-if="object.logspace_vehicle_id">
+                                        <t t-out="object.logspace_vehicle_id.vehicle_type_id.name or ''"/>
+                                        <t t-if="object.logspace_vehicle_id.plate_number">
+                                            (<t t-out="object.logspace_vehicle_id.plate_number"/>)
+                                        </t>
+                                    </t>
+                                    <t t-else="">Not assigned</t>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div style="background: #fff8e1; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                        <h4 style="color: #e65100; margin-top: 0;">Verification Codes</h4>
+                        <p style="color: #666; font-size: 13px; margin-bottom: 0;">
+                            Ask the customer for the pickup code when you collect the items, and for the
+                            drop-off code when you deliver them. You will be prompted to enter each code
+                            from your delivery page.
+                        </p>
+                    </div>
+
+                    <p style="text-align: center; margin: 30px 0;">
+                        <a t-attf-href="/logspace/driver/orders/track/{{ object.name }}" style="background: #1a237e; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px;">Open My Delivery</a>
+                    </p>
+
+                    <p style="color: #666; font-size: 12px; margin-top: 30px;">
+                        This is an automated message - please do not reply.
                     </p>
                 </div>
             </div>

@@ -36,11 +36,11 @@
               action="action_logspace_vehicle_list"
               sequence="20"/>
 
-    <menuitem id="menu_logspace_providers_fleet_summary"
+    <!-- <menuitem id="menu_logspace_providers_fleet_summary"
               name="Fleet Summary"
               parent="menu_logspace_providers"
               action="action_logspace_fleet_summary"
-              sequence="30"/>
+              sequence="30"/> -->
 
     <menuitem id="menu_logspace_providers_time_frames"
               name="Time Frames"
@@ -78,71 +78,107 @@
               action="action_sale_order_logspace"
               sequence="10"/>
 
+    <menuitem id="menu_logspace_provider_bills"
+              name="Provider Bills"
+              parent="menu_logspace_sales"
+              action="action_logspace_provider_bills"
+              sequence="20"/>
+
     <!-- Customer Support -->
     <menuitem id="menu_logspace_support"
               name="Customer Support"
               parent="menu_logspace_root"
+              groups="appness_logspace.group_logspace_admin"
               sequence="40"/>
 
     <menuitem id="menu_logspace_tickets"
               name="Tickets"
               parent="menu_logspace_support"
               action="action_helpdesk_ticket_logspace"
+              groups="appness_logspace.group_logspace_admin"
               sequence="10"/>
 
     <menuitem id="menu_logspace_refunds"
               name="Refund Requests"
               parent="menu_logspace_support"
               action="action_logspace_refund"
+              groups="appness_logspace.group_logspace_admin"
               sequence="30"/>
 
     <menuitem id="menu_logspace_notifications"
               name="Notifications"
               parent="menu_logspace_support"
               action="action_logspace_notification"
+              groups="appness_logspace.group_logspace_admin"
               sequence="40"/>
 
     <!-- Configuration -->
     <menuitem id="menu_logspace_configuration"
               name="Configuration"
               parent="menu_logspace_root"
+              groups="appness_logspace.group_logspace_admin"
               sequence="40"/>
+
+    <menuitem id="menu_logspace_settings"
+              name="Settings"
+              parent="menu_logspace_configuration"
+              action="action_logspace_settings"
+              groups="appness_logspace.group_logspace_admin"
+              sequence="5"/>
 
     <menuitem id="menu_logspace_addons"
               name="Add-ons"
               parent="menu_logspace_configuration"
               action="action_logspace_addon"
+              groups="appness_logspace.group_logspace_admin"
               sequence="10"/>
 
     <menuitem id="menu_logspace_zones"
               name="Zones"
               parent="menu_logspace_configuration"
               action="action_logspace_zone"
+              groups="appness_logspace.group_logspace_admin"
               sequence="20"/>
 
     <menuitem id="menu_logspace_zone_distances"
               name="Zone Distances"
               parent="menu_logspace_configuration"
               action="action_logspace_zone_distance"
+              groups="appness_logspace.group_logspace_admin"
               sequence="25"/>
 
     <menuitem id="menu_logspace_state_duration_config"
               name="Timeline Durations"
               parent="menu_logspace_configuration"
               action="action_logspace_state_duration_config"
+              groups="appness_logspace.group_logspace_admin"
               sequence="27"/>
+
+    <menuitem id="menu_logspace_vehicle_categories"
+              name="Vehicle Categories"
+              parent="menu_logspace_configuration"
+              action="action_logspace_vehicle_category"
+              groups="appness_logspace.group_logspace_admin"
+              sequence="29"/>
 
     <menuitem id="menu_logspace_vehicle_types"
               name="Vehicle Types"
               parent="menu_logspace_configuration"
               action="action_logspace_vehicle_type"
+              groups="appness_logspace.group_logspace_admin"
               sequence="30"/>
 
     <menuitem id="menu_logspace_contact_roles"
               name="Contact Roles"
               parent="menu_logspace_configuration"
               action="action_logspace_contact_roles"
+              groups="appness_logspace.group_logspace_admin"
               sequence="40"/>
+
+    <!-- Keep the unused menu archived on both new installs and upgrades. -->
+    <record id="menu_logspace_contact_roles" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
 
     <record id="logspace_action_website" model="ir.actions.act_url">
         <field name="name">Website</field>

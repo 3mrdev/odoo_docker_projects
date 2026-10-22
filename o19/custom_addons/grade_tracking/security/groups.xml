@@ -1,0 +1,25 @@
+<odoo>
+    <data>
+
+        <record model="res.groups.privilege" id="res_groups_privilege_grade_tracked">
+            <field name="name">Grade Tracking</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record model="res.groups.privilege" id="res_groups_privilege_grade_history">
+            <field name="name">Grade History</field>
+            <field name="sequence">11</field>
+        </record>
+
+        <record id="group_grade_tracked" model="res.groups">
+            <field name="name">Grade Tracked</field>
+            <field name="privilege_id" ref="res_groups_privilege_grade_tracked" />
+        </record>
+
+        <record id="group_grade_history_user" model="res.groups">
+            <field name="name">Grade History</field>
+            <field name="privilege_id" ref="res_groups_privilege_grade_history" />
+        </record>
+
+    </data>
+</odoo>

@@ -16,12 +16,9 @@ class LogspaceVehicleType(models.Model):
     default_capacity_kg = fields.Integer(string='Default Capacity (kg)')
     default_capacity_cbm = fields.Float(string='Default Capacity (cbm)')
     dimensions = fields.Char(string='Dimensions (L x W x H cm)', help='e.g., 300x200x150 cm')
-    category = fields.Selection([
-        ('light', 'Light'),
-        ('medium', 'Medium'),
-        ('heavy', 'Heavy'),
-        ('special', 'Special'),
-    ], string='Category', default='medium')
+    category_id = fields.Many2one(
+        'logspace.vehicle.category', string='Category',
+        ondelete='restrict', index=True)
     description = fields.Text(string='Description', translate=True)
     sequence = fields.Integer(string='Sequence', default=10)
     active = fields.Boolean(default=True, string='Active')
@@ -47,6 +44,7 @@ class LogspaceVehicleType(models.Model):
 
     _code_unique = models.Constraint('unique(code)', 'Vehicle type code must be unique!')
 
+    @api.depends('image', 'category_id')
     def _compute_image_url(self):
         """Compute image URL for frontend use"""
         for vt in self:
@@ -73,14 +71,15 @@ class LogspaceVehicleType(models.Model):
                         vt.image_url = img
                         break
                 else:
-                    # Category-based fallback
+                    # Category-based fallback, keyed on the category CODE (the m2o
+                    # recordset itself is unhashable, so it cannot be a dict key).
                     category_images = {
                         'light': '/appness_logspace/static/src/img/truck_mini.jpg',
                         'medium': '/appness_logspace/static/src/img/truck_flatbed.jpg',
                         'heavy': '/appness_logspace/static/src/img/truck_heavy.jpg',
                         'special': '/appness_logspace/static/src/img/truck_reefer.jpg',
                     }
-                    vt.image_url = category_images.get(vt.category,
+                    vt.image_url = category_images.get(vt.category_id.code,
                         '/appness_logspace/static/src/img/truck_flatbed.jpg')
 
     @api.model_create_multi

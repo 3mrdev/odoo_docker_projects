@@ -1,0 +1,27 @@
+<odoo>
+
+    <!-- Stock Quant List View -->
+    <record id="stock_quant_tree_grade_tracking" model="ir.ui.view">
+        <field name="name">stock.quant.tree.grade.tracking</field>
+        <field name="model">stock.quant</field>
+        <field name="priority" eval="25" />
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_editable" />
+        <field name="arch" type="xml">
+            <field name="lot_id" position="after">
+                <field name="mining_location_id" optional="show" invisible="not lot_id"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="mining_level_id" optional="show" invisible="not lot_id"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="average_grade" optional="show" invisible="not lot_id"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="grade_tier_id" optional="show" invisible="not lot_id"
+                    options="{'no_open': True, 'no_create': True}"
+                    groups="grade_tracking.group_grade_tracked" />
+                <field name="gold_content" optional="show" invisible="not lot_id"
+                    sum="Total Gold Content"
+                    groups="grade_tracking.group_grade_tracked" />
+            </field>
+        </field>
+    </record>
+
+</odoo>

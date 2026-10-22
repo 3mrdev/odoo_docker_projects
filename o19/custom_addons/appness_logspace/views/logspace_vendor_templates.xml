@@ -155,7 +155,7 @@
                                                 <div class="ms-3 flex-grow-1">
                                                     <h6 class="mb-1" t-esc="addon['name']"/>
                                                     <p class="small text-muted mb-1" t-esc="addon['description']"/>
-                                                    <span class="text-success fw-bold">+<span t-esc="'$' + str(int(addon['price']))"/></span>
+                                                    <span class="text-success fw-bold">+<span t-esc="currency_symbol + ' ' + str(int(addon['price']))"/></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -173,12 +173,12 @@
                                 <div class="mb-3">
                                     <div class="d-flex justify-content-between fw-bold">
                                         <span>Price Estimate</span>
-                                        <span class="text-success fs-4">$150</span>
+                                        <span class="text-success fs-4" t-esc="currency_symbol + ' ' + '150'"/>
                                     </div>
                                 </div>
                                 <a href="/logspace/booking/details" class="btn btn-primary w-100 btn-lg mb-2">Book Now</a>
                                 <div class="small text-muted mt-2">
-                                    <p class="mb-1"><i class="fa fa-check-circle text-success me-1"></i> Free cancellation up to 24 hours before pickup</p>
+                                    <p class="mb-1"><i class="fa fa-check-circle text-success me-1"></i> Free cancellation up to 24 hours before booking date</p>
                                     <p class="mb-1"><i class="fa fa-exclamation-circle text-warning me-1"></i> 50% refund after Pickup Started</p>
                                     <p class="mb-0"><i class="fa fa-times-circle text-danger me-1"></i> 0% refund after Pickup Completed</p>
                                 </div>
@@ -209,7 +209,7 @@
                         <!-- Service Image & Header -->
                         <div class="card mb-4">
                             <div class="card-img-top text-center">
-                                <img t-att-src="vehicle_type.image_url or '/appness_logspace/static/src/img/truck_default.jpg'"
+                                <img t-att-src="vehicle_type.image_url or '/appness_logspace/static/src/img/truck_flatbed.jpg'"
                                      class="img-fluid w-100" style="height: 300px; object-fit: cover;"
                                      t-att-alt="vehicle_type.name"/>
                             </div>
@@ -217,7 +217,7 @@
                                 <h3 t-esc="vehicle_type.name"/>
                                 <p class="text-muted mb-0">
                                     <i class="fa fa-truck me-1"></i>
-                                    <span t-esc="dict(vehicle_type._fields['category'].selection).get(vehicle_type.category, vehicle_type.category)"/>
+                                    <span t-esc="vehicle_type.category_id.name"/>
                                     <!-- <t t-if="zone"> <i class="fa fa-map-marker me-1"></i><span t-esc="zone.name"/></t> -->
                                 </p>
                             </div>
@@ -261,35 +261,6 @@
                             </div>
                         </div>
 
-                        <!-- Vehicle Information -->
-                        <div class="card mb-4">
-                            <div class="card-header bg-white">
-                                <h5 class="mb-0"><i class="fa fa-truck text-primary me-2"></i>Vehicle Information</h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-sm-6 mb-2">
-                                        <strong>Vehicle Code:</strong> <span t-esc="vehicle.name"/>
-                                    </div>
-                                    <!-- <div class="col-sm-6 mb-2">
-                                        <strong>Plate Number:</strong> <span t-esc="vehicle.plate_number"/>
-                                    </div>
-                                    <div class="col-sm-6 mb-2" t-if="vehicle_type.default_capacity_kg">
-                                        <strong>Capacity:</strong> <span t-esc="vehicle_type.default_capacity_kg"/> kg
-                                    </div>
-                                    <div class="col-sm-6 mb-2" t-if="vehicle_type.default_capacity_cbm">
-                                        <strong>Volume:</strong> <span t-esc="vehicle_type.default_capacity_cbm"/> m
-                                    </div>
-                                    <div class="col-sm-6 mb-2" t-if="vehicle.driver_id">
-                                        <strong>Driver:</strong> <span t-esc="vehicle.driver_id.name"/>
-                                    </div>
-                                    <div class="col-sm-6 mb-2" t-if="zone">
-                                        <strong>Service Zone:</strong> <span t-esc="zone.name"/>
-                                    </div> -->
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- Available Timeframes -->
                         <div class="card mb-4">
                             <div class="card-header bg-white">
@@ -312,7 +283,7 @@
                                 <hr/>
                                 <h6 class="text-muted small mb-2">Estimated Dropoff:</h6>
                                 <t t-if="booking_data and booking_data.get('dropoff_timeframe')">
-                                    <span class="badge bg-success" t-esc="{'morning': 'Morning', 'afternoon': 'Afternoon', 'evening': 'Evening'}.get(booking_data.get('dropoff_timeframe'), booking_data.get('dropoff_timeframe').title())"/>
+                                    <span class="badge bg-success" t-esc="request.env['logspace.time.slot']._get_labels_by_code().get(booking_data.get('dropoff_timeframe'), booking_data.get('dropoff_timeframe').title())"/>
                                 </t>
                                 <t t-if="not (booking_data and booking_data.get('dropoff_timeframe'))">
                                     <span class="text-muted small">Will be calculated based on your pickup selection and route distance</span>
@@ -420,7 +391,7 @@
                                                     <div class="ms-3 flex-grow-1">
                                                         <h6 class="mb-1" t-esc="addon['name']"/>
                                                         <p class="small text-muted mb-1" t-esc="addon['description']"/>
-                                                        <span class="text-success fw-bold">+<span t-esc="'$' + str(int(addon['price']))"/></span>
+                                                        <span class="text-success fw-bold">+<span t-esc="currency_symbol + ' ' + str(int(addon['price']))"/></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -440,16 +411,20 @@
                                     <div class="d-flex justify-content-between fw-bold">
                                         <span>Price Estimate</span>
                                         <span class="text-success fs-4">
-                                            <t t-if="price">$<t t-esc="'%.2f' % float(price)"/></t>
+                                            <t t-if="price"><t t-esc="currency_symbol + ' ' + ('%.2f' % float(price))"/></t>
                                             <t t-else="">Contact for price</t>
                                         </span>
                                     </div>
                                 </div>
+                                <div class="alert alert-info small mb-3 py-2" t-if="logspace_estimated_time_policy">
+                                    <i class="fa fa-info-circle me-1"></i>
+                                    <t t-esc="logspace_estimated_time_policy"/>
+                                </div>
                                 <a t-att-href="booking_url" class="btn btn-primary w-100 btn-lg mb-2">Book Now</a>
-                                <div class="small text-muted mt-2">
-                                    <p class="mb-1"><i class="fa fa-check-circle text-success me-1"></i> Free cancellation up to 24 hours before pickup</p>
-                                    <p class="mb-1"><i class="fa fa-exclamation-circle text-warning me-1"></i> 50% refund after Pickup Started</p>
-                                    <p class="mb-0"><i class="fa fa-times-circle text-danger me-1"></i> 0% refund after Pickup Completed</p>
+                                <div class="small text-muted mt-2" t-if="logspace_cancel_refund_policy">
+                                    <t t-foreach="logspace_cancel_refund_policy.split('\n')" t-as="policy_line">
+                                        <p class="mb-1" t-esc="policy_line"/>
+                                    </t>
                                 </div>
                             </div>
                         </div>

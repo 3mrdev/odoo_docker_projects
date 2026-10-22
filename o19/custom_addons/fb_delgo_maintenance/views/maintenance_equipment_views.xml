@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Equipment: form -->
+    <record id="hr_equipment_view_form" model="ir.ui.view">
+        <field name="name">maintenance.equipment.form.delgo</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Accounting" name="accounting">
+                    <group>
+                        <field name="expense_account_id"/>
+                        <field name="analytic_distribution" widget="analytic_distribution"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Equipment Category: form -->
+    <record id="hr_equipment_category_view_form" model="ir.ui.view">
+        <field name="name">maintenance.equipment.category.form.delgo</field>
+        <field name="model">maintenance.equipment.category</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_category_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='technician_user_id']" position="after">
+                <field name="expense_account_id"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

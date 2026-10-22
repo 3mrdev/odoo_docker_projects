@@ -18,7 +18,7 @@
         <field name="model">logspace.provider.fleet.summary</field>
         <field name="arch" type="xml">
             <list editable="bottom">
-                <field name="partner_id" domain="[('is_provider', '=', True)]"/>
+                <field name="partner_id" domain="[('is_provider', '=', True),('is_company','=',True)]"/>
                 <field name="vehicle_type_id"/>
                 <field name="fleet_count"/>
                 <field name="capacity_tons"/>
@@ -36,7 +36,7 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="partner_id" domain="[('is_provider', '=', True)]"/>
+                            <field name="partner_id" domain="[('is_provider', '=', True),('is_company','=',True)]"/>
                             <field name="vehicle_type_id"/>
                         </group>
                         <group>
